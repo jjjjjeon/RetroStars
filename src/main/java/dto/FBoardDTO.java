@@ -11,6 +11,7 @@ package dto;
  * History :
  *  - 작성자 : KJY, 날짜 : 2024. 6. 12., 설명 : 최초작성
  *  - 작성자 : KJY, 날짜 : 2024. 6. 12., 설명 : Camelcase로 수정
+ *  - 작성자 : KJY, 날짜 : 2024. 6. 12., 설명 : fBoardId -> userID 변경 
  * @author : KJY 
  * @version 1.0 
  */
@@ -18,19 +19,19 @@ package dto;
 public class FBoardDTO {
 	
 	private int fBoardSeq;
-	private String UserId, fBoardCategory, fBoardQuestion, fBoardAnswer;
-	
-	public FBoardDTO() {
-		super();
-	}
+	private String userId, fBoardCategory, fBoardQuestion, fBoardAnswer;
 	
 	public FBoardDTO(int fBoardSeq, String userId, String fBoardCategory, String fBoardQuestion, String fBoardAnswer) {
 		super();
 		this.fBoardSeq = fBoardSeq;
-		UserId = userId;
+		this.userId = userId;
 		this.fBoardCategory = fBoardCategory;
 		this.fBoardQuestion = fBoardQuestion;
 		this.fBoardAnswer = fBoardAnswer;
+	}
+
+	public FBoardDTO() {
+		super();
 	}
 
 	public int getfBoardSeq() {
@@ -42,11 +43,11 @@ public class FBoardDTO {
 	}
 
 	public String getUserId() {
-		return UserId;
+		return userId;
 	}
 
 	public void setUserId(String userId) {
-		UserId = userId;
+		this.userId = userId;
 	}
 
 	public String getfBoardCategory() {
@@ -73,6 +74,8 @@ public class FBoardDTO {
 		this.fBoardAnswer = fBoardAnswer;
 	}
 	
+	
+
 		
 	
 }
