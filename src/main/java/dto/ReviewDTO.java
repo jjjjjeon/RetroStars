@@ -5,6 +5,8 @@
  */
 package dto;
 
+import java.sql.Timestamp;
+
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
@@ -15,5 +17,76 @@ package dto;
  * @version 1.0 
  */
 public class ReviewDTO {
-
+	private int reviewSeq;
+	private int gBoardSeq;
+	private String userId;
+	private String reviewContent;
+	private int reviewLike;
+	private int reviewDislike;
+	private int reviewFunny;
+	private Timestamp reviewDate;
+	public int getReviewSeq() {
+		return reviewSeq;
+	}
+	public void setReviewSeq(int reviewSeq) {
+		this.reviewSeq = reviewSeq;
+	}
+	public int getgBoardSeq() {
+		return gBoardSeq;
+	}
+	public void setgBoardSeq(int gBoardSeq) {
+		this.gBoardSeq = gBoardSeq;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getReviewContent() {
+		return reviewContent;
+	}
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
+	}
+	public int getReviewLike() {
+		return reviewLike;
+	}
+	public void setReviewLike(int reviewLike) {
+		this.reviewLike = reviewLike;
+	}
+	public int getReviewDislike() {
+		return reviewDislike;
+	}
+	public void setReviewDislike(int reviewDislike) {
+		this.reviewDislike = reviewDislike;
+	}
+	public int getReviewFunny() {
+		return reviewFunny;
+	}
+	public void setReviewFunny(int reviewFunny) {
+		this.reviewFunny = reviewFunny;
+	}
+	public Timestamp getReviewDate() {
+		return reviewDate;
+	}
+	public void setReviewDate(Timestamp reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+	public ReviewDTO(int reviewSeq, int gBoardSeq, String userId, String reviewContent, int reviewLike,
+			int reviewDislike, int reviewFunny, Timestamp reviewDate) {
+		super();
+		this.reviewSeq = reviewSeq;
+		this.gBoardSeq = gBoardSeq;
+		this.userId = userId;
+		this.reviewContent = reviewContent;
+		this.reviewLike = reviewLike;
+		this.reviewDislike = reviewDislike;
+		this.reviewFunny = reviewFunny;
+		this.reviewDate = reviewDate;
+	}
+	public ReviewDTO() {
+		super();
+	}
+	
 }

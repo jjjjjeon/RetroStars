@@ -21,16 +21,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author : Jin 
  * @version 1.0 
  */
-@WebServlet("*.member")
-public class MemberController extends HttpServlet {
+@WebServlet("*.gboard")
+public class GBoardController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doGet(request, response);
 	}
 
