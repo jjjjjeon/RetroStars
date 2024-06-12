@@ -18,55 +18,61 @@ package dto;
 public class FBoardDTO {
 	
 	private int fBoardSeq;
-	private String fBoardId, fBoardCategory, fBoardQuestion, fBoardAnswer;
+	private String UserId, fBoardCategory, fBoardQuestion, fBoardAnswer;
 	
 	public FBoardDTO() {
 		super();
 	}
 	
-	public FBoardDTO(int fBoardSeq, String fBoardId, String fBoardCategory, String fBoardQuestion,
-			String fBoardAnswer) {
+	public FBoardDTO(int fBoardSeq, String userId, String fBoardCategory, String fBoardQuestion, String fBoardAnswer) {
 		super();
 		this.fBoardSeq = fBoardSeq;
-		this.fBoardId = fBoardId;
+		UserId = userId;
 		this.fBoardCategory = fBoardCategory;
 		this.fBoardQuestion = fBoardQuestion;
 		this.fBoardAnswer = fBoardAnswer;
 	}
-	
+
 	public int getfBoardSeq() {
 		return fBoardSeq;
 	}
+
 	public void setfBoardSeq(int fBoardSeq) {
 		this.fBoardSeq = fBoardSeq;
 	}
-	public String getfBoardId() {
-		return fBoardId;
+
+	public String getUserId() {
+		return UserId;
 	}
-	public void setfBoardId(String fBoardId) {
-		this.fBoardId = fBoardId;
+
+	public void setUserId(String userId) {
+		UserId = userId;
 	}
+
 	public String getfBoardCategory() {
 		return fBoardCategory;
 	}
+
 	public void setfBoardCategory(String fBoardCategory) {
 		this.fBoardCategory = fBoardCategory;
 	}
+
 	public String getfBoardQuestion() {
 		return fBoardQuestion;
 	}
+
 	public void setfBoardQuestion(String fBoardQuestion) {
 		this.fBoardQuestion = fBoardQuestion;
 	}
+
 	public String getfBoardAnswer() {
 		return fBoardAnswer;
 	}
+
 	public void setfBoardAnswer(String fBoardAnswer) {
 		this.fBoardAnswer = fBoardAnswer;
 	}
 	
-	
-	
-	
+		
 	
 }
