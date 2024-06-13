@@ -13,22 +13,22 @@
     <div class="container">
         <img src="logo.png" alt="Logo" class="logo">
         <h1>비밀번호 입력</h1>
-        <form id="password-form" action="/password.register" method="post">
+        <form id="password-form" action="/registerPw.member" method="post">
             <div class="input-group">
                 <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                <input type="password" id="userPw" name="userPw" placeholder="비밀번호" required>
             </div>
             <div class="input-group">
                 <label for="confirm-password">비밀번호 확인:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호 확인" required>
+                <input type="password" id="confirmUserPw" name="confirmUserPw" placeholder="비밀번호 확인" required>
             </div>
             <button type="button" onclick="validatePassword()">다음</button>
         </form>
     </div>
     <script>
         function validatePassword() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+            let password = document.getElementById('userPw').value;
+            let confirmPassword = document.getElementById('confirmUserPw').value;
             if (password === "" || confirmPassword === "") {
                 alert("비밀번호를 입력해주세요.");
             } else if (password !== confirmPassword) {

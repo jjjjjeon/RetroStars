@@ -165,7 +165,7 @@
         <img src="/images/logo.png" alt="Logo" class="logo">
         <h1>회원가입을 시작합니다!</h1>
         <p>약관에 동의해 주세요.</p>
-        <form action="/terms.register" method="post">
+        <form action="/term.member" method="post">
             <div class="all-agree" onclick="toggleAllAgree()">
                 <input type="checkbox" id="agreeAll" onclick="toggleAllAgreeCheckbox(event)">
                 <label for="agreeAll">모두 동의</label>
@@ -173,7 +173,7 @@
             <div class="note">필수 및 선택 정보를 한번에 동의하실 수 있습니다.</div>
             <div class="checkbox-group">
                 <label>
-                    <input type="checkbox" id="terms" name="terms" class="agree-checkbox"> 서비스 이용약관 동의 (필수)
+                    <input type="checkbox" id="term" name="term" class="agree-checkbox"> 서비스 이용약관 동의 (필수)
                     <span class="sub-label">&gt;</span>
                 </label>
                 <label>
@@ -192,27 +192,28 @@
     </div>
     <script>
         function toggleAllAgree() {
-            const agreeAllCheckbox = document.getElementById('agreeAll');
-            const agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let agreeAllCheckbox = document.getElementById('agreeAll');
+            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
             agreeAllCheckbox.checked = !agreeAllCheckbox.checked;
             agreeCheckboxes.forEach(checkbox => {
                 checkbox.checked = agreeAllCheckbox.checked;
             });
             toggleNextButton();
         }
+       
 
         function toggleAllAgreeCheckbox(event) {
             event.stopPropagation();
-            const agreeAllCheckbox = document.getElementById('agreeAll');
-            const agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let agreeAllCheckbox = document.getElementById('agreeAll');
+            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
             agreeAllCheckbox.checked = agreeCheckboxes.length === Array.from(agreeCheckboxes).filter(checkbox => checkbox.checked).length;
             toggleNextButton();
         }
 
         function toggleNextButton() {
-            const agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-            const nextButton = document.getElementById('nextButton');
-            const allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
+        	let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+        	let nextButton = document.getElementById('nextButton');
+        	let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             nextButton.disabled = !allChecked;
         }
 

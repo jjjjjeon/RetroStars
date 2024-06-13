@@ -202,6 +202,7 @@
                     <li calss="nav-item">
                     	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
                     </li>
+                   
                      
                     <i class="fa-solid fa-user"></i>        	
                    
