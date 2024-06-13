@@ -152,11 +152,11 @@
 					<div class="search_container row" style="flex: 1.0; width: 100%;">
 						<div class="col1" style="flex: 1;"></div>
 						<div class="search_col2" style="flex: 1; padding-bottom: 15px;">
-							<select id="#category1_select" style="margin-right: 5px;">
+							<select id="category1_select" style="margin-right: 5px;">
 								<option value="분류" selected disabled hidden>분류</option>
 								<option value="제목">제목</option>
 								<option value="내용">내용</option>
-							</select> <select id="#category2_select" style="margin-right: 5px;">
+							</select> <select id="category2_select" style="margin-right: 5px;">
 								<option value="카테고리" selected disabled hidden>카테고리</option>
 								<option value="전체">전체</option>
 								<option value="게임문의">게임문의</option>
@@ -179,18 +179,9 @@
 								<div class="list_head_write_date center" style="flex: 1.5;">작성일</div>
 								<div class="list_head_answer center" style="flex: 1;">답변</div>
 							</div>
-							<div class="list_detail_box row" style="flex: 9; width: 100%;">
-								<div class="list_detail_box col" style="flex: 1; height: 100%;">
-									<!--얘포함 10개로 넣자
-									<div class="list_data_row row" style="height: 44px; width: 100%;">
-										<div class="list_data_seq center" style="flex: 1;">1</div>
-										<div class="list_data_category center" style="flex: 1;">기타문의</div>
-										<div class="list_data_writer center" style="flex: 1;">sami3013</div>
-										<div class="list_data_title center" style="flex: 4.5;">이건
-											예시데이터 입니다.</div>
-										<div class="list_data_write_date center" style="flex: 1.5;">2024.06.09</div>
-										<div class="list_data_answer center" style="flex: 1;">답변완료</div>
-									</div>-->
+							<div class="list_detail_box_row row" style="flex: 9; width: 100%;">
+								<div class="list_detail_box_col col" style="flex: 1; height: 100%;">
+									<!--여기에 리스트 동적 할당-->
 								</div>
 							</div>
 						</div>
@@ -203,95 +194,98 @@
 			</div>
 
 			<script>
-				$(document).ready(
-					function () {
-						$.ajax({
-							url: "/select.qboard",
-							type: "POST",
-							dataType: "json"
-						}).done(function (data) {
-							let cpage = data[0];
-							console.log(cpage);
-							let recordCountPerPage = data[1];
-							let naviCountPerPage = data[2];
-							let recordTotalCount = data[3];
-							let list = data[4];
+				// 페이지 로드 시 첫 페이지 데이터 로드
+				$(document).ready(function () {
+					loadData(1);
+				});
 
-							let page_total_count = 0;
-							if (recordTotalCount % recordCountPerPage > 0) {
-								page_total_count = Math
-									.floor(recordTotalCount
-										/ recordCountPerPage) + 1;
-							} else {
-								page_total_count = Math
-									.floor(recordTotalCount
-										/ recordCountPerPage);
-							}
+				// 페이지 클릭시 클릭 이벤트 적용
+				$(document).on('click', '.pageAn', function (e) {
+					e.preventDefault();
+					let page = $(this).data('pageN');
+					loadData(page);
+				});
 
-							let startNavi = Math.floor((cpage - 1)
-								/ naviCountPerPage)
-								* naviCountPerPage + 1;
+				function loadData(page) {
+					$.ajax({
+						url: "/select.qboard",
+						type: "POST",
+						dataType: "json",
+						data: { cpage: page }
+					}).done(function (data) {
+						let cpage = data[0];
+						let recordCountPerPage = data[1];
+						let naviCountPerPage = data[2];
+						let recordTotalCount = data[3];
+						let list = data[4];
 
-							let endNavi = startNavi + naviCountPerPage - 1;
-							if (endNavi > page_total_count) {
-								endNavi = page_total_count;
-							}
+						let page_total_count = 0;
+						if (recordTotalCount % recordCountPerPage > 0) {
+							page_total_count = Math
+								.floor(recordTotalCount
+									/ recordCountPerPage) + 1;
+						} else {
+							page_total_count = Math
+								.floor(recordTotalCount
+									/ recordCountPerPage);
+						}
 
-							let needNext = true;
-							let needPrev = true;
+						let startNavi = Math.floor((cpage - 1)
+							/ naviCountPerPage)
+							* naviCountPerPage + 1;
 
-							if (startNavi == 1) {
-								needPrev = false;
-							}
-							if (endNavi == page_total_count) {
-								needNext = false;
-							}
+						let endNavi = startNavi + naviCountPerPage - 1;
+						if (endNavi > page_total_count) {
+							endNavi = page_total_count;
+						}
 
-							$("#page_navi").empty(); // 기존에 있던 내용을 지우고 새로운 페이지네이션을 추가합니다.
+						let needNext = true;
+						let needPrev = true;
 
-							if (needPrev) {
-								let needPreva = $("<a>").attr(
-									"href",
-									"/select.qboard?cpage="
-									+ (startNavi - 1)).html(
-										" < ");
-								$("#page_navi").append(needPreva);
-							}
+						if (startNavi == 1) {
+							needPrev = false;
+						}
+						if (endNavi == page_total_count) {
+							needNext = false;
+						}
+						//동적할당이기 때문에 그 전 작업을 지우는 게 필요함
+						$("#page_navi").empty(); 
 
-							for (let i = startNavi; i <= endNavi; i++) {
-								let pagesa = $("<a>").attr("href",
-									"/select.qboard?cpage=" + i).html(
-										i + "&nbsp;");
-								$("#page_navi").append(pagesa);
-							}
+						if (needPrev) {
+							let needPreva = $("<a>").addClass("pageAn").data("pageN", startNavi - 1).html(" < ");
+							$("#page_navi").append(needPreva);
+						}
 
-							if (needNext) {
-								let needNexta = $("<a>").attr(
-									"href",
-									"/select.qboard?cpage="
-									+ (endNavi + 1))
-									.html(" > ");
-								$("#page_navi").append(needNexta);
-							}
+						for (let i = startNavi; i <= endNavi; i++) {
+							let pagesa = $("<a>").addClass("pageAn").data("pageN", i).html(i + "&nbsp;");
+							$("#page_navi").append(pagesa);
+						}
 
-							for (let dto of list) {
-								let list_data_row = $("<div>").addClass("list_data_row row").css({
-									"height": "44px",
-									"width": "100%"
-								});
+						if (needNext) {
+							let needNexta = $("<a>").addClass("pageAn").data("pageN", endNavi + 1).html(" > ");
+							$("#page_navi").append(needNexta);
+						}
 
-								let list_data_seq = $("<div>").addClass("list_data_seq center").css("flex", "1").html(dto.qBoardSeq);
-								let list_data_category = $("<div>").addClass("list_data_category center").css("flex", "1").html(dto.qBoardCategory);
-								let list_data_writer = $("<div>").addClass("list_data_writer center").css("flex", "1").html(dto.userId);
-								let list_data_title = $("<div>").addClass("list_data_title center").css("flex", "1").html(dto.qBoardTitle);
-								let list_data_write_date = $("<div>").addClass("list_data_write_date center").css("flex", "1").html(dto.qBoardDate);
-								let list_data_answer = $("<div>").addClass("list_data_answer center").css("flex", "1").html(dto.qBoardAnswer);
+						$(".list_detail_box_col").empty(); 
 
-								list_data_row.append(list_data_seq, list_data_category, list_data_writer, list_data_title, list_data_write_date, list_data_answer);
-								$(".list_detail_box").append(list_data_row);
-							}
-						});
+						for (let dto of list) {
+							let list_data_row = $("<div>").addClass("list_data_row row").css({
+								"height": "44px",
+								"width": "100%"
+							});
+
+							let list_data_seq = $("<div>").addClass("list_data_seq center").css("flex", "1").html(dto.qBoardSeq);
+							let list_data_category = $("<div>").addClass("list_data_category center").css("flex", "1").html(dto.qBoardCategory);
+							let list_data_writer = $("<div>").addClass("list_data_writer center").css("flex", "1").html(dto.userId);
+							let list_data_title = $("<div>").addClass("list_data_title center").css("flex", "4.5").html(dto.qBoardTitle);
+							let list_data_write_date = $("<div>").addClass("list_data_write_date center").css("flex", "1.5").html(dto.qBoardDate);
+							let list_data_answer = $("<div>").addClass("list_data_answer center").css("flex", "1").html(dto.qBoardAnswer);
+
+							list_data_row.append(list_data_seq, list_data_category, list_data_writer, list_data_title, list_data_write_date, list_data_answer);
+							$(".list_detail_box_col").append(list_data_row);
+						}
 					});
+				};
 			</script>
 
 		</body>

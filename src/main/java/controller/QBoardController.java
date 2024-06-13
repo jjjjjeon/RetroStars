@@ -51,7 +51,6 @@ public class QBoardController extends HttpServlet {
 				String pcpage=request.getParameter("cpage");
 				if(pcpage==null) {pcpage="1";}
 				int cpage=Integer.parseInt(pcpage);
-				System.out.println(cpage);
 				int recordCountPerPage = Static.QBOARD_RECOD_COUNT_PER_PAGE;
 	            int naviCountPerPage = Static.QBOARD_NAVI_COUNT_PER_PAGE;
 	            int recordTotalCount = boarddao.getRecordCount();
