@@ -189,7 +189,7 @@ div {
 				</div>
 			</div>
 			<div class="btns_container" style="flex: 0.7; width: 100%;">
-				<button id="ask_btn" onclick="location.href='/qaboard/write.jsp'">문의하기</button>
+				<button id="ask_btn" onclick="location.href='/qaboard/writeBoard.jsp'">문의하기</button>
 			</div>
 			<div class="page_container" style="flex: 0.7; width: 100%;"></div>
 		</div>
