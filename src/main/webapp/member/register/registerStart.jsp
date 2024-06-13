@@ -162,7 +162,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="/images/logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>회원가입을 시작합니다!</h1>
         <p>약관에 동의해 주세요.</p>
         <form action="/term.member" method="post">

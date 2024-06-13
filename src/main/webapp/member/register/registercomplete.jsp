@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>회원가입 완료</h1>
         <p>Retro Stars 회원가입이 완료되었습니다.</p>
         <form action="/registerComplete.member" method="post">

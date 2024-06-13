@@ -109,6 +109,7 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("userPhone", request.getParameter("userPhone"));
 				response.sendRedirect("/member/register/registerComplete.jsp");
 			} else if(cmd.equals("/registerComplete.member")) {
+				// session에 저장된 모든 정보 불러오기
                 String term = (String) session.getAttribute("term");
                 String privacy = (String) session.getAttribute("privacy");
                 String ads = (String) session.getAttribute("ads");
@@ -121,11 +122,14 @@ public class MemberController extends HttpServlet {
                 String userPhone = (String) session.getAttribute("userPhone");
                 System.out.println(term  + privacy +  ads + userId + userPw + userEmail +  userName + userNickname + userNo + userPhone);
                 
+                // 기본 값 제외하고 모두 변수에 담아 dao에 넣기.
                 MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
                 memberDao.addMember(addMember);
                 
+                // 세션 값 초기화
                 session.invalidate();
                 
+                // 완료 버튼을 누르면 메인화면으로 돌아감.
                 response.sendRedirect("/index.jsp");
 			}
 			

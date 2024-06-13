@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>기타 정보 입력</h1>
         <form id="info-form" action="/registerName.member" method="post">
             <div class="input-group">

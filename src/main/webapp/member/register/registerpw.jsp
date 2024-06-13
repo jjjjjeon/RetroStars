@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>비밀번호 입력</h1>
         <form id="password-form" action="/registerPw.member" method="post">
             <div class="input-group">

@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>아이디 생성</h1>
         <p>retro Starts 아이디를 만들어 주세요.</p>
         <form action="/registerId.member" method="post">
