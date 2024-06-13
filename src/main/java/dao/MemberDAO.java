@@ -56,7 +56,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public boolean loginId(String id, String pw) throws Exception {
-        String sql = "select * from member where user_id = ? and user_pw = ?";
+        String sql = "select * from jinhyeok.member where user_id = ? and user_pw = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, id);
             pstat.setString(2, pw);

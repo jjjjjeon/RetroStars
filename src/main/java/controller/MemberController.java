@@ -133,9 +133,6 @@ public class MemberController extends HttpServlet {
                 response.sendRedirect("/index.jsp");
 			}
 			
-			else {
-				response.sendRedirect("/index.jsp");
-			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
