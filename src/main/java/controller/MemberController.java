@@ -133,6 +133,17 @@ public class MemberController extends HttpServlet {
                 response.sendRedirect("/index.jsp");
 			}
 			
+			// 마이페이지 접속 시 정보 출력 기능
+			if(cmd.equals("/mypage.member")) {
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				
+				MemberDTO mydata = memberDao.mydata(id);
+				request.setAttribute("mydata", mydata);
+				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);
+				
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
