@@ -60,7 +60,7 @@ public class QBoardDAO {
 
 	//0. 카테고리 이름을 검색하는 함수
 	public int getCategory(String categoryName) throws Exception{
-		String sql="select q_board_category from q_category where q_board_category_name=?";
+		String sql="select q_board_category from saemi.q_category where q_board_category_name=?";
 
 		try(Connection con=this.getConnection();
 				PreparedStatement ps=con.prepareStatement(sql);){	
@@ -78,7 +78,7 @@ public class QBoardDAO {
 
 	//1. 글 추가하기 insert
 	public int insert(QBoardDTO dto) throws Exception{
-		String sql="insert into q_board values(q_board_sequence.nextval,?,?,?,?,sysdate,?,?)";
+		String sql="insert into saemi.q_board values(q_board_sequence.nextval,?,?,?,?,sysdate,?,?)";
 		try(Connection con=this.getConnection();
 				PreparedStatement ps=con.prepareStatement(sql, new String[] {"q_board_seq"});){
 			ps.setString(1, dto.getUserId());
@@ -99,9 +99,9 @@ public class QBoardDAO {
 	public ArrayList<QBoardDTO> select(int startnum, int endnum) throws Exception {
 		String sql = "SELECT * " +
 				"FROM ( " +
-				"    SELECT q_board.*, " +
+				"    SELECT saemi.q_board.*, " +
 				"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
-				"    FROM q_board " +
+				"    FROM saemi.q_board " +
 				") subquery " +
 				"WHERE rown BETWEEN ? AND ?";
 
@@ -130,7 +130,7 @@ public class QBoardDAO {
 
 	//3. getRecordCount()
 	public int getRecordCount() throws Exception {
-		String sql="select count(*) from q_board";
+		String sql="select count(*) from saemi.q_board";
 		int result=0;
 
 		try(Connection con=this.getConnection();
