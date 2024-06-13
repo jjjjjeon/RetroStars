@@ -237,18 +237,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">마이페이지</a>
-                    </li>
-                    <li calss="nav-item">
-                    	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
-                    </li>
-                   
+                    </li>                  
                      
-                    <i class="fa-solid fa-user"></i>        	
+                    <i class="fa-solid fa-user"></i>      	
                    
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
                     </li>
                 </ul>
             </div>
