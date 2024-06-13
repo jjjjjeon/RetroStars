@@ -60,7 +60,7 @@ public class QBoardDAO {
 
 	//0. 카테고리 이름을 검색하는 함수
 	public int getCategory(String categoryName) throws Exception{
-		String sql="select q_board_category from saemi.q_category where q_board_category_name=?";
+		String sql="select q_board_category from q_category where q_board_category_name=?";
 
 		try(Connection con=this.getConnection();
 				PreparedStatement ps=con.prepareStatement(sql);){	
@@ -78,7 +78,7 @@ public class QBoardDAO {
 
 	//1. 글 추가하기 insert
 	public int insert(QBoardDTO dto) throws Exception{
-		String sql="insert into saemi.q_board values(q_board_sequence.nextval,?,?,?,?,sysdate,?,?)";
+		String sql="insert into q_board values(q_board_sequence.nextval,?,?,?,?,sysdate,?,?)";
 		try(Connection con=this.getConnection();
 				PreparedStatement ps=con.prepareStatement(sql, new String[] {"q_board_seq"});){
 			ps.setString(1, dto.getUserId());
@@ -96,19 +96,21 @@ public class QBoardDAO {
 	}
 
 	//2. 페이지별로 select하기
-	public ArrayList<QBoardDTO> select(int startnum, int endnum) throws Exception {
+	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category) throws Exception {
 		String sql = "SELECT * " +
 				"FROM ( " +
-				"    SELECT saemi.q_board.*, " +
+				"    SELECT q_board.*, " +
 				"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
-				"    FROM saemi.q_board " +
+				"    FROM q_board " +
+				" where q_board_category=?"+
 				") subquery " +
 				"WHERE rown BETWEEN ? AND ?";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement ptat = con.prepareStatement(sql)) {
-			ptat.setInt(1, startnum);
-			ptat.setInt(2, endnum);
+			ptat.setInt(1, category);
+			ptat.setInt(2, startnum);
+			ptat.setInt(3, endnum);
 
 			try (ResultSet rs = ptat.executeQuery()) {
 				ArrayList<QBoardDTO> list = new ArrayList<>();
@@ -130,7 +132,7 @@ public class QBoardDAO {
 
 	//3. getRecordCount()
 	public int getRecordCount() throws Exception {
-		String sql="select count(*) from saemi.q_board";
+		String sql="select count(*) from q_board";
 		int result=0;
 
 		try(Connection con=this.getConnection();
