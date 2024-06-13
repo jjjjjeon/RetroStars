@@ -141,7 +141,7 @@ public class MemberDAO {
     			String pw =rs.getString(2);
     			String name =rs.getString(3);
     			String nickName =rs.getString(4);
-    			String no =rs.getString(5);
+    			String no = rs.getString(5);
     			String phone =rs.getString(6);
     			String email=rs.getString(7);
     			Timestamp joinDate =rs.getTimestamp(8);
@@ -151,7 +151,7 @@ public class MemberDAO {
     			String black =rs.getString(12);
     			String active =rs.getString(13);
     			
-    			dto = new MemberDTO(userId, pw, name, nickName, no,phone, email, joinDate, profile, level, admin, black, active);
+    			dto = new MemberDTO(userId, pw, name, nickName, no, phone, email, joinDate, profile, level, admin, black, active);
     			}
     			return dto;
     		}
