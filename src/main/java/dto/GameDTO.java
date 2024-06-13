@@ -15,5 +15,39 @@ package dto;
  * @version 1.0 
  */
 public class GameDTO {
+	private String gameId;
+	private String gameTitle;
+	private String gameDesc;
+	
+	public GameDTO() {
+		super();
+	}
+	public String getGameId() {
+		return gameId;
+	}
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
+	}
+	public String getGameTitle() {
+		return gameTitle;
+	}
+	public void setGameTitle(String gameTitle) {
+		this.gameTitle = gameTitle;
+	}
+	public String getGameDesc() {
+		return gameDesc;
+	}
+	public void setGameDesc(String gameDesc) {
+		this.gameDesc = gameDesc;
+	}
+	public GameDTO(String gameId, String gameTitle, String gameDesc) {
+		this.gameId = gameId;
+		this.gameTitle = gameTitle;
+		this.gameDesc = gameDesc;
+	}
+
+	
+	
+
 
 }

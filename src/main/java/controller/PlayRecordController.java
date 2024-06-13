@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author : Jin 
  * @version 1.0 
  */
-@WebServlet("*.member")
-public class MemberController extends HttpServlet {
+@WebServlet("*.playrecord")
+public class PlayRecordController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

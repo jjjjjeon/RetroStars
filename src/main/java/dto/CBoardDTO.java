@@ -3,6 +3,7 @@ package dto;
 import java.sql.Timestamp;
 
 public class CboardDTO {
+	
 	private int c_board_seq;
 	private String user_id;
 	private int c_board_category;
