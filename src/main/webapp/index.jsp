@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
@@ -272,9 +273,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/mypage.member">마이페이지</a>
                     </li>
-                    <li calss="nav-item">
-                    	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
-                    </li>
                    
                      
                     <i class="fa-solid fa-user"></i>        	
@@ -282,7 +280,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
                     </li>
                 </ul>
             </div>
