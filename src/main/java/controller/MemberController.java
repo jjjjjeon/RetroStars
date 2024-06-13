@@ -133,6 +133,28 @@ public class MemberController extends HttpServlet {
                 response.sendRedirect("/index.jsp");
 			}
 			
+			// 마이페이지 접속 시 정보 출력 기능
+			if(cmd.equals("/mypage.member")) {
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				
+				MemberDTO mydata = memberDao.mydata(id);
+				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
+				String genderCode = mydata.getUserNo().substring(7,8);
+				String gender;
+				if(genderCode.equals("1")) {
+					gender="Male";
+				}else if(genderCode.equals("2")) {
+					gender="Female";
+				}else {gender="None";}
+				
+				request.setAttribute("birth", birth);
+				request.setAttribute("gender", gender);
+				request.setAttribute("mydata", mydata);
+				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);
+				
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();

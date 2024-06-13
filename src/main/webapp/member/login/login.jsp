@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 화면</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css">
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <style>
 		body {
 		    font-family: 'Georgia', serif;
@@ -89,7 +90,7 @@
         <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
         <div class="social-login">
             <img src="/image/google_login.png" alt="Google">
-            <img src="/image/kakao_login.png" alt="Kakao">
+            <a href="javascript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
             <img src="/image/naver_login.png" alt="Line">
         </div>
         <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
@@ -97,6 +98,24 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+	    function kakaoLogin() {
+	        Kakao.Auth.login({
+	            success: function (response) {
+	                Kakao.API.request({
+	                    url: '/v2/user/me',
+	                    success: function (response) {
+	                        alert(JSON.stringify(response))
+	                    },
+	                    fail: function (error) {
+	                        alert(JSON.stringify(error))
+	                    },
+	                })
+	            },
+	            fail: function (error) {
+	                alert(JSON.stringify(error))
+	            },
+	        })
+	    }
         $(document).ready(function(){
             $('#login-form').submit(function(event){
                 const id = $('#id').val();
@@ -106,6 +125,9 @@
                     alert("모든 필드를 입력해주세요.");
                 }
             });
+            Kakao.init('9c567e58c04139a37cf1de438a4b6ffa');
+
+            
         });
     </script>
 </body>

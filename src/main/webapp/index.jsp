@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
@@ -180,7 +181,7 @@
             background-color: #323232;
             postion:fixed; 
             bottom:0; 
-            
+            height: 150px;
             
         }
         .leftfooter{
@@ -199,11 +200,7 @@
         	margin: auto;
         	display: flex;
         	justify-content: space-between;
-        	align-items: center;    <!-- Video Background -->
-    <video class="video-background" autoplay muted loop>
-        <source src="/path/to/your/video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+        	align-items: center;    
     	}
 
         .iconbox {
@@ -274,7 +271,7 @@
                         <a class="nav-link">랭킹</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
+                        <a class="nav-link" href="/mypage.member">마이페이지</a>
                     </li>
                     <li calss="nav-item">
                     	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
@@ -337,4 +334,5 @@
         </div>
     </div>
 </body>
+
 </html>
