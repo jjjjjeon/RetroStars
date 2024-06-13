@@ -236,8 +236,17 @@
                         <a class="nav-link">랭킹</a>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link" href="#">마이페이지</a>
                     </li>                  
+=======
+                        <a class="nav-link" href="/mypage.member">마이페이지</a>
+                    </li>
+                    <li calss="nav-item">
+                    	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
+                    </li>
+                   
+>>>>>>> 2e86b31d3302b3c482d3ef363fc5da28f78f5920
                      
                     <i class="fa-solid fa-user"></i>      	
                    
