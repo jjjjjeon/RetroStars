@@ -120,10 +120,12 @@
     .content .fileBox{
     	color: #36393f;
     	display : none;
+    	flex-direction : column;
     }
     
     .content .fileBox a{
     	color : blue;
+    	margin-bottom : 5px;
     }
 
     .bookmark {
@@ -134,7 +136,7 @@
     .content .viewCont {
         padding: 45px 0 150px 0;
         color: #36393f;
-        font-size: 16px;
+        font-size: 18px;
         line-height: 30px;
         font-weight: 400;
     }
@@ -342,7 +344,7 @@
         </ul>
         <c:choose>
         	<c:when test="${fn:length(fileList) > 0}">
-        		<p class="fileOn" style="cursor:pointer;">▼ 첨부파일 목록 열기 (${fn:length(fileList)})</p>
+        		<p class="fileOn" style="cursor:pointer;">▼ 첨부파일 목록 열기 <span style="color:blue;">(${fn:length(fileList)})</span></p>
         	</c:when> 
         
         </c:choose>
@@ -402,6 +404,10 @@
     <div class="footer">Footer</div>
     
     <script>
+    	$("#writeBtn").on("click", function(){
+    		location.href = "cboard/writeBoard.jsp";
+    	})
+    
 	    $(document).ready(function(){
 			if (${category == 1}){
 				$("#viewC1").addClass("active");
@@ -418,7 +424,7 @@
     	$(".content").on("click", ".fileOn", function(){
     		$(this).html("▲ 첨부파일 목록 닫기");
     		$(this).attr("class", "fileOff");
-    		$(".fileBox").css("display", "block");
+    		$(".fileBox").css("display", "flex");
     	})
     	
     	$(".content").on("click", ".fileOff", function(){

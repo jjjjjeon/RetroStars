@@ -58,7 +58,7 @@ public class CBoardController extends HttpServlet {
 				request.setAttribute("list", list);
 				request.setAttribute("isSearchedList", 0);
 				
-				request.getRequestDispatcher("/board/mainBoard.jsp").forward(request, response);
+				request.getRequestDispatcher("/cboard/mainBoard.jsp").forward(request, response);
 				
 			//카테고리별 제목별/작성자별 검색된 글 목록 출력
 			}else if (cmd.equals("/searchList.cboard")) {
@@ -72,7 +72,7 @@ public class CBoardController extends HttpServlet {
 					cpageStr = "1";
 				}
 				
-				String searchType = request.getParameter("type");
+				String searchType = request.getParameter("searchType");
 				String searchInput = request.getParameter("searchInput");
 				int cpage = Integer.parseInt(cpageStr);
 				int category = Integer.parseInt(categoryStr);
@@ -91,7 +91,7 @@ public class CBoardController extends HttpServlet {
 				request.setAttribute("searchType", searchType);
 				request.setAttribute("searchInput", searchInput);
 				
-				request.getRequestDispatcher("/board/mainBoard.jsp").forward(request, response);
+				request.getRequestDispatcher("/cboard/mainBoard.jsp").forward(request, response);
 
 			//게시글 내용 열람
 			}else if(cmd.equals("/detail.cboard")) {
@@ -121,7 +121,7 @@ public class CBoardController extends HttpServlet {
 				request.setAttribute("fileList", fileList);
 				request.setAttribute("viewerId", id);
 				request.setAttribute("DTO", post);
-				request.getRequestDispatcher("/board/detailBoard.jsp").forward(request, response);
+				request.getRequestDispatcher("/cboard/detailBoard.jsp").forward(request, response);
 			}
 			
 		}catch(Exception e) {

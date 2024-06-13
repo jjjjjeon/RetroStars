@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-<title>Insert title here</title>
+<title>유저게시판</title>
 <style>
     * {
         box-sizing: border-box;
@@ -239,7 +239,7 @@
         <h3 id="boardTitleH3">전체</h3>
         <div class="community_header">
             <form action="/searchList.cboard" id="searchForm">
-                <select name="type" class="typeBox" id="searchType">
+                <select name="searchType" class="typeBox" id="searchType">
                     <option value="">검색 유형</option>
                     <option value="title">제목</option>
                     <option value="writer">작성자</option>
@@ -287,7 +287,7 @@
     <div class="footer">Footer</div>
     <script>
 		$("#writeBtn").on("click", function(){
-			location.href = "/board/writeBoard.jsp";
+			location.href = "/cboard/writeBoard.jsp";
 		});
 		
 		$("#searchForm").on("submit", function(e){
@@ -338,8 +338,8 @@
 			let naviString = "";
 			if (needPrev) {
 				if(${isSearchedList == 1}){
-					naviString = naviString + "<a href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=1'>《</a>";
-					naviString = naviString + "<a href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + (startNavi - 1) + "'>〈</a>";
+					naviString = naviString + "<a href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=1'>《</a>";
+					naviString = naviString + "<a href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + (startNavi - 1) + "'>〈</a>";
 				}else{
 					naviString = naviString + "<a href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=1'>《</a>";
 					naviString = naviString + "<a href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + (startNavi - 1) + "'>〈</a>";
@@ -348,9 +348,9 @@
 			for (let i = startNavi; i <= endNavi; i++) {
 				if(${isSearchedList == 1}){
 					if(i == currentPage){
-						naviString = naviString + "<a class='fw-bold' href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='fw-bold' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
 					}else{
-						naviString = naviString + "<a class='text-muted' href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='text-muted' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
 					}
 				}else{
 					if(i == currentPage){
@@ -363,8 +363,8 @@
 			}
 			if (needNext) {
 				if(${isSearchedList == 1}){
-					naviString = naviString + "<a href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + (endNavi + 1) + "'>〉</a>";
-					naviString = naviString + "<a href = '/searchList.cboard?type=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + pageTotalCount + "'>》</a>";
+					naviString = naviString + "<a href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + (endNavi + 1) + "'>〉</a>";
+					naviString = naviString + "<a href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + pageTotalCount + "'>》</a>";
 				}else{
 					naviString = naviString + "<a href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + (endNavi + 1) + "'>〉</a>";
 					naviString = naviString + "<a href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + pageTotalCount + "'>》</a>";
@@ -388,6 +388,13 @@
 				$("#viewAll").addClass("active");
 				$("#boardTitleH3").html("전체");
 			}
+			
+			if(${searchType == "title"}){
+				$("#searchType").val("title");
+			}else if(${searchType == "writer"}){
+				$("#searchType").val("writer");
+			}
+			$("#searchInput").val(${searchInput});
 		});
     </script>
 </body>
