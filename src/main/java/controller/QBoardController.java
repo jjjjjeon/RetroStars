@@ -54,10 +54,15 @@ public class QBoardController extends HttpServlet {
 				int recordCountPerPage = Static.QBOARD_RECOD_COUNT_PER_PAGE;
 	            int naviCountPerPage = Static.QBOARD_NAVI_COUNT_PER_PAGE;
 	            int recordTotalCount = boarddao.getRecordCount();
+	            
+	            int category=boarddao.getCategory(request.getParameter("category"));
+	            System.out.println(category);
+	            
 				ArrayList<QBoardDTO> list=
 						boarddao.select(
 								cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-								cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE);
+								cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,
+								category);
 				
 				request.setAttribute("list", list);
 				String json = g.toJson(new Object[] { cpage, recordCountPerPage, naviCountPerPage, recordTotalCount, list });

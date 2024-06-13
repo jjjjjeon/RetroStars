@@ -96,19 +96,21 @@ public class QBoardDAO {
 	}
 
 	//2. 페이지별로 select하기
-	public ArrayList<QBoardDTO> select(int startnum, int endnum) throws Exception {
+	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category) throws Exception {
 		String sql = "SELECT * " +
 				"FROM ( " +
 				"    SELECT q_board.*, " +
 				"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
 				"    FROM q_board " +
+				" where q_board_category=?"+
 				") subquery " +
 				"WHERE rown BETWEEN ? AND ?";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement ptat = con.prepareStatement(sql)) {
-			ptat.setInt(1, startnum);
-			ptat.setInt(2, endnum);
+			ptat.setInt(1, category);
+			ptat.setInt(2, startnum);
+			ptat.setInt(3, endnum);
 
 			try (ResultSet rs = ptat.executeQuery()) {
 				ArrayList<QBoardDTO> list = new ArrayList<>();

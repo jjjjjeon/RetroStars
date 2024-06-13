@@ -161,7 +161,7 @@
 				<div class="col2 col" style="flex: 9; width: 100%;">
 					<div class="navi_container row" style="flex: 0.7; width: 100%;">
 						<div class="navi_total center" style="flex: 1;">
-							<a href="">전체</a>
+							<a href="" data>전체</a>
 						</div>
 						<div class="navi_game center" style="flex: 1;">
 							<a href="">게임문의</a>
@@ -232,13 +232,18 @@
 					let page = $(this).data('pageN');
 					loadData(page);
 				});
+				
+				
 
 				function loadData(page) {
 					$.ajax({
 						url: "/select.qboard",
 						type: "POST",
 						dataType: "json",
-						data: { cpage: page }
+						data: { 
+							cpage: page,
+							category: "게임문의"
+						}
 					}).done(function (data) {
 						let cpage = data[0];
 						let recordCountPerPage = data[1];
