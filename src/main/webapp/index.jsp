@@ -199,7 +199,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">마이페이지</a>
                     </li>
-                    <i class="fa-solid fa-user"></i>
+                    <li calss="nav-item">
+                    	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
+                    </li>
+                     
+                    <i class="fa-solid fa-user"></i>        	
+                   
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
