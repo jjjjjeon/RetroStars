@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
     body{background-color: black;color:white;}
 
@@ -61,6 +62,10 @@
     .rpg_content_date{flex:2; font-size: 15px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
     .rpg_content_score{flex:4; font-size: 35px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
 
+	.favorite_game{flex:0.5; width: 80%; display: flex;}
+	.favorite_game_title{flex:2; font-size:25px; font-weight:700; display: flex; justify-content: start; align-items: center;}
+	.favorite_game_main{flex:8;text-indent:10px; display: flex; justify-content: start; align-items: center;}
+	
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
     .board_main{flex:8; width: 90%;border:1px solid white;}
@@ -152,6 +157,10 @@
                 </div>
             </div>
         </div>
+        <div class="favorite_game">
+            <div class="favorite_game_title">Favorite Games</div>
+            <div class="favorite_game_main">게임을 찾아봅시다</div>
+        </div>
         <div class="freeboard">
             <div class="free_title board_title">Community Board (자유)</div>
             <div class="free_main board_main">f_main</div>
@@ -162,9 +171,30 @@
         </div>
         <div class="footer">
             <div class="join_date">22.01.01 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
-            <button type="button" class="btn btn-dark" id="signout">회원 탈퇴</button>
+            <button type="button" class="btn btn-dark" id="memberOut">회원 탈퇴</button>
         </div>
     </div>
-    <script></script>
+    <script>
+    $("#memberOut").on("click",function(){
+    	Swal.fire({
+			  title: "Are you sure?",
+			  text: "You won't be able to revert this!",
+			  icon: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#3085d6",
+			  cancelButtonColor: "#d33",
+			  confirmButtonText: "Yes, delete it!"
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire({
+			      title: "Deleted!",
+			      text: "Your file has been deleted.",
+			      icon: "success"
+			    });
+			    location.href="/memberout.members";
+			  }
+			});
+    }) 	
+    </script>
 </body>
 </html>
