@@ -74,28 +74,25 @@
 					align-items: flex-end;
 					justify-content: right;
 				}
-
-				#category1_select {
-					height: 23px;
-				}
-
-				#category2_select {
-					height: 23px;
-				}
-
 				.search_bar {
 					padding-bottom: 2px;
 					display: flex;
-					align-items: flex-end;
-					width: 190px;
-					height: 30px;
+					align-items: center;
+					width: 220px;
+					height: 35px;
 					border-bottom: 2px solid black;
 				}
 
 				.search_bar>#search_input {
-					width: 170px;
+					width: 100%;
+					height: 100%;
 					text-align: center;
 					border: none;
+				}
+
+				.dropdown-toggle{
+    				height: 35px;
+    				border-radius: 0;
 				}
 
 				.list_container_row {
@@ -179,17 +176,20 @@
 					<div class="search_container row" style="flex: 1.0; width: 100%;">
 						<div class="col1" style="flex: 1;"></div>
 						<div class="search_col2" style="flex: 1; padding-bottom: 15px;">
-							<select id="category1_select" style="margin-right: 5px;">
+							<!--<select id="category1_select" style="margin-right: 5px;">
 								<option value="분류" selected disabled hidden>분류</option>
 								<option value="제목">제목</option>
 								<option value="내용">내용</option>
-							</select> <select id="category2_select" style="margin-right: 5px;">
-								<option value="카테고리" selected disabled hidden>카테고리</option>
-								<option value="전체">전체</option>
-								<option value="게임문의">게임문의</option>
-								<option value="게임문의">제휴문의</option>
-								<option value="게임문의">기타문의</option>
-							</select>
+							</select>-->
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								  전체
+								</button>
+								<ul class="dropdown-menu">
+								  <li><a class="dropdown-item" href="#">제목</a></li>
+								  <li><a class="dropdown-item" href="#">내용</a></li>
+								</ul>
+							</div>
 							<div class="search_bar center">
 								<input id="search_input" type="text" placeholder="검색어를 입력하세요.">
 								<i class="fa-solid fa-magnifying-glass"></i>
@@ -310,6 +310,19 @@
 						}
 					});
 				};
+				
+				//드랍다운 선택시 카테고리 텍스트 변경 이벤트
+				document.addEventListener("DOMContentLoaded", function () {
+					// 모든 드롭다운 항목에 이벤트 리스너 추가
+					let dropdownItems = document.querySelectorAll('.dropdown-item');
+					dropdownItems.forEach(function (item) {
+						item.addEventListener('click', function (event) {
+							// 버튼 텍스트 변경
+							let button = document.querySelector('.dropdown-toggle');
+							button.textContent = event.target.textContent;
+						});
+					});
+				});
 			</script>
 
 		</body>
