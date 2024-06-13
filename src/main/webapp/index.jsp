@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
@@ -34,9 +35,28 @@
 
         body {
             background-color: black;
+            margin-bottom:0;
+            padding:0;
         }
 
-
+	.video-background{
+		position : fixed;
+		top : 0;
+		left : 0;
+		min-width : 100%;
+		min-height : 100%;
+		width: auto;
+		height : auto;
+		z-index: -1;
+	}
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height:70px;
+    }
+    
         /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
         .nav-link {
             color: white !important;
@@ -97,6 +117,7 @@
             margin: 20px;
             display: flex;
             flex-direction: column;
+            height: 300px;
         }
 
         .zen-dots-regular {
@@ -114,9 +135,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
+        	cursor: pointer;
+        	transition: background-color 0.3s ease;
         }
-
+        
+    .gamelist .game:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
 
 
         .gameintro {
@@ -152,8 +178,11 @@
 
         .footer {
             width: 100%;
-            height: 120px;
-            background-color: #ef3a3a;
+            background-color: #323232;
+            postion:fixed; 
+            bottom:0; 
+            height: 150px;
+            
         }
         .leftfooter{
         	color : white;
@@ -171,7 +200,7 @@
         	margin: auto;
         	display: flex;
         	justify-content: space-between;
-        	align-items: center;
+        	align-items: center;    
     	}
 
         .iconbox {
@@ -197,6 +226,12 @@
     </style>
 </head>
 <body>
+		<!-- Video Background -->
+   		<video class="video-background" autoplay muted loop>
+        	<source src="/image/video.mp4" type="video/mp4">
+        	Your browser does not support the video tag.
+    	</video>
+    	
 	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">ICON</a>
@@ -238,9 +273,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/mypage.member">마이페이지</a>
                     </li>
-                    <li calss="nav-item">
-                    	<a class="nav-link" href="/member/login/login.jsp">로그인</a>
-                    </li>
                    
                      
                     <i class="fa-solid fa-user"></i>        	
@@ -248,24 +280,24 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container">
-        <img src="/image/maingamebg.png">
+        <img src="/image/1.png">
 
         <div class="mainbox">
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">LIST</div>
-                <div class="listgame1">> game 1 <</div> 
-                <div class="listgame2">> game 2 <</div> 
-                <div class="listgame3">> game 3 <</div> 
-                <div class="listgame4">> game 4 <</div> 
-                <div class="listgame5">> game 5 <</div> 
+                <div class = "game" id="listgame1">> game 1 <</div> 
+                <div class = "game" id="listgame2">> game 2 <</div> 
+                <div class = "game" id="listgame3">> game 3 <</div> 
+                <div class = "game" id="listgame4">> game 4 <</div> 
+                <div class = "game" id="listgame5">> game 5 <</div> 
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
@@ -299,4 +331,5 @@
         </div>
     </div>
 </body>
+
 </html>
