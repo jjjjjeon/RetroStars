@@ -9,14 +9,23 @@
 			<title>Q&Apage</title>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<script src="https://kit.fontawesome.com/5af4c0ec93.js" crossorigin="anonymous"></script>
+			<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
 			<style>
 				* {
 					box-sizing: border-box;
 				}
 
-				div {
+				/*div {
 					border: 1px solid red;
-				}
+				}*/
 
 				.row {
 					display: flex;
@@ -42,6 +51,7 @@
 				.navi_container {
 					padding-right: 250px;
 					padding-left: 250px;
+					margin: 0;
 				}
 
 				.navi_container>div:hover {
@@ -56,6 +66,7 @@
 				.search_container {
 					padding-right: 50px;
 					padding-left: 50px;
+					margin: 0;
 				}
 
 				.search_col2 {
@@ -90,24 +101,33 @@
 				.list_container_row {
 					padding-left: 50px;
 					padding-right: 50px;
+					margin: 0;
 				}
 
 				.list_container_col {
 					border-bottom: 3px solid black;
+					padding: 0;
 				}
 
 				.list_head {
 					border-top: 3px solid black;
 					border-bottom: 3px solid black;
+					margin: 0;
+				}
+
+				.list_detail_box_row{
+					margin: 0;
+				}
+				
+				.list_detail_box_col{
+					padding: 0;
 				}
 
 				.list_data_row {
 					border-bottom: 1px solid lightgray;
+					margin: 0;
 				}
 
-				.list_data_row>div {
-					flex: 1;
-				}
 
 				.btns_container {
 					display: flex;
@@ -118,7 +138,8 @@
 				}
 
 				#ask_btn {
-					background-color: transparent;
+					width: 120px;
+					border-radius: 0;
 				}
 
 				#page_navi a {
@@ -127,6 +148,12 @@
 					text-decoration: none;
 					color: black;
 				}
+
+				#page_navi a:hover {
+					cursor: pointer;
+				}
+
+
 			</style>
 		</head>
 
@@ -187,7 +214,7 @@
 						</div>
 					</div>
 					<div class="btns_container" style="flex: 0.7; width: 100%;">
-						<button id="ask_btn" onclick="location.href='/qaboard/writeBoard.jsp'">문의하기</button>
+						<button id="ask_btn" class="btn btn-primary" onclick="location.href='/qboard/writeBoard.jsp'">글쓰기</button>
 					</div>
 					<div id="page_navi" class="page_container center" style="flex: 0.7; width: 100%;"></div>
 				</div>
@@ -222,17 +249,13 @@
 						let page_total_count = 0;
 						if (recordTotalCount % recordCountPerPage > 0) {
 							page_total_count = Math
-								.floor(recordTotalCount
-									/ recordCountPerPage) + 1;
+								.floor(recordTotalCount/ recordCountPerPage) + 1;
 						} else {
 							page_total_count = Math
-								.floor(recordTotalCount
-									/ recordCountPerPage);
+								.floor(recordTotalCount/ recordCountPerPage);
 						}
 
-						let startNavi = Math.floor((cpage - 1)
-							/ naviCountPerPage)
-							* naviCountPerPage + 1;
+						let startNavi = Math.floor((cpage - 1)/ naviCountPerPage)* naviCountPerPage + 1;
 
 						let endNavi = startNavi + naviCountPerPage - 1;
 						if (endNavi > page_total_count) {
@@ -248,6 +271,7 @@
 						if (endNavi == page_total_count) {
 							needNext = false;
 						}
+
 						//동적할당이기 때문에 그 전 작업을 지우는 게 필요함
 						$("#page_navi").empty(); 
 
