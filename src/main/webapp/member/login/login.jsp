@@ -80,19 +80,19 @@
 <body>
     <div class="container">
         <h1>Retro Stars 로그인</h1>
-        <form id="login-form" action="/login.members" method="post">
+        <form id="login-form" action="/login.member" method="post">
             <input type="text" name="id" id="id" placeholder="아이디" required>
             <input type="password" name="pw" id="password" placeholder="비밀번호" required>
             <button type="submit">로그인</button>
         </form>
-        <a href="/members/findID.jsp">아이디를 잊어버리셨나요?</a>
-        <a href="/members/realFindPassword.jsp">비밀번호를 잊어버리셨나요?</a>
+        <a href="/member/login/findId.jsp">아이디를 잊어버리셨나요?</a>
+        <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
         <div class="social-login">
-            <img src="/images/google_login.png" alt="Google">
-            <img src="/images/kakao_login.png" alt="Kakao">
-            <img src="/images/naver_login.png" alt="Line">
+            <img src="/image/google_login.png" alt="Google">
+            <img src="/image/kakao_login.png" alt="Kakao">
+            <img src="/image/naver_login.png" alt="Line">
         </div>
-        <a href="/members/register/oneCheck.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
+        <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

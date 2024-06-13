@@ -11,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.MemberDAO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -23,13 +26,35 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
+	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+		String cmd = request.getRequestURI();
+		MemberDAO memberDao = MemberDAO.getInstance();
+		
+		try {
+			// 로그인 기능.
+			if(cmd.equals("/login.member")) {
+				String id = request.getParameter("id");
+				String pw = request.getParameter("pw");
+				
+				boolean result = memberDao.loginId(id, pw);
+				if(result) {
+					HttpSession session = request.getSession();
+					session.setAttribute("loginId", id);
+				}
+				response.sendRedirect("/index.jsp");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("error.jsp");
+		}
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 
 		doGet(request, response);
 	}
