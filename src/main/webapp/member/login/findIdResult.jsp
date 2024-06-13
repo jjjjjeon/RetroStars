@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아이디 찾기</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>아이디 찾기 결과</title>
     <style>
         body {
             margin: 0;
@@ -81,43 +80,14 @@
         button:hover {
             background-color: #b20710;
         }
-        
-        .links {
-            margin-top: 20px;
-        }
-        
-        .links a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 12px;
-            display: block;
-            margin-top: 10px;
-        }
-        
-        .links a:hover {
-            text-decoration: underline;
-        }   
     </style>
 </head>
 <body>
     <div class="background"></div>
     <div class="container">
-        <h1>아이디 찾기</h1>
-        <form id="find-id-form" action="/findId" method="post">
-            <div class="input-group">
-                <label for="name">이름 입력</label>
-                <input type="text" id="name" name="name" placeholder="이름" required>
-            </div>
-            <div class="input-group">
-                <label for="email">이메일 주소 입력</label>
-                <input type="email" id="email" name="email" placeholder="이메일" required>
-            </div>
-            <button type="submit">확인</button>
-        </form>
-        <div class="links">
-            <a href="/members/realFindPassword.jsp">비밀번호 찾기</a>
-            <a href="#">고객센터 문의</a>
-        </div>
+        <h1>아이디 찾기 결과</h1>
+        <p>${message}</p>
+        <button onclick="location.href='/members/login.jsp'">로그인 페이지로 이동</button>
     </div>
 </body>
 </html>
