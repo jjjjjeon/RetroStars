@@ -65,6 +65,8 @@ public class MemberDAO {
             }
         }
     }
+    
+  
 
     /** 
      * @Method Name  : deleteMember 
