@@ -24,7 +24,7 @@
         align-items: center;
     }
     
-    /* div{border:1px solid red;} */
+    /*div{border:1px solid red;}*/
 
     .header{flex:0.5; width: 100%;}
 
@@ -36,15 +36,21 @@
 
     .user_value_box{display: flex; font-size: 17px; height: 42px;}
     .user_id{flex:1.5; display:flex; justify-content: start; text-indent: 5px;}
-    .user_id_value{flex:4;}
+    .user_id_value{flex:4;align-items: center}
     .user_level{flex:2; display:flex; justify-content: end;}
     .user_level_value{flex:2.5;text-indent: 5px; display:flex; justify-content: start;}
 
     .value_title{flex:2.5; display:flex; justify-content: start;text-indent: 5px;}
     .value_content{flex:7.5;}
-    .value_content1{flex:4;}
-    .value_content2{flex:3.5;}
+    .value_content1{flex:2.5;}
+    .value_content2{flex:5;}
+    .value_content3{flex:4.5;}
+    .value_content4{flex:3;}
+    .gender_value{display: flex;justify-content: start;align-items: center;} 
+    .gender_img{width: 40%; height: 90%;margin-bottom:10px;}
+     #update_btn{width:90%; height:90%;}
     
+    .rpg{background-image:url("/image/rpg_background.png"); background-size:100% 100%;}
     .rpg{height: 90%; width: 50%; display: flex; flex-direction: column; border:1px solid white; justify-content: center; align-items: center;}
     .rpg_title{flex:2; width: 100%; display: flex; align-items: center; font-size: 20px; font-weight: 700; text-indent: 20px;}
     .rpg_main_box{display:flex; width: 100%; flex:8;}
@@ -65,10 +71,11 @@
 
     .row{display: flex;}
 
-    .headertitle{width: 100%; display: flex; justify-content: center; align-items: center;}
-    .header_user_id{width: inline;}
+    .headertitle{width: 100%; display: flex; justify-content: center; align-items: center; font-size:25px;}
+    .header_user_id{width: inline; font-weight:600;}
 
     #basic_img{width: 80%; height: 80%;}
+    
     
 </style>
 
@@ -76,41 +83,57 @@
 <body>
     <div class="container">
         <div class="header row">
-            <div class="headertitle"><div class="header_user_id">ooo</div> &nbsp;님의 My page</div>
+            <div class="headertitle"><div class="header_user_id">${mydata.userId}</div> &nbsp;님의 My page</div>
         </div> 
         <div class="profilebox">
             <div class="profile">
                 <div class="main_profile">
                     <div class="profile_img">
-                        <img id="basic_img" src="profileBasicImg.jpg">
+                        <img id="basic_img" src="/image/profileBasicImg.jpg">
                     </div>
                     <div class="profile_data">
                         <div class="user_value_box">
                             <div class="user_id">ID : </div>
-                            <div class="user_id_value">IDdkfkskda</div>
+                            <div class="user_id_value">${mydata.userId}</div>
                             <div class="user_level">LEVEL</div>
-                            <div class="user_level_value">0</div>
+                            <div class="user_level_value">${mydata.userLevel}</div>
                         </div>
 
                         <div class="user_value_box">
                             <div class="user_name value_title">NAME : </div>
-                            <div class="user_name_value value_content">가상인</div>
+                            <div class="user_name_value value_content">${mydata.userName} ( ${mydata.userNickname} )</div>
                         </div>
 
                         <div class="user_value_box">
                             <div class="user_birth value_title">BRITH : </div>
-                            <div class="user_birth_value value_content1"> 00.06.13 </div>
-                            <div class="gender_value  value_content2">Female</div>
+                            <div class="user_birth_value value_content1"> ${birth} </div>
+                            <div class="gender_value  value_content2">
+                            	<c:choose>
+                            		<c:when test="${gender.equals('Male')}">
+                            			<img class="gender_img" src="/image/male.png">
+                            		</c:when>
+                            		<c:when test="${gender.equals('Male')}">
+                            			<img class="gender_img" src="/image/female.png">
+                            		</c:when>
+                            		<c:otherwise>
+                            			
+                            		</c:otherwise>
+                            	</c:choose>
+                            </div>
                         </div>
 
                         <div class="user_value_box">
                             <div class="user_email value_title">E-MAIL : </div>
-                            <div class="user_email_value value_content">asdfsdfsd@admin.com</div>
+                            <div class="user_email_value value_content"> ${mydata.userEmail} </div>
                         </div>
 
                         <div class="user_value_box">
                             <div class="user_phone value_title">PHONE : </div>
-                            <div class="user_phone_value value_content">010-1234-5678</div>
+                            <div class="user_phone_value value_content3"> ${mydata.userPhone} </div>
+                            <div class="user_phone_value value_content4"> 
+                            	<button type="button" class="btn btn-dark" id="update_btn">Update</button>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -142,5 +165,6 @@
             <button type="button" class="btn btn-dark" id="signout">회원 탈퇴</button>
         </div>
     </div>
+    <script></script>
 </body>
 </html>

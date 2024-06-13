@@ -26,179 +26,143 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
-        <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+    body {
+        background-color: #f0f0f0;
+        color: #333;
+        margin-bottom: 120px; /* Footer 높이 만큼의 여백을 추가 */
+    }
 
-        div {
-            border: 1px solid black;
-        }
+    .container {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        body {
-            background-color: black;
-        }
+    .boardName {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
-        .nav-link {
-            color: white !important;
-            /* margin-left: 20px; */
-        }
+    .title span {
+        font-size: 20px;
+        font-weight: bold;
+    }
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
+    .btn-write {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        margin-left: -600px;
+    }
 
+    .btn-write:hover {
+        background-color: #0056b3;
+        color: white;
+    }
 
-        /* notice영역 */
-        .container {
-            /* flex: 1; */
-            /* width: 200px; */
-            /* padding: 20px; */
-            background-color: antiquewhite;
-            display: flex;
-            flex-direction: column;
-            height: 1000px;
+    .form-search {
+        display: flex;
+        align-items: center;
+    }
 
+    .form-search input[type="search"] {
+        width: 300px;
+        margin-right: 10px;
+    }
 
-        }
+    .notiListItem {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+    }
 
-        .container .boardName {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 25px;
-            font-weight: bold;
-        }
+    .notiCategory {
+        flex: 1;
+        text-align: center;
+        font-weight: bold;
+    }
 
-        .container .title {
-            height: 80px;
-        }
+    .notiTitle {
+        flex: 5;
+        padding-left: 20px;
+    }
 
-        .title span {
-            float: left;
-            margin: 20px;
-            font-size: 20px;
-        }
+    .notiAdmin, .notiDate, .notiView {
+        flex: 2;
+        text-align: center;
+    }
 
-        .title form {
-            float: right;
-            margin: 20px;
-        }
+    .pagenavi {
+        text-align: center;
+        margin-top: 20px;
+    }
 
+    .footer {
+        width: 100%;
+        height: 120px;
+        background-color: #323232;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
 
-        .container .noticeContent {
-            flex: 7;
-            background-color: azure;
-        }
+    .leftfooter {
+        color: white;
+        font-weight: bold;
+        margin-top: 20px;
+    }
 
-        .notiListItem {
-            width: 100%;
-            height: 50px;
-            display: flex;
-        }
+    .rightfooter {
+        display: flex;
+        align-items: center;
+    }
 
-        .notiCategory {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .footerbox {
+        width: 1000px;
+        height: 100%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .notiTitle {
-            flex: 5;
-            display: flex;
-            align-items: center;
-            padding-left: 20px;
-        }
+    .iconbox {
+        display: flex;
+        align-items: center;
+    }
 
-        .notiAdmin {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .iconbox a {
+        margin: 0 10px;
+        font-size: 50px;
+        color: white;
+    }
 
-        .notiDate {
-            flex: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .coinbox {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+    }
 
-        .notiView {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .pagenavi {
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-
-
-
-
-        /* footer */
-        .footer {
-            width: 100%;
-            height: 120px;
-            background-color: #ef3a3a;
-        }
-
-        .leftfooter {
-            color: white;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .rightfooter {
-            display: flex;
-            align-items: center;
-
-        }
-
-        .footerbox {
-            width: 1000px;
-            height: 100%;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
-
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-
-        .coinbox {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
-
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left: 20px;
-        }
-    </style>
+    .coinbox img {
+        width: 120px;
+        height: 100px;
+        margin-left: 20px;
+    }
+</style>
 </head>
 <body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -261,7 +225,18 @@
         <div class="boardName">공지게시판</div>
         <div class="title">
             <span>전체</span>
+            
+            <button class="btn btn-primary btn-write">
+            <a href="/nboard/nBoardWrite.jsp" style="
+    			color: white;
+    			text-align: none;
+    			text-decoration-line: none;
+				">글 작성 
+			</a>
+            <i class="fas fa-pencil-alt"></i></button>
+
             <form class="d-flex" role="search">
+            	
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
