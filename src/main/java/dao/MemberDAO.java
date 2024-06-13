@@ -77,7 +77,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public int deleteMember(String id) throws Exception {
-    	String sql = "delete from member where user_id = ?";
+    	String sql = "delete from jinhyeok.member where user_id = ?";
     	try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
     		pstat.setString(1, id);
     		return pstat.executeUpdate();
@@ -96,7 +96,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public int addMember(MemberDTO dto) throws Exception {
-        String sql = "insert into member (user_id, user_pw, user_name, user_nickname, user_no, user_phone, user_email, user_join_date) values(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into jinhyeok.member (user_id, user_pw, user_name, user_nickname, user_no, user_phone, user_email, user_join_date) values(?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
         	pstat.setString(1, dto.getUserId());
