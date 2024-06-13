@@ -152,8 +152,47 @@
 
         .footer {
             width: 100%;
+            height: 120px;
+            background-color: #ef3a3a;
+        }
+        .leftfooter{
+        	color : white;
+        	font-weight : bold;
+        	margin-top: 20px;
+        }
+        .rightfooter {
+        	display: flex;
+        	align-items: center;
+    	
+    	}
+   		.footerbox {
+        	width: 1000px;
+        	height: 100%;
+        	margin: auto;
+        	display: flex;
+        	justify-content: space-between;
+        	align-items: center;
+    	}
+
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+    	.coinbox {
+        	display: flex;
+        	align-items: center;
+        	margin-left: 20px;
+    	}
+        .coinbox img {
+            width: 120px;
             height: 100px;
-            background-color: white;
+            margin-left : 20px;
         }
     </style>
 </head>
@@ -234,9 +273,24 @@
         </div>
 
     </div>
-    <div class="footer">
-		footer영역입니다.
-
+<div class="footer">
+        <div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
