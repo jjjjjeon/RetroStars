@@ -8,6 +8,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -66,8 +67,6 @@ public class MemberDAO {
         }
     }
     
-  
-
     /** 
      * @Method Name  : deleteMember 
      * @date : 2024. 6. 13. 
@@ -118,5 +117,47 @@ public class MemberDAO {
         }
         return result;
     }
+    /** 
+     * @Method Name  : mydata
+     * @date : 2024. 6. 13. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 마이페이지 내 개인정보 출력 기능.
+     * @param String id
+     * @return MemberDTO dto
+     * @throws Exception 
+     */ 
+    public MemberDTO mydata(String id) throws Exception{
+    	
+    	String sql = "select * from jinhyeok.member where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,id);
+    		try(ResultSet rs= pstat.executeQuery();){
+    			MemberDTO dto = null;
+    			while(rs.next()){
+    			String userId =rs.getString(1);
+    			String pw =rs.getString(2);
+    			String name =rs.getString(3);
+    			String nickName =rs.getString(4);
+    			String no =rs.getString(5);
+    			String phone =rs.getString(6);
+    			String email=rs.getString(7);
+    			Timestamp joinDate =rs.getTimestamp(8);
+    			String profile =rs.getString(9);
+    			String level =rs.getString(10);
+    			String admin =rs.getString(11);
+    			String black =rs.getString(12);
+    			String active =rs.getString(13);
+    			
+    			dto = new MemberDTO(userId, pw, name, nickName, no,phone, email, joinDate, profile, level, admin, black, active);
+    			}
+    			return dto;
+    		}
+    	}
+    	
+    }
+    
 
 }
