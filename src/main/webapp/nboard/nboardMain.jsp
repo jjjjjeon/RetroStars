@@ -114,7 +114,7 @@
     .footer {
         width: 100%;
         height: 120px;
-        background-color: #ef3a3a;
+        background-color: #323232;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -226,7 +226,14 @@
         <div class="title">
             <span>전체</span>
             
-            <button class="btn btn-primary btn-write">글 작성 <i class="fas fa-pencil-alt"></i></button>
+            <button class="btn btn-primary btn-write">
+            <a href="/nboard/nBoardWrite.jsp" style="
+    			color: white;
+    			text-align: none;
+    			text-decoration-line: none;
+				">글 작성 
+			</a>
+            <i class="fas fa-pencil-alt"></i></button>
 
             <form class="d-flex" role="search">
             	
