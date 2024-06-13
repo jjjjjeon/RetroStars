@@ -11,22 +11,22 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>아이디 생성</h1>
         <p>retro Starts 아이디를 만들어 주세요.</p>
-        <form action="/username.register" method="post">
+        <form action="/registerId.member" method="post">
             <div class="input-group">
-                <label for="username">아이디</label>
-                <input type="text" id="username" name="username" placeholder="아이디를 입력해주세요">
-                <p id="username-availability" class="availability-text">사용할 수 있는 아이디입니다.</p>
+                <label for="userId">아이디</label>
+                <input type="text" id="userId" name="userId" placeholder="아이디를 입력해주세요">
+                <p id="userId-availability" class="availability-text">사용할 수 있는 아이디입니다.</p>
             </div>
-            <button type="button" onclick="checkUsername()">중복확인</button>
+            <button type="button" onclick="checkUserId()">중복확인</button>
             <button type="submit">다음</button>
         </form>
     </div>
     <script>
-        function checkUsername() {
-            document.getElementById('username-availability').innerText = "사용할 수 있는 아이디입니다.";
+        function checkUserId() {
+            document.getElementById('userId-availability').innerText = "사용할 수 있는 아이디입니다.";
         }
     </script>
 </body>

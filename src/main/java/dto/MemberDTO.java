@@ -126,6 +126,18 @@ public class MemberDTO {
 		this.userBlack = userBlack;
 		this.userActive = userActive;
 	}
+	public MemberDTO(String userId, String userPw, String userName, String userNickname, String userNo,
+			String userPhone, String userEmail, Timestamp userJoinDate) {
+		super();
+		this.userId = userId;
+		this.userPw = userPw;
+		this.userName = userName;
+		this.userNickname = userNickname;
+		this.userNo = userNo;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userJoinDate = userJoinDate;
+	}
 	public MemberDTO() {
 		super();
 	}

@@ -11,24 +11,25 @@
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>기타 정보 입력</h1>
-        <form id="info-form" action="/additionalInfo.register" method="post">
+        <form id="info-form" action="/registerName.member" method="post">
             <div class="input-group">
                 <label for="name">이름:</label>
-                <input type="text" id="name" name="name" placeholder="이름" required>
+                <input type="text" id="userName" name="userName" placeholder="이름" required>
             </div>
             <div class="input-group">
-                <label for="birthdate">생년월일:</label>
-                <input type="date" id="birthdate" name="birthdate" required>
+                <label for="name">닉네임:</label>
+                <input type="text" id="userNickname" name="userNickname" placeholder="닉네임" required>
             </div>
             <div class="input-group">
-                <label for="gender">성별:</label>
-                <select id="gender" name="gender" required>
-                    <option value="male">남자</option>
-                    <option value="female">여자</option>
-                </select>
+                <label for="name">주민등록번호:</label>
+                <input type="text" id="userNo" name="userNo" placeholder="주민등록번호" required>
             </div>
+            <div class="input-group">
+                <label for="name">폰 번호:</label>
+                <input type="text" id="userPhone" name="userPhone" placeholder="폰 번호">
+            </div>            
             <button type="submit">다음</button>
         </form>
     </div>
