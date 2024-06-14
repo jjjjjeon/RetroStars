@@ -56,7 +56,7 @@ public class QBoardController extends HttpServlet {
 	            int recordTotalCount = boarddao.getRecordCount();
 	            
 	            String strcategory=request.getParameter("category");
-	            System.out.println(strcategory);
+	            //System.out.println(strcategory);
 	            ArrayList<QBoardDTO> list=null;
 	            
 	            if(strcategory.equals("전체")) {
