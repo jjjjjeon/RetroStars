@@ -248,13 +248,74 @@
                 <div class="notiAdmin">관리자</div>
                 <div class="notiDate">2024-06-12</div>
                 <div class="notiView">100</div>
-
             </div>
+
+            <c:forEach var ="dto" items="${list}">
+            	<div class = "notiListContent">
+                 	<div class="notiCategory">공지</div>
+                	<div class="notiTitle">${dto.nBoardTitle }</div>
+                	<div class="notiAdmin">${dto.userId }</div>
+                	<div class="notiDate">${dto.nBoardDate }</div>
+                	<div class="notiView">${dto.nBoardView }</div>
+            	
+            	</div>
+            </c:forEach>
         </div>
-        <div class="pagenavi">1 2 3 4 5 6 7 8 9 10</div>
+        <div class="pagenavi" id="navi"></div>
     </div>
 
+	<script>
+      
+            let cpage = ${cpage}; // 현재 페이지
+            let recordTotalCount = ${record_total_count}; // 전체 글의 개수
+            let recordCountPerPage = ${record_count_per_page}; // 한 페이지에 보여줄 게시물 수
+            let naviCountPerPage = ${navi_count_per_page}; // 페이지네비게이터 몇 개씩 보여줄 것인지
 
+			
+           // 필요한 전체 페이지 개수 = 게시글의 개수 / 한 페이지당 보여줄 게시글 + 1
+           let pageTotalCount = 0;
+ 		   if(recordTotalCount % recordCountPerPage >0) {
+ 			   pageTotalCount = Math.floor(recordTotalCount / recordCountPerPage) + 1;
+ 			   // +1 해주면 15페이지 -> 나머지 게시글들을 다 보여줄 수 있음
+ 		   } else {
+ 			   pageTotalCount = Math.floor(recordTotalCount / recordCountPerPage);
+ 			   // 전체 글의 개수가 140개라면 14페이지 
+ 		   }
+                
+			// 네비게이터 시작 값
+                let startNavi = Math.floor((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
+            // 네비게이터 끝 값 
+			let endNavi = startNavi + naviCountPerPage - 1;
+			
+            // 네비게이터의 끝 값은 pageTotalCount보다 클 수 없음.
+                if (endNavi > pageTotalCount) {endNavi = pageTotalCount};
+
+                let needPrev = true;
+                let needNext = true;
+                
+                //화살표 필요없을 때
+                if(startNavi==1){needPrev=false}
+                if(endNavi==pageTotalCount){needNext=false}
+
+                //출력
+         		// 왼쪽 화살표가 필요한 상황일때
+                if (needPrev) {
+                	let needPreva=$("<a>").attr("href","/list.nboard?cpage="+(startNavi - 1)).html(" < ");
+                	$("#navi").append(needPreva);
+                }
+
+                for (let i = startNavi; i <= endNavi; i++) {
+                   let cpagea=$("<a>").attr("href","/list.nboard?cpage="+i).html(i+"&nbsp");
+                   $("#navi").append(cpagea);
+                }
+
+                if (needNext) {
+                	let needNexta=$("<a>").attr("href","/list.nboard?cpage="+(endNavi + 1)).html(" > ");
+                	$("#navi").append(needNexta);
+                }
+
+     
+    </script>
 
 
     <div class="footer">
