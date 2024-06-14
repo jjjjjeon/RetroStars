@@ -11,6 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.GBoardDAO;
+import dao.MemberDAO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -25,11 +29,24 @@ import javax.servlet.http.HttpServletResponse;
 public class GBoardController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		HttpSession session = request.getSession();
+		String cmd = request.getRequestURI();
+		GBoardDAO gBoardDao = GBoardDAO.getInstance();
+		
+		try {
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("error.jsp");
+		}
+		
 	}
 
 }
