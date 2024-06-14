@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -170,7 +171,7 @@
             <div class="tip_main board_main">t_main</div>
         </div>
         <div class="footer">
-            <div class="join_date">22.01.01 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
+            <div class="join_date"><fmt:formatDate value="${mydata.userJoinDate}" pattern="yy.MM.dd" /> 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
             <button type="button" class="btn btn-dark" id="memberOut">회원 탈퇴</button>
         </div>
     </div>
