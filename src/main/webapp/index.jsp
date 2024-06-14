@@ -259,7 +259,7 @@
                             게시판
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
                             <li><a class="dropdown-item" href="#">자유게시판</a></li>
                             <li><a class="dropdown-item" href="#">공략게시판</a></li>
                             <li><a class="dropdown-item" href="#">QA게시판</a></li>

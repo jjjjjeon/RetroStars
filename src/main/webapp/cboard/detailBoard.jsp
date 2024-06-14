@@ -218,6 +218,30 @@
         font-weight: bold;
         margin-right: 10px;
     }
+    
+    #corYesBtn{
+    	width: 120px;
+        height: 45px;
+        background: #3392ff;
+        color: #fff;
+        border: 0;
+        font-size: 13px;
+        font-weight: bold;
+        margin-right: 10px;
+        display : none;
+    }
+    
+    #corNoBtn{
+    	width: 120px;
+        height: 45px;
+        background: gray;
+        color: #fff;
+        border: 0;
+        font-size: 13px;
+        font-weight: bold;
+        margin-right: 10px;
+        display : none;
+    }
 
     .commentBox {
         position: relative;
@@ -371,6 +395,8 @@
                 <button type="button" id="delBtn">삭제</button>
                 <button type="button" id="corBtn">수정</button>
                 <button type="button" id="writeBtn">글쓰기</button>
+                <button type="button" id="corNoBtn">수정취소</button>
+                <button type="button" id="corYesBtn">수정완료</button>
             </div>
         </div>
     </div>
@@ -436,7 +462,19 @@
     	$("#goListBtn").on("click", function(){
     		location.href = "/list.cboard?category=${category}&cpage=${cpage}";
     	});
-    
+    	
+    	$("#corBtn").on("click", function(){
+    		$(".fileOn").css("display", "none");
+    		$("#goListBtn").css("display", "none");
+    		$("#delBtn").css("display", "none");
+    		$("#corBtn").css("display", "none");
+    		$("#writeBtn").css("display", "none");
+    		$("#corNoBtn").css("display", "block");
+    		$("#corYesBtn").css("display", "block");
+    		
+    		
+    	});
+    	
     </script>
 </body>
 </html>
