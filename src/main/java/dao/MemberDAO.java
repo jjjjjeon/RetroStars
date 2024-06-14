@@ -9,11 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import dto.CBoardBookmarkDTO;
 import dto.MemberDTO;
 
 /**
@@ -158,6 +161,90 @@ public class MemberDAO {
     	}
     	
     }
+    
+    /** 
+     * @Method Name  : selectCBoradCate1
+     * @date : 2024. 6. 14. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 마이페이지 내 자유게시판 북마크 출력
+     * @param String id
+     * @return List<CBoardBookmarkDTO>
+     * @throws Exception 
+     */ 
+    
+    public List<CBoardBookmarkDTO> selectCBoradCate1(String id) throws Exception {
+
+		String sql = "select "
+				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "from "
+				+ "gyeongho.c_board c right outer join gyeongho.bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "where "
+				+ "c.c_board_category = 1 and b.user_id = ? "
+				+ "order by 5 desc";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				) {
+			pstat.setString(1,id);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<CBoardBookmarkDTO> list = new ArrayList<>();
+				while (rs.next()) {
+					String userId = rs.getString(1);
+					int category = rs.getInt(2); 
+					String title = rs.getString(3);
+					String writerId = rs.getString(4);
+					Timestamp date = rs.getTimestamp(5);
+					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
+					}
+				return list;
+			}
+		}
+
+	}
+    
+    /** 
+     * @Method Name  : selectCBoradCate2
+     * @date : 2024. 6. 14. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 마이페이지 내 공략 게시판 북마크 출력
+     * @param String id
+     * @return List<CBoardBookmarkDTO>
+     * @throws Exception 
+     */ 
+    
+    public List<CBoardBookmarkDTO> selectCBoradCate2(String id) throws Exception {
+
+		String sql = "select "
+				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "from "
+				+ "gyeongho.c_board c right outer join gyeongho.bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "where "
+				+ "c.c_board_category = 2 and b.user_id = ? "
+				+ "order by 5 desc";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				) {
+			pstat.setString(1,id);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<CBoardBookmarkDTO> list = new ArrayList<>();
+				while (rs.next()) {
+					String userId = rs.getString(1);
+					int category = rs.getInt(2); 
+					String title = rs.getString(3);
+					String writerId = rs.getString(4);
+					Timestamp date = rs.getTimestamp(5);
+					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
+					}
+				return list;
+			}
+		}
+
+	}
     
 
 }
