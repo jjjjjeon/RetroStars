@@ -69,7 +69,7 @@
 	
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
-    .board_main{flex:8; width: 90%;border:1px solid white;}
+    .board_main{flex:8; width: 90%;border:1px solid white; overflow-y:auto;}
 
     .tipboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
 
@@ -81,6 +81,11 @@
     .header_user_id{width: inline; font-weight:600;}
 
     #basic_img{width: 80%; height: 80%;}
+    
+    .board_bookmark_row{display:flex;}
+    .board_bookmark_title{flex:6;}
+    .board_bookmark_writer{flex:2;}
+    .board_bookmark_date{flex:2;}
     
     
 </style>
@@ -164,11 +169,26 @@
         </div>
         <div class="freeboard">
             <div class="free_title board_title">Community Board (자유)</div>
-            <div class="free_main board_main">f_main</div>
+            <div class="free_main board_main">
+            	<c:forEach var="listCategory1" items="${listCategory1}">
+							<div class="free_row board_bookmark_row">
+								<div class="free_title board_bookmark_title">${listCategory1.cBoardTitle}</div>
+								<div class="free_writer board_bookmark_writer">${listCategory1.writerId}</div>
+								<fmt:formatDate value="${listCategory1.cBoardDate}" pattern="yy.MM.dd" />
+							</div>
+				</c:forEach>
+			</div>
         </div>
         <div class="tipboard">
             <div class="tip_title board_title">Community Board (공략)</div>
-            <div class="tip_main board_main">t_main</div>
+            <div class="tip_main board_main">
+            	<c:forEach var="listCategory2" items="${listCategory2}">
+							<div class="tip_row board_bookmark_row">
+								<div class="tip_title board_bookmark_title">${listCategory2.cBoardTitle}</div>
+								<div class="tip_writer board_bookmark_writer">${listCategory2.writerId}</div>
+								<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
+							</div>
+				</c:forEach></div>
         </div>
         <div class="footer">
             <div class="join_date"><fmt:formatDate value="${mydata.userJoinDate}" pattern="yy.MM.dd" /> 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
@@ -176,6 +196,7 @@
         </div>
     </div>
     <script>
+
     $("#memberOut").on("click",function(){
     	Swal.fire({
 			  title: "Are you sure?",
