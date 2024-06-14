@@ -54,11 +54,18 @@ public class QBoardController extends HttpServlet {
 				int recordCountPerPage = Static.QBOARD_RECOD_COUNT_PER_PAGE;
 	            int naviCountPerPage = Static.QBOARD_NAVI_COUNT_PER_PAGE;
 	            int recordTotalCount = boarddao.getRecordCount();
+	            System.out.println("1. 페이지정보" + cpage);
 	            
 	            String strcategory=request.getParameter("category");
-	            //System.out.println(strcategory);
-	            ArrayList<QBoardDTO> list=null;
+	            System.out.println("2.카테고리정보" +strcategory);
 	            
+	            //String searchBy=request.getParameter("searchBy");
+	            //System.out.println("3. 검색분류" +searchBy);
+	            
+	            ///String searchDetail=request.getParameter("searchDetail");
+	            //System.out.println("4. 검색내용" +searchDetail);
+	            
+	            ArrayList<QBoardDTO> list=null;
 	            if(strcategory.equals("전체")) {
 	            	list=boarddao.selectAll(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
 									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE);
@@ -72,7 +79,7 @@ public class QBoardController extends HttpServlet {
 	            }
 				
 				request.setAttribute("list", list);
-				String json = g.toJson(new Object[] { cpage, recordCountPerPage, naviCountPerPage, recordTotalCount, list });
+				String json = g.toJson(new Object[] { cpage,recordCountPerPage, naviCountPerPage, recordTotalCount, list });
 		        response.getWriter().write(json);
 			}
 		}catch(Exception e) {

@@ -16,26 +16,26 @@
 				integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 				crossorigin="anonymous"></script>
 			<!-- Google Fonts -->
-    		<link rel="preconnect" href="https://fonts.googleapis.com">
-    		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
-        	rel="stylesheet">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+				rel="stylesheet">
 			<style>
-			
-				body{
+				body {
 					background-image: url('/image/background.png');
 				}
-				
-				nav{
+
+				nav {
 					background-color: #323232;
-				
+
 				}
-				
-				nav{
+
+				nav {
 					margin-bottom: 50px;
 				}
-				
-				
+
+
 				* {
 					box-sizing: border-box;
 				}
@@ -51,9 +51,9 @@
 				.col {
 					display: flex;
 					flex-direction: column;
-					color:white;
+					color: white;
 				}
-							
+
 
 				.center {
 					display: flex;
@@ -66,7 +66,7 @@
 					height: 800px;
 					margin: auto;
 					background-color: #323232;
-					
+
 				}
 
 				.navi_container {
@@ -111,7 +111,7 @@
 					text-align: center;
 					border: none;
 					background-color: #323232;
-					color:white;
+					color: white;
 				}
 
 				.dropdown-toggle {
@@ -173,115 +173,122 @@
 				#page_navi a:hover {
 					cursor: pointer;
 				}
-				
-		.footer{
-			margin-top:50px;
-		}
-				
-        .footer {
-            width: 100%;
-            background-color: #323232;
-            postion:fixed; 
-            bottom:0; 
-            height: 150px;
-            
-        }
-        .leftfooter{
-        	color : white;
-        	font-weight : bold;
-        	margin-top: 20px;
-        }
-        .rightfooter {
-        	display: flex;
-        	align-items: center;
-    	
-    	}
-   		.footerbox {
-        	width: 1000px;
-        	height: 100%;
-        	margin: auto;
-        	display: flex;
-        	justify-content: space-between;
-        	align-items: center;    
-    	}
 
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
+				.footer {
+					margin-top: 50px;
+				}
 
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-    	.coinbox {
-        	display: flex;
-        	align-items: center;
-        	margin-left: 20px;
-    	}
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left : 20px;
-        }
+				.footer {
+					width: 100%;
+					background-color: #323232;
+					postion: fixed;
+					bottom: 0;
+					height: 150px;
+
+				}
+
+				.leftfooter {
+					color: white;
+					font-weight: bold;
+					margin-top: 20px;
+				}
+
+				.rightfooter {
+					display: flex;
+					align-items: center;
+
+				}
+
+				.footerbox {
+					width: 1000px;
+					height: 100%;
+					margin: auto;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+
+				.iconbox {
+					display: flex;
+					align-items: center;
+				}
+
+				.iconbox a {
+					margin: 0 10px;
+					font-size: 50px;
+					color: white;
+				}
+
+				.coinbox {
+					display: flex;
+					align-items: center;
+					margin-left: 20px;
+				}
+
+				.coinbox img {
+					width: 120px;
+					height: 100px;
+					margin-left: 20px;
+				}
 			</style>
 		</head>
 
 
 		<body>
-		 <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">ICON</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
-                            게임
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
-                            게시판
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
-                    </li>
-                
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">ICON</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+									style="color:white">
+									게임
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									<li><a class="dropdown-item" href="#">game1</a></li>
+									<li><a class="dropdown-item" href="#">game2</a></li>
+									<li><a class="dropdown-item" href="#">game3</a></li>
+									<li><a class="dropdown-item" href="#">game4</a></li>
+									<li><a class="dropdown-item" href="#">game5</a></li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+									style="color:white">
+									게시판
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									<li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
+									<li><a class="dropdown-item" href="#">자유게시판</a></li>
+									<li><a class="dropdown-item" href="#">공략게시판</a></li>
+									<li><a class="dropdown-item" href="#">QA게시판</a></li>
+									<li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+									<li><a class="dropdown-item" href="#">공지게시판</a></li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link">랭킹</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">마이페이지</a>
+							</li>
 
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+						</ul>
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 			<div class="container col center">
 				<div class="col1 center" style="flex: 1; width: 100%;">Q&Apage</div>
 				<div class="col2 col" style="flex: 9; width: 100%;">
@@ -342,32 +349,33 @@
 					<div id="page_navi" class="page_container center" style="flex: 0.7; width: 100%;"></div>
 				</div>
 			</div>
-<div class="footer">
-        <div class="footerbox">
-            <div class="leftfooter">
-                <p>회사명: 팀별빛</p>
-                <p>전화: 02-1234-5678</p>
-                <p>이메일: info@example.com</p>
-            </div>
-            <div class="rightfooter">
-                <div class="iconbox">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="coinbox">
-                    <img src="/image/coin.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
+			<div class="footer">
+				<div class="footerbox">
+					<div class="leftfooter">
+						<p>회사명: 팀별빛</p>
+						<p>전화: 02-1234-5678</p>
+						<p>이메일: info@example.com</p>
+					</div>
+					<div class="rightfooter">
+						<div class="iconbox">
+							<a href="#"><i class="fab fa-facebook"></i></a>
+							<a href="#"><i class="fab fa-instagram"></i></a>
+							<a href="#"><i class="fab fa-youtube"></i></a>
+						</div>
+						<div class="coinbox">
+							<img src="/image/coin.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
 			<script>
 				let navi="전체";
+				let page=1;
+				
 			
 				// 페이지 로드 시 첫 페이지 데이터 로드
 				$(document).ready(function () {
-					loadData(1);
+					loadData(page);
 				});
 				
 
@@ -383,24 +391,60 @@
 						e.preventDefault();
 						navi = $(this).html();
 						console.log(navi);
-						loadData(1);
+						loadData(page);
 				});
+
+				//검색 종류 클릭 시 클릭 이벤트로 데이터 전달
+				/*$(document).on('click', '.dropdown-item', function (e) {
+						//엔터로 입력
+						$("#search_input").on('keydown', function(e){
+							if(e.key=="Enter"){
+								e.preventDefault();
+								search = $(".dropdown-toggle").text();
+								page=1;
+								loadData(page,navi,search,searchD);
+							}
+						})
+	
+						//이미지 클릭할 때
+						$('.fa-magnifying-glass').on('click', function () {
+							e.preventDefault();
+							search = $(".dropdown-toggle").text();
+							page=1;
+							loadData(page,navi,search,searchD);
+						})
+				});*/
+
+				//드랍다운을 눌렀을 때는 무조건 인풋을 입력하기위해 인풋이 비었는지 체크하는 함수
+				function performSearch() {
+					if ($("#search_input").val() === "") {
+						alert("검색어를 입력하세요.");
+						return false;
+
+					}
+				}
+
 
 				function loadData(page) {
 					$.ajax({
 						url: "/select.qboard",
-						type: "POST",
+						type: "GET",
 						dataType: "json",
 						data: {
 							cpage: page,
 							category: navi
+							// searchBy: search,
+							// searchDetail:$("#search_input").val()
 						}
 					}).done(function (data) {
 						let cpage = data[0];
+						//let category = data[1];
+						//console.log(category);
 						let recordCountPerPage = data[1];
 						let naviCountPerPage = data[2];
 						let recordTotalCount = data[3];
 						let list = data[4];
+						
 
 						let page_total_count = 0;
 						if (recordTotalCount % recordCountPerPage > 0) {
@@ -467,18 +511,13 @@
 					});
 				};
 
-				//드랍다운 선택시 카테고리 텍스트 변경 이벤트
-				document.addEventListener("DOMContentLoaded", function () {
-					// 모든 드롭다운 항목에 이벤트 리스너 추가
-					let dropdownItems = document.querySelectorAll('.dropdown-item');
-					dropdownItems.forEach(function (item) {
-						item.addEventListener('click', function (event) {
-							// 버튼 텍스트 변경
-							let button = document.querySelector('.dropdown-toggle');
-							button.textContent = event.target.textContent;
-						});
-					});
+				// 드롭다운 선택 시 버튼 텍스트 변경 이벤트
+				$(document).on('click', '.dropdown-item', function (event) {
+					let button = $(this).closest('.dropdown').find('.dropdown-toggle');
+					button.text($(this).text());
 				});
+
+
 			</script>
 
 		</body>

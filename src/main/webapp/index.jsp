@@ -262,7 +262,7 @@
                             <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
                             <li><a class="dropdown-item" href="#">자유게시판</a></li>
                             <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/qboard/mainBoard.jsp">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
                             <li><a class="dropdown-item" href="#">공지게시판</a></li>
                         </ul>

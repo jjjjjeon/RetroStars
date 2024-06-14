@@ -177,7 +177,27 @@ public class QBoardDAO {
 			}	
 		}
 	}
+	
+	/*//더미데이터만들기
+	public static void main(String[] args) throws SQLException {
+		String url="jdbc:oracle:thin:@localhost:1521:xe";
+		String id="star";
+		String pw="star";
 
+		String sql="insert into q_board values(q_board_sequence.nextval,?,3,?,?,sysdate,'N','N')";
+
+		try(Connection con= DriverManager.getConnection(url, id, pw);
+				PreparedStatement pstat=con.prepareStatement(sql);){
+			for(int i=1; i<10; i++) {
+				pstat.setString(1, "nickname"+(i+100));
+				pstat.setString(2, "title"+(i+100));
+				pstat.setString(3, "content"+(i+100));
+				pstat.addBatch();
+			}
+			pstat.executeBatch();
+		}
+	}*/
+	
 
 
 
