@@ -230,18 +230,22 @@
             공지게시판
         </div>
 
-        <div class="form-group">
+		<form action="/write.nboard" method="post">
+		       <div class="form-group">
             <label for="title">제목</label>
-            <input type="text" id="title" name="title" placeholder="글 제목을 입력하세요">
+            <input type="text" id="nBoardTitle" name="title" placeholder="글 제목을 입력하세요">
         </div>
         <div class="form-group">
             <label for="contents">내용</label>
-            <textarea id="contents" name="contents" placeholder="글 내용을 입력하세요"></textarea>
+            <textarea id="nBoardContent" name="contents" placeholder="글 내용을 입력하세요"></textarea>
         </div>
         <div class="form-actions">
-            <a href="/list.board"><button type="button">목록으로</button></a>
-            <button type="submit">작성 완료</button>
+            <a href="/list.nboard"><button type="button">목록으로</button></a>
+            <button id="submit" type="submit">작성 완료</button>
         </div>
+		</form>
+		
+ 
     </div>
         <div class="footer">
         <div class="footerbox">
@@ -262,7 +266,9 @@
             </div>
         </div>
     </div>
-    
+	<script>
+	
+	</script>
 </body>
 
 </html>
