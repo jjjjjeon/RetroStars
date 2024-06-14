@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.MemberDAO;
+import dto.CBoardBookmarkDTO;
 import dto.MemberDTO;
 
 /**
@@ -62,6 +64,7 @@ public class MemberController extends HttpServlet {
 			if(cmd.equals("/logout.member")) {
 				session = request.getSession();
 				session.invalidate();
+				System.out.println("로그아웃 성공");
 				response.sendRedirect("/index.jsp");
 			}
 			
@@ -138,7 +141,9 @@ public class MemberController extends HttpServlet {
 
                 session.setAttribute("kakaoId", kakaoId);
                 session.setAttribute("nickname", nickname);
-
+                MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
+                memberDao.addMember(addMember);
+                System.out.println("카카오 로그인 성공");
                 response.sendRedirect("/index.jsp");
 			}
 			
@@ -148,6 +153,7 @@ public class MemberController extends HttpServlet {
 				String id = (String) session.getAttribute("loginId");
 				
 				MemberDTO mydata = memberDao.mydata(id);
+				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
 				String genderCode = mydata.getUserNo().substring(7,8);
 				String gender;
@@ -157,10 +163,20 @@ public class MemberController extends HttpServlet {
 					gender="Female";
 				}else {gender="None";}
 				
+				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
+				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
+				int count1 = listCategory1.size();
+				int count2 = listCategory2.size();
+				
 				request.setAttribute("birth", birth);
 				request.setAttribute("gender", gender);
 				request.setAttribute("mydata", mydata);
-				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);
+				request.setAttribute("listCategory1", listCategory1);
+				request.setAttribute("listCategory2", listCategory2);
+				request.setAttribute("count1", count1);
+				request.setAttribute("count2", count2);
+				
+				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				
 			}
 			

@@ -138,6 +138,12 @@ public class MemberDTO {
 		this.userEmail = userEmail;
 		this.userJoinDate = userJoinDate;
 	}
+	public MemberDTO(String userId, String userNickname, Timestamp userJoinDate) {
+		super();
+		this.userId = userId;
+		this.userNickname = userNickname;
+		this.userJoinDate = userJoinDate;
+	}
 	public MemberDTO() {
 		super();
 	}
