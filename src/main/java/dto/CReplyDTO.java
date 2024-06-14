@@ -5,15 +5,62 @@
  */
 package dto;
 
-/**
- * Description : 클래스에 대한 설명을 입력해주세요.
- * Date : 2024. 6. 12.
- * History :
- *  - 작성자 : Jin, 날짜 : 2024. 6. 12., 설명 : 최초작성
- *
- * @author : Jin 
- * @version 1.0 
- */
-public class CReplyDTO {
+import java.sql.Timestamp;
 
+public class CReplyDTO {
+	private int cReplySeq;
+	private int cBoardSeq;
+	private String userId;
+	private String cReplyContent;
+	private Timestamp cReplyDate;
+	private int cReplyReply;
+	public int getcReplySeq() {
+		return cReplySeq;
+	}
+	public void setcReplySeq(int cReplySeq) {
+		this.cReplySeq = cReplySeq;
+	}
+	public int getcBoardSeq() {
+		return cBoardSeq;
+	}
+	public void setcBoardSeq(int cBoardSeq) {
+		this.cBoardSeq = cBoardSeq;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getcReplyContent() {
+		return cReplyContent;
+	}
+	public void setcReplyContent(String cReplyContent) {
+		this.cReplyContent = cReplyContent;
+	}
+	public Timestamp getcReplyDate() {
+		return cReplyDate;
+	}
+	public void setcReplyDate(Timestamp cReplyDate) {
+		this.cReplyDate = cReplyDate;
+	}
+	public int getcReplyReply() {
+		return cReplyReply;
+	}
+	public void setcReplyReply(int cReplyReply) {
+		this.cReplyReply = cReplyReply;
+	}
+	public CReplyDTO() {
+		super();
+	}
+	public CReplyDTO(int cReplySeq, int cBoardSeq, String userId, String cReplyContent, Timestamp cReplyDate,
+			int cReplyReply) {
+		super();
+		this.cReplySeq = cReplySeq;
+		this.cBoardSeq = cBoardSeq;
+		this.userId = userId;
+		this.cReplyContent = cReplyContent;
+		this.cReplyDate = cReplyDate;
+		this.cReplyReply = cReplyReply;
+	}
 }
