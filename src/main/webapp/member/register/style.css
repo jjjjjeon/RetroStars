@@ -1,13 +1,55 @@
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Georgia', serif;
-    background-color: #f4f4f4;
-}
+		body{
+			   font-family: 'Georgia', serif;
+               background-image: url('/image/background.png');
+               background-position: center;
+               display: flex;
+               height : 100vh;
+               justify-content: center;
+		       align-items: center;
+            }
+		nav{
+               background-color: #323232;
+            
+            }
+
+        .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
+        }
+        .rightfooter {
+           display: flex;
+           align-items: center;       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
+
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }	
 
 .container {
     background: white;
@@ -16,6 +58,7 @@ body {
     width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    color : black;
 }
 
 .logo {
@@ -26,11 +69,12 @@ body {
 h1 {
     font-size: 32px;
     margin-bottom: 20px;
+    color : black;
 }
 
 p {
     font-size: 16px;
-    color: #333;
+    color: black;
     margin-bottom: 20px;
 }
 
