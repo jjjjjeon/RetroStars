@@ -9,17 +9,6 @@
     <title>회원가입 - 약관 동의</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-
         .container {
             background: white;
             padding: 40px;
@@ -27,6 +16,7 @@
             width: 400px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+      
         }
 
         .logo {

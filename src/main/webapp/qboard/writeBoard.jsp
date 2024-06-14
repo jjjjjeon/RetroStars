@@ -16,13 +16,15 @@
 				crossorigin="anonymous"></script>
 
 			<style>
+				
+
 				* {
 					box-sizing: border-box;
 				}
 
-				/*div {
+				div {
 					border: 1px solid black;
-				}*/
+				}
 
 				.row {
 					display: flex;

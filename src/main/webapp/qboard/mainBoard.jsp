@@ -9,16 +9,33 @@
 			<title>Q&Apage</title>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<script src="https://kit.fontawesome.com/5af4c0ec93.js" crossorigin="anonymous"></script>
-			<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+				integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+				crossorigin="anonymous">
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+				crossorigin="anonymous"></script>
+			<!-- Google Fonts -->
+    		<link rel="preconnect" href="https://fonts.googleapis.com">
+    		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        	rel="stylesheet">
 			<style>
+			
+				body{
+					background-image: url('/image/background.png');
+				}
+				
+				nav{
+					background-color: #323232;
+				
+				}
+				
+				nav{
+					margin-bottom: 50px;
+				}
+				
+				
 				* {
 					box-sizing: border-box;
 				}
@@ -34,7 +51,9 @@
 				.col {
 					display: flex;
 					flex-direction: column;
+					color:white;
 				}
+							
 
 				.center {
 					display: flex;
@@ -46,6 +65,8 @@
 					width: 1100px;
 					height: 800px;
 					margin: auto;
+					background-color: #323232;
+					
 				}
 
 				.navi_container {
@@ -55,12 +76,12 @@
 				}
 
 				.navi_container>div:hover {
-					border-bottom: 2px solid black;
+					border-bottom: 2px solid white;
 				}
 
 				.navi_container a {
 					text-decoration: none;
-					color: black;
+					color: white;
 				}
 
 				.search_container {
@@ -74,13 +95,14 @@
 					align-items: flex-end;
 					justify-content: right;
 				}
+
 				.search_bar {
 					padding-bottom: 2px;
 					display: flex;
 					align-items: center;
 					width: 220px;
 					height: 35px;
-					border-bottom: 2px solid black;
+					border-bottom: 2px solid white;
 				}
 
 				.search_bar>#search_input {
@@ -88,11 +110,13 @@
 					height: 100%;
 					text-align: center;
 					border: none;
+					background-color: #323232;
+					color:white;
 				}
 
-				.dropdown-toggle{
-    				height: 35px;
-    				border-radius: 0;
+				.dropdown-toggle {
+					height: 35px;
+					border-radius: 0;
 				}
 
 				.list_container_row {
@@ -102,21 +126,21 @@
 				}
 
 				.list_container_col {
-					border-bottom: 3px solid black;
+					border-bottom: 3px solid white;
 					padding: 0;
 				}
 
 				.list_head {
-					border-top: 3px solid black;
-					border-bottom: 3px solid black;
+					border-top: 3px solid white;
+					border-bottom: 3px solid white;
 					margin: 0;
 				}
 
-				.list_detail_box_row{
+				.list_detail_box_row {
 					margin: 0;
 				}
-				
-				.list_detail_box_col{
+
+				.list_detail_box_col {
 					padding: 0;
 				}
 
@@ -143,51 +167,149 @@
 					display: inline-block;
 					margin-right: 5px;
 					text-decoration: none;
-					color: black;
+					color: white;
 				}
 
 				#page_navi a:hover {
 					cursor: pointer;
 				}
+				
+		.footer{
+			margin-top:50px;
+		}
+				
+        .footer {
+            width: 100%;
+            background-color: #323232;
+            postion:fixed; 
+            bottom:0; 
+            height: 150px;
+            
+        }
+        .leftfooter{
+        	color : white;
+        	font-weight : bold;
+        	margin-top: 20px;
+        }
+        .rightfooter {
+        	display: flex;
+        	align-items: center;
+    	
+    	}
+   		.footerbox {
+        	width: 1000px;
+        	height: 100%;
+        	margin: auto;
+        	display: flex;
+        	justify-content: space-between;
+        	align-items: center;    
+    	}
 
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
 
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+    	.coinbox {
+        	display: flex;
+        	align-items: center;
+        	margin-left: 20px;
+    	}
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }
 			</style>
 		</head>
 
 
 		<body>
+		 <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ICON</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">마이페이지</a>
+                    </li>
+                
+
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 			<div class="container col center">
 				<div class="col1 center" style="flex: 1; width: 100%;">Q&Apage</div>
 				<div class="col2 col" style="flex: 9; width: 100%;">
 					<div class="navi_container row" style="flex: 0.7; width: 100%;">
 						<div class="navi_total center" style="flex: 1;">
-							<a href="" data>전체</a>
+							<a href="" class="naviAn" data-naviD="전체">전체</a>
 						</div>
 						<div class="navi_game center" style="flex: 1;">
-							<a href="">게임문의</a>
+							<a href="" class="naviAn" data-naviD="게임문의">게임문의</a>
 						</div>
 						<div class="navi_collaboration center" style="flex: 1;">
-							<a href="">제휴문의</a>
+							<a href="" class="naviAn" data-naviD="제휴문의">제휴문의</a>
 						</div>
 						<div class="navi_etc center" style="flex: 1;">
-							<a href="">기타문의</a>
+							<a href="" class="naviAn" data-naviD="기타문의">기타문의</a>
 						</div>
 					</div>
 					<div class="search_container row" style="flex: 1.0; width: 100%;">
 						<div class="col1" style="flex: 1;"></div>
 						<div class="search_col2" style="flex: 1; padding-bottom: 15px;">
-							<!--<select id="category1_select" style="margin-right: 5px;">
-								<option value="분류" selected disabled hidden>분류</option>
-								<option value="제목">제목</option>
-								<option value="내용">내용</option>
-							</select>-->
 							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								  전체
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									전체
 								</button>
 								<ul class="dropdown-menu">
-								  <li><a class="dropdown-item" href="#">제목</a></li>
-								  <li><a class="dropdown-item" href="#">내용</a></li>
+									<li><a class="dropdown-item" href="#">제목</a></li>
+									<li><a class="dropdown-item" href="#">내용</a></li>
 								</ul>
 							</div>
 							<div class="search_bar center">
@@ -214,35 +336,64 @@
 						</div>
 					</div>
 					<div class="btns_container" style="flex: 0.7; width: 100%;">
-						<button id="ask_btn" class="btn btn-primary" onclick="location.href='/qboard/writeBoard.jsp'">글쓰기</button>
+						<button id="ask_btn" class="btn btn-primary"
+							onclick="location.href='/qboard/writeBoard.jsp'">글쓰기</button>
 					</div>
 					<div id="page_navi" class="page_container center" style="flex: 0.7; width: 100%;"></div>
 				</div>
 			</div>
+<div class="footer">
+        <div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 
 			<script>
+				let navi="전체";
+			
 				// 페이지 로드 시 첫 페이지 데이터 로드
 				$(document).ready(function () {
 					loadData(1);
 				});
+				
 
-				// 페이지 클릭시 클릭 이벤트 적용
+				// 페이지 클릭시 클릭 이벤트로 데이터 전달
 				$(document).on('click', '.pageAn', function (e) {
 					e.preventDefault();
-					let page = $(this).data('pageN');
+					page = $(this).data('pageN');
 					loadData(page);
 				});
-				
-				
+
+				//카테고리 클릭 시 클릭 이벤트로 데이터 전달
+				$(document).on('click', '.naviAn', function (e) {
+						e.preventDefault();
+						navi = $(this).html();
+						console.log(navi);
+						loadData(1);
+				});
 
 				function loadData(page) {
 					$.ajax({
 						url: "/select.qboard",
 						type: "POST",
 						dataType: "json",
-						data: { 
+						data: {
 							cpage: page,
-							category: "게임문의"
+							category: navi
 						}
 					}).done(function (data) {
 						let cpage = data[0];
@@ -254,13 +405,13 @@
 						let page_total_count = 0;
 						if (recordTotalCount % recordCountPerPage > 0) {
 							page_total_count = Math
-								.floor(recordTotalCount/ recordCountPerPage) + 1;
+								.floor(recordTotalCount / recordCountPerPage) + 1;
 						} else {
 							page_total_count = Math
-								.floor(recordTotalCount/ recordCountPerPage);
+								.floor(recordTotalCount / recordCountPerPage);
 						}
 
-						let startNavi = Math.floor((cpage - 1)/ naviCountPerPage)* naviCountPerPage + 1;
+						let startNavi = Math.floor((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
 
 						let endNavi = startNavi + naviCountPerPage - 1;
 						if (endNavi > page_total_count) {
@@ -278,7 +429,7 @@
 						}
 
 						//동적할당이기 때문에 그 전 작업을 지우는 게 필요함
-						$("#page_navi").empty(); 
+						$("#page_navi").empty();
 
 						if (needPrev) {
 							let needPreva = $("<a>").addClass("pageAn").data("pageN", startNavi - 1).html(" < ");
@@ -295,7 +446,7 @@
 							$("#page_navi").append(needNexta);
 						}
 
-						$(".list_detail_box_col").empty(); 
+						$(".list_detail_box_col").empty();
 
 						for (let dto of list) {
 							let list_data_row = $("<div>").addClass("list_data_row row").css({
@@ -315,7 +466,7 @@
 						}
 					});
 				};
-				
+
 				//드랍다운 선택시 카테고리 텍스트 변경 이벤트
 				document.addEventListener("DOMContentLoaded", function () {
 					// 모든 드롭다운 항목에 이벤트 리스너 추가

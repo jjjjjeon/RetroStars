@@ -11,10 +11,41 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+
 <style>
-    body{background-color: black;color:white;}
+
+    body{background-image:url("/image/background.png"); background-size:100% 100%;color:white;}
 
     *{box-sizing: border-box;}
+    
+    .navbar {
+        width: 100%;
+        z-index: 1000;
+        height:70px;
+    }
+    
+        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
+        .nav-link {
+            color: white !important;
+            /* margin-left: 20px; */
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
 
     .container{
         margin: auto;
@@ -24,13 +55,18 @@
         width: 1200px;
         justify-content: center;
         align-items: center;
+        background-color:#323232;
+        border-radius:15px;
     }
     
     /*div{border:1px solid red;}*/
+	.emptybox{height:35px; width:100% };
+    .header{flex:2; width: 100%;}
+    .row{display: flex;}
+    .headertitle{width: 100%; display: flex; justify-content: start; align-items: center; font-size:30px; margin-bottom:20px;}
+    .header_user_id{width: inline; font-weight:600;}
 
-    .header{flex:0.5; width: 100%;}
-
-    .profilebox{flex:2.5; width: 90%; border:1px solid white; display: flex;}
+    .profilebox{flex:2.5; width: 90%; border:1px solid white; display: flex; border-radius:10px;}
     .profile{height: 100%;width: 95%;margin: auto; display: flex; justify-content: center; align-items: center} 
     .main_profile{height: 100%;width: 50%;display: flex; justify-content: center; align-items: center}
     .profile_img{width:40%; height: 80%;display: flex;justify-content: center;align-items: center;}
@@ -69,24 +105,90 @@
 	
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
-    .board_main{flex:8; width: 90%;border:1px solid white;}
+    .board_main{flex:8; width: 90%;border:1px solid white; overflow-y:auto; display:flex;flex-direction: column; justify-content: start; align-items: center;}
+	.board_bookmark_row{display:flex; width:100%; justify-content: center; align-items: center;}
+    .board_bookmark_title{flex:6;display: flex; justify-content: center; align-items: center;}
+    .board_bookmark_writer{flex:2;display: flex; justify-content: center; align-items: center;}
+    .board_bookmark_date{flex:2;display: flex; justify-content: center; align-items: center;}
+    .list_header{background-color:white;  font-size:18px; color:#323232; width:100%; display: flex; justify-content: center; align-items: center;}
+
 
     .tipboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
 
-    .footer{flex:0.5; width: 90%; display: flex; justify-content: end; align-items: center;}
+    .footer{flex:0.5; width:90%; display: flex; justify-content: start; align-items: center;}
+    .footer_delete_btn{flex:4;}
+    .footer_gohome_btn{flex:6;display: flex; justify-content: end; align-items: center;}
+    .join_date{display:inline;}
 
-    .row{display: flex;}
-
-    .headertitle{width: 100%; display: flex; justify-content: center; align-items: center; font-size:25px;}
-    .header_user_id{width: inline; font-weight:600;}
 
     #basic_img{width: 80%; height: 80%;}
     
+    .main_footer { width: 100%;background-color: #323232;height: 150px; }
+    .leftfooter{color : white;font-weight : bold;margin-top: 20px;}
+    .rightfooter {display: flex;align-items: center;}
+   	.footerbox {width: 1000px;height: 100%;margin: auto;display: flex;justify-content: space-between;align-items: center;}
+    .iconbox {display: flex;align-items: center;}
+	.iconbox a {margin: 0 10px;font-size: 50px;color: white;}
+    .coinbox {display: flex;align-items: center;margin-left: 20px;}
+    .coinbox img {width: 120px;height: 100px;margin-left : 20px;}
     
 </style>
 
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ICON</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mypage.member">마이페이지</a>
+                    </li>      	                  
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class ="emptybox"></div>
     <div class="container">
         <div class="header row">
             <div class="headertitle"><div class="header_user_id">${mydata.userId}</div> &nbsp;님의 My page</div>
@@ -164,18 +266,80 @@
         </div>
         <div class="freeboard">
             <div class="free_title board_title">Community Board (자유)</div>
-            <div class="free_main board_main">f_main</div>
+            <div class="free_main board_main">
+            	<div class="board_bookmark_row list_header">
+					<div class="board_bookmark_title">TITLE</div>
+					<div class="board_bookmark_writer">WRITER</div>
+					<div class="board_bookmark_date">DATE</div>
+				</div>
+            
+            	<c:forEach var="listCategory1" items="${listCategory1}">
+							<div class="free_row board_bookmark_row">
+								<div class="free_title board_bookmark_title">${listCategory1.cBoardTitle}</div>
+								<div class="free_writer board_bookmark_writer">${listCategory1.writerId}</div>
+								<div class="free_date board_bookmark_date">
+									<fmt:formatDate value="${listCategory1.cBoardDate}" pattern="yy.MM.dd" />
+								</div>
+							</div>
+				</c:forEach>
+			</div>
         </div>
         <div class="tipboard">
             <div class="tip_title board_title">Community Board (공략)</div>
-            <div class="tip_main board_main">t_main</div>
+            <div class="tip_main board_main">
+            <div class="board_bookmark_row list_header">
+					<div class="board_bookmark_title ">TITLE</div>
+					<div class="board_bookmark_writer">WRITER</div>
+					<div class="board_bookmark_date">DATE</div>
+				</div>
+            	<c:forEach var="listCategory2" items="${listCategory2}">
+							<div class="tip_row board_bookmark_row">
+								<div class="tip_title board_bookmark_title">${listCategory2.cBoardTitle}</div>
+								<div class="tip_writer board_bookmark_writer">${listCategory2.writerId}</div>
+								<div class="tip_date board_bookmark_date">
+									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
+								</div>
+							</div>
+				</c:forEach></div>
         </div>
         <div class="footer">
-            <div class="join_date"><fmt:formatDate value="${mydata.userJoinDate}" pattern="yy.MM.dd" /> 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
-            <button type="button" class="btn btn-dark" id="memberOut">회원 탈퇴</button>
+        	<div class="footer_delete_btn">
+        		<button type="button" class="btn btn-dark" id="memberOut">회원 탈퇴</button>
+        	</div>
+        	<div class="footer_gohome_btn">
+        		<div class="join_date"><fmt:formatDate value="${mydata.userJoinDate}" pattern="yy.MM.dd" /> 부터 함께 하는 중</div>  &nbsp; &nbsp; &nbsp;
+            	<button type="button" class="btn btn-dark" id="gohome">Home</button>
+        	</div> 
         </div>
     </div>
+    <div class ="emptybox"></div>
+    <div class="main_footer">
+        <div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
     <script>
+    
+    $("#gohome").on("click",function(){
+    	location.href="/index.jsp";
+    })
+
     $("#memberOut").on("click",function(){
     	Swal.fire({
 			  title: "Are you sure?",
