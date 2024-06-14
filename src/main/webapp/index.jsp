@@ -270,19 +270,30 @@
                     <li class="nav-item">
                         <a class="nav-link">랭킹</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/mypage.member">마이페이지</a>
-                    </li>
-                   
-                     
-                    <i class="fa-solid fa-user"></i>        	
+   	
                    
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
+                <c:choose>
+                	<c:when test="${not empty loginId}">
+	                <ul class="navbar-nav ms-auto">
+	                   <li class="nav-item">
+                        	<a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="/logout.member">로그아웃</a>
+	                    </li>
+	                </ul>                    		
+                	</c:when>
+                	<c:otherwise>
+		                <ul class="navbar-nav ms-auto">
+		                    <li class="nav-item">
+		                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+		                    </li>
+		                </ul>
+                	</c:otherwise>
+                </c:choose>
+            
+
             </div>
         </div>
     </nav>

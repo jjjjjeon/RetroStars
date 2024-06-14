@@ -64,6 +64,7 @@ public class MemberController extends HttpServlet {
 			if(cmd.equals("/logout.member")) {
 				session = request.getSession();
 				session.invalidate();
+				System.out.println("로그아웃 성공");
 				response.sendRedirect("/index.jsp");
 			}
 			
@@ -140,7 +141,9 @@ public class MemberController extends HttpServlet {
 
                 session.setAttribute("kakaoId", kakaoId);
                 session.setAttribute("nickname", nickname);
-
+                MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
+                memberDao.addMember(addMember);
+                System.out.println("카카오 로그인 성공");
                 response.sendRedirect("/index.jsp");
 			}
 			
