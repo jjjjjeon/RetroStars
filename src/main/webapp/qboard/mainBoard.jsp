@@ -214,12 +214,13 @@
 			</div>
 
 			<script>
+				let navi="전체";
+			
 				// 페이지 로드 시 첫 페이지 데이터 로드
 				$(document).ready(function () {
 					loadData(1);
 				});
-
-				let navi="전체";
+				
 
 				// 페이지 클릭시 클릭 이벤트로 데이터 전달
 				$(document).on('click', '.pageAn', function (e) {
@@ -228,14 +229,15 @@
 					loadData(page);
 				});
 
-				function loadData(page) {
-					//카테고리 클릭 시 클립 이벤트로 데이터 전달
-					$(document).on('click', '.naviAn', function (e) {
+				//카테고리 클릭 시 클릭 이벤트로 데이터 전달
+				$(document).on('click', '.naviAn', function (e) {
 						e.preventDefault();
-						let navi = $(this).data('naviD');
-						loadData(navi);
-					});
+						navi = $(this).html();
+						console.log(navi);
+						loadData(1);
+				});
 
+				function loadData(page) {
 					$.ajax({
 						url: "/select.qboard",
 						type: "POST",
