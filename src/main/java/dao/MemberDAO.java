@@ -24,7 +24,6 @@ import dto.MemberDTO;
  * Date : 2024. 6. 12.
  * History :
  *  - 작성자 : Jin, 날짜 : 2024. 6. 12., 설명 : 최초작성
- *
  * @author : Jin 
  * @version 1.0 
  */
@@ -60,7 +59,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public boolean loginId(String id, String pw) throws Exception {
-        String sql = "select * from jinhyeok.member where user_id = ? and user_pw = ?";
+        String sql = "select * from member where user_id = ? and user_pw = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, id);
             pstat.setString(2, pw);
@@ -81,7 +80,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public int deleteMember(String id) throws Exception {
-    	String sql = "delete from jinhyeok.member where user_id = ?";
+    	String sql = "delete from member where user_id = ?";
     	try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
     		pstat.setString(1, id);
     		return pstat.executeUpdate();
@@ -100,7 +99,7 @@ public class MemberDAO {
      * @throws Exception 
      */ 
     public int addMember(MemberDTO dto) throws Exception {
-        String sql = "insert into jinhyeok.member (user_id, user_pw, user_name, user_nickname, user_no, user_phone, user_email, user_join_date) values(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into member (user_id, user_pw, user_name, user_nickname, user_no, user_phone, user_email, user_join_date) values(?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
         	pstat.setString(1, dto.getUserId());
@@ -132,7 +131,7 @@ public class MemberDAO {
      */ 
     public MemberDTO mydata(String id) throws Exception{
     	
-    	String sql = "select * from jinhyeok.member where user_id=?";
+    	String sql = "select * from member where user_id=?";
     	
     	try(Connection con = this.getConnection(); 
     			PreparedStatement pstat = con.prepareStatement(sql);){
@@ -178,7 +177,7 @@ public class MemberDAO {
 		String sql = "select "
 				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
-				+ "gyeongho.c_board c right outer join gyeongho.bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
 				+ "c.c_board_category = 1 and b.user_id = ? "
 				+ "order by 5 desc";
@@ -220,7 +219,7 @@ public class MemberDAO {
 		String sql = "select "
 				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
-				+ "gyeongho.c_board c right outer join gyeongho.bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
 				+ "c.c_board_category = 2 and b.user_id = ? "
 				+ "order by 5 desc";
