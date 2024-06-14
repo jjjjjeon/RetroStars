@@ -1,7 +1,14 @@
 package dto;
 
 import java.sql.Timestamp;
-
+/**
+ * Description : 클래스에 대한 설명을 입력해주세요.
+ * Date : 2024. 6. 14.
+ * History :
+ *  - 작성자 : KJY, 날짜 : 2024. 6. 14., 설명 : 최초작성
+ * @author : KJY 
+ * @version 1.0 
+ */
 public class CBoardBookmarkDTO {
 	
 	private String userId;
