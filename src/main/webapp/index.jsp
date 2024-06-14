@@ -270,10 +270,13 @@
                     <li class="nav-item">
                         <a class="nav-link">랭킹</a>
                     </li>
+                	
+
                     <li class="nav-item">
                         <a class="nav-link" href="/mypage.member">마이페이지</a>
                     </li>
-                   
+
+
                      
                     <i class="fa-solid fa-user"></i>        	
                    
