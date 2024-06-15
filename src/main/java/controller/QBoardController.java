@@ -50,12 +50,16 @@ public class QBoardController extends HttpServlet {
 			
 			}else if(cmd.equals("/list.qboard")) {
 				//받은 정보 처리하기
-				String pcpage=request.getParameter("cpage");
-				if(pcpage==null) {pcpage="1";}
-				int cpage=Integer.parseInt(pcpage);
+				String strcpage=request.getParameter("cpage");
+				if(strcpage==null) {strcpage="1";}
+				int cpage=Integer.parseInt(strcpage);
 				String strcategory=request.getParameter("category");
 				if(strcategory==null) {strcategory="0";}
 				int category=Integer.parseInt(strcategory);
+				
+				//받은 검색 정보
+				String strsearchBy=request.getParameter("searchBy");
+				String strsearchData=request.getParameter("searchData");
 				
 				//보낼 정보 처리하기
 				request.setAttribute("cpage", cpage);
