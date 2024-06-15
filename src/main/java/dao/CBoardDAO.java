@@ -226,5 +226,27 @@ public class CBoardDAO {
 		}
 
 	}
+	
+	//DB에서 유저게시판 게시글 삭제
+	public void delPost(int seq) throws Exception {
+		String sql = "delete from c_board where c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			pstat.executeUpdate();
+		}
+	}
+	
+	//DB에서 유저게시판 게시글 수정
+	public void correctPost(CBoardDTO post) throws Exception{
+		String sql = "update c_board set c_board_title = ?, c_board_content = ?, c_board_date = sysdate where c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, post.getcBoardTitle());
+			pstat.setString(2, post.getcBoardContent());
+			pstat.setInt(3, post.getcBoardSeq());
+			pstat.executeUpdate();
+		}
+	}
 
 }

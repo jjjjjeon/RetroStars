@@ -5,6 +5,18 @@
  */
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import dto.NBoardDTO;
+
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
@@ -15,5 +27,75 @@ package dao;
  * @version 1.0 
  */
 public class NBoardDAO {
+	private static NBoardDAO instance;
+	
+	public synchronized static NBoardDAO getInstance() {
+		if(instance == null) {
+			return new NBoardDAO();
+		} else {
+			return instance;
+		}
+	}
+	
+	private Connection getConnection() throws Exception{
+		Context ctx = new InitialContext();
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/oracle");
+		return ds.getConnection();
+	}
+	
+	public List<NBoardDTO> selectNtoM(int start, int end) throws Exception{
+		List<NBoardDTO> list = new ArrayList<>();
+		
+		   String sql = "select * from ("+
+		   "select rownum AS rnum, a.* from("+
+				   "select*from n_board order by n_board_seq desc"+
+		   ") a where rownum <= ?"+
+				   ") where rnum >= ?";
+		   
+		   try(Connection conn = getConnection();
+				   PreparedStatement pstmt = conn.prepareStatement(sql)){
+			   pstmt.setInt(1,end);
+			   pstmt.setInt(2,start);
+			   
+			   try(ResultSet rs = pstmt.executeQuery()){
+				   while(rs.next()) {
+					   NBoardDTO dto = new NBoardDTO();
+					   dto.setnBoardSeq(rs.getInt("n_board_seq"));
+					   dto.setUserId(rs.getString("user_id"));
+					   dto.setnBoardTitle(rs.getString("n_board_title"));
+					   dto.setnBoardContent(rs.getString("n_board_content"));
+					   dto.setnBoardDate(rs.getTimestamp("n_board_date"));
+					   dto.setnBoardView(rs.getInt("n_board_view"));
 
+					   list.add(dto);
+				   }
+				   return list;
+		   }
+		   }
+	}
+	public int insert(NBoardDTO dto) throws Exception{
+        String sql = "insert into n_board values(n_board_sequence.nextval, ?, ?, ?, sysdate,0)";
+	      try (Connection con = this.getConnection(); 
+	    		  PreparedStatement pstat = con.prepareStatement(sql)) {
+	    	  
+	    	  pstat.setString(1, dto.getUserId());
+	    	  pstat.setString(2, dto.getnBoardTitle());
+	    	  pstat.setString(3, dto.getnBoardContent());
+	    	  
+	    	  
+	    	  return pstat.executeUpdate();
+	    	  
+	      }
+	}
+	// 게시글 개수 나타내는 메서드
+	public int getRecordCount() throws Exception{
+		String sql = "select count(*) from n_board";
+		try(Connection con=this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery()){
+			rs.next();
+			return rs.getInt(1);
+		}
+	}
+	
 }
