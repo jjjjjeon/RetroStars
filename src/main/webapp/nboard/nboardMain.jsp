@@ -89,7 +89,14 @@
         display: flex;
         align-items: center;
     }
-
+	.notiListContent{
+	    border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+	}
     .notiCategory {
         flex: 1;
         text-align: center;
@@ -226,9 +233,11 @@
         <div class="title">
             <span>전체</span>
             
-            <a href="/nboard/nBoardWrite.jsp">글 작성
-            <button class="btn btn-primary btn-write">            
-            <i class="fas fa-pencil-alt"></i></button></a>
+			
+			<a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
+    			<i class="fas fa-pencil-alt"></i> 글 작성
+			</a>
+			
 
             <form class="d-flex" role="search">
             	
@@ -292,7 +301,7 @@
                 if(startNavi==1){needPrev=false}
                 if(endNavi==pageTotalCount){needNext=false}
 
-                //출력
+                // 출력
          		// 왼쪽 화살표가 필요한 상황일때
                 if (needPrev) {
                 	let needPreva=$("<a>").attr("href","/list.nboard?cpage="+(startNavi - 1)).html(" < ");

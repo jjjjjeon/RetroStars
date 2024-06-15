@@ -38,6 +38,8 @@ public class NBoardController extends HttpServlet {
 				
 				response.sendRedirect("/list.nboard");
 			} else if(cmd.equals("/list.nboard")) {
+				System.out.println("list.nboard 들어감");
+				
 				String pcpage = request.getParameter("cpage");
 				
 				if(pcpage==null) {pcpage="1";}
@@ -60,6 +62,7 @@ public class NBoardController extends HttpServlet {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			System.out.println("Error during forward: " + e.getMessage());
 		}
 		
 		
