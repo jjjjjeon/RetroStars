@@ -181,7 +181,6 @@
 				.footer {
 					width: 100%;
 					background-color: #323232;
-					postion: fixed;
 					bottom: 0;
 					height: 150px;
 
@@ -294,16 +293,16 @@
 				<div class="col2 col" style="flex: 9; width: 100%;">
 					<div class="navi_container row" style="flex: 0.7; width: 100%;">
 						<div class="navi_total center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="전체">전체</a>
+							<a href="" class="naviAn" data-categoryCode="0">전체</a>
 						</div>
 						<div class="navi_game center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="게임문의">게임문의</a>
+							<a href="" class="naviAn" data-categoryCode="1">게임문의</a>
 						</div>
 						<div class="navi_collaboration center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="제휴문의">제휴문의</a>
+							<a href="" class="naviAn" data-categoryCode="2">제휴문의</a>
 						</div>
 						<div class="navi_etc center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="기타문의">기타문의</a>
+							<a href="" class="naviAn" data-categoryCode="3">기타문의</a>
 						</div>
 					</div>
 					<div class="search_container row" style="flex: 1.0; width: 100%;">
@@ -337,7 +336,21 @@
 							</div>
 							<div class="list_detail_box_row row" style="flex: 9; width: 100%;">
 								<div class="list_detail_box_col col" style="flex: 1; height: 100%;">
-									<!--여기에 리스트 동적 할당-->
+									<!--여기에 리스트 출력-->
+									<c:forEach var="dto" items="${list}">
+										<div class="list_data_row row" style="height: 44px; width: 100%;">
+											<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
+											<div class="list_data_category center" style="flex: 1;">
+												${dto.qBoardCategory}</div>
+											<div class="list_data_writer center" style="flex: 1;">${dto.userId}</div>
+											<div class="list_data_title center" style="flex: 4.5;">${dto.qBoardTitle}
+											</div>
+											<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
+											</div>
+											<div class="list_data_answer center" style="flex: 1;">${dto.qBoardAnswer}
+											</div>
+										</div>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -369,154 +382,129 @@
 				</div>
 			</div>
 			<script>
-				let navi="전체";
-				let page=1;
-				
-			
-				// 페이지 로드 시 첫 페이지 데이터 로드
-				$(document).ready(function () {
-					loadData(page);
-				});
-				
+				 
 
-				// 페이지 클릭시 클릭 이벤트로 데이터 전달
-				$(document).on('click', '.pageAn', function (e) {
-					e.preventDefault();
-					page = $(this).data('pageN');
-					loadData(page);
-				});
-
-				//카테고리 클릭 시 클릭 이벤트로 데이터 전달
+				// 클릭 이벤트 위임
 				$(document).on('click', '.naviAn', function (e) {
 						e.preventDefault();
-						navi = $(this).html();
-						console.log(navi);
-						loadData(page);
+						let category = $(this).attr('data-categoryCode');
+
+						if (category == 1 || category == 2 || category == 3) {
+							categoryPageA();
+						} else {
+							totalPageA();
+						}
 				});
 
-				//검색 종류 클릭 시 클릭 이벤트로 데이터 전달
-				/*$(document).on('click', '.dropdown-item', function (e) {
-						//엔터로 입력
-						$("#search_input").on('keydown', function(e){
-							if(e.key=="Enter"){
-								e.preventDefault();
-								search = $(".dropdown-toggle").text();
-								page=1;
-								loadData(page,navi,search,searchD);
-							}
-						})
-	
-						//이미지 클릭할 때
-						$('.fa-magnifying-glass').on('click', function () {
-							e.preventDefault();
-							search = $(".dropdown-toggle").text();
-							page=1;
-							loadData(page,navi,search,searchD);
-						})
-				});*/
+				$(document).on('click', '.naviAn', function (e) {
+					e.preventDefault();
+					let category = $(this).attr('data-categoryCode');
 
-				//드랍다운을 눌렀을 때는 무조건 인풋을 입력하기위해 인풋이 비었는지 체크하는 함수
-				function performSearch() {
-					if ($("#search_input").val() === "") {
-						alert("검색어를 입력하세요.");
-						return false;
-
+					if (category == 1) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=1";		
+					} else if (category == 2) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=2";			
+					} else if (category == 3) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=3";				
+					} else {
+						window.location.href = "/list.qboard";
 					}
+
+				});
+
+				function duplicatePageCode() {
+					let cpage = ${ cpage };
+					let record_total_count = ${ record_total_count };
+					let record_count_per_page = ${ record_count_per_page };
+					let navi_count_per_page = ${ navi_count_per_page };
+
+					let page_total_count = 0;
+					if (record_total_count % record_count_per_page > 0) {
+						page_total_count = Math.floor(record_total_count / record_count_per_page) + 1;
+					} else {
+						page_total_count = Math.floor(record_total_count / record_count_per_page);
+					}
+
+
+					let startNavi = Math.floor((cpage - 1) / navi_count_per_page) * navi_count_per_page + 1;
+
+					let endNavi = startNavi + navi_count_per_page - 1;
+					if (endNavi > page_total_count) { endNavi = page_total_count; }
+
+
+					let needNext = true;
+					let needPrev = true;
+
+
+					if (startNavi == 1) { needPrev = false; }
+					if (endNavi == page_total_count) { needNext = false; }
+
+					return {
+						startNavi: startNavi,
+						endNavi: endNavi,
+						needNext: needNext,
+						needPrev: needPrev,
+						page_total_count: page_total_count
+					};
 				}
 
+				function totalPageA() {
+					$("#page_navi").empty();
 
-				function loadData(page) {
-					$.ajax({
-						url: "/select.qboard",
-						type: "GET",
-						dataType: "json",
-						data: {
-							cpage: page,
-							category: navi
-							// searchBy: search,
-							// searchDetail:$("#search_input").val()
-						}
-					}).done(function (data) {
-						let cpage = data[0];
-						//let category = data[1];
-						//console.log(category);
-						let recordCountPerPage = data[1];
-						let naviCountPerPage = data[2];
-						let recordTotalCount = data[3];
-						let list = data[4];
-						
+					let { startNavi, endNavi, needNext, needPrev, page_total_count } = duplicatePageCode();
 
-						let page_total_count = 0;
-						if (recordTotalCount % recordCountPerPage > 0) {
-							page_total_count = Math
-								.floor(recordTotalCount / recordCountPerPage) + 1;
-						} else {
-							page_total_count = Math
-								.floor(recordTotalCount / recordCountPerPage);
-						}
+					if (needPrev == true) {
+						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1)).html(" < ");
+						$("#page_navi").append(needPreva);
+					}
 
-						let startNavi = Math.floor((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
+					for (let i = startNavi; i <= endNavi; i++) {
+						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i).html(i + "&nbsp;");
+						$("#page_navi").append(pagesa);
+					}
 
-						let endNavi = startNavi + naviCountPerPage - 1;
-						if (endNavi > page_total_count) {
-							endNavi = page_total_count;
-						}
 
-						let needNext = true;
-						let needPrev = true;
+					if (needNext == true) {
+						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1)).html(" > ");
+						$("#page_navi").append(needNexta);
+					}
 
-						if (startNavi == 1) {
-							needPrev = false;
-						}
-						if (endNavi == page_total_count) {
-							needNext = false;
-						}
+					console.log("needNext:", needNext);
+					console.log("startNavi:", startNavi);
+					console.log("endNavi:", endNavi);
+					console.log("page_total_count:", page_total_count);
 
-						//동적할당이기 때문에 그 전 작업을 지우는 게 필요함
-						$("#page_navi").empty();
+				}
 
-						if (needPrev) {
-							let needPreva = $("<a>").addClass("pageAn").data("pageN", startNavi - 1).html(" < ");
-							$("#page_navi").append(needPreva);
-						}
+				function categoryPageA() {
+					let category=${category};
+					console.log("category");
+					$("#page_navi").empty();
 
-						for (let i = startNavi; i <= endNavi; i++) {
-							let pagesa = $("<a>").addClass("pageAn").data("pageN", i).html(i + "&nbsp;");
-							$("#page_navi").append(pagesa);
-						}
+					let { startNavi, endNavi, needNext, needPrev, page_total_count } = duplicatePageCode();
 
-						if (needNext) {
-							let needNexta = $("<a>").addClass("pageAn").data("pageN", endNavi + 1).html(" > ");
-							$("#page_navi").append(needNexta);
-						}
+					if (needPrev == true) {
+						let needPreva = $("<a>").attr("href", "/categoryList.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
+						$("#page_navi").append(needPreva);
+					}
 
-						$(".list_detail_box_col").empty();
+					for (let i = startNavi; i <= endNavi; i++) {
+						let pagesa = $("<a>").attr("href", "/categoryList.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
+						$("#page_navi").append(pagesa);
+					}
 
-						for (let dto of list) {
-							let list_data_row = $("<div>").addClass("list_data_row row").css({
-								"height": "44px",
-								"width": "100%"
-							});
 
-							let list_data_seq = $("<div>").addClass("list_data_seq center").css("flex", "1").html(dto.qBoardSeq);
-							let list_data_category = $("<div>").addClass("list_data_category center").css("flex", "1").html(dto.qBoardCategory);
-							let list_data_writer = $("<div>").addClass("list_data_writer center").css("flex", "1").html(dto.userId);
-							let list_data_title = $("<div>").addClass("list_data_title center").css("flex", "4.5").html(dto.qBoardTitle);
-							let list_data_write_date = $("<div>").addClass("list_data_write_date center").css("flex", "1.5").html(dto.qBoardDate);
-							let list_data_answer = $("<div>").addClass("list_data_answer center").css("flex", "1").html(dto.qBoardAnswer);
+					if (needNext == true) {
+						let needNexta = $("<a>").attr("href", "/categoryList.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
+						$("#page_navi").append(needNexta);
+					}
 
-							list_data_row.append(list_data_seq, list_data_category, list_data_writer, list_data_title, list_data_write_date, list_data_answer);
-							$(".list_detail_box_col").append(list_data_row);
-						}
-					});
-				};
+					console.log("needNext:", needNext);
+					console.log("startNavi:", startNavi);
+					console.log("endNavi:", endNavi);
+					console.log("page_total_count:", page_total_count);
 
-				// 드롭다운 선택 시 버튼 텍스트 변경 이벤트
-				$(document).on('click', '.dropdown-item', function (event) {
-					let button = $(this).closest('.dropdown').find('.dropdown-toggle');
-					button.text($(this).text());
-				});
-
+				}
 
 			</script>
 
