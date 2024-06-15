@@ -38,16 +38,16 @@
             padding:0;
         }
 
-	.video-background{
-		position : fixed;
-		top : 0;
-		left : 0;
-		min-width : 100%;
-		min-height : 100%;
-		width: auto;
-		height : auto;
-		z-index: -1;
-	}
+   .video-background{
+      position : fixed;
+      top : 0;
+      left : 0;
+      min-width : 100%;
+      min-height : 100%;
+      width: auto;
+      height : auto;
+      z-index: -1;
+   }
     .navbar {
         position: fixed;
         top: 0;
@@ -134,8 +134,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-        	cursor: pointer;
-        	transition: background-color 0.3s ease;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
         }
         
     .gamelist .game:hover {
@@ -184,23 +184,23 @@
             
         }
         .leftfooter{
-        	color : white;
-        	font-weight : bold;
-        	margin-top: 20px;
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
         }
         .rightfooter {
-        	display: flex;
-        	align-items: center;
-    	
-    	}
-   		.footerbox {
-        	width: 1000px;
-        	height: 100%;
-        	margin: auto;
-        	display: flex;
-        	justify-content: space-between;
-        	align-items: center;    
-    	}
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
 
         .iconbox {
             display: flex;
@@ -212,11 +212,11 @@
             font-size: 50px;
             color: white;
         }
-    	.coinbox {
-        	display: flex;
-        	align-items: center;
-        	margin-left: 20px;
-    	}
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
         .coinbox img {
             width: 120px;
             height: 100px;
@@ -225,13 +225,13 @@
     </style>
 </head>
 <body>
-		<!-- Video Background -->
-   		<video class="video-background" autoplay muted loop>
-        	<source src="/image/video.mp4" type="video/mp4">
-        	Your browser does not support the video tag.
-    	</video>
-    	
-	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- Video Background -->
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
+       
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">ICON</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -270,27 +270,27 @@
                         <a class="nav-link">랭킹</a>
 
                     </li>
-                	
+                   
 
                 </ul>
                 <c:choose>
-                	<c:when test="${not empty loginId}">
-	                <ul class="navbar-nav ms-auto">
-	                   <li class="nav-item">
-                        	<a class="nav-link" href="/mypage.member">마이페이지</a>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
                        </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="/logout.member">로그아웃</a>
-	                    </li>
-	                </ul>                    		
-                	</c:when>
-                	<c:otherwise>
-		                <ul class="navbar-nav ms-auto">
-		                    <li class="nav-item">
-		                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-		                    </li>
-		                </ul>
-                	</c:otherwise>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
                 </c:choose>
 
             </div>

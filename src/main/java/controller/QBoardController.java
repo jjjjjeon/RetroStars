@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -46,34 +47,28 @@ public class QBoardController extends HttpServlet {
 				String qBoardContent= request.getParameter("qBoardContent");
 				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
 				boarddao.insert(new QBoardDTO(0,userId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
-				
-			}else if(cmd.equals("/select.qboard")) {
+			
+			}else if(cmd.equals("/list.qboard")) {
+				//받은 정보 처리하기
 				String pcpage=request.getParameter("cpage");
 				if(pcpage==null) {pcpage="1";}
 				int cpage=Integer.parseInt(pcpage);
-				int recordCountPerPage = Static.QBOARD_RECOD_COUNT_PER_PAGE;
-	            int naviCountPerPage = Static.QBOARD_NAVI_COUNT_PER_PAGE;
-	            int recordTotalCount = boarddao.getRecordCount();
-	            
-	            String strcategory=request.getParameter("category");
-	            //System.out.println(strcategory);
-	            ArrayList<QBoardDTO> list=null;
-	            
-	            if(strcategory.equals("전체")) {
-	            	list=boarddao.selectAll(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE);
-	            	
-	            }else if(strcategory.equals("게임문의")||strcategory.equals("제휴문의")||strcategory.equals("기타문의")){
-	            	int category= boarddao.getCategory(strcategory);
-	            	list=boarddao.selectCategory(
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,
-									category);
-	            }
+				String strcategory=request.getParameter("category");
+				if(strcategory==null) {strcategory="0";}
+				int category=Integer.parseInt(strcategory);
 				
+				//보낼 정보 처리하기
+				request.setAttribute("cpage", cpage);
+				request.setAttribute("category", category);
+				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
+				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
+				
+				//게시판 전체 레코드 체크
+				request.setAttribute("record_total_count", boarddao.getRecordCount(category));
+				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
+										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category);
 				request.setAttribute("list", list);
-				String json = g.toJson(new Object[] { cpage, recordCountPerPage, naviCountPerPage, recordTotalCount, list });
-		        response.getWriter().write(json);
+				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

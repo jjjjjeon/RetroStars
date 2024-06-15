@@ -16,26 +16,26 @@
 				integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 				crossorigin="anonymous"></script>
 			<!-- Google Fonts -->
-    		<link rel="preconnect" href="https://fonts.googleapis.com">
-    		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
-        	rel="stylesheet">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+				rel="stylesheet">
 			<style>
-			
-				body{
+				body {
 					background-image: url('/image/background.png');
 				}
-				
-				nav{
+
+				nav {
 					background-color: #323232;
-				
+
 				}
-				
-				nav{
+
+				nav {
 					margin-bottom: 50px;
 				}
-				
-				
+
+
 				* {
 					box-sizing: border-box;
 				}
@@ -51,9 +51,9 @@
 				.col {
 					display: flex;
 					flex-direction: column;
-					color:white;
+					color: white;
 				}
-							
+
 
 				.center {
 					display: flex;
@@ -66,7 +66,7 @@
 					height: 800px;
 					margin: auto;
 					background-color: #323232;
-					
+
 				}
 
 				.navi_container {
@@ -111,7 +111,7 @@
 					text-align: center;
 					border: none;
 					background-color: #323232;
-					color:white;
+					color: white;
 				}
 
 				.dropdown-toggle {
@@ -173,130 +173,136 @@
 				#page_navi a:hover {
 					cursor: pointer;
 				}
-				
-		.footer{
-			margin-top:50px;
-		}
-				
-        .footer {
-            width: 100%;
-            background-color: #323232;
-            postion:fixed; 
-            bottom:0; 
-            height: 150px;
-            
-        }
-        .leftfooter{
-        	color : white;
-        	font-weight : bold;
-        	margin-top: 20px;
-        }
-        .rightfooter {
-        	display: flex;
-        	align-items: center;
-    	
-    	}
-   		.footerbox {
-        	width: 1000px;
-        	height: 100%;
-        	margin: auto;
-        	display: flex;
-        	justify-content: space-between;
-        	align-items: center;    
-    	}
 
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
+				.footer {
+					margin-top: 50px;
+				}
 
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-    	.coinbox {
-        	display: flex;
-        	align-items: center;
-        	margin-left: 20px;
-    	}
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left : 20px;
-        }
+				.footer {
+					width: 100%;
+					background-color: #323232;
+					bottom: 0;
+					height: 150px;
+
+				}
+
+				.leftfooter {
+					color: white;
+					font-weight: bold;
+					margin-top: 20px;
+				}
+
+				.rightfooter {
+					display: flex;
+					align-items: center;
+
+				}
+
+				.footerbox {
+					width: 1000px;
+					height: 100%;
+					margin: auto;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				}
+
+				.iconbox {
+					display: flex;
+					align-items: center;
+				}
+
+				.iconbox a {
+					margin: 0 10px;
+					font-size: 50px;
+					color: white;
+				}
+
+				.coinbox {
+					display: flex;
+					align-items: center;
+					margin-left: 20px;
+				}
+
+				.coinbox img {
+					width: 120px;
+					height: 100px;
+					margin-left: 20px;
+				}
 			</style>
 		</head>
 
 
 		<body>
-		 <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">ICON</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
-                            게임
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color:white">
-                            게시판
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
-                    </li>
-                
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">ICON</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+									style="color:white">
+									게임
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									<li><a class="dropdown-item" href="#">game1</a></li>
+									<li><a class="dropdown-item" href="#">game2</a></li>
+									<li><a class="dropdown-item" href="#">game3</a></li>
+									<li><a class="dropdown-item" href="#">game4</a></li>
+									<li><a class="dropdown-item" href="#">game5</a></li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+									style="color:white">
+									게시판
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									<li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
+									<li><a class="dropdown-item" href="#">자유게시판</a></li>
+									<li><a class="dropdown-item" href="#">공략게시판</a></li>
+									<li><a class="dropdown-item" href="#">QA게시판</a></li>
+									<li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+									<li><a class="dropdown-item" href="#">공지게시판</a></li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link">랭킹</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">마이페이지</a>
+							</li>
 
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+						</ul>
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 			<div class="container col center">
 				<div class="col1 center" style="flex: 1; width: 100%;">Q&Apage</div>
 				<div class="col2 col" style="flex: 9; width: 100%;">
 					<div class="navi_container row" style="flex: 0.7; width: 100%;">
 						<div class="navi_total center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="전체">전체</a>
+							<a href="" class="naviAn" data-categoryCode="0">전체</a>
 						</div>
 						<div class="navi_game center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="게임문의">게임문의</a>
+							<a href="" class="naviAn" data-categoryCode="1">게임문의</a>
 						</div>
 						<div class="navi_collaboration center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="제휴문의">제휴문의</a>
+							<a href="" class="naviAn" data-categoryCode="2">제휴문의</a>
 						</div>
 						<div class="navi_etc center" style="flex: 1;">
-							<a href="" class="naviAn" data-naviD="기타문의">기타문의</a>
+							<a href="" class="naviAn" data-categoryCode="3">기타문의</a>
 						</div>
 					</div>
 					<div class="search_container row" style="flex: 1.0; width: 100%;">
@@ -330,7 +336,21 @@
 							</div>
 							<div class="list_detail_box_row row" style="flex: 9; width: 100%;">
 								<div class="list_detail_box_col col" style="flex: 1; height: 100%;">
-									<!--여기에 리스트 동적 할당-->
+									<!--여기에 리스트 출력-->
+									<c:forEach var="dto" items="${list}">
+										<div class="list_data_row row" style="height: 44px; width: 100%;">
+											<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
+											<div class="list_data_category center" style="flex: 1;">
+												${dto.qBoardCategory}</div>
+											<div class="list_data_writer center" style="flex: 1;">${dto.userId}</div>
+											<div class="list_data_title center" style="flex: 4.5;">${dto.qBoardTitle}
+											</div>
+											<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
+											</div>
+											<div class="list_data_answer center" style="flex: 1;">${dto.qBoardAnswer}
+											</div>
+										</div>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -342,146 +362,113 @@
 					<div id="page_navi" class="page_container center" style="flex: 0.7; width: 100%;"></div>
 				</div>
 			</div>
-<div class="footer">
-        <div class="footerbox">
-            <div class="leftfooter">
-                <p>회사명: 팀별빛</p>
-                <p>전화: 02-1234-5678</p>
-                <p>이메일: info@example.com</p>
-            </div>
-            <div class="rightfooter">
-                <div class="iconbox">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="coinbox">
-                    <img src="/image/coin.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
+			<div class="footer">
+				<div class="footerbox">
+					<div class="leftfooter">
+						<p>회사명: 팀별빛</p>
+						<p>전화: 02-1234-5678</p>
+						<p>이메일: info@example.com</p>
+					</div>
+					<div class="rightfooter">
+						<div class="iconbox">
+							<a href="#"><i class="fab fa-facebook"></i></a>
+							<a href="#"><i class="fab fa-instagram"></i></a>
+							<a href="#"><i class="fab fa-youtube"></i></a>
+						</div>
+						<div class="coinbox">
+							<img src="/image/coin.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
 			<script>
-				let navi="전체";
-			
-				// 페이지 로드 시 첫 페이지 데이터 로드
 				$(document).ready(function () {
-					loadData(1);
-				});
-				
+					let category = ${ category };
+					let cpage = ${ cpage };
+					let record_total_count = ${ record_total_count };
+					let record_count_per_page = ${ record_count_per_page };
+					let navi_count_per_page = ${ navi_count_per_page };
 
-				// 페이지 클릭시 클릭 이벤트로 데이터 전달
-				$(document).on('click', '.pageAn', function (e) {
-					e.preventDefault();
-					page = $(this).data('pageN');
-					loadData(page);
+					let page_total_count = 0;
+					if (record_total_count % record_count_per_page > 0) {
+						page_total_count = Math.floor(record_total_count / record_count_per_page) + 1;
+					} else {
+						page_total_count = Math.floor(record_total_count / record_count_per_page);
+					}
+
+					let startNavi = Math.floor((cpage - 1) / navi_count_per_page) * navi_count_per_page + 1;
+					let endNavi = startNavi + navi_count_per_page - 1;
+					if (endNavi > page_total_count) { endNavi = page_total_count; }
+
+					let needNext = true;
+					let needPrev = true;
+
+					if (startNavi == 1) { needPrev = false; }
+					if (endNavi == page_total_count) { needNext = false; }
+
+					if (needPrev == true) {
+						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
+						$("#page_navi").append(needPreva);
+					}
+
+					for (let i = startNavi; i <= endNavi; i++) {
+						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
+						$("#page_navi").append(pagesa);
+					}
+
+					if (needNext == true) {
+						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
+						$("#page_navi").append(needNexta);
+					}
+
+					console.log("needNext:", needNext);
+					console.log("startNavi:", startNavi);
+					console.log("endNavi:", endNavi);
+					console.log("page_total_count:", page_total_count);
 				});
 
-				//카테고리 클릭 시 클릭 이벤트로 데이터 전달
 				$(document).on('click', '.naviAn', function (e) {
-						e.preventDefault();
-						navi = $(this).html();
-						console.log(navi);
-						loadData(1);
+					e.preventDefault();
+					let category = $(this).attr('data-categoryCode');
+					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
 
-				function loadData(page) {
-					$.ajax({
-						url: "/select.qboard",
-						type: "POST",
-						dataType: "json",
-						data: {
-							cpage: page,
-							category: navi
-						}
-					}).done(function (data) {
-						let cpage = data[0];
-						let recordCountPerPage = data[1];
-						let naviCountPerPage = data[2];
-						let recordTotalCount = data[3];
-						let list = data[4];
-
-						let page_total_count = 0;
-						if (recordTotalCount % recordCountPerPage > 0) {
-							page_total_count = Math
-								.floor(recordTotalCount / recordCountPerPage) + 1;
-						} else {
-							page_total_count = Math
-								.floor(recordTotalCount / recordCountPerPage);
-						}
-
-						let startNavi = Math.floor((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-
-						let endNavi = startNavi + naviCountPerPage - 1;
-						if (endNavi > page_total_count) {
-							endNavi = page_total_count;
-						}
-
-						let needNext = true;
-						let needPrev = true;
-
-						if (startNavi == 1) {
-							needPrev = false;
-						}
-						if (endNavi == page_total_count) {
-							needNext = false;
-						}
-
-						//동적할당이기 때문에 그 전 작업을 지우는 게 필요함
-						$("#page_navi").empty();
-
-						if (needPrev) {
-							let needPreva = $("<a>").addClass("pageAn").data("pageN", startNavi - 1).html(" < ");
-							$("#page_navi").append(needPreva);
-						}
-
-						for (let i = startNavi; i <= endNavi; i++) {
-							let pagesa = $("<a>").addClass("pageAn").data("pageN", i).html(i + "&nbsp;");
-							$("#page_navi").append(pagesa);
-						}
-
-						if (needNext) {
-							let needNexta = $("<a>").addClass("pageAn").data("pageN", endNavi + 1).html(" > ");
-							$("#page_navi").append(needNexta);
-						}
-
-						$(".list_detail_box_col").empty();
-
-						for (let dto of list) {
-							let list_data_row = $("<div>").addClass("list_data_row row").css({
-								"height": "44px",
-								"width": "100%"
-							});
-
-							let list_data_seq = $("<div>").addClass("list_data_seq center").css("flex", "1").html(dto.qBoardSeq);
-							let list_data_category = $("<div>").addClass("list_data_category center").css("flex", "1").html(dto.qBoardCategory);
-							let list_data_writer = $("<div>").addClass("list_data_writer center").css("flex", "1").html(dto.userId);
-							let list_data_title = $("<div>").addClass("list_data_title center").css("flex", "4.5").html(dto.qBoardTitle);
-							let list_data_write_date = $("<div>").addClass("list_data_write_date center").css("flex", "1.5").html(dto.qBoardDate);
-							let list_data_answer = $("<div>").addClass("list_data_answer center").css("flex", "1").html(dto.qBoardAnswer);
-
-							list_data_row.append(list_data_seq, list_data_category, list_data_writer, list_data_title, list_data_write_date, list_data_answer);
-							$(".list_detail_box_col").append(list_data_row);
-						}
-					});
-				};
-
-				//드랍다운 선택시 카테고리 텍스트 변경 이벤트
-				document.addEventListener("DOMContentLoaded", function () {
-					// 모든 드롭다운 항목에 이벤트 리스너 추가
-					let dropdownItems = document.querySelectorAll('.dropdown-item');
-					dropdownItems.forEach(function (item) {
-						item.addEventListener('click', function (event) {
-							// 버튼 텍스트 변경
-							let button = document.querySelector('.dropdown-toggle');
-							button.textContent = event.target.textContent;
-						});
-					});
-				});
 			</script>
 
 		</body>
 
 
 		</html>
+
+
+
+
+		<!--
+					
+				// 클릭 이벤트 위임
+				$(document).on('click', '.naviAn', function (e) {
+						e.preventDefault();
+						let category = $(this).attr('data-categoryCode');
+
+						if (category == 1 || category == 2 || category == 3) {
+							categoryPageA();
+						} else {
+							totalPageA();
+						}
+				});
+
+				$(document).on('click', '.naviAn', function (e) {
+					e.preventDefault();
+					let category = $(this).attr('data-categoryCode');
+
+					if (category == 1) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=1";		
+					} else if (category == 2) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=2";			
+					} else if (category == 3) {
+						window.location.href = "/categoryList.qboard?cpage=1&category=3";				
+					} else {
+						window.location.href = "/list.qboard";
+					}
+
+				});-->

@@ -95,23 +95,129 @@ public class QBoardDAO {
 		}
 	}
 
+
+	//3.페이지별 전체 게시글 select 하기
+	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category) throws Exception {
+		if(category==0) {
+			String sql = "SELECT * " +
+					"FROM ( " +
+					"    SELECT q_board.*, " +
+					"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
+					"    FROM q_board " +
+					") subquery " +
+					"WHERE rown BETWEEN ? AND ?";
+
+			try (Connection con = this.getConnection();
+					PreparedStatement ptat = con.prepareStatement(sql)) {
+				ptat.setInt(1, startnum);
+				ptat.setInt(2, endnum);
+
+				try (ResultSet rs = ptat.executeQuery()) {
+					ArrayList<QBoardDTO> list = new ArrayList<>();
+					while (rs.next()) {
+						int qBoardSeq = rs.getInt("q_board_seq");
+						String userId = rs.getString("user_id");
+						int qBoardCategory = rs.getInt("q_board_category");
+						String qBoardTitle = rs.getString("q_board_title");
+						String qBoardContent = rs.getString("q_board_content");
+						Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+						String qBoardAnswer=rs.getString("q_board_answer");
+						String qBoardSecret=rs.getString("q_board_secret");
+						list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+					}
+					return list;
+				}
+			}
+		}else {
+			String sql = "SELECT * " +
+					"FROM ( " +
+					"    SELECT q_board.*, " +
+					"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
+					"    FROM q_board " +
+					" where q_board_category=?"+
+					") subquery " +
+					"WHERE rown BETWEEN ? AND ?";
+
+			try (Connection con = this.getConnection();
+					PreparedStatement ptat = con.prepareStatement(sql)) {
+				ptat.setInt(1, category);
+				ptat.setInt(2, startnum);
+				ptat.setInt(3, endnum);
+
+				try (ResultSet rs = ptat.executeQuery()) {
+					ArrayList<QBoardDTO> list = new ArrayList<>();
+					while (rs.next()) {
+						int qBoardSeq = rs.getInt("q_board_seq");
+						String userId = rs.getString("user_id");
+						int qBoardCategory = rs.getInt("q_board_category");
+						String qBoardTitle = rs.getString("q_board_title");
+						String qBoardContent = rs.getString("q_board_content");
+						Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+						String qBoardAnswer=rs.getString("q_board_answer");
+						String qBoardSecret=rs.getString("q_board_secret");
+						list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+					}
+					return list;
+				}
+			}
+			
+		}
+	}
+
+
+	//4. 현재 전체 보드 카운티하는 함수
+	public int getRecordCount(int category) throws Exception {
+		if(category==0) {
+			String sql="select count(*) from q_board";
+			int result=0;
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){	
+				try(ResultSet rs=ps.executeQuery();){
+					rs.next();
+					result= rs.getInt(1);
+					return result;
+				}	
+			}
+		}else {
+			String sql="select count(*) from q_board where q_board_category=?";
+			int result=0;
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){
+				ps.setInt(1, category);
+				try(ResultSet rs=ps.executeQuery();){
+					rs.next();
+					result= rs.getInt(1);
+					return result;
+				}	
+			}
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+	/*
 	//2. 페이지별 카테고리별로 select하기
-	public ArrayList<QBoardDTO> selectCategory(int startnum, int endnum, int category) throws Exception {
+	public ArrayList<QBoardDTO> selectCategoryList(int category) throws Exception {
 		String sql = "SELECT * " +
 				"FROM ( " +
 				"    SELECT q_board.*, " +
 				"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
 				"    FROM q_board " +
 				" where q_board_category=?"+
-				") subquery " +
-				"WHERE rown BETWEEN ? AND ?";
+				") subquery ";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement ptat = con.prepareStatement(sql)) {
 			ptat.setInt(1, category);
-			ptat.setInt(2, startnum);
-			ptat.setInt(3, endnum);
-
 			try (ResultSet rs = ptat.executeQuery()) {
 				ArrayList<QBoardDTO> list = new ArrayList<>();
 				while (rs.next()) {
@@ -129,21 +235,18 @@ public class QBoardDAO {
 			}
 		}
 	}
-	
+
 	//3.페이지별 전체 게시글 select 하기
-	public ArrayList<QBoardDTO> selectAll(int startnum, int endnum) throws Exception {
+	public ArrayList<QBoardDTO> selectAllList() throws Exception {
 		String sql = "SELECT * " +
 				"FROM ( " +
 				"    SELECT q_board.*, " +
 				"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
 				"    FROM q_board " +
-				") subquery " +
-				"WHERE rown BETWEEN ? AND ?";
+				") subquery ";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement ptat = con.prepareStatement(sql)) {
-			ptat.setInt(1, startnum);
-			ptat.setInt(2, endnum);
 
 			try (ResultSet rs = ptat.executeQuery()) {
 				ArrayList<QBoardDTO> list = new ArrayList<>();
@@ -161,22 +264,30 @@ public class QBoardDAO {
 				return list;
 			}
 		}
-	}
+	}*/
 
-	//4. getRecordCount()
-	public int getRecordCount() throws Exception {
-		String sql="select count(*) from q_board";
-		int result=0;
 
-		try(Connection con=this.getConnection();
-				PreparedStatement ps=con.prepareStatement(sql);){	
-			try(ResultSet rs=ps.executeQuery();){
-				rs.next();
-				result= rs.getInt(1);
-				return result;
-			}	
+
+
+	/*//더미데이터만들기
+	public static void main(String[] args) throws SQLException {
+		String url="jdbc:oracle:thin:@localhost:1521:xe";
+		String id="star";
+		String pw="star";
+
+		String sql="insert into q_board values(q_board_sequence.nextval,?,3,?,?,sysdate,'N','N')";
+
+		try(Connection con= DriverManager.getConnection(url, id, pw);
+				PreparedStatement pstat=con.prepareStatement(sql);){
+			for(int i=1; i<10; i++) {
+				pstat.setString(1, "nickname"+(i+100));
+				pstat.setString(2, "title"+(i+100));
+				pstat.setString(3, "content"+(i+100));
+				pstat.addBatch();
+			}
+			pstat.executeBatch();
 		}
-	}
+	}*/
 
 
 
