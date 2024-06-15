@@ -48,7 +48,7 @@ public class NBoardDAO {
 		
 		   String sql = "select * from ("+
 		   "select rownum AS rnum, a.* from("+
-				   "select*from n_board order by seq desc"+
+				   "select*from n_board order by n_board_seq desc"+
 		   ") a where rownum <= ?"+
 				   ") where rnum >= ?";
 		   
@@ -60,12 +60,13 @@ public class NBoardDAO {
 			   try(ResultSet rs = pstmt.executeQuery()){
 				   while(rs.next()) {
 					   NBoardDTO dto = new NBoardDTO();
-					   dto.setnBoardSeq(rs.getInt("nBoardSeq"));
-					   dto.setUserId(rs.getString("userId"));
-					   dto.setnBoardTitle(rs.getString("nBoardTitle"));
-					   dto.setnBoardContent(rs.getString("nBoardContent"));
-					   dto.setnBoardDate(rs.getTimestamp("nBoardDate"));
-					   dto.setnBoardView(rs.getInt("nBoardView"));
+					   dto.setnBoardSeq(rs.getInt("n_board_seq"));
+					   dto.setUserId(rs.getString("user_id"));
+					   dto.setnBoardTitle(rs.getString("n_board_title"));
+					   dto.setnBoardContent(rs.getString("n_board_content"));
+					   dto.setnBoardDate(rs.getTimestamp("n_board_date"));
+					   dto.setnBoardView(rs.getInt("n_board_view"));
+
 					   list.add(dto);
 				   }
 				   return list;

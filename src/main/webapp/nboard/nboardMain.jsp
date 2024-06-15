@@ -89,7 +89,14 @@
         display: flex;
         align-items: center;
     }
-
+	.notiListContent{
+	    border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+	}
     .notiCategory {
         flex: 1;
         text-align: center;
@@ -226,14 +233,11 @@
         <div class="title">
             <span>전체</span>
             
-            <button class="btn btn-primary btn-write">
-            <a href="/nboard/nBoardWrite.jsp" style="
-    			color: white;
-    			text-align: none;
-    			text-decoration-line: none;
-				">글 작성 
+			
+			<a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
+    			<i class="fas fa-pencil-alt"></i> 글 작성
 			</a>
-            <i class="fas fa-pencil-alt"></i></button>
+			
 
             <form class="d-flex" role="search">
             	
@@ -265,7 +269,7 @@
     </div>
 
 	<script>
-      
+	window.onload=function(){
             let cpage = ${cpage}; // 현재 페이지
             let recordTotalCount = ${record_total_count}; // 전체 글의 개수
             let recordCountPerPage = ${record_count_per_page}; // 한 페이지에 보여줄 게시물 수
@@ -297,7 +301,7 @@
                 if(startNavi==1){needPrev=false}
                 if(endNavi==pageTotalCount){needNext=false}
 
-                //출력
+                // 출력
          		// 왼쪽 화살표가 필요한 상황일때
                 if (needPrev) {
                 	let needPreva=$("<a>").attr("href","/list.nboard?cpage="+(startNavi - 1)).html(" < ");
@@ -314,7 +318,7 @@
                 	$("#navi").append(needNexta);
                 }
 
-     
+	 }
     </script>
 
 
