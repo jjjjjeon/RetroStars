@@ -273,11 +273,6 @@
                 	
 
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
                 <c:choose>
                 	<c:when test="${not empty loginId}">
 	                <ul class="navbar-nav ms-auto">

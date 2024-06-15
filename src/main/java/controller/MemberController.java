@@ -53,9 +53,12 @@ public class MemberController extends HttpServlet {
 				String pw = request.getParameter("pw");
 				
 				boolean result = memberDao.loginId(id, pw);
+				System.out.println(result);
 				if(result) {
-					
+					System.out.println("로그인 성공");
 					session.setAttribute("loginId", id);
+				}else {
+					System.out.println("로그인 실패. db 확인 부탁드려요.");
 				}
 				response.sendRedirect("/index.jsp");
 			}
