@@ -336,6 +336,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
     
+    $("#update_btn").on("click",function(){
+    	location.href="/member/mypage/updateMyPage.jsp"
+    })
+    
     $("#gohome").on("click",function(){
     	location.href="/index.jsp";
     })

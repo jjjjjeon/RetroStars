@@ -122,6 +122,16 @@ public class CBoardController extends HttpServlet {
 				request.setAttribute("viewerId", id);
 				request.setAttribute("DTO", post);
 				request.getRequestDispatcher("/cboard/detailBoard.jsp").forward(request, response);
+				
+			//유저게시판 게시글 삭제	
+			}else if (cmd.equals("/delete.cboard")) {
+				int category = Integer.parseInt(request.getParameter("category"));
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				
+				bManager.delPost(seq);
+				
+				response.sendRedirect("/list.cboard?category=" + category + "&cpage=" + cpage);
 			}
 			
 		}catch(Exception e) {
@@ -181,6 +191,20 @@ public class CBoardController extends HttpServlet {
 				}
 				
 				response.sendRedirect("/list.cboard");
+				
+			//유저게시판 게시글 수정
+			}else if (cmd.equals("/correction.cboard")) {
+				int category = Integer.parseInt(request.getParameter("category"));
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				String title = request.getParameter("title");
+				String content = request.getParameter("content");
+				
+				CBoardDTO post = new CBoardDTO(seq, "system", category, title, content, null, 0, 0);
+				
+				bManager.correctPost(post);
+				
+				response.sendRedirect("/detail.cboard?category=" + category + "&cpage=" + cpage + "&seq=" + seq);
 			}
 			
 		}catch(Exception e) {
