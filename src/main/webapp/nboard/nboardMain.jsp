@@ -226,14 +226,9 @@
         <div class="title">
             <span>전체</span>
             
-            <button class="btn btn-primary btn-write">
-            <a href="/nboard/nBoardWrite.jsp" style="
-    			color: white;
-    			text-align: none;
-    			text-decoration-line: none;
-				">글 작성 
-			</a>
-            <i class="fas fa-pencil-alt"></i></button>
+            <a href="/nboard/nBoardWrite.jsp">글 작성
+            <button class="btn btn-primary btn-write">            
+            <i class="fas fa-pencil-alt"></i></button></a>
 
             <form class="d-flex" role="search">
             	
@@ -265,7 +260,7 @@
     </div>
 
 	<script>
-      
+	window.onload=function(){
             let cpage = ${cpage}; // 현재 페이지
             let recordTotalCount = ${record_total_count}; // 전체 글의 개수
             let recordCountPerPage = ${record_count_per_page}; // 한 페이지에 보여줄 게시물 수
@@ -314,7 +309,7 @@
                 	$("#navi").append(needNexta);
                 }
 
-     
+	 }
     </script>
 
 

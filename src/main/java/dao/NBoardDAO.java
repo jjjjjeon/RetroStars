@@ -48,7 +48,7 @@ public class NBoardDAO {
 		
 		   String sql = "select * from ("+
 		   "select rownum AS rnum, a.* from("+
-				   "select*from n_board order by seq desc"+
+				   "select*from n_board order by n_board_seq desc"+
 		   ") a where rownum <= ?"+
 				   ") where rnum >= ?";
 		   
