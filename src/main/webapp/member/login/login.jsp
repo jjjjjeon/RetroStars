@@ -185,8 +185,12 @@
 	    			nickname: userData.properties.nickname
 	    		}	    		
 	    	}).done(function(data){
-	    		console.log("확인");
-	    	});
+	            console.log("확인");
+	            window.location.href = "/index.jsp";
+	    	}).fail(function(jqXHR, textStatus, errorThrown) {
+	            console.error("카카오 로그인 중 오류 발생 :", textStatus, errorThrown);
+	            alert("로그인 중 오류가 발생했습니다. 다시 시도해 주세요.");
+	        });
 	    	
 	    }
         $(document).ready(function(){

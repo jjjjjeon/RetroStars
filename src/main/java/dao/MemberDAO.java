@@ -119,6 +119,32 @@ public class MemberDAO {
         }
         return result;
     }
+    
+    /** 
+     * @Method Name  : id 확인
+     * @date : 2024. 6. 15. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 로그인 시 id가 존재하는 지 확인.
+     * @param 로그인 시 사용한 id
+     * @return boolean
+     * @throws Exception 
+     */
+    public boolean isMemberExists(String id) {
+        String sql = "select count(*) FROM member WHERE user_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     /** 
      * @Method Name  : mydata
      * @date : 2024. 6. 13. 

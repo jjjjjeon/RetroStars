@@ -138,16 +138,22 @@ public class MemberController extends HttpServlet {
                 // 완료 버튼을 누르면 메인화면으로 돌아감.
                 response.sendRedirect("/index.jsp");
 			}else if(cmd.equals("/kakaoLogin.member")) {
-                // 카카오 로그인 정보 처리
-                String kakaoId = request.getParameter("id");
-                String nickname = request.getParameter("nickname");
+			    // 카카오 로그인 정보 처리
+			    String kakaoId = request.getParameter("id");
+			    String nickname = request.getParameter("nickname");
 
-                session.setAttribute("kakaoId", kakaoId);
-                session.setAttribute("nickname", nickname);
-                MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
-                memberDao.addMember(addMember);
-                System.out.println("카카오 로그인 성공");
-                response.sendRedirect("/index.jsp");
+			    // 회원이 이미 존재하는지 확인
+			    if(!memberDao.isMemberExists(kakaoId)) {
+			        // 회원이 존재하지 않으면 회원가입 진행
+			        MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
+			        memberDao.addMember(addMember);
+			    }
+
+			    // 세션에 로그인 정보 저장
+			    session.setAttribute("loginId", kakaoId);
+			    session.setAttribute("nickname", nickname);
+			    System.out.println("카카오 로그인 성공");
+			    response.sendRedirect("/index.jsp");
 			}
 			
 			// 마이페이지 접속 시 정보 출력 기능
