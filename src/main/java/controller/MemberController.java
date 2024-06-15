@@ -61,6 +61,7 @@ public class MemberController extends HttpServlet {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
 				}
 				response.sendRedirect("/index.jsp");
+				return;
 			}
 			
 			// 로그아웃 기능.
@@ -69,6 +70,7 @@ public class MemberController extends HttpServlet {
 				session.invalidate();
 				System.out.println("로그아웃 성공");
 				response.sendRedirect("/index.jsp");
+				return;
 			}
 			
 			// 회원탈퇴 기능.
@@ -78,6 +80,7 @@ public class MemberController extends HttpServlet {
 				memberDao.deleteMember(id);
 				session.invalidate();
 				response.sendRedirect("/index.jsp");
+				return;
 			}
 			
 			if(cmd.equals("/term.member")) {
