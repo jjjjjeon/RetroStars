@@ -382,8 +382,69 @@
 				</div>
 			</div>
 			<script>
-				 
+				$(document).ready(function () {
+					let category = ${ category };
+					let cpage = ${ cpage };
+					let record_total_count = ${ record_total_count };
+					let record_count_per_page = ${ record_count_per_page };
+					let navi_count_per_page = ${ navi_count_per_page };
 
+					let page_total_count = 0;
+					if (record_total_count % record_count_per_page > 0) {
+						page_total_count = Math.floor(record_total_count / record_count_per_page) + 1;
+					} else {
+						page_total_count = Math.floor(record_total_count / record_count_per_page);
+					}
+
+					let startNavi = Math.floor((cpage - 1) / navi_count_per_page) * navi_count_per_page + 1;
+					let endNavi = startNavi + navi_count_per_page - 1;
+					if (endNavi > page_total_count) { endNavi = page_total_count; }
+
+					let needNext = true;
+					let needPrev = true;
+
+					if (startNavi == 1) { needPrev = false; }
+					if (endNavi == page_total_count) { needNext = false; }
+
+					if (needPrev == true) {
+						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
+						$("#page_navi").append(needPreva);
+					}
+
+					for (let i = startNavi; i <= endNavi; i++) {
+						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
+						$("#page_navi").append(pagesa);
+					}
+
+					if (needNext == true) {
+						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
+						$("#page_navi").append(needNexta);
+					}
+
+					console.log("needNext:", needNext);
+					console.log("startNavi:", startNavi);
+					console.log("endNavi:", endNavi);
+					console.log("page_total_count:", page_total_count);
+				});
+
+				$(document).on('click', '.naviAn', function (e) {
+					e.preventDefault();
+					let category = $(this).attr('data-categoryCode');
+					window.location.href = "/list.qboard?cpage=1&category=" + category;
+				});
+
+			</script>
+
+		</body>
+
+
+		</html>
+
+
+
+
+		<!--
+					
 				// 클릭 이벤트 위임
 				$(document).on('click', '.naviAn', function (e) {
 						e.preventDefault();
@@ -410,105 +471,4 @@
 						window.location.href = "/list.qboard";
 					}
 
-				});
-
-				function duplicatePageCode() {
-					let cpage = ${ cpage };
-					let record_total_count = ${ record_total_count };
-					let record_count_per_page = ${ record_count_per_page };
-					let navi_count_per_page = ${ navi_count_per_page };
-
-					let page_total_count = 0;
-					if (record_total_count % record_count_per_page > 0) {
-						page_total_count = Math.floor(record_total_count / record_count_per_page) + 1;
-					} else {
-						page_total_count = Math.floor(record_total_count / record_count_per_page);
-					}
-
-
-					let startNavi = Math.floor((cpage - 1) / navi_count_per_page) * navi_count_per_page + 1;
-
-					let endNavi = startNavi + navi_count_per_page - 1;
-					if (endNavi > page_total_count) { endNavi = page_total_count; }
-
-
-					let needNext = true;
-					let needPrev = true;
-
-
-					if (startNavi == 1) { needPrev = false; }
-					if (endNavi == page_total_count) { needNext = false; }
-
-					return {
-						startNavi: startNavi,
-						endNavi: endNavi,
-						needNext: needNext,
-						needPrev: needPrev,
-						page_total_count: page_total_count
-					};
-				}
-
-				function totalPageA() {
-					$("#page_navi").empty();
-
-					let { startNavi, endNavi, needNext, needPrev, page_total_count } = duplicatePageCode();
-
-					if (needPrev == true) {
-						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1)).html(" < ");
-						$("#page_navi").append(needPreva);
-					}
-
-					for (let i = startNavi; i <= endNavi; i++) {
-						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i).html(i + "&nbsp;");
-						$("#page_navi").append(pagesa);
-					}
-
-
-					if (needNext == true) {
-						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1)).html(" > ");
-						$("#page_navi").append(needNexta);
-					}
-
-					console.log("needNext:", needNext);
-					console.log("startNavi:", startNavi);
-					console.log("endNavi:", endNavi);
-					console.log("page_total_count:", page_total_count);
-
-				}
-
-				function categoryPageA() {
-					let category=${category};
-					console.log("category");
-					$("#page_navi").empty();
-
-					let { startNavi, endNavi, needNext, needPrev, page_total_count } = duplicatePageCode();
-
-					if (needPrev == true) {
-						let needPreva = $("<a>").attr("href", "/categoryList.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
-						$("#page_navi").append(needPreva);
-					}
-
-					for (let i = startNavi; i <= endNavi; i++) {
-						let pagesa = $("<a>").attr("href", "/categoryList.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
-						$("#page_navi").append(pagesa);
-					}
-
-
-					if (needNext == true) {
-						let needNexta = $("<a>").attr("href", "/categoryList.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
-						$("#page_navi").append(needNexta);
-					}
-
-					console.log("needNext:", needNext);
-					console.log("startNavi:", startNavi);
-					console.log("endNavi:", endNavi);
-					console.log("page_total_count:", page_total_count);
-
-				}
-
-			</script>
-
-		</body>
-
-
-		</html>
+				});-->

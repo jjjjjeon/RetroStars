@@ -53,103 +53,23 @@ public class QBoardController extends HttpServlet {
 				String pcpage=request.getParameter("cpage");
 				if(pcpage==null) {pcpage="1";}
 				int cpage=Integer.parseInt(pcpage);
+				String strcategory=request.getParameter("category");
+				if(strcategory==null) {strcategory="0";}
+				int category=Integer.parseInt(strcategory);
 				
 				//보낼 정보 처리하기
 				request.setAttribute("cpage", cpage);
+				request.setAttribute("category", category);
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
 				
-				//전체출력리스트
-				
-				request.setAttribute("record_total_count", boarddao.getRecordCountAll());
-				ArrayList<QBoardDTO> list=boarddao.selectAll(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE);
+				//게시판 전체 레코드 체크
+				request.setAttribute("record_total_count", boarddao.getRecordCount(category));
+				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
+										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category);
 				request.setAttribute("list", list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
-				
-				
-		  
-			}else if(cmd.equals("/categoryList.qboard")) {
-				HttpSession session=request.getSession();
-				
-				//받은 정보 처리하기
-				String pcpage=request.getParameter("cpage");
-				if(pcpage==null) {pcpage="1";}
-				int cpage=Integer.parseInt(pcpage);
-				
-				String strcategory=String.valueOf(session.getAttribute("category"));
-				//넘길 변수
-				int sscategory;
-				if(strcategory==null) { //세션정보 없다.
-					String rcategory=request.getParameter("category");
-					session.setAttribute("category", rcategory);
-					sscategory=Integer.parseInt(rcategory);
-				}else {//세션에 정보 있다.
-					sscategory=Integer.parseInt(strcategory);
-				}
-				
-			
-				System.out.println(sscategory);
-	
-
-				
-				//보낼 정보 처리하기
-				request.setAttribute("cpage", cpage);
-				request.setAttribute("category", sscategory);
-				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
-				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
-				request.setAttribute("record_total_count", boarddao.getRecordCountCategory(sscategory));
-				ArrayList<QBoardDTO> list=boarddao.selectCategory(
-							cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-							cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,
-							sscategory);
-				request.setAttribute("list", list);
-				
-				
-				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
-							
-			}else if(cmd.equals("/selectCategoryList.qboard")) {
-				//여기서 페이징 처리하고 화면에 보여줘
-				
-				
-				
-				
 			}
-			/*else if(cmd.equals("/select.qboard")) {
-				String pcpage=request.getParameter("cpage");
-				if(pcpage==null) {pcpage="1";}
-				int cpage=Integer.parseInt(pcpage);
-				int recordCountPerPage = Static.QBOARD_RECOD_COUNT_PER_PAGE;
-	            int naviCountPerPage = Static.QBOARD_NAVI_COUNT_PER_PAGE;
-	            int recordTotalCount = boarddao.getRecordCount();
-	            System.out.println("1. 페이지정보" + cpage);
-	            
-	            String strcategory=request.getParameter("category");
-	            System.out.println("2.카테고리정보" +strcategory);
-	            
-	            //String searchBy=request.getParameter("searchBy");
-	            //System.out.println("3. 검색분류" +searchBy);
-	            
-	            ///String searchDetail=request.getParameter("searchDetail");
-	            //System.out.println("4. 검색내용" +searchDetail);
-	            
-	            ArrayList<QBoardDTO> list=null;
-	            if(strcategory.equals("전체")) {
-	            	list=boarddao.selectAll(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE);
-	            	
-	            }else if(strcategory.equals("게임문의")||strcategory.equals("제휴문의")||strcategory.equals("기타문의")){
-	            	int category= boarddao.getCategory(strcategory);
-	            	list=boarddao.selectCategory(
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-									cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,
-									category);
-	            }
-				
-				request.setAttribute("list", list);
-				String json = g.toJson(new Object[] { cpage,recordCountPerPage, naviCountPerPage, recordTotalCount, list });
-		        response.getWriter().write(json);
-			}*/
 		}catch(Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("/error.jsp");
