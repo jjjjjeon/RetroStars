@@ -121,7 +121,7 @@ public class MemberDAO {
     }
     
     /** 
-     * @Method Name  : id 확인
+     * @Method Name  : 카카오 id 확인
      * @date : 2024. 6. 15. 
      * @author : Jin 
      * @version : 
@@ -131,7 +131,7 @@ public class MemberDAO {
      * @throws Exception 
      */
     public boolean isMemberExists(String id) {
-        String sql = "select count(*) FROM member WHERE user_id=?";
+        String sql = "select count(*) from member where user_id=?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id);
@@ -145,6 +145,22 @@ public class MemberDAO {
         }
         return false;
     }
+    
+    public boolean isUserIdAvailable(String userId) {
+        String sql = "select count(*) from member where user_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }    
     /** 
      * @Method Name  : mydata
      * @date : 2024. 6. 13. 
