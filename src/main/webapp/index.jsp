@@ -262,7 +262,7 @@
                             <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
                             <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
                             <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
                         </ul>
                     </li>

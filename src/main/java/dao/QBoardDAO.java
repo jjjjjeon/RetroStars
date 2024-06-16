@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
 import dto.QBoardDTO;
 
 /**
@@ -289,9 +288,33 @@ public class QBoardDAO {
 			}
 		}
 	}
+	
+	//3. 내용출력하기
+		public QBoardDTO selectcontent(int searchseq) throws Exception{
+			String sql="select * from q_board  where q_board_seq=?";
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){	
+				ps.setInt(1, searchseq);
+				try(ResultSet rs=ps.executeQuery();){
+					while(rs.next()) {
+						int qBoardSeq = rs.getInt("q_board_seq");
+						String userId = rs.getString("user_id");
+						int qBoardCategory = rs.getInt("q_board_category");
+						String qBoardTitle = rs.getString("q_board_title");
+						String qBoardContent = rs.getString("q_board_content");
+						Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+						String qBoardAnswer=rs.getString("q_board_answer");
+						String qBoardSecret=rs.getString("q_board_secret");
+						return new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret);
+					}
+					return null;
+				}
+			}
+		}
 
 
-	//더미데이터만들기
+	/*//더미데이터만들기
 	public static void main(String[] args) throws SQLException {
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String id="star";
@@ -309,7 +332,7 @@ public class QBoardDAO {
 			}
 			pstat.executeBatch();
 		}
-	}
+	}*/
 
 
 
