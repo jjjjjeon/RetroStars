@@ -28,6 +28,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 <style>
+        /* thisboard section styling */
+        .thisboard {
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+    
+        .detailtitle {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr 1.5fr 1fr;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    
+        .cdetailcontent {
+            padding: 20px;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
                /* footer */
         .footer {
         	position: fixed;
@@ -140,8 +167,44 @@
         </div>
     </nav>
     
-    아직 미완
-    
+    <div class="thisboard">
+    	<div class="detailtitle">
+    		<span>${dto.nBoardSeq }</span>
+    		<span>${dto.nBoardTitle }</span>
+    		<span>${dto.userId }</span>
+    		<span>${dto.nBoardDate }</span>
+    		<span>${dto.nBoardView }</span>
+    	</div>
+    	<div class="detailcontent">
+    		${dto.nBoardContent }
+    	</div>
+    	<div class="detailbtn">
+			<input type="button" value="뒤로가기" id="back">
+			<input type="button" value="삭제" id="delete" data-nboard-seq="${dto.nBoardSeq}">
+			<input type="button" value="수정" id="edit">
+    	</div>
+    	<form action="/update.nboard">
+    		<input type="hidden">
+    	</form>
+    </div>
+    <script>
+    	// 뒤로 가기 버튼 클릭 시
+    	$("#back").on("click",function(){
+    		location.href="/list.nboard";
+    	});
+    	
+    	// 삭제 버튼 클릭 시
+    	$("#delete").on("click",function(){
+    		let nboardseq = $(this).data("nboard-seq");
+    		
+    		let result = confirm("정말 삭제하시겠습니까?");
+    		
+    		if(result) {
+    			location.href = "/boardOut.nboard?nBoardSeq="+nboardseq;
+    		}
+    	});
+    	
+    </script>
     
      <div class="footer">
         <div class="footerbox">
