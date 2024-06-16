@@ -61,7 +61,7 @@ public class MemberController extends HttpServlet {
 				if(result) {
 					System.out.println("로그인 성공");
 					session.setAttribute("loginId", id);
-					MemberDTO member = memberDao.mydata(id);
+					MemberDTO member = memberDao.myData(id);
                     session.setAttribute("profileUrl", member.getUserProfileUrl());
 					
 				}else {
@@ -197,10 +197,11 @@ public class MemberController extends HttpServlet {
 				session = request.getSession();
 				String id = (String) session.getAttribute("loginId");
 				
-				MemberDTO mydata = memberDao.mydata(id);
+				MemberDTO mydata = memberDao.myData(id);
 				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
 				String genderCode = mydata.getUserNo().substring(7,8);
+				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String gender;
 				if(genderCode.equals("1")) {
 					gender="Male";
@@ -214,6 +215,7 @@ public class MemberController extends HttpServlet {
 				int count2 = listCategory2.size();
 				
 				request.setAttribute("birth", birth);
+				request.setAttribute("phone", phone);
 				request.setAttribute("gender", gender);
 				request.setAttribute("mydata", mydata);
 				request.setAttribute("listCategory1", listCategory1);
@@ -222,6 +224,39 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("count2", count2);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
+				
+			// 마이페이지 수정 버튼 클릭 시 기존 저장된 정보 출력 기능	
+			}else if(cmd.equals("/updateList.member")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				
+				MemberDTO mydata = memberDao.myData(id);
+				System.out.println(mydata.getUserNo());
+				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
+				String genderCode = mydata.getUserNo().substring(7,8);
+				String gender;
+				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
+				
+				if(genderCode.equals("1")) {
+					gender="Male";
+				}else if(genderCode.equals("2")) {
+					gender="Female";
+				}else {gender="None";}
+				
+				request.setAttribute("phone", phone);
+				request.setAttribute("birth", birth);
+				request.setAttribute("gender", gender);
+				request.setAttribute("mydata", mydata);
+				
+				
+				request.getRequestDispatcher("/member/mypage/updateMyPage.jsp").forward(request, response);	
+				
+			}else if(cmd.equals("/updateData")) {
+				
+				String id = (String) request.getSession().getAttribute("loginId");
+				
+				System.out.println();
 				
 			}
 			
