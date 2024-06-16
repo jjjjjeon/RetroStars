@@ -184,6 +184,16 @@
                     height: 100px;
                     margin-left: 20px;
                 }
+
+                .btnsdiv{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .btnsdiv>button{
+                    margin-right: 5px;
+                }
             </style>
         </head>
 
@@ -231,8 +241,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">마이페이지</a>
                             </li>
-
-
                         </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
@@ -253,11 +261,20 @@
                                 <div id="post-title" contenteditable="false">${dto.qBoardTitle}</div>
                             </div>
                             <div class="post-body">
-                                <div id="post-content" contenteditable="false">${dto.qBoardContent }</div>
+                                <div id="post-content" contenteditable="false">${dto.qBoardContent}</div>
                             </div>
                         </div>
                     </div>
                 </main>
+            </div>
+            <div class="btnsdiv">
+                <button class="backlist btn btn-secondary" type="button" onclick="location.href='/list.qboard'">목록으로</button>
+                <c:choose>
+                    <c:when test="${loginId eq dto.userId}">
+                        <button class="btn btn-secondary" id="updatebtn">수정</button>
+                        <button class="btn btn-secondary" id="deletebtn">삭제</button>
+                    </c:when>
+                </c:choose>
             </div>
             <div class="footer">
                 <div class="footerbox">
@@ -279,5 +296,71 @@
                 </div>
             </div>
         </body>
+        <script>
+		$("#updatebtn").on("click", function() {
+			updatebtn = $(this);
+			deletebtn = $(this).next();
+
+			if (updatebtn.html() == "수정") {
+				$("div[contenteditable]").attr("contenteditable", "true");
+				updatebtn.html("완료");
+				deletebtn.html("취소");
+
+				$(".title").on("keypress", function(e) {
+					if (e.key == "Enter") {
+						return false;
+					}
+				});
+
+				$(".contents").on("keypress", function(e) {
+					if (e.key == "Enter") {
+						return false;
+					}
+				});
+
+			} else if (updatebtn.html() == "완료") {
+				$("div[contenteditable]").attr("contenteditable", "false");
+
+				let form = $('<form>', {
+					action : '/update.qboard',
+					method : 'post'
+				}); // 동적  form 생성
+
+	
+				let formData = [ $('<input>', {
+					type : 'hidden',
+					name : 'seq',
+					value : '${dto.qBoardSeq}'
+				}), $('<input>', {
+					type : 'hidden',
+					name : 'title',
+					value : $('#post-title').html().trim()
+				}), $('<input>', {
+					type : 'hidden',
+					name : 'content',
+					value : $('#post-content').html().trim()
+				}) ];
+
+				
+				form.append(formData);
+				form.appendTo('body').submit();
+			}
+		})
+
+		$("#deletebtn").on("click", function() {
+			updatebtn = $(this).prev();
+			deletebtn = $(this);
+
+			if (deletebtn.html() == "삭제") {
+				let result = confirm("정말 삭제하시겠습니까?");
+				if (result) {
+					location.href = "/delete.qboard?seq=${dto.qBoardSeq}"
+				}
+			} else if (deletebtn.html() == "취소") {
+				location.href = "/detail.qboard?seq=${dto.qBoardSeq}";
+			}
+
+		})
+        </script>
 
         </html>
