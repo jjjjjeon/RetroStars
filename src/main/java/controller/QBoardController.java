@@ -71,13 +71,18 @@ public class QBoardController extends HttpServlet {
 				
 				//게시판 전체 레코드 체크
 				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
-				System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
+				//System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
 				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
 										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);
 				request.setAttribute("list", list);
-				System.out.println(list);
+				//System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			
+			}else if(cmd.equals("/detail.qboard")) {
+				int seq=Integer.parseInt(request.getParameter("qBoardSeq"));
+				QBoardDTO dto=boarddao.selectcontent(seq);
+				request.setAttribute("dto", dto);
+				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
