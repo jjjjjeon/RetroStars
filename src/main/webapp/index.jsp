@@ -318,7 +318,7 @@
                 play 영상 영역
                 </div>
                 <div class="startbtn">
-                    <a href="/gboard/mainBoard.jsp"><img src="/image/startbtn.png" alt=""></a>
+                    <a href="/list.gboard"><img src="/image/startbtn.png" alt=""></a>
                 </div>
             </div>
 
