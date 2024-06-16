@@ -6,7 +6,7 @@
 
 		<head>
 			<meta charset="UTF-8">
-			<title>Q&Apage</title>
+			<title>Q&A page</title>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<script src="https://kit.fontawesome.com/5af4c0ec93.js" crossorigin="anonymous"></script>
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -147,6 +147,15 @@
 				.list_data_row {
 					border-bottom: 1px solid lightgray;
 					margin: 0;
+				}
+
+				.detailA{
+				 	text-decoration: none;
+					color: white;
+				}
+
+				.detailA:hover{
+					color: #00d4ff;
 				}
 
 
@@ -338,18 +347,19 @@
 								<div class="list_detail_box_col col" style="flex: 1; height: 100%;">
 									<!--여기에 리스트 출력-->
 									<c:forEach var="dto" items="${list}">
-										<div class="list_data_row row" style="height: 44px; width: 100%;">
+										<a href="/detail.qboard?qBoardSeq=${dto.qBoardSeq}" class="detailA"><div class="list_data_row row" style="height: 44px; width: 100%;">
 											<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
 											<div class="list_data_category center" style="flex: 1;">
 												${dto.qBoardCategory}</div>
 											<div class="list_data_writer center" style="flex: 1;">${dto.userId}</div>
-											<div class="list_data_title center" style="flex: 4.5;">${dto.qBoardTitle}
+											<div class="list_data_title center" style="flex: 4.5;">
+											${dto.qBoardTitle}
 											</div>
 											<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
 											</div>
 											<div class="list_data_answer center" style="flex: 1;">${dto.qBoardAnswer}
 											</div>
-										</div>
+										</div></a>
 									</c:forEach>
 								</div>
 							</div>
