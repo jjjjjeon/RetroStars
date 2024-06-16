@@ -314,13 +314,13 @@
 									전체
 								</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">제목</a></li>
-									<li><a class="dropdown-item" href="#">내용</a></li>
+									<li><a class="dropdown-item" href="#" data-searchBy="q_board_title">제목</a></li>
+									<li><a class="dropdown-item" href="#" data-searchBy="q_board_content">내용</a></li>
 								</ul>
 							</div>
 							<div class="search_bar center">
 								<input id="search_input" type="text" placeholder="검색어를 입력하세요.">
-								<i class="fa-solid fa-magnifying-glass"></i>
+								<i id="search_icon" class="fa-solid fa-magnifying-glass"></i>
 							</div>
 						</div>
 					</div>
@@ -382,7 +382,26 @@
 				</div>
 			</div>
 			<script>
+				let searchBy="0";
+				let searchData="0";
 				$(document).ready(function () {
+					//url파싱 스트링값을 변수로 처리하는 문제를 해결하기 위해
+					const currentUrl = window.location.href;
+					const url = new URL(currentUrl);
+
+					const protocol = url.protocol; // 예: "https:"
+					const host = url.host; // 예: "example.com"
+					const pathname = url.pathname; // 예: "/path"
+					const searchParams = url.searchParams;
+
+					searchBy = searchParams.get('searchBy');
+					searchData = searchParams.get('searchData'); 
+
+					if(searchBy==null){
+						searchBy="0";
+						searchData="0";
+					}
+
 					let category = ${ category };
 					let cpage = ${ cpage };
 					let record_total_count = ${ record_total_count };
@@ -407,24 +426,20 @@
 					if (endNavi == page_total_count) { needNext = false; }
 
 					if (needPrev == true) {
-						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
+						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(" < ");
 						$("#page_navi").append(needPreva);
 					}
 
 					for (let i = startNavi; i <= endNavi; i++) {
-						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
+						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(i + "&nbsp;");
 						$("#page_navi").append(pagesa);
 					}
 
 					if (needNext == true) {
-						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
+						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(" > ");
 						$("#page_navi").append(needNexta);
 					}
 
-					console.log("needNext:", needNext);
-					console.log("startNavi:", startNavi);
-					console.log("endNavi:", endNavi);
-					console.log("page_total_count:", page_total_count);
 				});
 
 				$(document).on('click', '.naviAn', function (e) {
@@ -433,42 +448,50 @@
 					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
 
+				//토글을 클릭하지 않고 전체인 상태에서 검색하려고 할 때 카테고리를 선택하라고 알리기
+
+
+				//토글을 선택했다면
+				$(".dropdown-item").on("click", function (e) {
+					e.preventDefault();
+					$(".dropdown-toggle").html($(this).html());
+					let searchBy = $(this).attr("data-searchBy");
+					console.log(searchBy);
+
+					//돋보기 이미지를 클릭할 때
+					$("#search_icon").on("click", function () {
+						if ($("#search_input").val() == "") {
+							alert("검색어를 입력해주세요.");
+							return false;
+						} else {
+							let category = ${ category };
+							//주소는 일단 고민중
+							window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
+						}
+					})
+
+					//엔터버튼을 누를 때
+					$("#search_input").on("keydown", function (e) {
+						if (e.key == "Enter") {
+							if ($("#search_input").val() == "") {
+								alert("검색어를 입력해주세요.");
+								return false;
+							} else {
+								let category = ${ category };
+								//주소는 일단 고민중
+								window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
+							}
+						}
+					})
+
+
+				});
+
+
+
 			</script>
 
 		</body>
 
 
 		</html>
-
-
-
-
-		<!--
-					
-				// 클릭 이벤트 위임
-				$(document).on('click', '.naviAn', function (e) {
-						e.preventDefault();
-						let category = $(this).attr('data-categoryCode');
-
-						if (category == 1 || category == 2 || category == 3) {
-							categoryPageA();
-						} else {
-							totalPageA();
-						}
-				});
-
-				$(document).on('click', '.naviAn', function (e) {
-					e.preventDefault();
-					let category = $(this).attr('data-categoryCode');
-
-					if (category == 1) {
-						window.location.href = "/categoryList.qboard?cpage=1&category=1";		
-					} else if (category == 2) {
-						window.location.href = "/categoryList.qboard?cpage=1&category=2";			
-					} else if (category == 3) {
-						window.location.href = "/categoryList.qboard?cpage=1&category=3";				
-					} else {
-						window.location.href = "/list.qboard";
-					}
-
-				});-->
