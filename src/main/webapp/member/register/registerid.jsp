@@ -32,7 +32,7 @@
     <div class="container">
         <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>아이디 생성</h1>
-        <p>retro Starts 아이디를 만들어 주세요.</p>
+        <p>Retro Starts 아이디를 만들어 주세요.</p>
         <form action="/registerId.member" method="post">
             <div class="input-group">
                 <label for="userId">아이디</label>
