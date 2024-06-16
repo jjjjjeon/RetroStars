@@ -384,19 +384,24 @@
 			<script>
 				let searchBy="0";
 				let searchData="0";
-
 				$(document).ready(function () {
-					
-					/*$.ajax({
-						url:"/list.qboard",
-						type:'GET',
-						dataType:"json"
-					}).done(function(search){
-						searchBy=search[0];
-						searchData=search[1];
-					});*/
-					searchBy = '<%= request.getParameter("searchBy") %>';
-					searchData = '<%= request.getParameter("searchData") %>';
+					//url파싱 스트링값을 변수로 처리하는 문제를 해결하기 위해
+					const currentUrl = window.location.href;
+					const url = new URL(currentUrl);
+
+					const protocol = url.protocol; // 예: "https:"
+					const host = url.host; // 예: "example.com"
+					const pathname = url.pathname; // 예: "/path"
+					const searchParams = url.searchParams;
+
+					searchBy = searchParams.get('searchBy');
+					searchData = searchParams.get('searchData'); 
+
+					if(searchBy==null){
+						searchBy="0";
+						searchData="0";
+					}
+
 					let category = ${ category };
 					let cpage = ${ cpage };
 					let record_total_count = ${ record_total_count };
@@ -421,17 +426,17 @@
 					if (endNavi == page_total_count) { needNext = false; }
 
 					if (needPrev == true) {
-						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category).html(" < ");
+						let needPreva = $("<a>").attr("href", "/list.qboard?cpage=" + (startNavi - 1) + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(" < ");
 						$("#page_navi").append(needPreva);
 					}
 
 					for (let i = startNavi; i <= endNavi; i++) {
-						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category).html(i + "&nbsp;");
+						let pagesa = $("<a>").attr("href", "/list.qboard?cpage=" + i + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(i + "&nbsp;");
 						$("#page_navi").append(pagesa);
 					}
 
 					if (needNext == true) {
-						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category).html(" > ");
+						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(" > ");
 						$("#page_navi").append(needNexta);
 					}
 
@@ -443,8 +448,7 @@
 					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
 
-				//토글을 클릭하지 않고 전체인 상태에서 검색하려고 할 때 
-				//카테고리를 선택하라고 띄워주기
+				//토글을 클릭하지 않고 전체인 상태에서 검색하려고 할 때 카테고리를 선택하라고 알리기
 
 
 				//토글을 선택했다면

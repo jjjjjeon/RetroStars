@@ -104,15 +104,14 @@ public class QBoardDAO {
 			//검색이 있을 때
 			if(!(strsearchBy.equals("0"))) {
 				String sql= "SELECT * FROM ( SELECT q_board.*, row_number() "+ 
-						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board where ? Like ?) subquery "+
+						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board where "+strsearchBy+" Like ?) subquery "+
 						"WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
 						PreparedStatement ps = con.prepareStatement(sql);) {
-					ps.setString(1, strsearchBy);
-					ps.setString(2, strsearchData);
-					ps.setInt(3, startnum);
-					ps.setInt(4, endnum);
+					ps.setString(1, "%"+strsearchData+"%");
+					ps.setInt(2, startnum);
+					ps.setInt(3, endnum);
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
@@ -165,16 +164,15 @@ public class QBoardDAO {
 			if(!(strsearchBy.equals("0"))) {
 				String sql = "SELECT * FROM ( SELECT q_board.*, row_number() "+
 			             "OVER (ORDER BY q_board_seq DESC) AS rown "+
-			             "FROM q_board WHERE q_board_category=? AND ? LIKE ?) subquery " +
+			             "FROM q_board WHERE q_board_category=? AND "+strsearchBy+" LIKE ?) subquery " +
 			             "WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
 						PreparedStatement ps = con.prepareStatement(sql);) {
 					ps.setInt(1, category);
-					ps.setString(2, strsearchBy);
-					ps.setString(3, strsearchData);
-					ps.setInt(4, startnum);
-					ps.setInt(5, endnum);
+					ps.setString(2, "%"+strsearchData+"%");
+					ps.setInt(3, startnum);
+					ps.setInt(4, endnum);
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
@@ -237,7 +235,7 @@ public class QBoardDAO {
 
 				try(Connection con=this.getConnection();
 						PreparedStatement ps=con.prepareStatement(sql);){
-					 ps.setString(1, "%" + strsearchData + "%");
+					 ps.setString(1, "%"+strsearchData+"%");
 					try(ResultSet rs=ps.executeQuery();){
 						rs.next();
 						result= rs.getInt(1);
@@ -266,7 +264,7 @@ public class QBoardDAO {
 				try(Connection con=this.getConnection();
 						PreparedStatement ps=con.prepareStatement(sql);){
 					ps.setInt(1, category);
-				    ps.setString(2, "%" + strsearchData + "%");
+				    ps.setString(2, "%"+strsearchData+"%");
 					try(ResultSet rs=ps.executeQuery();){
 						rs.next();
 						result= rs.getInt(1);
@@ -293,25 +291,25 @@ public class QBoardDAO {
 	}
 
 
-	/*//더미데이터만들기
+	//더미데이터만들기
 	public static void main(String[] args) throws SQLException {
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String id="star";
 		String pw="star";
 
-		String sql="insert into q_board values(q_board_sequence.nextval,?,3,?,?,sysdate,'N','N')";
+		String sql="insert into q_board values(q_board_sequence.nextval,?,1,?,?,sysdate,'N','N')";
 
 		try(Connection con= DriverManager.getConnection(url, id, pw);
 				PreparedStatement pstat=con.prepareStatement(sql);){
-			for(int i=1; i<10; i++) {
-				pstat.setString(1, "nickname"+(i+100));
-				pstat.setString(2, "title"+(i+100));
-				pstat.setString(3, "content"+(i+100));
+			for(int i=1; i<30; i++) {
+				pstat.setString(1, "test"+(i));
+				pstat.setString(2, "test"+(i));
+				pstat.setString(3, "test"+(i));
 				pstat.addBatch();
 			}
 			pstat.executeBatch();
 		}
-	}*/
+	}
 
 
 

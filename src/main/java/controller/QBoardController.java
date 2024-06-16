@@ -64,14 +64,10 @@ public class QBoardController extends HttpServlet {
 				//보낼 정보 처리하기
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("category", category);
-				//response.getWriter().append(g.toJson(new String[] {searchBy, searchData}));
 				request.setAttribute("searchBy", searchBy);
 				request.setAttribute("searchData", searchData);
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
-				
-				System.out.println("=========="+searchBy+searchData);
-				
 				
 				//게시판 전체 레코드 체크
 				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
@@ -81,6 +77,7 @@ public class QBoardController extends HttpServlet {
 				request.setAttribute("list", list);
 				System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
+			
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
