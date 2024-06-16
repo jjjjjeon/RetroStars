@@ -256,8 +256,9 @@
 
             <c:forEach var ="dto" items="${list}">
             	<div class = "notiListContent">
-                 	<div class="notiCategory">공지</div>
-                	<div class="notiTitle">${dto.nBoardTitle }</div>
+                 	
+                 	<div class="notiCategory">${dto.nBoardSeq }</div>
+                	<div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle }</a></div>
                 	<div class="notiAdmin">${dto.userId }</div>
                 	<div class="notiDate">${dto.nBoardDate }</div>
                 	<div class="notiView">${dto.nBoardView }</div>

@@ -87,6 +87,17 @@ public class NBoardDAO {
 	    	  
 	      }
 	}
+	// 게시물 삭제
+	public int removePage(int seq) throws Exception{
+		String sql = "delete from n_board where n_board_seq=?";
+		   try(Connection con = this.getConnection();
+				   PreparedStatement pstat = con.prepareStatement(sql)){
+			   pstat.setInt(1, seq);
+			   int result = pstat.executeUpdate();
+			   
+			   return result;
+		   }
+	}
 	// 게시글 개수 나타내는 메서드
 	public int getRecordCount() throws Exception{
 		String sql = "select count(*) from n_board";
@@ -97,5 +108,28 @@ public class NBoardDAO {
 			return rs.getInt(1);
 		}
 	}
+	
+	public NBoardDTO detailPage(int seq) throws Exception{
+		String sql = "select*from n_board where n_board_seq=?";
+		   try(Connection con = this.getConnection();
+				   PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1,seq);
+			
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				NBoardDTO dto = new NBoardDTO();
+				   dto.setnBoardSeq(rs.getInt("n_board_seq"));
+				   dto.setUserId(rs.getString("user_id"));
+				   dto.setnBoardTitle(rs.getString("n_board_title"));
+				   dto.setnBoardContent(rs.getString("n_board_content"));
+				   dto.setnBoardDate(rs.getTimestamp("n_board_date"));
+				   dto.setnBoardView(rs.getInt("n_board_view"));
+				   
+				   return dto;
+			}
+		}
+	}
+	
+	
 	
 }
