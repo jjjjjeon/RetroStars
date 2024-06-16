@@ -233,7 +233,7 @@
        
        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">ICON</a>
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -258,17 +258,16 @@
                             게시판
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
                             <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">랭킹</a>
-
                     </li>
                    
 
@@ -276,6 +275,11 @@
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
                       <li class="nav-item">
                            <a class="nav-link" href="/mypage.member">마이페이지</a>
                        </li>

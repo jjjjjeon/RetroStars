@@ -59,7 +59,23 @@ public class NBoardController extends HttpServlet {
 				request.setAttribute("record_total_count", nManager.getRecordCount());
 				
 				request.getRequestDispatcher("/nboard/nboardMain.jsp").forward(request,response);
+			} else if(cmd.equals("/detail.nboard")) {
+				
+				System.out.println("detail.nboard진입");
+				
+				int seq = Integer.parseInt(request.getParameter("nBoardSeq"));
+				NBoardDTO dto = nManager.detailPage(seq);
+			
+				request.setAttribute("dto",dto);
+				request.getRequestDispatcher("/nboard/nboardDetail.jsp").forward(request, response);
+			} else if(cmd.equals("/boardOut.nboard")) {
+				int seq = Integer.parseInt(request.getParameter("nBoardSeq"));
+				nManager.removePage(seq);
+				System.out.println("게시물 삭제 성공");
+				response.sendRedirect("/list.nboard");
+				
 			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Error during forward: " + e.getMessage());
