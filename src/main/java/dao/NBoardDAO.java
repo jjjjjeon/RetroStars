@@ -124,11 +124,35 @@ public class NBoardDAO {
 				   dto.setnBoardContent(rs.getString("n_board_content"));
 				   dto.setnBoardDate(rs.getTimestamp("n_board_date"));
 				   dto.setnBoardView(rs.getInt("n_board_view"));
-				   
 				   return dto;
 			}
 		}
 	}
+	
+		public int updateNBoard(NBoardDTO dto) throws Exception {
+		    String sql = "update n_board set n_board_title=?, n_board_content=? where n_board_seq=?";
+		    try (Connection con = this.getConnection();
+		         PreparedStatement pstat = con.prepareStatement(sql)) {
+		        pstat.setString(1, dto.getnBoardTitle());
+		        pstat.setString(2, dto.getnBoardContent());
+		        pstat.setInt(3, dto.getnBoardSeq());
+		        
+		        System.out.println("삭제 성공");
+		        int result = pstat.executeUpdate();
+		        return result;
+		    }
+		}
+		
+		public int updateViewCount(int seq) throws Exception{
+			String sql = "update n_board set n_board_view=n_board_view + 1 where n_board_seq=?";
+			try(Connection con= this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setInt(1,seq);
+				return pstat.executeUpdate();
+			}
+		}
+		
+		
 	
 	
 	
