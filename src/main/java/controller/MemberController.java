@@ -200,7 +200,8 @@ public class MemberController extends HttpServlet {
 				MemberDTO mydata = memberDao.myData(id);
 				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
-				String genderCode = mydata.getUserNo().substring(7,8);
+				String genderCode = mydata.getUserNo().substring(6,7);
+				System.out.println(genderCode);
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String gender;
 				if(genderCode.equals("1")) {
@@ -234,7 +235,7 @@ public class MemberController extends HttpServlet {
 				MemberDTO mydata = memberDao.myData(id);
 				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
-				String genderCode = mydata.getUserNo().substring(7,8);
+				String genderCode = mydata.getUserNo().substring(6,7);
 				String gender;
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				
