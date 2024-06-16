@@ -197,7 +197,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <div class="profile">
                 <div class="main_profile">
                     <div class="profile_img">
-                        <img id="basic_img" src="/image/profileBasicImg.jpg">
+                        <img id="basic_img" src="${mydata.userProfileUrl}">
                     </div>
                     <div class="profile_data">
                         <div class="user_value_box">
@@ -237,7 +237,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
                         <div class="user_value_box">
                             <div class="user_phone value_title">PHONE : </div>
-                            <div class="user_phone_value value_content3"> ${mydata.userPhone} </div>
+                            <div class="user_phone_value value_content3"> ${phone} </div>
                             <div class="user_phone_value value_content4"> 
                             	<button type="button" class="btn btn-dark" id="update_btn">Update</button>
                             </div>
@@ -337,7 +337,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
     
     $("#update_btn").on("click",function(){
-    	location.href="/member/mypage/updateMyPage.jsp"
+    	location.href="/updateList.member"
     })
     
     $("#gohome").on("click",function(){

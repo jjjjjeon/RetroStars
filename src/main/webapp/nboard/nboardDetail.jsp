@@ -169,13 +169,13 @@
     
     <div class="thisboard">
     	<div class="detailtitle">
-    		<span>${dto.nBoardSeq }</span>
-    		<span>${dto.nBoardTitle }</span>
-    		<span>${dto.userId }</span>
-    		<span>${dto.nBoardDate }</span>
-    		<span>${dto.nBoardView }</span>
+    		<div>${dto.nBoardSeq }</div>
+    		<div class="ntitle" contenteditable="false">${dto.nBoardTitle }</div>
+    		<div>${dto.userId }</div>
+    		<div>${dto.nBoardDate }</div>
+    		<div>${dto.nBoardView }</div>
     	</div>
-    	<div class="detailcontent">
+    	<div class="detailcontent" contenteditable="false">
     		${dto.nBoardContent }
     	</div>
     	<div class="detailbtn">
@@ -184,7 +184,11 @@
 			<input type="button" value="수정" id="edit">
     	</div>
     	<form action="/update.nboard">
-    		<input type="hidden">
+    		<input type="hidden" name="seq" value="${dto.nBoardSeq}">
+    		<input type="hidden" name="title" id="hidden_title" value="${dto.nBoardTitle }">
+    		<input type="hidden" name="post" id="hidden_post" value="${dto.nBoardContent }">
+    		<input type="submit" id="complete" style="display:none" value="완료">
+    		<input type="button" id="cancel" style="display:none" value="취소">
     	</form>
     </div>
     <script>
@@ -202,6 +206,36 @@
     		if(result) {
     			location.href = "/boardOut.nboard?nBoardSeq="+nboardseq;
     		}
+    	});
+    	
+ 	
+    	let post = $(".detailcontent");
+    	let title = $(".ntitle");
+    	
+    	// 수정 버튼 클릭 시
+    	$("#edit").on("click",function(){
+    
+    		$("#edit").hide();
+    		$("#complete").show();
+    		$("#cancel").show();
+    		$("#delete").hide();
+    		
+    		post.attr("contenteditable",true);
+    		title.attr("contenteditable",true);
+    		
+    	});
+    	// 완료 버튼 클릭 시
+    	$("#complete").on("click",function(){
+    		$("#hidden_title").val($(".ntitle").text().trim());
+    		$("#hidden_post").val($(".detailcontent").text().trim());
+    		$("#edit").show();
+    		$("#complete").hide();
+    		$("#cancel").hide();
+    		
+    	});
+    	// 취소 버튼 클릭 시
+    	$("#cancel").on("click",function(){
+    		location.href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}";
     	});
     	
     </script>
