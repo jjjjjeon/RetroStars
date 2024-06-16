@@ -50,25 +50,34 @@ public class QBoardController extends HttpServlet {
 			
 			}else if(cmd.equals("/list.qboard")) {
 				//받은 정보 처리하기
-				String pcpage=request.getParameter("cpage");
-				if(pcpage==null) {pcpage="1";}
-				int cpage=Integer.parseInt(pcpage);
+				String strcpage=request.getParameter("cpage");
+				if(strcpage==null) {strcpage="1";}
+				int cpage=Integer.parseInt(strcpage);
 				String strcategory=request.getParameter("category");
 				if(strcategory==null) {strcategory="0";}
 				int category=Integer.parseInt(strcategory);
+				String searchBy=request.getParameter("searchBy");
+				if(searchBy==null) {searchBy="0";}
+				String searchData=request.getParameter("searchData");
+				if(searchData==null) {searchData="0";}		
 				
 				//보낼 정보 처리하기
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("category", category);
+				request.setAttribute("searchBy", searchBy);
+				request.setAttribute("searchData", searchData);
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
 				
 				//게시판 전체 레코드 체크
-				request.setAttribute("record_total_count", boarddao.getRecordCount(category));
+				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
+				System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
 				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category);
+										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);
 				request.setAttribute("list", list);
+				System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
+			
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

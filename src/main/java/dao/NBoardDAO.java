@@ -124,11 +124,13 @@ public class NBoardDAO {
 				   dto.setnBoardContent(rs.getString("n_board_content"));
 				   dto.setnBoardDate(rs.getTimestamp("n_board_date"));
 				   dto.setnBoardView(rs.getInt("n_board_view"));
+
 				   return dto;
 			}
 		}
 	}
 	
+
 		public int updateNBoard(NBoardDTO dto) throws Exception {
 		    String sql = "update n_board set n_board_title=?, n_board_content=? where n_board_seq=?";
 		    try (Connection con = this.getConnection();
@@ -153,7 +155,7 @@ public class NBoardDAO {
 		}
 		
 		
-	
+
 	
 	
 }

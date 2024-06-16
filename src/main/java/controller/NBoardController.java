@@ -68,8 +68,9 @@ public class NBoardController extends HttpServlet {
 				NBoardDTO dto = nManager.detailPage(seq);
 			
 				request.setAttribute("dto",dto);
+
 				nManager.updateViewCount(seq);
-				
+
 				request.getRequestDispatcher("/nboard/nboardDetail.jsp").forward(request, response);
 			} else if(cmd.equals("/boardOut.nboard")) {
 				int seq = Integer.parseInt(request.getParameter("nBoardSeq"));
@@ -77,6 +78,7 @@ public class NBoardController extends HttpServlet {
 				System.out.println("게시물 삭제 성공");
 				response.sendRedirect("/list.nboard");
 				
+
 			} else if(cmd.equals("/update.nboard")) {
 				System.out.println("update.nboard진입");
 				int seq = Integer.parseInt(request.getParameter("seq"));
@@ -86,6 +88,7 @@ public class NBoardController extends HttpServlet {
 				System.out.println("게시물 수정 성공");
 				response.sendRedirect("/detail.nboard?nBoardSeq="+seq);
 				
+
 			}
 			
 		} catch(Exception e) {
