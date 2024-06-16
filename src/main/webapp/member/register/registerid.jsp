@@ -5,13 +5,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - 아이디 생성</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .availability-text {
-            display: none;
+        .checkText {
+            visibility: hidden;
             margin-top: 5px;
         }
         .disabled-button {
@@ -37,7 +37,7 @@
             <div class="input-group">
                 <label for="userId">아이디</label>
                 <input type="text" id="userId" name="userId" placeholder="아이디를 입력해주세요">
-                <p id="userId-availability" class="availability-text">사용할 수 있는 아이디입니다.</p>
+                <p id="checkText" class="checkText">사용할 수 있는 아이디입니다.</p>
                 <p class="rules">아이디는 3자 이상 16자 이하, 영어 또는 숫자로 구성되어야 합니다.</p>
             </div>
             <button type="submit" id="nextButton" class="disabled-button" disabled>다음</button>
@@ -51,13 +51,13 @@
 
     function checkUserId() {
         let userId = $('#userId').val();
-        let availabilityText = $('#userId-availability');
+        let checkText = $('#checkText');
         let nextButton = $('#nextButton');
 
         if (!validateUserId(userId)) {
-            availabilityText.text("사용 불가능한 아이디입니다.");
-            availabilityText.css('color', 'red');
-            availabilityText.show();
+            checkText.text("사용 불가능한 아이디입니다.");
+            checkText.css('color', 'red');
+            checkText.css('visibility', 'visible');
             nextButton.addClass('disabled-button');
             nextButton.prop('disabled', true);
             return;
@@ -69,22 +69,22 @@
             data: { userId: userId },
             success: function(response) {
                 if (response === "true") {
-                    availabilityText.text("사용할 수 있는 아이디입니다.");
-                    availabilityText.css('color', 'green');
+                    checkText.text("사용할 수 있는 아이디입니다.");
+                    checkText.css('color', 'green');
                     nextButton.removeClass('disabled-button');
                     nextButton.prop('disabled', false);
                 } else {
-                    availabilityText.text("이미 사용 중인 아이디입니다.");
-                    availabilityText.css('color', 'red');
+                    checkText.text("이미 사용 중인 아이디입니다.");
+                    checkText.css('color', 'red');
                     nextButton.addClass('disabled-button');
                     nextButton.prop('disabled', true);
                 }
-                availabilityText.show();
+                checkText.css('visibility', 'visible');
             },
             error: function() {
-                availabilityText.text("아이디 확인 중 오류가 발생했습니다.");
-                availabilityText.css('color', 'red');
-                availabilityText.show();
+                checkText.text("아이디 확인 중 오류가 발생했습니다.");
+                checkText.css('color', 'red');
+                checkText.css('visibility', 'visible');
                 nextButton.addClass('disabled-button');
                 nextButton.prop('disabled', true);
             }
@@ -93,16 +93,16 @@
 
     $(document).ready(function(){
         $('#userId').on('input', function() {
-            $('#userId-availability').hide();
+            $('#checkText').css('visibility', 'hidden');
             $('#nextButton').addClass('disabled-button');
             $('#nextButton').prop('disabled', true);
 
             if (validateUserId($(this).val())) {
                 checkUserId();
             } else {
-                $('#userId-availability').text("사용 불가능한 아이디입니다.");
-                $('#userId-availability').css('color', 'red');
-                $('#userId-availability').show();
+                $('#checkText').text("사용 불가능한 아이디입니다.");
+                $('#checkText').css('color', 'red');
+                $('#checkText').css('visibility', 'visible');
             }
         });
     });

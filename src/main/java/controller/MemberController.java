@@ -61,6 +61,9 @@ public class MemberController extends HttpServlet {
 				if(result) {
 					System.out.println("로그인 성공");
 					session.setAttribute("loginId", id);
+					MemberDTO member = memberDao.mydata(id);
+                    session.setAttribute("profileUrl", member.getUserProfileUrl());
+					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
 				}
@@ -102,12 +105,19 @@ public class MemberController extends HttpServlet {
 			else if(cmd.equals("/checkUserId.member")) {
 				// 아이디 중복확인
 				String userId = request.getParameter("userId");
-				boolean isAvailable = memberDao.isUserIdAvailable(userId);
+				boolean isAvailable = memberDao.isUserIdCheck(userId);
 				String idCheckResult = g.toJson(isAvailable);
 				PrintWriter pw = response.getWriter();
 				pw.append(idCheckResult);
 				return;
-			}			
+			}else if(cmd.equals("/checkUserNickname.member")) {
+                String userNickname = request.getParameter("userNickname");
+                boolean isCheck = memberDao.isUserNicknameCheck(userNickname);
+                String nicknameCheckResult = g.toJson(isCheck);
+                PrintWriter pw = response.getWriter();
+                pw.append(nicknameCheckResult);
+                return;
+            }			
 			else if(cmd.equals("/registerPw.member")) {
 				// 유저 패스워드 전송
 				String userPw = request.getParameter("userPw");
@@ -129,9 +139,12 @@ public class MemberController extends HttpServlet {
 			} 
 			else if(cmd.equals("/registerName.member")) {
 				// 이름, 닉네임, 주민등록번호, 폰 번호 전송
+			    String userNoFront = request.getParameter("userNoFront");
+			    String userNoBack = request.getParameter("userNoBack");
+			    String userNo = userNoFront + userNoBack + "******"; // 주민등록번호 형식 변환
 				session.setAttribute("userName", request.getParameter("userName"));
 				session.setAttribute("userNickname", request.getParameter("userNickname"));
-				session.setAttribute("userNo", request.getParameter("userNo"));
+				session.setAttribute("userNo", userNo);
 				session.setAttribute("userPhone", request.getParameter("userPhone"));
 				response.sendRedirect("/member/register/registerComplete.jsp");
 			} 
@@ -147,17 +160,18 @@ public class MemberController extends HttpServlet {
                 String userNickname = (String) session.getAttribute("userNickname");
                 String userNo = (String) session.getAttribute("userNo");
                 String userPhone = (String) session.getAttribute("userPhone");
+                String userProfileUrl = "upload/profile/default.png";
                 System.out.println(term  + privacy +  ads + userId + userPw + userEmail +  userName + userNickname + userNo + userPhone);
                 
                 // 기본 값 제외하고 모두 변수에 담아 dao에 넣기.
-                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
+                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()), userProfileUrl);
                 memberDao.addMember(addMember);
                 
                 // 세션 값 초기화
                 session.invalidate();
                 
                 // 완료 버튼을 누르면 메인화면으로 돌아감.
-                response.sendRedirect("/index.jsp");
+                response.sendRedirect("/member/login/login.jsp");
 			}
 			else if(cmd.equals("/kakaoLogin.member")) {
 			    // 카카오 로그인 정보 처리
