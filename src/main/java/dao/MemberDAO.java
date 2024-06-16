@@ -119,6 +119,84 @@ public class MemberDAO {
         }
         return result;
     }
+    
+    /** 
+     * @Method Name  : 카카오 id 확인
+     * @date : 2024. 6. 15. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 로그인 시 id가 존재하는 지 확인.
+     * @param 로그인 시 사용한 id
+     * @return boolean
+     * @throws Exception 
+     */
+    public boolean isMemberExists(String id) {
+        String sql = "select count(*) from member where user_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /** 
+     * @Method Name  : id 중복확인
+     * @date : 2024. 6. 16. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 회원가입 시 id가 존재하는 지 확인.
+     * @param 회원가입 시 사용한 id
+     * @return boolean
+     * @throws Exception 
+     */
+    public boolean isUserIdCheck(String userId) {
+        String sql = "select count(*) from member where user_id=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    /** 
+     * @Method Name  : 닉네임 중복확인
+     * @date : 2024. 6. 16. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 회원가입 시 닉네임이 존재하는 지 확인.
+     * @param 회원가입 시 사용한 닉네임
+     * @return boolean
+     * @throws Exception 
+     */
+    public boolean isUserNicknameCheck(String userNickname) {
+        String sql = "select count(*) from member where user_nickname=?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userNickname);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     /** 
      * @Method Name  : mydata
      * @date : 2024. 6. 13. 
@@ -160,6 +238,8 @@ public class MemberDAO {
     	}
     	
     }
+    
+    
     
     /** 
      * @Method Name  : selectCBoradCate1
