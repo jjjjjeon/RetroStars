@@ -198,7 +198,7 @@ public class MemberDAO {
         return false;
     }
     /** 
-     * @Method Name  : mydata
+     * @Method Name  : myData
      * @date : 2024. 6. 13. 
      * @author : kjy
      * @version : 
@@ -207,7 +207,7 @@ public class MemberDAO {
      * @return MemberDTO dto
      * @throws Exception 
      */ 
-    public MemberDTO mydata(String id) throws Exception{
+    public MemberDTO myData(String id) throws Exception{
     	
     	String sql = "select * from member where user_id=?";
     	
@@ -238,8 +238,6 @@ public class MemberDAO {
     	}
     	
     }
-    
-    
     
     /** 
      * @Method Name  : selectCBoradCate1
@@ -324,6 +322,5 @@ public class MemberDAO {
 		}
 
 	}
-    
 
 }
