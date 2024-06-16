@@ -382,7 +382,21 @@
 				</div>
 			</div>
 			<script>
+				let searchBy="0";
+				let searchData="0";
+
 				$(document).ready(function () {
+					
+					/*$.ajax({
+						url:"/list.qboard",
+						type:'GET',
+						dataType:"json"
+					}).done(function(search){
+						searchBy=search[0];
+						searchData=search[1];
+					});*/
+					searchBy = '<%= request.getParameter("searchBy") %>';
+					searchData = '<%= request.getParameter("searchData") %>';
 					let category = ${ category };
 					let cpage = ${ cpage };
 					let record_total_count = ${ record_total_count };
@@ -434,39 +448,39 @@
 
 
 				//토글을 선택했다면
-				$(".dropdown-item").on("click",function (e){
+				$(".dropdown-item").on("click", function (e) {
 					e.preventDefault();
 					$(".dropdown-toggle").html($(this).html());
-					let searchBy=$(this).attr("data-searchBy");
-					console.log(searchCategory);
+					let searchBy = $(this).attr("data-searchBy");
+					console.log(searchBy);
 
 					//돋보기 이미지를 클릭할 때
-					$("#search_icon").on("click", function(){
-						if($("#search_input").val()==""){
+					$("#search_icon").on("click", function () {
+						if ($("#search_input").val() == "") {
 							alert("검색어를 입력해주세요.");
 							return false;
-						}else{
+						} else {
 							let category = ${ category };
 							//주소는 일단 고민중
-							window.location.href = "/list.qboard?cpage=1&category=" + category+ "&searchBy="+searchBy+"&searchData"+$("#search_input").val();
+							window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
 						}
 					})
 
 					//엔터버튼을 누를 때
-					$("#search_input").on("keydown", function(e){
-						if(e.key=="Enter"){
-							if($("#search_input").val()==""){
+					$("#search_input").on("keydown", function (e) {
+						if (e.key == "Enter") {
+							if ($("#search_input").val() == "") {
 								alert("검색어를 입력해주세요.");
 								return false;
-							}else{
+							} else {
 								let category = ${ category };
 								//주소는 일단 고민중
-								window.location.href = "/list.qboard?cpage=1&category=" + category+ "&searchBy="+searchBy+"&searchData="+$("#search_input").val();
+								window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
 							}
 						}
 					})
 
-					
+
 				});
 
 

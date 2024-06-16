@@ -96,104 +96,200 @@ public class QBoardDAO {
 	}
 
 
-	//3.페이지별 전체 게시글 select 하기
-	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category) throws Exception {
+	//3.페이지별 게시글 select 하기
+	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category, String strsearchBy, String strsearchData) throws Exception {
+		ArrayList<QBoardDTO> list = new ArrayList<>();
+		//전체 카테고리일 때
 		if(category==0) {
-			String sql = "SELECT * " +
-					"FROM ( " +
-					"    SELECT q_board.*, " +
-					"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
-					"    FROM q_board " +
-					") subquery " +
-					"WHERE rown BETWEEN ? AND ?";
+			//검색이 있을 때
+			if(!(strsearchBy.equals("0"))) {
+				String sql= "SELECT * FROM ( SELECT q_board.*, row_number() "+ 
+						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board where ? Like ?) subquery "+
+						"WHERE rown BETWEEN ? AND ?";
 
-			try (Connection con = this.getConnection();
-					PreparedStatement ptat = con.prepareStatement(sql)) {
-				ptat.setInt(1, startnum);
-				ptat.setInt(2, endnum);
+				try (Connection con = this.getConnection();
+						PreparedStatement ps = con.prepareStatement(sql);) {
+					ps.setString(1, strsearchBy);
+					ps.setString(2, strsearchData);
+					ps.setInt(3, startnum);
+					ps.setInt(4, endnum);
 
-				try (ResultSet rs = ptat.executeQuery()) {
-					ArrayList<QBoardDTO> list = new ArrayList<>();
-					while (rs.next()) {
-						int qBoardSeq = rs.getInt("q_board_seq");
-						String userId = rs.getString("user_id");
-						int qBoardCategory = rs.getInt("q_board_category");
-						String qBoardTitle = rs.getString("q_board_title");
-						String qBoardContent = rs.getString("q_board_content");
-						Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-						String qBoardAnswer=rs.getString("q_board_answer");
-						String qBoardSecret=rs.getString("q_board_secret");
-						list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+					try (ResultSet rs = ps.executeQuery();) {
+						while (rs.next()) {
+							int qBoardSeq = rs.getInt("q_board_seq");
+							String userId = rs.getString("user_id");
+							int qBoardCategory = rs.getInt("q_board_category");
+							String qBoardTitle = rs.getString("q_board_title");
+							String qBoardContent = rs.getString("q_board_content");
+							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+							String qBoardAnswer=rs.getString("q_board_answer");
+							String qBoardSecret=rs.getString("q_board_secret");
+							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+						}
+						return list;
 					}
-					return list;
+				}
+
+
+				//검색을 하지 않을 때
+			}else {
+				String sql = "SELECT * FROM ( SELECT q_board.*, row_number() "+
+						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board) subquery " +
+						"WHERE rown BETWEEN ? AND ?";
+
+				try (Connection con = this.getConnection();
+						PreparedStatement ps = con.prepareStatement(sql);) {
+					ps.setInt(1, startnum);
+					ps.setInt(2, endnum);
+
+					try (ResultSet rs = ps.executeQuery();) {
+						while (rs.next()) {
+							int qBoardSeq = rs.getInt("q_board_seq");
+							String userId = rs.getString("user_id");
+							int qBoardCategory = rs.getInt("q_board_category");
+							String qBoardTitle = rs.getString("q_board_title");
+							String qBoardContent = rs.getString("q_board_content");
+							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+							String qBoardAnswer=rs.getString("q_board_answer");
+							String qBoardSecret=rs.getString("q_board_secret");
+							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+						}
+						return list;
+					}
 				}
 			}
+
+			//카테고리로 구분할 때
 		}else {
-			String sql = "SELECT * " +
-					"FROM ( " +
-					"    SELECT q_board.*, " +
-					"           row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
-					"    FROM q_board " +
-					" where q_board_category=?"+
-					") subquery " +
-					"WHERE rown BETWEEN ? AND ?";
+			//검색이 있을 때
+			if(!(strsearchBy.equals("0"))) {
+				String sql = "SELECT * FROM ( SELECT q_board.*, row_number() "+
+			             "OVER (ORDER BY q_board_seq DESC) AS rown "+
+			             "FROM q_board WHERE q_board_category=? AND ? LIKE ?) subquery " +
+			             "WHERE rown BETWEEN ? AND ?";
 
-			try (Connection con = this.getConnection();
-					PreparedStatement ptat = con.prepareStatement(sql)) {
-				ptat.setInt(1, category);
-				ptat.setInt(2, startnum);
-				ptat.setInt(3, endnum);
+				try (Connection con = this.getConnection();
+						PreparedStatement ps = con.prepareStatement(sql);) {
+					ps.setInt(1, category);
+					ps.setString(2, strsearchBy);
+					ps.setString(3, strsearchData);
+					ps.setInt(4, startnum);
+					ps.setInt(5, endnum);
 
-				try (ResultSet rs = ptat.executeQuery()) {
-					ArrayList<QBoardDTO> list = new ArrayList<>();
-					while (rs.next()) {
-						int qBoardSeq = rs.getInt("q_board_seq");
-						String userId = rs.getString("user_id");
-						int qBoardCategory = rs.getInt("q_board_category");
-						String qBoardTitle = rs.getString("q_board_title");
-						String qBoardContent = rs.getString("q_board_content");
-						Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-						String qBoardAnswer=rs.getString("q_board_answer");
-						String qBoardSecret=rs.getString("q_board_secret");
-						list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+					try (ResultSet rs = ps.executeQuery();) {
+						while (rs.next()) {
+							int qBoardSeq = rs.getInt("q_board_seq");
+							String userId = rs.getString("user_id");
+							int qBoardCategory = rs.getInt("q_board_category");
+							String qBoardTitle = rs.getString("q_board_title");
+							String qBoardContent = rs.getString("q_board_content");
+							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+							String qBoardAnswer=rs.getString("q_board_answer");
+							String qBoardSecret=rs.getString("q_board_secret");
+							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+						}
+						return list;
 					}
-					return list;
+				}
+
+			}else {
+				String sql = "SELECT * FROM ( " +
+			             "SELECT q_board.*, row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
+			             "FROM q_board WHERE q_board_category=?) subquery " +
+			             "WHERE rown BETWEEN ? AND ?";
+
+				try (Connection con = this.getConnection();
+						PreparedStatement ps = con.prepareStatement(sql);) {
+					ps.setInt(1, category);
+					ps.setInt(2, startnum);
+					ps.setInt(3, endnum);
+
+					try (ResultSet rs = ps.executeQuery();) {
+						while (rs.next()) {
+							int qBoardSeq = rs.getInt("q_board_seq");
+							String userId = rs.getString("user_id");
+							int qBoardCategory = rs.getInt("q_board_category");
+							String qBoardTitle = rs.getString("q_board_title");
+							String qBoardContent = rs.getString("q_board_content");
+							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
+							String qBoardAnswer=rs.getString("q_board_answer");
+							String qBoardSecret=rs.getString("q_board_secret");
+							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+						}
+						return list;
+					}
 				}
 			}
-			
+
 		}
 	}
 
 
 	//3. 현재 전체 보드 카운티하는 함수
-	public int getRecordCount(int category) throws Exception {
+	public int getRecordCount(int category, String strsearchBy, String strsearchData) throws Exception {
+		int result=0;
+
+		//전체 카테고리일 때
 		if(category==0) {
-			String sql="select count(*) from q_board";
-			int result=0;
+			//검색이 있을 때
+			if(!(strsearchBy.equals("0"))) {
+				String sql="select count(*) from q_board where "+ strsearchBy +" Like ?";
 
-			try(Connection con=this.getConnection();
-					PreparedStatement ps=con.prepareStatement(sql);){	
-				try(ResultSet rs=ps.executeQuery();){
-					rs.next();
-					result= rs.getInt(1);
-					return result;
-				}	
+				try(Connection con=this.getConnection();
+						PreparedStatement ps=con.prepareStatement(sql);){
+					 ps.setString(1, "%" + strsearchData + "%");
+					try(ResultSet rs=ps.executeQuery();){
+						rs.next();
+						result= rs.getInt(1);
+						return result;
+					}	
+				}
+				//검색이 없을 때
+			}else {
+				String sql="select count(*) from q_board";
+
+				try(Connection con=this.getConnection();
+						PreparedStatement ps=con.prepareStatement(sql);){	
+					try(ResultSet rs=ps.executeQuery();){
+						rs.next();
+						result= rs.getInt(1);
+						return result;
+					}	
+				}
 			}
-		}else {
-			String sql="select count(*) from q_board where q_board_category=?";
-			int result=0;
 
-			try(Connection con=this.getConnection();
-					PreparedStatement ps=con.prepareStatement(sql);){
-				ps.setInt(1, category);
-				try(ResultSet rs=ps.executeQuery();){
-					rs.next();
-					result= rs.getInt(1);
-					return result;
-				}	
+			//카테고리를 구분할 때
+		}else {
+			//검색이 있을 때
+			if(!(strsearchBy.equals("0"))) {
+				String sql="select count(*) from q_board where q_board_category=? and "+ strsearchBy +" Like ?";
+				try(Connection con=this.getConnection();
+						PreparedStatement ps=con.prepareStatement(sql);){
+					ps.setInt(1, category);
+				    ps.setString(2, "%" + strsearchData + "%");
+					try(ResultSet rs=ps.executeQuery();){
+						rs.next();
+						result= rs.getInt(1);
+						return result;
+					}	
+				}
+
+
+				//검색이 없을 때
+			}else {
+				String sql="select count(*) from q_board where q_board_category=?";
+
+				try(Connection con=this.getConnection();
+						PreparedStatement ps=con.prepareStatement(sql);){
+					ps.setInt(1, category);
+					try(ResultSet rs=ps.executeQuery();){
+						rs.next();
+						result= rs.getInt(1);
+						return result;
+					}	
+				}
 			}
 		}
-
 	}
 
 
