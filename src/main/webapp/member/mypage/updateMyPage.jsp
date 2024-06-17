@@ -166,7 +166,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
   <div class="container">
             <div class="col mydata_chage col1 col_attr"> 
                 <div class="col1_profile_img col1_sub">
-                	<img id="profile_img" src="${mydata.userProfileUrl}">
+                	<img id="profile_img" src="${userProfileUrl}">
                 </div>
                 <div class="col1_profile_update col1_sub">
                     <input type="file" class="col1_file">
