@@ -201,9 +201,9 @@
         }
 
         function toggleNextButton() {
-        	let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-        	let nextButton = document.getElementById('nextButton');
-        	let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
+           let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+           let nextButton = document.getElementById('nextButton');
+           let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             nextButton.disabled = !allChecked;
         }
 

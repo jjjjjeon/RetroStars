@@ -1,13 +1,15 @@
-		body{
-			   font-family: 'Georgia', serif;
+@charset "UTF-8";
+
+   body{
+            font-family: 'Georgia', serif;
                background-image: url('/image/background.png');
                background-position: center;
                display: flex;
                height : 100vh;
                justify-content: center;
-		       align-items: center;
+             align-items: center;
             }
-		nav{
+      nav{
                background-color: #323232;
             
             }
@@ -49,7 +51,7 @@
             width: 120px;
             height: 100px;
             margin-left : 20px;
-        }	
+        }   
 
 .container {
     background: white;
