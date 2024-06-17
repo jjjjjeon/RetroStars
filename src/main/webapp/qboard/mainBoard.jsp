@@ -155,7 +155,7 @@
 				}
 
 				.detailA:hover{
-					color: #00d4ff;
+					color: black;
 				}
 
 
@@ -318,9 +318,9 @@
 						<div class="col1" style="flex: 1;"></div>
 						<div class="search_col2" style="flex: 1; padding-bottom: 15px;">
 							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
+								<button id="searchToggle" class="btn btn-secondary dropdown-toggle" type="button"
 									data-bs-toggle="dropdown" aria-expanded="false">
-									전체
+									분류
 								</button>
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="#" data-searchBy="q_board_title">제목</a></li>
@@ -347,19 +347,48 @@
 								<div class="list_detail_box_col col" style="flex: 1; height: 100%;">
 									<!--여기에 리스트 출력-->
 									<c:forEach var="dto" items="${list}">
-										<a href="/detail.qboard?seq=${dto.qBoardSeq}" class="detailA"><div class="list_data_row row" style="height: 44px; width: 100%;">
-											<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
-											<div class="list_data_category center" style="flex: 1;">
-												${dto.qBoardCategory}</div>
-											<div class="list_data_writer center" style="flex: 1;">${dto.userId}</div>
-											<div class="list_data_title center" style="flex: 4.5;">
-											${dto.qBoardTitle}
+										<a href="/detail.qboard?seq=${dto.qBoardSeq}" class="detailA">
+											<div class="list_data_row row" style="height: 44px; width: 100%;">
+												<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
+												<div class="list_data_category center" style="flex: 1;">
+													<c:choose>
+														<c:when test="${dto.qBoardCategory==1}">
+															게임문의
+														</c:when>
+														<c:when test="${dto.qBoardCategory==2}">
+															제휴문의
+														</c:when>
+														<c:when test="${dto.qBoardCategory==3}">
+															기타문의
+														</c:when>
+													</c:choose>
+												</div>
+												<div class="list_data_writer center" style="flex: 1;">${nickname}</div>
+												<div class="list_data_title center" style="flex: 4.5;">
+												${dto.qBoardTitle}
+													<c:choose>
+														<c:when test="${dto.qBoardSecret eq 'N'}">
+															<i class="fa-solid fa-lock-open" style="margin-left: 5px;"></i>
+														</c:when>
+														<c:when test="${dto.qBoardSecret eq 'Y'}">
+															<i class="fa-solid fa-lock"  style="margin-left: 5px;"></i>
+														</c:when>
+													</c:choose>
+												</div>
+												<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
+												</div>
+												<div class="list_data_answer center" style="flex: 1;">
+												<c:choose>
+														<c:when test="${dto.qBoardAnswer eq 'N'}">
+															답변예정
+														</c:when>
+														<c:when test="${dto.qBoardAnswer eq 'Y'}">
+															답변완료
+														</c:when>
+													</c:choose>
+												</div>
 											</div>
-											<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
-											</div>
-											<div class="list_data_answer center" style="flex: 1;">${dto.qBoardAnswer}
-											</div>
-										</div></a>
+										</a>
 									</c:forEach>
 								</div>
 							</div>
@@ -367,7 +396,7 @@
 					</div>
 					<div class="btns_container" style="flex: 0.7; width: 100%;">
 						<button id="ask_btn" class="btn btn-primary"
-							onclick="location.href='/qboard/writeBoard.jsp'">글쓰기</button>
+							onclick="location.href='/gowrite.qboard'">글쓰기</button>
 					</div>
 					<div id="page_navi" class="page_container center" style="flex: 0.7; width: 100%;"></div>
 				</div>
@@ -449,7 +478,62 @@
 						let needNexta = $("<a>").attr("href", "/list.qboard?cpage=" + (endNavi + 1) + "&category=" + category + "&searchBy=" + searchBy + "&searchData=" + searchData).html(" > ");
 						$("#page_navi").append(needNexta);
 					}
+					
+					//현재 게시판 표시하기
+					if(category==0){
+						$(".navi_total").css("border-bottom","2px solid white");
+					}else if(category==1){
+						$(".navi_game").css("border-bottom","2px solid white");
+					}else if(category==2){
+						$(".navi_collaboration").css("border-bottom","2px solid white");
+					}else if(category==3){
+						$(".navi_etc").css("border-bottom","2px solid white");
+					}
+					
+					
+					//답변에 따라 색 부여하기
+					if($(".list_data_answer").html().trim()=="답변예정"){
+						$(".list_data_answer").css("color","orangered");
+					}else if($(".list_data_answer").html().trim()=="답변완료"){
+						$(".list_data_answer").css("color","dodgerblue");
+					}
+					
+					
+					 // .dropdown-item을 클릭했을 때
+		            $(".dropdown-item").on("click", function (e) {
+		                e.preventDefault();
+		                $("#searchToggle").html($(this).html());
+		                searchBy = $(this).attr("data-searchBy");
+		                //console.log(searchBy);
+		            });
 
+		            function performSearch() {
+		                if ($("#searchToggle").text().trim() == "분류") {
+		                    alert("카테고리를 선택해주세요.");
+		                    return false;
+		                }
+
+		                if ($("#search_input").val() == "") {
+		                    alert("검색어를 입력해주세요.");
+		                    return false;
+		                }
+
+		                let category = ${category};
+		                window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
+		            }
+
+		            // 돋보기 이미지를 클릭할 때
+		            $("#search_icon").on("click", function () {
+		                performSearch();
+		            });
+
+		            // 엔터 버튼을 누를 때
+		            $("#search_input").on("keydown", function (e) {
+		                if (e.key == "Enter") {
+		                    performSearch();
+		                }
+		            });
+		            
 				});
 
 				$(document).on('click', '.naviAn', function (e) {
@@ -457,45 +541,14 @@
 					let category = $(this).attr('data-categoryCode');
 					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
+				
+	          
+				
+				
 
-				//토글을 클릭하지 않고 전체인 상태에서 검색하려고 할 때 카테고리를 선택하라고 알리기
+				
 
-
-				//토글을 선택했다면
-				$(".dropdown-item").on("click", function (e) {
-					e.preventDefault();
-					$(".dropdown-toggle").html($(this).html());
-					let searchBy = $(this).attr("data-searchBy");
-					console.log(searchBy);
-
-					//돋보기 이미지를 클릭할 때
-					$("#search_icon").on("click", function () {
-						if ($("#search_input").val() == "") {
-							alert("검색어를 입력해주세요.");
-							return false;
-						} else {
-							let category = ${ category };
-							//주소는 일단 고민중
-							window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
-						}
-					})
-
-					//엔터버튼을 누를 때
-					$("#search_input").on("keydown", function (e) {
-						if (e.key == "Enter") {
-							if ($("#search_input").val() == "") {
-								alert("검색어를 입력해주세요.");
-								return false;
-							} else {
-								let category = ${ category };
-								//주소는 일단 고민중
-								window.location.href = "/list.qboard?cpage=1&category=" + category + "&searchBy=" + searchBy + "&searchData=" + $("#search_input").val();
-							}
-						}
-					})
-
-
-				});
+		
 
 
 

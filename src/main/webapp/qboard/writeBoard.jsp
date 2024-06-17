@@ -139,7 +139,7 @@
 				<div class="container col">
 					<div class="boardwritername_container row" style="flex: 1;">
 						<div class="col" style="flex: 1; display: inline;">
-							<span id="boardwriter_div">${loginId}</span>
+							<span id="boardwriter_div">${nickname}</span>
 							<span>님의 글</span>
 							<hr>
 						</div>
