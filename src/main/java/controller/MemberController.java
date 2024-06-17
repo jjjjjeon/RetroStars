@@ -22,9 +22,11 @@ import com.google.gson.Gson;
 import common.util;
 import dao.GameDAO;
 import dao.MemberDAO;
+import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
 import dto.GameDTO;
 import dto.MemberDTO;
+import dto.UserProfileImgDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -53,36 +55,28 @@ public class MemberController extends HttpServlet {
 		MemberDAO memberDao = MemberDAO.getInstance();
 		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
+		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		
 		try {
 			
 			// 로그인 기능.
 			if(cmd.equals("/login.member")) {
+			
 				String id = request.getParameter("id");
+				System.out.println(id);
 				String pw = util.getSHA512(request.getParameter("pw"));
+
 						
 				
 				boolean result = memberDao.loginId(id, pw);
 				System.out.println(result);
-			
+
 				if(result) {
 					System.out.println("로그인 성공");
-		            String loginResult = g.toJson(true);
-		    		PrintWriter pwt = response.getWriter();
-		    		pwt.append(loginResult);
-		    		
-		    		String nickname = memberDao.getNickname(id);
-		    		session.setAttribute("nickname", nickname);
-					session.setAttribute("loginId", id);
-					MemberDTO member = memberDao.myData(id);
-					System.out.println("닉네임 확인" + nickname);
-                    session.setAttribute("profileUrl", "/upload/profile/default.png");
-					
+					session.setAttribute("loginId", id);					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
-		            String loginResult = g.toJson(false);
-		    		PrintWriter pwt = response.getWriter();		    			
-		    		pwt.append(loginResult);	
+		         
 				}
 				response.sendRedirect("/index.jsp");
 				return;
@@ -188,6 +182,11 @@ public class MemberController extends HttpServlet {
                 MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
                 memberDao.addMember(addMember);
                 
+                UserProfileImgDTO addDefault = new UserProfileImgDTO(0, userId, null, null);
+                System.out.println("기본 이미지 확인");
+                userProfileImgDao.updateImg(addDefault);
+                
+
                 // 세션 값 초기화
                 session.invalidate();
                 
@@ -232,7 +231,8 @@ public class MemberController extends HttpServlet {
 				}else if(genderCode.equals("2")) {
 					gender="Female";
 				}else {gender="None";}
-				String url = "/upload/profile/default.png";
+				
+				String url = userProfileImgDao.selectMyUrl(id);
 				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
@@ -263,13 +263,14 @@ public class MemberController extends HttpServlet {
 				String genderCode = mydata.getUserNo().substring(6,7);
 				String gender;
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
-				String url = "/upload/profile/default.png";
+				String url = userProfileImgDao.selectMyUrl(id);
 				
 				if(genderCode.equals("1")) {
 					gender="Male";
 				}else if(genderCode.equals("2")) {
 					gender="Female";
 				}else {gender="None";}
+				
 				
 				request.setAttribute("phone", phone);
 				request.setAttribute("birth", birth);
@@ -279,12 +280,29 @@ public class MemberController extends HttpServlet {
 				
 				request.getRequestDispatcher("/member/mypage/updateMyPage.jsp").forward(request, response);	
 				
-			}else if(cmd.equals("/updateData")) {
+			}else if(cmd.equals("/updateData.member")) {
 				
 				String id = (String) request.getSession().getAttribute("loginId");
 				
-				System.out.println();
+				String name = request.getParameter("userName");
+				String nickname = request.getParameter("userNickname");
+				String birth = request.getParameter("userBirth");
+				String gender = request.getParameter("gender");
+				String email = request.getParameter("userEmail");
+				String phone = request.getParameter("userPhone");
+				String formattedPhone = phone.replaceAll("-", "");
+				String genderCode ="";
 				
+				if(gender.equals("Male")) {
+					genderCode="1";
+				}else if(gender.equals("Female")){
+					genderCode="2";
+				}
+				
+				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
+				
+				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
+				request.getRequestDispatcher("/mypage.member").forward(request, response);	
 			}
 			
 			

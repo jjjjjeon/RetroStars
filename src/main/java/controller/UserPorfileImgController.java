@@ -36,38 +36,28 @@ public class UserPorfileImgController extends HttpServlet {
 				String id = (String)session.getAttribute("loginId");
 				
 				int maxSize = 1024 * 1024 * 1;
-				String fileSavePath = "/upload/profile"; // 웹 경로
-                
-                // 실제 파일 시스템 경로 가져오기
-                String realPath = request.getServletContext().getRealPath(fileSavePath);
-                System.out.println("Real Path: " + realPath); // 실제 경로 확인
-                
-                 //실제 경로가 null이 아닌지 확인
-                if (realPath == null) {
-                    throw new IOException("Real path not found");
-                }
-                
-                File uploadDir = new File(realPath);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdirs(); // 디렉토리 생성
-                }
 				
-				MultipartRequest multi = new MultipartRequest(request, realPath, maxSize,"UTF8", new DefaultFileRenamePolicy());
-				
-				Enumeration<String> names = multi.getFileNames();
-				
-				while(names.hasMoreElements()) {
-				
-					String name = names.nextElement();
-					String oriname = multi.getOriginalFileName(name); // 원본 파일 이름
-					String sysname = multi.getFilesystemName(name); // 서버에 저장되었을 때 이름 (중복시 라벨링 된 이름)
-				
-					if(oriname != null) {imgDao.insertImg(new UserProfileImgDTO(0,id,oriname,sysname));}
-				}
-				request.getRequestDispatcher("/updateList.member").forward(request, response);
-			}
-			
-			
+				// 실제 경로
+				 String filePath = "C:\\workspace\\profileImg";
+				 File downloadFile = new File(filePath);
+				 
+				 if (!downloadFile.exists()) {
+					  downloadFile.mkdir();
+			        }
+				 
+				 MultipartRequest multi = new MultipartRequest(request, filePath, maxSize,"UTF8", new DefaultFileRenamePolicy());
+				 Enumeration<String> names = multi.getFileNames();
+				 
+				 while(names.hasMoreElements()) {						
+							String name = names.nextElement();
+							String oriname = multi.getOriginalFileName(name); // 원본 파일 이름
+							String sysname = multi.getFilesystemName(name); // 서버에 저장되었을 때 이름 (중복시 라벨링 된 이름)						
+							if(oriname != null) {
+								imgDao.updateImg(new UserProfileImgDTO(0,id,oriname,sysname));
+								}
+						}
+				 request.getRequestDispatcher("/updateList.member").forward(request, response);
+			}	
 			
 		}catch(Exception e) {
 			e.printStackTrace();

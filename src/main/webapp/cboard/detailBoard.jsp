@@ -163,7 +163,7 @@ a {
 	font-weight: 400;
 }
 
-.content .viewCont #bookmarkBtn {
+.content .viewCont #addBookmarkBtn {
 	display: block;
 	margin: 115px auto 0 auto;
 	width: 200px;
@@ -175,7 +175,21 @@ a {
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 56px;
-	cursor: pointer;
+}
+
+.content .viewCont #delBookmarkBtn {
+	display: block;
+	margin: 115px auto 0 auto;
+	width: 200px;
+	height: 60px;
+	background-color: gray;
+	color : white;
+	border: 1px solid #e0e2ec;
+	border-radius: 30px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 56px;
 }
 
 .btnBox .leftBox {
@@ -195,6 +209,7 @@ a {
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
+	display : none;
 }
 
 #delBtn {
@@ -282,6 +297,17 @@ a {
 	line-height: 36px;
 }
 
+.commentBox .commentTitle .commentAnker {
+	height: 36px;
+	position: absolute;
+	right : 0;
+	margin-bottom: 20px;
+	color: #6a6e76;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 36px;
+}
+
 .commentBox .commentList .cmtGroup {
 	padding: 35px 0 35px 30px;
 	border-top: 1px solid #eeedf2;
@@ -342,7 +368,14 @@ a {
 	margin-bottom: 10px;
 }
 
-.writeCmtBtn {
+#writeCmtBtn {
+	width: 100px;
+	height: 120px;
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+
+.writeReplyReplyBtn {
 	width: 100px;
 	height: 120px;
 	margin-left: 5px;
@@ -373,6 +406,13 @@ a {
     margin-left : 15px;
     cursor:pointer;
 }
+
+.delRepleRepleBtn{
+	color : black;
+    font-weight: bold;
+    margin-left : 15px;
+    cursor:pointer;
+}
 </style>
 <body>
 	<form action="/correction.cboard" method="post" id="changeForm">
@@ -391,11 +431,11 @@ a {
 			<ul class="infoBox">
 				<li><span class="name">${DTO.userId}</span></li>
 				<li id=info2><span class="date"> <fmt:formatDate
-							value="${DTO.cBoarDate}" pattern="MM.dd" />
+							value="${DTO.cBoarDate}" pattern="yyyy.MM.dd HH:mm" />
 				</span> <span class="view"> <i class="fa-regular fa-eye"
 						style="color: #36393f;"></i> ${DTO.cBoardView}
 				</span> <span class="bookmark"> <i class="fa-regular fa-bookmark"
-						style="color: #36393f;"></i> ${DTO.cBoardReport}
+						style="color: #36393f;"></i> ${DTO.cBoardBookmark}
 				</span></li>
 			</ul>
 			<c:choose>
@@ -414,9 +454,12 @@ a {
 				</c:forEach>
 			</div>
 			<div class="viewCont">
-				${DTO.cBoardContent} <a id="bookmarkBtn" style="clear: both;"> <i
-					class="fa-regular fa-bookmark" style="color: #000000;"></i> 북마크
-				</a>
+				${DTO.cBoardContent}
+				<button type="button" id="addBookmarkBtn" style="clear: both;
+				"> 
+				<i class="fa-regular fa-bookmark" style="color: #000000;"></i>
+				 북마크
+				</button>
 			</div>
 			<div id="summernote"></div>
 			<div class="btnBox">
@@ -440,22 +483,37 @@ a {
 		<input type="hidden" id="contentInput" name="content">
 	</form>
 	<div class="commentBox">
-		<div class="commentTitle">댓글 (0)</div>
+		<div class="commentTitle">댓글 (0) <a class="commentAnker">댓글쓰러가기</a></div>
+		
 		<div class="commentList">
 		</div>
 		<div class="writeCmtBox">
-				<div class="writeCmtWriter">SessionId</div>
+				<div class="writeCmtWriter">${loginUser}</div>
 				<div class="writeCmtCttRow">
 					<textarea
 						placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
 						class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
-					<button type="button" class="btn btn-dark writeCmtBtn" id="writeCmtBtn">등록</button>
+					<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
 				</div>
 		</div>
 	</div>
 	<div class="footer">Footer</div>
 
 	<script>
+		let totalReplyCount = 0;
+		
+		function getTotalReplyCount(){
+			$.ajax({
+				url : "/countRepleList.reply",
+				data : {
+				seq : $("#delBtn").attr("data-seq")
+				}
+			}).done(function(resp){
+				totalReplyCount = Number(resp);
+				$(".commentTitle").text("댓글 (" + totalReplyCount + ")" + <a class=`commentAnker`>댓글쓰러가기</a>);
+			});
+		};
+	
     	$("#writeBtn").on("click", function(){
     		location.href = "cboard/writeBoard.jsp";
     	})
@@ -471,7 +529,37 @@ a {
 				$("#viewAll").addClass("active");
 				$("#boardTitleH3").html("전체");
 			}
+			
+			if(${isBookmark > 0}){
+				$("#addBookmarkBtn").html(`<i class="fa-solid fa-bookmark" style="color: #ffffff;"></i>
+						 북마크취소`);
+				$("#addBookmarkBtn").off("click");
+				$("#addBookmarkBtn").attr("id", "delBookmarkBtn");
+				$("#delBookmarkBtn").on("click", function(){
+					$.ajax({
+						url : "/delBookmark.cboard",
+						data : {
+						seq : $("#delBtn").attr("data-seq")
+						}
+					}).done(function(resp){
+						alert("해당 게시글의 북마크가 취소되었습니다.");
+						location.reload();
+					});
+		    	})
+			}
 		});
+    	
+    	$("#addBookmarkBtn").on("click", function(){
+    		$.ajax({
+				url : "/addBookmark.cboard",
+				data : {
+				seq : $("#delBtn").attr("data-seq")
+				}
+			}).done(function(resp){
+				alert("해당 게시글을 북마크했습니다.");
+				location.reload();
+			});
+    	});
     
     	$(".content").on("click", ".fileOn", function(){
     		$(this).html("▲ 첨부파일 목록 닫기");
@@ -581,67 +669,141 @@ a {
     		
     	});
     	
-    	function getRepleList(){
-			$.ajax({
-				url : "/viewReple.reply",
-				dataType:"json",
-				traditional : true,
-				data : {
-				seq : $("#delBtn").attr("data-seq")
-				}
-			}).done(function(resp){
-				if(resp.length != 0){
-					function formatDate(timestamp) {
-		                let date = new Date(timestamp);
-		                let year = date.getFullYear().toString().slice(2);
-		                let month = ('0' + (date.getMonth() + 1)).slice(-2);
-		                let day = ('0' + date.getDate()).slice(-2);
-		                let hours = ('0' + date.getHours()).slice(-2);
-		                let minutes = ('0' + date.getMinutes()).slice(-2);
-		                return year + "." + month + "." + day + " " + hours+ ":" + minutes;
-		            }
-			
-			$(".commentTitle").attr("data-replesLength", Object.keys(resp).length);
-			$(".commentTitle").html("댓글 (" + Object.keys(resp).length + ")");
-			$(".commentList").html("");
-			resp.forEach(function(dto) {
-				let formattedDate = formatDate(dto.cReplyDate);
-				
-				let cmtGroup = $('<div>').addClass('cmtGroup');
-				let commentDiv = $('<div>').addClass('comment');
-				let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userId);
-				let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
-				let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
-				let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
-				deleteButton.attr('data-repleSeq', dto.cReplySeq);
-				let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
-				let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary').text('답글쓰기');
-				
-				cmtDateDiv.append(deleteButton);
-			    cmtBtnBoxDiv.append(replyButton);
-			    cmtDateDiv.append(cmtBtnBoxDiv);
-			    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
-			    
-			    let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-			    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ SessionId`);
-			    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
-			    let textarea = $('<textarea>')
-			        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
-			        .addClass('writeCmtCtt')
-			        .attr('maxlength', '1000');
-			    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-dark writeCmtBtn').text('등록');
-			    writeCmtCttRowDiv.append(textarea, submitButton);
-			    reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
-			    cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
-			    $('.commentList').append(cmtGroup);
-			 	});
-				}
-			});
-		}
+    	function loadComments() {
+    	    return new Promise((resolve, reject) => {
+    	        $.ajax({
+    	            url: "/viewReple.reply",
+    	            dataType: "json",
+    	            traditional: true,
+    	            data: {
+    	                seq: $("#delBtn").attr("data-seq")
+    	            }
+    	        }).done(function(resp) {
+    	            if (resp.length != 0) {
+    	                function formatDate(timestamp) {
+    	                    let date = new Date(timestamp);
+    	                    let year = date.getFullYear().toString().slice(2);
+    	                    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    	                    let day = ('0' + date.getDate()).slice(-2);
+    	                    let hours = ('0' + date.getHours()).slice(-2);
+    	                    let minutes = ('0' + date.getMinutes()).slice(-2);
+    	                    return year + "." + month + "." + day + " " + hours + ":" + minutes;
+    	                }
+
+    	                $(".commentList").html("");
+    	                resp.forEach(function(dto) {
+    	                    let formattedDate = formatDate(dto.cReplyDate);
+
+    	                    let cmtGroup = $('<div>').addClass('cmtGroup');
+    	                    cmtGroup.attr("id", dto.cReplySeq);
+    	                    let commentDiv = $('<div>').addClass('comment');
+    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userId);
+    	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
+    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
+    	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
+    	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
+    	                    
+    	                    console.log("${loginUser}" == dto.userId);
+    	                    
+    	                    if("${loginUser}" == dto.userId){
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+        	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
+    	    	                cmtDateDiv.append(deleteButton);
+    	    	            }
+
+    	                    cmtBtnBoxDiv.append(replyButton);
+    	                    cmtDateDiv.append(cmtBtnBoxDiv);
+    	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
+
+    	                    let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
+    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
+    	                    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
+    	                    let textarea = $('<textarea>')
+    	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
+    	                        .addClass('writeCmtCtt')
+    	                        .attr('maxlength', '1000');
+    	                    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-dark writeReplyReplyBtn').text('등록');
+    	                    writeCmtCttRowDiv.append(textarea, submitButton);
+    	                    reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
+    	                    cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
+    	                    $('.commentList').append(cmtGroup);
+    	                });
+    	            }
+    	            resolve();
+    	        }).fail(function(jqXHR, textStatus, errorThrown) {
+    	            console.error('Failed to load comments:', textStatus, errorThrown);
+    	            reject(textStatus);
+    	        });
+    	    });
+    	}
+
+    	function loadReplies() {
+    	    return new Promise((resolve, reject) => {
+    	        $.ajax({
+    	            url: "/viewRepleReple.reply",
+    	            dataType: "json",
+    	            traditional: true,
+    	            data: {
+    	                seq: $("#delBtn").attr("data-seq")
+    	            }
+    	        }).done(function(resp) {
+    	            if (resp.length != 0) {
+    	                function formatDate(timestamp) {
+    	                    let date = new Date(timestamp);
+    	                    let year = date.getFullYear().toString().slice(2);
+    	                    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    	                    let day = ('0' + date.getDate()).slice(-2);
+    	                    let hours = ('0' + date.getHours()).slice(-2);
+    	                    let minutes = ('0' + date.getMinutes()).slice(-2);
+    	                    return year + "." + month + "." + day + " " + hours + ":" + minutes;
+    	                }
+
+    	                resp.forEach(function(dto) {
+    	                    let formattedDate = formatDate(dto.cReplyDate);
+
+    	                    let commentDiv = $('<div>').addClass('comment');
+    	                    commentDiv.css("margin-top", "15px");
+    	                    let userId = dto.userId;
+    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
+    	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
+    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
+    	                    
+    	                    if("${loginUser}" == dto.userId){
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+        	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
+    	    	                cmtDateDiv.append(deleteButton);
+    	    	            }
+    	                    
+    	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
+
+    	                    $("#" + dto.cReplyReply).append(commentDiv);
+    	                });
+    	            }
+    	            resolve();
+    	        }).fail(function(jqXHR, textStatus, errorThrown) {
+    	            console.error('Failed to load replies:', textStatus, errorThrown);
+    	            reject(textStatus);
+    	        });
+    	    });
+    	}
+
+    	function getRepleList() {
+    	    loadComments()
+    	        .then(loadReplies)
+    	        .catch(error => console.error('Error in loading comments or replies:', error));
+    	}
     	
-    	$(function() {
+    	$(function(){
     		getRepleList();
-		});
+    		getTotalReplyCount();
+    		
+    		if(${loginUser != DTO.userId}){
+    			$("#delBtn").css("display", "none");
+    			$("#corBtn").css("display", "none");
+    			$("#reportBtn").css("display", "block");
+    		}
+    		
+    	})
     	
     	$("#writeCmtBtn").on("click", function(e){
     		if($("#repleContent").val() == ""){
@@ -651,14 +813,58 @@ a {
     			$.ajax({
 					type: 'post',
 					url : "/addReple.reply",
+					dataType: "json",
 					data : {
 						parentSeq : $("#delBtn").attr("data-seq"),
 						content : $("#repleContent").val()
 					}
-				}).done(function(){
-					$("#repleContent").val("");
-					$(".commentList").text("");
-					getRepleList();
+				}).done(function(resp){
+					function formatDate(timestamp) {
+	                    let date = new Date(timestamp);
+	                    let year = date.getFullYear().toString().slice(2);
+	                    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+	                    let day = ('0' + date.getDate()).slice(-2);
+	                    let hours = ('0' + date.getHours()).slice(-2);
+	                    let minutes = ('0' + date.getMinutes()).slice(-2);
+	                    return year + "." + month + "." + day + " " + hours + ":" + minutes;
+	                }
+
+	                let formattedDate = formatDate(resp.cReplyDate);
+
+	                let cmtGroup = $('<div>').addClass('cmtGroup');
+	                cmtGroup.attr("id", resp.cReplySeq);
+	                let commentDiv = $('<div>').addClass('comment');
+	                let cmtUserDiv = $('<div>').addClass('cmtUser').text(resp.userId);
+	                let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
+	                let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
+	                let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
+	                let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
+
+	                if("${loginUser}" == resp.userId){
+	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+	                deleteButton.attr('data-repleSeq', resp.cReplySeq);
+	                cmtDateDiv.append(deleteButton);
+	                }
+	                
+	                cmtBtnBoxDiv.append(replyButton);
+	                cmtDateDiv.append(cmtBtnBoxDiv);
+	                commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
+
+	                let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
+	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
+	                let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
+	                let textarea = $('<textarea>')
+	                    .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
+	                    .addClass('writeCmtCtt')
+	                    .attr('maxlength', '1000');
+	                let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-dark writeReplyReplyBtn').text('등록');
+	                writeCmtCttRowDiv.append(textarea, submitButton);
+	                reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
+	                cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
+	                totalReplyCount = totalReplyCount + 1;
+					$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+	                $('.commentList').append(cmtGroup);
+	                $('#repleContent').val("");
 				});
     		}    		
     	});
@@ -672,15 +878,96 @@ a {
 					data : {
 						seq : $(this).attr("data-repleseq")
 					}
+				}).done(function(resp){
+					getTotalReplyCount();
 				});
             }else{
             	return false;
             }
-            let currentLength = Number($(".commentTitle").attr("data-replesLength")) - 1;
-            $(".commentTitle").attr("data-replesLength", currentLength);
-			$(".commentTitle").html("댓글 (" + currentLength + ")");
             $(this).closest(".cmtGroup").remove();
         });
+    	
+    	$(".commentList").on("click", ".delRepleRepleBtn", function(){
+            let isRepleDel = confirm("이 대댓글을 정말로 삭제하시겠습니까?");
+            
+            if(isRepleDel){
+            	$.ajax({
+					url : "/delRepleReple.reply",
+					data : {
+						seq : $(this).attr("data-repleseq")
+					}
+				});
+            }else{
+            	return false;
+            }
+            $(this).closest(".comment").remove();
+            totalReplyCount = totalReplyCount - 1
+			$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+        });
+    	
+    	$(".commentList").on("click", ".openReReplyWriteBtn", function(){
+    		$(this).closest(".cmtGroup").find(".reReplyWriteBox").css("display", "block");
+    		$(this).attr("class", 'btn btn-outline-secondary closeReReplyWriteBtn');
+    		$(this).html("답글취소");
+    	})
+    	
+    	$(".commentList").on("click", ".closeReReplyWriteBtn", function(){
+    		$(this).closest(".cmtGroup").find(".reReplyWriteBox").css("display", "none");
+    		$(this).attr("class", 'btn btn-outline-secondary openReReplyWriteBtn');
+    		$(this).html("답글쓰기");
+    	});
+    	
+    	$(".commentList").on("click", ".writeReplyReplyBtn", function(){
+    		$.ajax({
+    			url : "/addReplyReply.reply",
+    			type : "post",
+    			dataType: "json",
+    			data : {
+    			parentBoardSeq : $("#delBtn").attr("data-seq"),
+    			parentReplySeq : $(this).closest(".cmtGroup").attr("id"),
+    			content : $(this).prev().val()
+    			}
+    		}).done(function(resp){
+    			function formatDate(timestamp) {
+                    let date = new Date(timestamp);
+                    let year = date.getFullYear().toString().slice(2);
+                    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    let day = ('0' + date.getDate()).slice(-2);
+                    let hours = ('0' + date.getHours()).slice(-2);
+                    let minutes = ('0' + date.getMinutes()).slice(-2);
+                    return year + "." + month + "." + day + " " + hours + ":" + minutes;
+                }
+
+                let formattedDate = formatDate(resp.cReplyDate);
+
+                let commentDiv = $('<div>').addClass('comment');
+                commentDiv.css("margin-top", "15px");
+                let userId = resp.userId;
+                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
+                let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
+                let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
+
+                if("${loginUser}" == resp.userId){
+                	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+                    deleteButton.attr('data-repleSeq', resp.cReplySeq);
+                    cmtDateDiv.append(deleteButton);
+	            }
+                
+                commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
+
+                $("#" + resp.cReplyReply).append(commentDiv);
+                
+                totalReplyCount = totalReplyCount + 1;
+				$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+				
+    		});
+    		$(this).prev().val("");
+    		$(this).closest(".cmtGroup").find(".reReplyWriteBox").css("display", "none");
+    		$(this).closest(".cmtGroup").find(".closeReReplyWriteBtn").html("답글쓰기");
+    		$(this).closest(".cmtGroup").find(".closeReReplyWriteBtn").attr("class", 'btn btn-outline-secondary openReReplyWriteBtn');
+    	});
+    	
+    	
     	
     </script>
 </body>

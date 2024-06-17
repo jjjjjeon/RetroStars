@@ -11,6 +11,7 @@ public class CBoardDTO {
 	private Timestamp cBoarDate;
 	private int cBoardView;
 	private int cBoardReport;
+	private int cBoardBookmark;
 	
 	public int getcBoardSeq() {
 		return cBoardSeq;
@@ -60,11 +61,17 @@ public class CBoardDTO {
 	public void setcBoardReport(int cBoardReport) {
 		this.cBoardReport = cBoardReport;
 	}
+	public int getcBoardBookmark() {
+		return cBoardBookmark;
+	}
+	public void setcBoardBookmark(int cBoardBookmark) {
+		this.cBoardBookmark = cBoardBookmark;
+	}
 	public CBoardDTO() {
 		super();
 	}
 	public CBoardDTO(int cBoardSeq, String userId, int cBoardCategory, String cBoardTitle, String cBoardContent,
-			Timestamp cBoarDate, int cBoardView, int cBoardReport) {
+			Timestamp cBoarDate, int cBoardView, int cBoardReport, int cBoardBookmark) {
 		super();
 		this.cBoardSeq = cBoardSeq;
 		this.userId = userId;
@@ -74,10 +81,7 @@ public class CBoardDTO {
 		this.cBoarDate = cBoarDate;
 		this.cBoardView = cBoardView;
 		this.cBoardReport = cBoardReport;
+		this.cBoardBookmark = cBoardBookmark;
 	}
-	
-	
-	
-	
 	
 }

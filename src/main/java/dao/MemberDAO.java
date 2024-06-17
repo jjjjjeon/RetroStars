@@ -224,7 +224,6 @@ public class MemberDAO {
     }
     
     
-    
     /** 
      * @Method Name  : myData
      * @date : 2024. 6. 13. 
@@ -280,7 +279,7 @@ public class MemberDAO {
     public List<CBoardBookmarkDTO> selectCBoradCate1(String id) throws Exception {
 
 		String sql = "select "
-				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
 				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
@@ -294,12 +293,13 @@ public class MemberDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<CBoardBookmarkDTO> list = new ArrayList<>();
 				while (rs.next()) {
-					String userId = rs.getString(1);
-					int category = rs.getInt(2); 
-					String title = rs.getString(3);
-					String writerId = rs.getString(4);
-					Timestamp date = rs.getTimestamp(5);
-					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					int seq = rs.getInt(1);
+					String userId = rs.getString(2);
+					int category = rs.getInt(3); 
+					String title = rs.getString(4);
+					String writerId = rs.getString(5);
+					Timestamp date = rs.getTimestamp(6);
+					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
 					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
 					}
 				return list;
@@ -322,7 +322,7 @@ public class MemberDAO {
     public List<CBoardBookmarkDTO> selectCBoradCate2(String id) throws Exception {
 
 		String sql = "select "
-				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
 				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
@@ -336,12 +336,13 @@ public class MemberDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<CBoardBookmarkDTO> list = new ArrayList<>();
 				while (rs.next()) {
-					String userId = rs.getString(1);
-					int category = rs.getInt(2); 
-					String title = rs.getString(3);
-					String writerId = rs.getString(4);
-					Timestamp date = rs.getTimestamp(5);
-					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					int seq = rs.getInt(1);
+					String userId = rs.getString(2);
+					int category = rs.getInt(3); 
+					String title = rs.getString(4);
+					String writerId = rs.getString(5);
+					Timestamp date = rs.getTimestamp(6);
+					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
 					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
 					}
 				return list;
@@ -349,5 +350,32 @@ public class MemberDAO {
 		}
 
 	}
+    
+    /** 
+     * @Method Name  : updateData
+     * @date : 2024. 6. 17. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 개인 정보 수정 페이지 내 수정 기능
+     * @param MemberDTO dto
+     * @return void
+     * @throws Exception 
+     */ 
+    public void updateData(MemberDTO dto) throws Exception{
+    	
+    	String sql = "update member set user_name=?, user_nickname=?, user_no=?, user_email=?, user_phone=? where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,dto.getUserName());
+    		pstat.setString(2,dto.getUserNickname());
+    		pstat.setString(3,dto.getUserNo());
+    		pstat.setString(4,dto.getUserEmail());
+    		pstat.setString(5,dto.getUserPhone());
+    		pstat.setString(6,dto.getUserId());
+    		pstat.executeUpdate();
+    	}
+    	
+    }
 
 }
