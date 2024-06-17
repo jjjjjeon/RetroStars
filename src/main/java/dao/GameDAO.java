@@ -8,6 +8,9 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -73,5 +76,36 @@ public class GameDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    /** 
+     * @Method Name  : getGameById 
+     * @date : 2024. 6. 16. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 게임 아이디로 게임 정보 모두 가져오기..
+     * @param GameId
+     * @return GameDTO
+     * @throws Exception 
+     */     
+    public List<GameDTO> getAllGames() throws SQLException {
+        List<GameDTO> games = new ArrayList<>();
+        String sql = "SELECT * FROM game";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                GameDTO game = new GameDTO(
+                    rs.getString("game_id"),
+                    rs.getString("game_title"),
+                    rs.getString("game_desc"),
+                    rs.getString("developer"),
+                    rs.getTimestamp("release_date")
+                );
+                games.add(game);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return games;
     }
 }

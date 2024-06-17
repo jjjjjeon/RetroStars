@@ -6,6 +6,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,12 +46,15 @@ public class GBoardController extends HttpServlet {
 
         try {
             if (cmd.equals("/list.gboard")) {
-            	System.out.println("확인");
-                String gameId = "G1"; 
+                System.out.println("확인");
+                List<GameDTO> games = gameDao.getAllGames(); // 모든 게임을 가져옴
+                request.setAttribute("games", games);
+                request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
+                return;
+            } else if (cmd.equals("/viewGame.gboard")) {
+                String gameId = request.getParameter("gameId");
                 GameDTO game = gameDao.getGameById(gameId);
-
                 request.setAttribute("game", game);
-                
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
             }
