@@ -28,17 +28,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 <style>
     body {
-        background-color: #f0f0f0;
+        background-image: url('image/background.png');
+        background-size:100% 100%;
+        color:white;
         color: #333;
         margin-bottom: 120px; /* Footer 높이 만큼의 여백을 추가 */
     }
-
+	a{
+		color:white;
+		text-decoration:none;
+	}
     .container {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
+        background-color: #323232;
+        color:white;
+        border-radius: 20px;
         padding: 20px;
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 200px;
     }
 
     .boardName {
@@ -58,17 +65,27 @@
         font-size: 20px;
         font-weight: bold;
     }
-
+	/* searchbtn */
+	#searchbtn{
+		color:white;
+		border: 1px solid white;
+	}
+	#searchbtn:hover{
+		color:#323232;
+		background-color: white;
+	}
+	/* 	글작성 btn */
     .btn-write {
-        background-color: #007bff;
+        background-color: #323232;
         color: white;
-        border: none;
+        border: 1px solid white;
         margin-left: -600px;
     }
 
     .btn-write:hover {
-        background-color: #0056b3;
-        color: white;
+        background-color: white;
+        color: #323232;
+        
     }
 
     .form-search {
@@ -85,17 +102,25 @@
         border: 1px solid #ddd;
         padding: 10px;
         margin-bottom: 10px;
-        background-color: #f9f9f9;
+        background-color: #ababab;
         display: flex;
         align-items: center;
+        font-size:18px;
+        font-weight: bold;
+    }
+    .notiListItem div{
+    	background-color: #ababab;
     }
 	.notiListContent{
 	    border: 1px solid #ddd;
         padding: 10px;
         margin-bottom: 10px;
-        background-color: #f9f9f9;
+        background-color: #323232;
         display: flex;
         align-items: center;
+	}
+	.notiListContent:hover{
+		background-color: #ababab;
 	}
     .notiCategory {
         flex: 1;
@@ -233,16 +258,16 @@
         <div class="title">
             <span>전체</span>
             
-			
+
 			<a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
     			<i class="fas fa-pencil-alt"></i> 글 작성
 			</a>
-			
+
 
             <form class="d-flex" role="search">
             	
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="submit" id="searchbtn">Search</button>
             </form>
         </div>
         <div class="noticeContent">

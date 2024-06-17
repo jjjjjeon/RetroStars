@@ -28,33 +28,74 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 <style>
+		body{
+            background-image: url('/image/background.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+		}
         /* thisboard section styling */
         .thisboard {
             padding: 20px;
             margin: 20px auto;
-            width: 80%;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #f9f9f9;
+            width: 800px;
+            border: none;
+            height: 600px;
+            border-radius: 20px;
+            background-color: #323232;
+            color:white;
         }
     
         .detailtitle {
             display: grid;
             grid-template-columns: 1fr 3fr 1fr 1.5fr 1fr;
             padding: 10px;
-            background-color: #f1f1f1;
+            
             border-bottom: 1px solid #ddd;
             font-weight: bold;
             font-size: 18px;
         }
     
-        .cdetailcontent {
+        .detailcontent {
             padding: 20px;
             font-size: 16px;
-            color: #333;
             line-height: 1.5;
+            height: 400px;
         }
-        
+        .detailbtn{
+        	padding: 20px;
+        	display:flex;
+        	gap:10px;
+
+        }
+        #back{
+        	background-color: #323232;
+        	color: white;
+        	border: 1px solid white;
+        	border-radius: 10px;
+        	font-weight: bold;
+        }
+        #back:hover{
+        	background-color:white;
+        	padding: 10px;
+    		border: none;
+    		color: #323232;
+    		
+    		
+        }
+        #delete,
+        #edit,
+        #complete,
+        #cancel
+        {
+            padding: 10px;
+    		border: none;
+    		color: white;
+    		font-weight: bold;
+    		border-radius: 10px;
+    		background-color:#6c757d;
+        }
                /* footer */
         .footer {
         	position: fixed;
@@ -182,14 +223,16 @@
 			<input type="button" value="뒤로가기" id="back">
 			<input type="button" value="삭제" id="delete" data-nboard-seq="${dto.nBoardSeq}">
 			<input type="button" value="수정" id="edit">
+    	    
+    	    <form action="/update.nboard">
+    			<input type="hidden" name="seq" value="${dto.nBoardSeq}">
+    			<input type="hidden" name="title" id="hidden_title" value="${dto.nBoardTitle }">
+    			<input type="hidden" name="post" id="hidden_post" value="${dto.nBoardContent }">
+    			<input type="submit" id="complete" style="display:none" value="완료">
+    			<input type="button" id="cancel" style="display:none" value="취소">
+    		</form>
     	</div>
-    	<form action="/update.nboard">
-    		<input type="hidden" name="seq" value="${dto.nBoardSeq}">
-    		<input type="hidden" name="title" id="hidden_title" value="${dto.nBoardTitle }">
-    		<input type="hidden" name="post" id="hidden_post" value="${dto.nBoardContent }">
-    		<input type="submit" id="complete" style="display:none" value="완료">
-    		<input type="button" id="cancel" style="display:none" value="취소">
-    	</form>
+
     </div>
     <script>
     	// 뒤로 가기 버튼 클릭 시

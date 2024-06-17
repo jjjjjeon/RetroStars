@@ -32,9 +32,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
+            background-image: url('/image/background.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
@@ -51,12 +53,21 @@
         .container {
             width: 800px;
             margin: 20px auto;
-            background-color: #ffffff;
-            border: 1px solid #dddddd;
+            background-color: #323232;
+            border: none;
+            color:white;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius:20px;
         }
-
+		#nBoardTitle{
+			background-color: #323232;
+			color:white;
+		}
+		#nBoardContent{
+			background-color: #323232;
+			color:white;
+		}
         .header {
             text-align: center;
             font-size: 24px;
@@ -164,6 +175,10 @@
             width: 120px;
             height: 100px;
             margin-left: 20px;
+        }
+        #submit{
+        	background-color:white;
+        	color:#323232;
         }
     </style>
 </head>
