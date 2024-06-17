@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -17,6 +18,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import common.BoardConfig;
 import dao.CBoardDAO;
 import dao.CFileDAO;
+import dao.CReplyDAO;
+import dao.MemberDAO;
 import dto.CBoardDTO;
 import dto.CFileDTO;
 
@@ -26,12 +29,16 @@ public class CBoardController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		CBoardDAO bManager = CBoardDAO.getInstance();
 		CFileDAO fManager = CFileDAO.getInstance();
+		CReplyDAO rManager = CReplyDAO.getInstance();
+		MemberDAO mManager = MemberDAO.getInstance();
 		String cmd = request.getRequestURI();
 		System.out.println("get:" + cmd);
 		
 		try {
 			//카테고리별 글 목록 출력
 			if(cmd.equals("/list.cboard")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				
 				String categoryStr = request.getParameter("category");
 				if(categoryStr == null) {
 					categoryStr = "0";
@@ -50,6 +57,7 @@ public class CBoardController extends HttpServlet {
 				
 				List<CBoardDTO> list = bManager.viewList(category, startNum, endNum);
 				
+				request.setAttribute("loginId", id);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("category", category);
 				request.setAttribute("record_count_per_page", BoardConfig.recordCountPerPage);
@@ -95,7 +103,8 @@ public class CBoardController extends HttpServlet {
 
 			//게시글 내용 열람
 			}else if(cmd.equals("/detail.cboard")) {
-				String id = "jkh28";
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
 				
 				String categoryStr = request.getParameter("category");
 				if(categoryStr == null) {
@@ -116,10 +125,16 @@ public class CBoardController extends HttpServlet {
 				
 				List<CFileDTO> fileList = fManager.getFileList(seq);
 				
+				int isBookmark = bManager.isBookmark(id, seq);
+				
+				int replyTotalCount = rManager.countRepleList(seq);
+				
+				request.setAttribute("isBookmark", isBookmark);
+				request.setAttribute("replyTotalCount", replyTotalCount);
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fileList", fileList);
-				request.setAttribute("viewerId", id);
+				request.setAttribute("loginUser", nickname);
 				request.setAttribute("DTO", post);
 				request.getRequestDispatcher("/cboard/detailBoard.jsp").forward(request, response);
 				
@@ -132,6 +147,28 @@ public class CBoardController extends HttpServlet {
 				bManager.delPost(seq);
 				
 				response.sendRedirect("/list.cboard?category=" + category + "&cpage=" + cpage);
+				
+			//유저게시판 게시글 북마크 해제	
+			}else if( cmd.equals("/delBookmark.cboard")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				
+				bManager.delBookmark(id, seq);
+				
+			//유저게시판 게시글 북마크 추가
+			}else if( cmd.equals("/addBookmark.cboard")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				
+				bManager.addBookmark(id, seq);
+				
+			//글쓰기게시판 이동
+			}else if(cmd.equals("/goWrite.cboard")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
+				
+				request.setAttribute("nickname", nickname);
+				request.getRequestDispatcher("/cboard/writeBoard.jsp").forward(request, response);
 			}
 			
 		}catch(Exception e) {
@@ -149,7 +186,6 @@ public class CBoardController extends HttpServlet {
 		try {
 			//유저게시판 게시글 작성
 			if(cmd.equals("/write.cboard")) {
-				String id = "jkh28";
 				int category = 0;
 				
 				int maxSize = 1024 * 1024 * 10;
@@ -170,14 +206,15 @@ public class CBoardController extends HttpServlet {
 					category = 2;
 				}
 				
+				String nickname = multi.getParameter("nickname");
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");	
 				
-				CBoardDTO ctt = new CBoardDTO(0, id, category ,title, content, null, 0, 0);
+				CBoardDTO ctt = new CBoardDTO(0, nickname, category ,title, content, null, 0, 0, 0);
 				
 				bManager.insertPost(ctt);
 				
-				int parent_seq = bManager.getLastSeq(id, category);
+				int parent_seq = bManager.getLastSeq(nickname, category);
 				
 				Enumeration<String> names = multi.getFileNames();
 				while(names.hasMoreElements()) {
@@ -200,7 +237,7 @@ public class CBoardController extends HttpServlet {
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
 				
-				CBoardDTO post = new CBoardDTO(seq, "system", category, title, content, null, 0, 0);
+				CBoardDTO post = new CBoardDTO(seq, "system", category, title, content, null, 0, 0, 0);
 				
 				bManager.correctPost(post);
 				
