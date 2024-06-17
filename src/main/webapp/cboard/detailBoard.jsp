@@ -209,6 +209,7 @@ a {
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
+	display : none;
 }
 
 #delBtn {
@@ -290,6 +291,17 @@ a {
 	position: relative;
 	margin-bottom: 20px;
 	width: 1300px;
+	color: #6a6e76;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 36px;
+}
+
+.commentBox .commentTitle .commentAnker {
+	height: 36px;
+	position: absolute;
+	right : 0;
+	margin-bottom: 20px;
 	color: #6a6e76;
 	font-size: 18px;
 	font-weight: 400;
@@ -471,11 +483,12 @@ a {
 		<input type="hidden" id="contentInput" name="content">
 	</form>
 	<div class="commentBox">
-		<div class="commentTitle">댓글 (0)</div>
+		<div class="commentTitle">댓글 (0) <a class="commentAnker">댓글쓰러가기</a></div>
+		
 		<div class="commentList">
 		</div>
 		<div class="writeCmtBox">
-				<div class="writeCmtWriter">SessionId</div>
+				<div class="writeCmtWriter">${loginUser}</div>
 				<div class="writeCmtCttRow">
 					<textarea
 						placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
@@ -497,7 +510,7 @@ a {
 				}
 			}).done(function(resp){
 				totalReplyCount = Number(resp);
-				$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+				$(".commentTitle").text("댓글 (" + totalReplyCount + ")" + <a class=`commentAnker`>댓글쓰러가기</a>);
 			});
 		};
 	
@@ -687,18 +700,23 @@ a {
     	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userId);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
-    	                    let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
-    	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
     	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
+    	                    
+    	                    console.log("${loginUser}" == dto.userId);
+    	                    
+    	                    if("${loginUser}" == dto.userId){
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+        	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
+    	    	                cmtDateDiv.append(deleteButton);
+    	    	            }
 
-    	                    cmtDateDiv.append(deleteButton);
     	                    cmtBtnBoxDiv.append(replyButton);
     	                    cmtDateDiv.append(cmtBtnBoxDiv);
     	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
     	                    let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ SessionId`);
+    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
     	                    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
     	                    let textarea = $('<textarea>')
     	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
@@ -749,10 +767,13 @@ a {
     	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
-    	                    let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
-    	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
-
-    	                    cmtDateDiv.append(deleteButton);
+    	                    
+    	                    if("${loginUser}" == dto.userId){
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+        	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
+    	    	                cmtDateDiv.append(deleteButton);
+    	    	            }
+    	                    
     	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
     	                    $("#" + dto.cReplyReply).append(commentDiv);
@@ -775,6 +796,13 @@ a {
     	$(function(){
     		getRepleList();
     		getTotalReplyCount();
+    		
+    		if(${loginUser != DTO.userId}){
+    			$("#delBtn").css("display", "none");
+    			$("#corBtn").css("display", "none");
+    			$("#reportBtn").css("display", "block");
+    		}
+    		
     	})
     	
     	$("#writeCmtBtn").on("click", function(e){
@@ -809,18 +837,21 @@ a {
 	                let cmtUserDiv = $('<div>').addClass('cmtUser').text(resp.userId);
 	                let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
 	                let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
-	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
-	                deleteButton.attr('data-repleSeq', resp.cReplySeq);
 	                let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
 	                let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
 
+	                if("${loginUser}" == resp.userId){
+	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+	                deleteButton.attr('data-repleSeq', resp.cReplySeq);
 	                cmtDateDiv.append(deleteButton);
+	                }
+	                
 	                cmtBtnBoxDiv.append(replyButton);
 	                cmtDateDiv.append(cmtBtnBoxDiv);
 	                commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
 	                let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ SessionId`);
+	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
 	                let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
 	                let textarea = $('<textarea>')
 	                    .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
@@ -915,10 +946,13 @@ a {
                 let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
                 let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
                 let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
-                let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
-                deleteButton.attr('data-repleSeq', resp.cReplySeq);
 
-                cmtDateDiv.append(deleteButton);
+                if("${loginUser}" == resp.userId){
+                	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+                    deleteButton.attr('data-repleSeq', resp.cReplySeq);
+                    cmtDateDiv.append(deleteButton);
+	            }
+                
                 commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
                 $("#" + resp.cReplyReply).append(commentDiv);

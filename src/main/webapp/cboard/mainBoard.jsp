@@ -287,7 +287,7 @@
     <div class="footer">Footer</div>
     <script>
 		$("#writeBtn").on("click", function(){
-			location.href = "/cboard/writeBoard.jsp";
+			location.href = "/goWrite.cboard";
 		});
 		
 		$("#searchForm").on("submit", function(e){

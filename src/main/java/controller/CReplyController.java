@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dao.CReplyDAO;
+import dao.MemberDAO;
 import dto.CReplyDTO;
 
 @WebServlet("*.reply")
@@ -77,7 +78,8 @@ public class CReplyController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		CReplyDAO manager = CReplyDAO.getInstance();
+		CReplyDAO rManager = CReplyDAO.getInstance();
+		MemberDAO mManager = MemberDAO.getInstance();
 		String cmd = request.getRequestURI();
 		System.out.println("post:" + cmd);
 		Gson g = new Gson();
@@ -85,17 +87,16 @@ public class CReplyController extends HttpServlet {
 		try {
 			//유저게시판 글에 댓글 추가
 			if (cmd.equals("/addReple.reply")) {
-//				HttpSession session = request.getSession();
-//				String id = (String) session.getAttribute("loginID");
-				String id = "SessionId";
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
 
 				int parentSeq = Integer.parseInt(request.getParameter("parentSeq"));
 				String content = request.getParameter("content");
 
-				CReplyDTO rpl = new CReplyDTO(0, parentSeq, id, content, null, 0);
-				manager.addReple(rpl);
+				CReplyDTO rpl = new CReplyDTO(0, parentSeq, nickname, content, null, 0);
+				rManager.addReple(rpl);
 				
-				CReplyDTO addedReple = manager.viewReple(id, parentSeq, 0);
+				CReplyDTO addedReple = rManager.viewReple(nickname, parentSeq, 0);
 				
 				String result = g.toJson(addedReple);
 				
@@ -105,17 +106,16 @@ public class CReplyController extends HttpServlet {
 				
 			//유저게시판 글의 댓글에 답글 추가
 			}else if(cmd.equals("/addReplyReply.reply")) {
-//				HttpSession session = request.getSession();
-//				String id = (String) session.getAttribute("loginID");
-				String id = "SessionId";
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
 				int boardSeq = Integer.parseInt(request.getParameter("parentBoardSeq"));
 				int replySeq = Integer.parseInt(request.getParameter("parentReplySeq"));
 				String content = request.getParameter("content");
 				
-				CReplyDTO rerpl = new CReplyDTO(0, boardSeq, id, content , null, replySeq);
-				manager.addReplyReply(rerpl);
+				CReplyDTO rerpl = new CReplyDTO(0, boardSeq, nickname, content , null, replySeq);
+				rManager.addReplyReply(rerpl);
 				
-				CReplyDTO addedReReple = manager.viewReple(id, boardSeq, replySeq);
+				CReplyDTO addedReReple = rManager.viewReple(nickname, boardSeq, replySeq);
 				
 				String result = g.toJson(addedReReple);
 				
