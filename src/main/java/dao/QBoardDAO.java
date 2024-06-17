@@ -74,6 +74,18 @@ public class QBoardDAO {
 		}
 
 	}
+	
+	//0.카테고리 코드를 검색하는 함수
+	public String getCategoryCode(int categoryCode) throws Exception{
+		if(categoryCode==1) {
+			return "게임문의";
+		}else if(categoryCode==2) {
+			return "제휴문의";
+		}else if(categoryCode==3) {
+			return "기타문의";
+		}
+		return null;
+	}
 
 	//1. 글 추가하기 insert
 	public int insert(QBoardDTO dto) throws Exception{

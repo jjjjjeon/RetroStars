@@ -39,11 +39,11 @@ public class QBoardController extends HttpServlet {
 		String cmd=request.getRequestURI();
 		System.out.println(cmd);
 		QBoardDAO boarddao=QBoardDAO.getInstance();
-		
+		MemberDAO memberdao=MemberDAO.getInstance();
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
-				String writer=(String)request.getSession().getAttribute("loginID");
+				String writer=(String)request.getSession().getAttribute("loginId");
 				String userId=request.getParameter("userId");
 				int qBoardCategory= boarddao.getCategory(request.getParameter("qBoardCategory")) ;
 				String qBoardTitle= request.getParameter("qBoardTitle");
@@ -73,6 +73,15 @@ public class QBoardController extends HttpServlet {
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
 				
+				//정보 변환시키고 태워서 보내기
+				//닉네임
+				String writer=(String)request.getSession().getAttribute("loginId");
+				String nickname=memberdao.getNickname(writer);
+				request.setAttribute("nickname", nickname);
+				//카테고리
+				String categoryName=boarddao.getCategoryCode(category);
+				request.setAttribute("categoryName", strcategory);
+				
 				//게시판 전체 레코드 체크
 				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
 				//System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
@@ -101,6 +110,14 @@ public class QBoardController extends HttpServlet {
 				String content=request.getParameter("content");
 				int result=boarddao.updateBySeq(seq,title,content);
 				response.sendRedirect("/list.qboard");
+				
+			}else if(cmd.equals("/gowrite.qboard")) {
+				//닉네임처리
+				String writer=(String)request.getSession().getAttribute("loginId");
+				String nickname=memberdao.getNickname(writer);
+				request.setAttribute("nickname", nickname);
+				request.getRequestDispatcher("/qboard/writeBoard.jsp").forward(request, response);
+				
 				
 			}
 		}catch(Exception e) {
