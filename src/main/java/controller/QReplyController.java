@@ -42,9 +42,9 @@ public class QReplyController extends HttpServlet {
 				String loginId=request.getParameter("loginId");
 				String comment=request.getParameter("comment");
 				int qBoardSeq=Integer.parseInt(request.getParameter("qBoardSeq"));
-				System.out.println(loginId+comment+ qBoardSeq);
+				//System.out.println(loginId+comment+ qBoardSeq);
 				QReplyDTO qdto=replydao.insert(new QReplyDTO(0,qBoardSeq,loginId,comment,null));
-				System.out.println(qdto);
+				//System.out.println(qdto);
 				PrintWriter pw=response.getWriter();
 				pw.append(g.toJson(qdto));
 				
