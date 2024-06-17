@@ -85,6 +85,7 @@ public class QBoardController extends HttpServlet {
 				int seq=Integer.parseInt(request.getParameter("seq"));
 				QBoardDTO dto=boarddao.selectcontent(seq);
 				request.setAttribute("dto", dto);
+				
 				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
 			}else if(cmd.equals("/delete.qboard")) {
 				int seq=Integer.parseInt(request.getParameter("seq"));
