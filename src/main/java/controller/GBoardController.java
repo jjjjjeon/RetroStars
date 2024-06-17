@@ -6,6 +6,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.GBoardDAO;
+import dao.GameDAO;
 import dao.MemberDAO;
+import dto.GameDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -34,18 +38,33 @@ public class GBoardController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		HttpSession session = request.getSession();
-		String cmd = request.getRequestURI();
-		GBoardDAO gBoardDao = GBoardDAO.getInstance();
-		
-		try {
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			response.sendRedirect("error.jsp");
-		}
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        HttpSession session = request.getSession();
+        String cmd = request.getRequestURI();
+        GameDAO gameDao = GameDAO.getInstance();
+
+        try {
+            if (cmd.equals("/list.gboard")) {
+                System.out.println("확인");
+                List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
+                request.setAttribute("listGame", listGame);
+                request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
+                return;
+            } else if (cmd.equals("/viewGame.gboard")) {
+                String gameId = request.getParameter("gameId");
+                System.out.println(gameId);
+                String gameTestId = "G3";
+                GameDTO game = gameDao.getGameById(gameId);
+                request.setAttribute("game", game);
+                request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
+        }
 		
 	}
 

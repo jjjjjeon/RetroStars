@@ -139,7 +139,7 @@
 				<div class="container col">
 					<div class="boardwritername_container row" style="flex: 1;">
 						<div class="col" style="flex: 1; display: inline;">
-							<span id="boardwriter_div">test</span>
+							<span id="boardwriter_div">${loginId}</span>
 							<span>님의 글</span>
 							<hr>
 						</div>
@@ -166,7 +166,7 @@
 					</div>
 					<div class="btns_container" style="flex: 1; width: 100%;">
 						<button id="back_btn" class="btn btn-secondary" type="button"
-							onclick="location.href='/qboard/mainBoard.jsp'">취소</button>
+							onclick="location.href='/list.qboard'">취소</button>
 						<button id="insert_btn" class="btn btn-primary">등록</button>
 					</div>
 				</div>
@@ -200,8 +200,8 @@
 							qBoardSecret: $('#secret').prop('checked')
 						}
 					}).done(function () {
-						alret("질문이 등록되었습니다.");
-						window.location.href = "/qboard/mainBoard.jsp";
+						//alret("질문이 등록되었습니다.");
+						window.location.href = "/insert.qboard";
 
 					})
 				}

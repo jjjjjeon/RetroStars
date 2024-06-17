@@ -19,9 +19,14 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import common.util;
+import dao.GameDAO;
 import dao.MemberDAO;
+import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
+import dto.GameDTO;
 import dto.MemberDTO;
+import dto.UserProfileImgDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -32,6 +37,7 @@ import dto.MemberDTO;
  * @author : Jin 
  * @version 1.0 
  */
+
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
 	
@@ -47,25 +53,30 @@ public class MemberController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String cmd = request.getRequestURI();
 		MemberDAO memberDao = MemberDAO.getInstance();
+		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
+		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		
 		try {
 			
 			// 로그인 기능.
 			if(cmd.equals("/login.member")) {
+			
 				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
+				System.out.println(id);
+				String pw = util.getSHA512(request.getParameter("pw"));
+
+						
 				
 				boolean result = memberDao.loginId(id, pw);
 				System.out.println(result);
+
 				if(result) {
 					System.out.println("로그인 성공");
-					session.setAttribute("loginId", id);
-					MemberDTO member = memberDao.mydata(id);
-                    session.setAttribute("profileUrl", member.getUserProfileUrl());
-					
+					session.setAttribute("loginId", id);					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
+		         
 				}
 				response.sendRedirect("/index.jsp");
 				return;
@@ -120,8 +131,9 @@ public class MemberController extends HttpServlet {
             }			
 			else if(cmd.equals("/registerPw.member")) {
 				// 유저 패스워드 전송
-				String userPw = request.getParameter("userPw");
-				String confirmUserPw = request.getParameter("confirmUserPw");				
+				
+				String userPw = util.getSHA512(request.getParameter("userPw"));
+				String confirmUserPw = util.getSHA512(request.getParameter("confirmUserPw")); 				
 				if(userPw.equals(confirmUserPw)) {
 					// 패스워드 일치했을 때만 전송
 					session.setAttribute("userPw", userPw);
@@ -131,11 +143,13 @@ public class MemberController extends HttpServlet {
 					// 불일치했을 때 다시 패스워드 페이지로 이동
 					response.sendRedirect("/member/register/registerPw.jsp");
 				}
+				return;
 			} 
 			else if(cmd.equals("/registerEmail.member")) {
 				// 유저 이메일 전송
 				session.setAttribute("userEmail", request.getParameter("userEmail"));
 				response.sendRedirect("member/register/registerName.jsp");
+				return;
 			} 
 			else if(cmd.equals("/registerName.member")) {
 				// 이름, 닉네임, 주민등록번호, 폰 번호 전송
@@ -147,6 +161,7 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("userNo", userNo);
 				session.setAttribute("userPhone", request.getParameter("userPhone"));
 				response.sendRedirect("/member/register/registerComplete.jsp");
+				return;
 			} 
 			else if(cmd.equals("/registerComplete.member")) {
 				// session에 저장된 모든 정보 불러오기
@@ -160,18 +175,24 @@ public class MemberController extends HttpServlet {
                 String userNickname = (String) session.getAttribute("userNickname");
                 String userNo = (String) session.getAttribute("userNo");
                 String userPhone = (String) session.getAttribute("userPhone");
-                String userProfileUrl = "upload/profile/default.png";
+                //String userProfileUrl = "upload/profile/default.png";
                 System.out.println(term  + privacy +  ads + userId + userPw + userEmail +  userName + userNickname + userNo + userPhone);
                 
                 // 기본 값 제외하고 모두 변수에 담아 dao에 넣기.
-                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()), userProfileUrl);
+                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
                 memberDao.addMember(addMember);
                 
+                UserProfileImgDTO addDefault = new UserProfileImgDTO(0, userId, null, null);
+                System.out.println("기본 이미지 확인");
+                userProfileImgDao.updateImg(addDefault);
+                
+
                 // 세션 값 초기화
                 session.invalidate();
                 
                 // 완료 버튼을 누르면 메인화면으로 돌아감.
-                response.sendRedirect("/member/login/login.jsp");
+                request.getRequestDispatcher("/member/login/login.jsp").forward(request, response);
+                return;
 			}
 			else if(cmd.equals("/kakaoLogin.member")) {
 			    // 카카오 로그인 정보 처리
@@ -190,6 +211,7 @@ public class MemberController extends HttpServlet {
 			    session.setAttribute("nickname", nickname);
 			    System.out.println("카카오 로그인 성공");
 			    response.sendRedirect("/index.jsp");
+			    return;
 			}
 			
 			// 마이페이지 접속 시 정보 출력 기능
@@ -197,10 +219,12 @@ public class MemberController extends HttpServlet {
 				session = request.getSession();
 				String id = (String) session.getAttribute("loginId");
 				
-				MemberDTO mydata = memberDao.mydata(id);
+				MemberDTO mydata = memberDao.myData(id);
 				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
-				String genderCode = mydata.getUserNo().substring(7,8);
+				String genderCode = mydata.getUserNo().substring(6,7);
+				System.out.println(genderCode);
+				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String gender;
 				if(genderCode.equals("1")) {
 					gender="Male";
@@ -208,14 +232,18 @@ public class MemberController extends HttpServlet {
 					gender="Female";
 				}else {gender="None";}
 				
+				String url = userProfileImgDao.selectMyUrl(id);
+				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
 				int count1 = listCategory1.size();
-				int count2 = listCategory2.size();
+				int count2 = listCategory2.size();				
 				
 				request.setAttribute("birth", birth);
+				request.setAttribute("phone", phone);
 				request.setAttribute("gender", gender);
 				request.setAttribute("mydata", mydata);
+				request.setAttribute("userProfileUrl", url);
 				request.setAttribute("listCategory1", listCategory1);
 				request.setAttribute("listCategory2", listCategory2);
 				request.setAttribute("count1", count1);
@@ -223,6 +251,58 @@ public class MemberController extends HttpServlet {
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				
+			// 마이페이지 수정 버튼 클릭 시 기존 저장된 정보 출력 기능	
+			}else if(cmd.equals("/updateList.member")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				
+				MemberDTO mydata = memberDao.myData(id);
+				System.out.println(mydata.getUserNo());
+				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
+				String genderCode = mydata.getUserNo().substring(6,7);
+				String gender;
+				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
+				String url = userProfileImgDao.selectMyUrl(id);
+				
+				if(genderCode.equals("1")) {
+					gender="Male";
+				}else if(genderCode.equals("2")) {
+					gender="Female";
+				}else {gender="None";}
+				
+				
+				request.setAttribute("phone", phone);
+				request.setAttribute("birth", birth);
+				request.setAttribute("gender", gender);
+				request.setAttribute("mydata", mydata);
+				request.setAttribute("userProfileUrl", url);
+				
+				request.getRequestDispatcher("/member/mypage/updateMyPage.jsp").forward(request, response);	
+				
+			}else if(cmd.equals("/updateData.member")) {
+				
+				String id = (String) request.getSession().getAttribute("loginId");
+				
+				String name = request.getParameter("userName");
+				String nickname = request.getParameter("userNickname");
+				String birth = request.getParameter("userBirth");
+				String gender = request.getParameter("gender");
+				String email = request.getParameter("userEmail");
+				String phone = request.getParameter("userPhone");
+				String formattedPhone = phone.replaceAll("-", "");
+				String genderCode ="";
+				
+				if(gender.equals("Male")) {
+					genderCode="1";
+				}else if(gender.equals("Female")){
+					genderCode="2";
+				}
+				
+				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
+				
+				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
+				request.getRequestDispatcher("/mypage.member").forward(request, response);	
 			}
 			
 			

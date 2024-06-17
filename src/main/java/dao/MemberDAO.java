@@ -27,6 +27,7 @@ import dto.MemberDTO;
  * @author : Jin 
  * @version 1.0 
  */
+
 public class MemberDAO {
 	public static MemberDAO instance;
 	
@@ -198,7 +199,33 @@ public class MemberDAO {
         return false;
     }
     /** 
-     * @Method Name  : mydata
+     * @Method Name  : 닉네임 얻어오기
+     * @date : 2024. 6. 17. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 아이디에 따른 닉네임 가져오기
+     * @param 로그인 시 사용한 id
+     * @return 유저 닉네임
+     * @throws Exception 
+     */   
+    public String getNickname(String userId) throws Exception {
+        String sql = "select user_nickname FROM member WHERE user_id = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+            pstat.setString(1, userId);
+            try (ResultSet rs = pstat.executeQuery();) {
+                if (rs.next()) {
+                    String userNickname = rs.getString(1);
+                    return userNickname;
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+    
+    
+    /** 
+     * @Method Name  : myData
      * @date : 2024. 6. 13. 
      * @author : kjy
      * @version : 
@@ -207,7 +234,7 @@ public class MemberDAO {
      * @return MemberDTO dto
      * @throws Exception 
      */ 
-    public MemberDTO mydata(String id) throws Exception{
+    public MemberDTO myData(String id) throws Exception{
     	
     	String sql = "select * from member where user_id=?";
     	
@@ -225,21 +252,18 @@ public class MemberDAO {
     			String phone =rs.getString(6);
     			String email=rs.getString(7);
     			Timestamp joinDate =rs.getTimestamp(8);
-    			String profile =rs.getString(9);
-    			String level =rs.getString(10);
-    			String admin =rs.getString(11);
-    			String black =rs.getString(12);
-    			String active =rs.getString(13);
+    			String level =rs.getString(9);
+    			String admin =rs.getString(10);
+    			String black =rs.getString(11);
+    			String active =rs.getString(12);
     			
-    			dto = new MemberDTO(userId, pw, name, nickName, no, phone, email, joinDate, profile, level, admin, black, active);
+    			dto = new MemberDTO(userId, pw, name, nickName, no, phone, email, joinDate, level, admin, black, active);
     			}
     			return dto;
     		}
     	}
     	
     }
-    
-    
     
     /** 
      * @Method Name  : selectCBoradCate1
@@ -255,7 +279,7 @@ public class MemberDAO {
     public List<CBoardBookmarkDTO> selectCBoradCate1(String id) throws Exception {
 
 		String sql = "select "
-				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
 				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
@@ -269,12 +293,13 @@ public class MemberDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<CBoardBookmarkDTO> list = new ArrayList<>();
 				while (rs.next()) {
-					String userId = rs.getString(1);
-					int category = rs.getInt(2); 
-					String title = rs.getString(3);
-					String writerId = rs.getString(4);
-					Timestamp date = rs.getTimestamp(5);
-					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					int seq = rs.getInt(1);
+					String userId = rs.getString(2);
+					int category = rs.getInt(3); 
+					String title = rs.getString(4);
+					String writerId = rs.getString(5);
+					Timestamp date = rs.getTimestamp(6);
+					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
 					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
 					}
 				return list;
@@ -297,7 +322,7 @@ public class MemberDAO {
     public List<CBoardBookmarkDTO> selectCBoradCate2(String id) throws Exception {
 
 		String sql = "select "
-				+ "b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
 				+ "from "
 				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
 				+ "where "
@@ -311,12 +336,13 @@ public class MemberDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<CBoardBookmarkDTO> list = new ArrayList<>();
 				while (rs.next()) {
-					String userId = rs.getString(1);
-					int category = rs.getInt(2); 
-					String title = rs.getString(3);
-					String writerId = rs.getString(4);
-					Timestamp date = rs.getTimestamp(5);
-					list.add(new CBoardBookmarkDTO(userId,category, title, writerId, date));
+					int seq = rs.getInt(1);
+					String userId = rs.getString(2);
+					int category = rs.getInt(3); 
+					String title = rs.getString(4);
+					String writerId = rs.getString(5);
+					Timestamp date = rs.getTimestamp(6);
+					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
 					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
 					}
 				return list;
@@ -325,5 +351,31 @@ public class MemberDAO {
 
 	}
     
+    /** 
+     * @Method Name  : updateData
+     * @date : 2024. 6. 17. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 개인 정보 수정 페이지 내 수정 기능
+     * @param MemberDTO dto
+     * @return void
+     * @throws Exception 
+     */ 
+    public void updateData(MemberDTO dto) throws Exception{
+    	
+    	String sql = "update member set user_name=?, user_nickname=?, user_no=?, user_email=?, user_phone=? where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,dto.getUserName());
+    		pstat.setString(2,dto.getUserNickname());
+    		pstat.setString(3,dto.getUserNo());
+    		pstat.setString(4,dto.getUserEmail());
+    		pstat.setString(5,dto.getUserPhone());
+    		pstat.setString(6,dto.getUserId());
+    		pstat.executeUpdate();
+    	}
+    	
+    }
 
 }

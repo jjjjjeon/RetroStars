@@ -106,7 +106,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
     .board_main{flex:8; width: 90%;border:1px solid white; overflow-y:auto; display:flex;flex-direction: column; justify-content: start; align-items: center;}
-	.board_bookmark_row{display:flex; width:100%; justify-content: center; align-items: center;}
+	.board_bookmark_row{display:flex; width:100%; justify-content: center; align-items: center; height:32px;}
     .board_bookmark_title{flex:6;display: flex; justify-content: center; align-items: center;}
     .board_bookmark_writer{flex:2;display: flex; justify-content: center; align-items: center;}
     .board_bookmark_date{flex:2;display: flex; justify-content: center; align-items: center;}
@@ -115,6 +115,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     .tipboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
 
+	.board_link{color:white; text-decoration-line: none;}
+	
     .footer{flex:0.5; width:90%; display: flex; justify-content: start; align-items: center;}
     .footer_delete_btn{flex:4;}
     .footer_gohome_btn{flex:6;display: flex; justify-content: end; align-items: center;}
@@ -137,9 +139,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">ICON</a>
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -164,26 +166,45 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                             게시판
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
                             <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">랭킹</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/mypage.member">마이페이지</a>
-                    </li>      	                  
+                   
+
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
+
             </div>
         </div>
     </nav>
@@ -197,7 +218,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <div class="profile">
                 <div class="main_profile">
                     <div class="profile_img">
-                        <img id="basic_img" src="/image/profileBasicImg.jpg">
+                        <img id="basic_img" src="/upload/${userProfileUrl}">
                     </div>
                     <div class="profile_data">
                         <div class="user_value_box">
@@ -215,12 +236,12 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                         <div class="user_value_box">
                             <div class="user_birth value_title">BRITH : </div>
                             <div class="user_birth_value value_content1"> ${birth} </div>
-                            <div class="gender_value  value_content2">
+                            <div class="gender_value  value_content2"> 
                             	<c:choose>
-                            		<c:when test="${gender.equals('Male')}">
+                            		<c:when test="${gender == 'Male'}">
                             			<img class="gender_img" src="/image/male.png">
                             		</c:when>
-                            		<c:when test="${gender.equals('Male')}">
+                            		<c:when test="${gender == 'Female'}">
                             			<img class="gender_img" src="/image/female.png">
                             		</c:when>
                             		<c:otherwise>
@@ -237,7 +258,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
                         <div class="user_value_box">
                             <div class="user_phone value_title">PHONE : </div>
-                            <div class="user_phone_value value_content3"> ${mydata.userPhone} </div>
+                            <div class="user_phone_value value_content3"> ${phone} </div>
                             <div class="user_phone_value value_content4"> 
                             	<button type="button" class="btn btn-dark" id="update_btn">Update</button>
                             </div>
@@ -275,7 +296,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             
             	<c:forEach var="listCategory1" items="${listCategory1}">
 							<div class="free_row board_bookmark_row">
-								<div class="free_title board_bookmark_title">${listCategory1.cBoardTitle}</div>
+								<div class="free_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory1.cBoardSeq}">${listCategory1.cBoardTitle}</a></div>
 								<div class="free_writer board_bookmark_writer">${listCategory1.writerId}</div>
 								<div class="free_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory1.cBoardDate}" pattern="yy.MM.dd" />
@@ -294,7 +315,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 				</div>
             	<c:forEach var="listCategory2" items="${listCategory2}">
 							<div class="tip_row board_bookmark_row">
-								<div class="tip_title board_bookmark_title">${listCategory2.cBoardTitle}</div>
+								<div class="tip_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory2.cBoardSeq}">${listCategory2.cBoardTitle}</a></div>
 								<div class="tip_writer board_bookmark_writer">${listCategory2.writerId}</div>
 								<div class="tip_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
@@ -337,7 +358,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
     
     $("#update_btn").on("click",function(){
-    	location.href="/member/mypage/updateMyPage.jsp"
+    	location.href="/updateList.member"
     })
     
     $("#gohome").on("click",function(){

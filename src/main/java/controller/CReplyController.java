@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dao.CReplyDAO;
+import dao.MemberDAO;
 import dto.CReplyDTO;
 
 @WebServlet("*.reply")
@@ -36,11 +37,37 @@ public class CReplyController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 				
+			//유저게시판 글의 대댓글 목록을 json으로 클라이언트에게 반환
+			}else if(cmd.equals("/viewRepleReple.reply")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				List<CReplyDTO> replerepleList = manager.viewRepleRepleList(seq);
+				
+				String result = g.toJson(replerepleList);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter pw = response.getWriter();
+				pw.append(result);
+				
 			//유저게시판 글의 댓글 삭제
 			}else if(cmd.equals("/delReple.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				manager.delReple(seq);
+				manager.delRepleChildren(seq);
+			
+			//유저게시판 글의 대댓글 삭제
+			}else if(cmd.equals("/delRepleReple.reply")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				manager.delReple(seq);
+				
+			//유저게시판 글의 총 댓글 수 반환
+			}else if(cmd.equals("/countRepleList.reply")) {
+				int seq = Integer.parseInt(request.getParameter("seq"));
+				String result = "" + manager.countRepleList(seq);
+				
+				PrintWriter pw = response.getWriter();
+				pw.append(result);
 			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -51,7 +78,8 @@ public class CReplyController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		CReplyDAO manager = CReplyDAO.getInstance();
+		CReplyDAO rManager = CReplyDAO.getInstance();
+		MemberDAO mManager = MemberDAO.getInstance();
 		String cmd = request.getRequestURI();
 		System.out.println("post:" + cmd);
 		Gson g = new Gson();
@@ -59,15 +87,42 @@ public class CReplyController extends HttpServlet {
 		try {
 			//유저게시판 글에 댓글 추가
 			if (cmd.equals("/addReple.reply")) {
-//				HttpSession session = request.getSession();
-//				String id = (String) session.getAttribute("loginID");
-				String id = "SessionId";
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
 
 				int parentSeq = Integer.parseInt(request.getParameter("parentSeq"));
 				String content = request.getParameter("content");
 
-				CReplyDTO rpl = new CReplyDTO(0, parentSeq, id, content, null, 0);
-				manager.addReple(rpl);
+				CReplyDTO rpl = new CReplyDTO(0, parentSeq, nickname, content, null, 0);
+				rManager.addReple(rpl);
+				
+				CReplyDTO addedReple = rManager.viewReple(nickname, parentSeq, 0);
+				
+				String result = g.toJson(addedReple);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter pw = response.getWriter();
+				pw.append(result);
+				
+			//유저게시판 글의 댓글에 답글 추가
+			}else if(cmd.equals("/addReplyReply.reply")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
+				int boardSeq = Integer.parseInt(request.getParameter("parentBoardSeq"));
+				int replySeq = Integer.parseInt(request.getParameter("parentReplySeq"));
+				String content = request.getParameter("content");
+				
+				CReplyDTO rerpl = new CReplyDTO(0, boardSeq, nickname, content , null, replySeq);
+				rManager.addReplyReply(rerpl);
+				
+				CReplyDTO addedReReple = rManager.viewReple(nickname, boardSeq, replySeq);
+				
+				String result = g.toJson(addedReReple);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter pw = response.getWriter();
+				pw.append(result);
+				
 			}
 			
 		}catch(Exception e) {

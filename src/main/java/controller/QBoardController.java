@@ -21,7 +21,7 @@ import dto.QBoardDTO;
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
  * History :
- *  - 작성자 : Sam, 날짜 : 2024. 6. 13., 설명 : 최초작성
+ *  - 작성자 : Sam, 날짜 : 2024. 6. 17., 설명 : CRUD완성
  *
  * @author : Sam
  * @version 1.0 
@@ -41,34 +41,65 @@ public class QBoardController extends HttpServlet {
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
+				String writer=(String)request.getSession().getAttribute("loginID");
 				String userId=request.getParameter("userId");
 				int qBoardCategory= boarddao.getCategory(request.getParameter("qBoardCategory")) ;
 				String qBoardTitle= request.getParameter("qBoardTitle");
 				String qBoardContent= request.getParameter("qBoardContent");
 				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
 				boarddao.insert(new QBoardDTO(0,userId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
-			
+				response.sendRedirect("/list.qboard");
+				
 			}else if(cmd.equals("/list.qboard")) {
 				//받은 정보 처리하기
-				String pcpage=request.getParameter("cpage");
-				if(pcpage==null) {pcpage="1";}
-				int cpage=Integer.parseInt(pcpage);
+				String strcpage=request.getParameter("cpage");
+				if(strcpage==null) {strcpage="1";}
+				int cpage=Integer.parseInt(strcpage);
 				String strcategory=request.getParameter("category");
 				if(strcategory==null) {strcategory="0";}
 				int category=Integer.parseInt(strcategory);
+				String searchBy=request.getParameter("searchBy");
+				if(searchBy==null) {searchBy="0";}
+				String searchData=request.getParameter("searchData");
+				if(searchData==null) {searchData="0";}		
 				
 				//보낼 정보 처리하기
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("category", category);
+				request.setAttribute("searchBy", searchBy);
+				request.setAttribute("searchData", searchData);
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
 				
 				//게시판 전체 레코드 체크
-				request.setAttribute("record_total_count", boarddao.getRecordCount(category));
+				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
+				//System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
 				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category);
+										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);
 				request.setAttribute("list", list);
+				//System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
+			
+			}else if(cmd.equals("/detail.qboard")) {
+				String loginId=(String)request.getSession().getAttribute("loginId");
+				int seq=Integer.parseInt(request.getParameter("seq"));
+				QBoardDTO dto=boarddao.selectcontent(seq);
+				request.setAttribute("dto", dto);
+				request.setAttribute("loginId", loginId);
+				
+				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
+			}else if(cmd.equals("/delete.qboard")) {
+				int seq=Integer.parseInt(request.getParameter("seq"));
+				int result=boarddao.deleteBySeq(seq);
+				response.sendRedirect("/list.qboard");
+				
+			}else if(cmd.equals("/update.qboard")) {
+				int seq=Integer.parseInt(request.getParameter("seq"));
+				String title=request.getParameter("title");
+				String content=request.getParameter("content");
+				int result=boarddao.updateBySeq(seq,title,content);
+				response.sendRedirect("/list.qboard");
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

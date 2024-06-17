@@ -5,6 +5,8 @@
  */
 package dto;
 
+import java.sql.Timestamp;
+
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
@@ -18,7 +20,16 @@ public class GameDTO {
 	private String gameId;
 	private String gameTitle;
 	private String gameDesc;
-	
+	private String developer;
+	private Timestamp releaseDate;
+	public GameDTO(String gameId, String gameTitle, String gameDesc, String developer, Timestamp releaseDate) {
+		super();
+		this.gameId = gameId;
+		this.gameTitle = gameTitle;
+		this.gameDesc = gameDesc;
+		this.developer = developer;
+		this.releaseDate = releaseDate;
+	}
 	public GameDTO() {
 		super();
 	}
@@ -40,11 +51,19 @@ public class GameDTO {
 	public void setGameDesc(String gameDesc) {
 		this.gameDesc = gameDesc;
 	}
-	public GameDTO(String gameId, String gameTitle, String gameDesc) {
-		this.gameId = gameId;
-		this.gameTitle = gameTitle;
-		this.gameDesc = gameDesc;
+	public String getDeveloper() {
+		return developer;
 	}
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
+	public Timestamp getReleaseDate() {
+		return releaseDate;
+	}
+	public void setReleaseDate(Timestamp releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+	
 
 	
 	

@@ -190,7 +190,6 @@
     		<input type="submit" id="complete" style="display:none" value="완료">
     		<input type="button" id="cancel" style="display:none" value="취소">
     	</form>
-    	
     </div>
     <script>
     	// 뒤로 가기 버튼 클릭 시
@@ -209,8 +208,7 @@
     		}
     	});
     	
-    	
-    	
+ 	
     	let post = $(".detailcontent");
     	let title = $(".ntitle");
     	
@@ -239,7 +237,6 @@
     	$("#cancel").on("click",function(){
     		location.href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}";
     	});
-    	
     	
     </script>
     

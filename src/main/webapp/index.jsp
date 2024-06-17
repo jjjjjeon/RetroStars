@@ -222,6 +222,13 @@
             height: 100px;
             margin-left : 20px;
         }
+        
+        .thumbnail{
+        	border-radius: 20px;
+        	width: 356px;
+        	height: 230px;
+        	object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -262,7 +269,7 @@
                             <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
                             <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
                             <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
                         </ul>
                     </li>
@@ -307,18 +314,18 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">LIST</div>
-                <div class = "game" id="listgame1">> game 1 <</div> 
-                <div class = "game" id="listgame2">> game 2 <</div> 
-                <div class = "game" id="listgame3">> game 3 <</div> 
-                <div class = "game" id="listgame4">> game 4 <</div> 
-                <div class = "game" id="listgame5">> game 5 <</div> 
+                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameId=G1">> Grimm worlds <</a> </div>
+                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameId=G2">> The Sims4 <</a> </div>
+                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameId=G3">> Apex 레전드 <</a> </div>
+                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameId=G4">> 오버워치 <</a> </div>
+                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameId=G5">> 배틀그라운드 <</a> </div>
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
-                play 영상 영역
+                <video src="/image/mainVideo.mp4" class="thumbnail" autoplay muted loop></video>
                 </div>
                 <div class="startbtn">
-                    <a href="/gboard/mainBoard.jsp"><img src="/image/startbtn.png" alt=""></a>
+                    <a href="/viewGame.gboard"><img src="/image/startbtn.png" alt=""></a>
                 </div>
             </div>
 

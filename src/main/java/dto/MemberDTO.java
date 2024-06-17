@@ -25,7 +25,6 @@ public class MemberDTO {
 	private String userPhone;
 	private String userEmail;
 	private Timestamp userJoinDate;
-	private String userProfileUrl;
 	private String userLevel;
 	private String userAdmin;
 	private String userBlack;
@@ -78,12 +77,6 @@ public class MemberDTO {
 	public void setUserJoinDate(Timestamp userJoinDate) {
 		this.userJoinDate = userJoinDate;
 	}
-	public String getUserProfileUrl() {
-		return userProfileUrl;
-	}
-	public void setUserProfileUrl(String userProfileUrl) {
-		this.userProfileUrl = userProfileUrl;
-	}
 	public String getUserLevel() {
 		return userLevel;
 	}
@@ -109,7 +102,7 @@ public class MemberDTO {
 		this.userActive = userActive;
 	}
 	public MemberDTO(String userId, String userPw, String userName, String userNickname, String userNo,
-			String userPhone, String userEmail, Timestamp userJoinDate, String userProfileUrl, String userLevel,
+			String userPhone, String userEmail, Timestamp userJoinDate, String userLevel,
 			String userAdmin, String userBlack, String userActive) {
 		super();
 		this.userId = userId;
@@ -120,7 +113,6 @@ public class MemberDTO {
 		this.userPhone = userPhone;
 		this.userEmail = userEmail;
 		this.userJoinDate = userJoinDate;
-		this.userProfileUrl = userProfileUrl;
 		this.userLevel = userLevel;
 		this.userAdmin = userAdmin;
 		this.userBlack = userBlack;
@@ -144,19 +136,20 @@ public class MemberDTO {
 		this.userNickname = userNickname;
 		this.userJoinDate = userJoinDate;
 	}
+	
+	public MemberDTO(String userId, String userName, String userNickname, String userNo,
+			String userEmail,String userPhone) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userNickname = userNickname;
+		this.userNo = userNo;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+	}
+	
 	private static final String DEFAULT_PROFILE_URL = "upload/profile/default.png";
-    public MemberDTO(String userId, String userPw, String userName, String userNickname, String userNo,
-            String userPhone, String userEmail, Timestamp userJoinDate, String userProfileUrl) {
-        this.userId = userId;
-        this.userPw = userPw;
-        this.userName = userName;
-        this.userNickname = userNickname;
-        this.userNo = userNo;
-        this.userPhone = userPhone;
-        this.userEmail = userEmail;
-        this.userJoinDate = userJoinDate;
-        this.userProfileUrl = userProfileUrl != null ? userProfileUrl : DEFAULT_PROFILE_URL;
-    }
+
 	public MemberDTO() {
 		super();
 	}
