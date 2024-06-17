@@ -97,8 +97,17 @@
             padding: 5px 10px;
             text-decoration: none;
         }
+        
         .community-button:hover {
             background-color: #3a4b58;
+        }
+        
+        .community-button .gameBtn{
+        	background-color : #6fa720;
+        }
+        
+        #gameBtn{
+        	background-color: #6fa720;
         }
         .main-content {
             display: flex;
@@ -251,7 +260,7 @@
                 <div class="buttons">
                     <button class="btn community-button">찜하기</button>
                     <button class="btn community-button">팔로우</button>
-                    <button class="btn community-button">게임하기</button>
+                    <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
             </div>
         </div>
@@ -268,7 +277,7 @@
                 <div class="buttons">
                     <button class="btn community-button">찜하기</button>
                     <button class="btn community-button">팔로우</button>
-                    <button class="btn community-button">게임하기</button>
+                    <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
             </div>
         </div>
