@@ -314,7 +314,7 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">LIST</div>
-                <div class = "game" id="listgame1">> Grimm worlds <</div> 
+                <a href="/viewGame.gboard?gameId=1"><div class = "game" id="listgame1">> Grimm worlds <</div></a> 
                 <div class = "game" id="listgame2">> The Sims4 <</div> 
                 <div class = "game" id="listgame3">> Apex 레전드 <</div> 
                 <div class = "game" id="listgame4">> 오버워치 <</div> 

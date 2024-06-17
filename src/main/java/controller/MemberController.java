@@ -67,11 +67,14 @@ public class MemberController extends HttpServlet {
 				if(result) {
 					System.out.println("로그인 성공");
 		            String loginResult = g.toJson(true);
-		    		PrintWriter pwt = response.getWriter();		    			
+		    		PrintWriter pwt = response.getWriter();
 		    		pwt.append(loginResult);
 		    		
+		    		String nickname = memberDao.isUserNickname(id);
+		    		session.setAttribute("nickname", nickname);
 					session.setAttribute("loginId", id);
 					MemberDTO member = memberDao.myData(id);
+					System.out.println(nickname);
                     session.setAttribute("profileUrl", "/upload/profile/default.png");
 					
 				}else {
