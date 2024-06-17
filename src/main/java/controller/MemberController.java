@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import common.util;
 import dao.GameDAO;
 import dao.MemberDAO;
+import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
 import dto.GameDTO;
 import dto.MemberDTO;
@@ -53,6 +54,7 @@ public class MemberController extends HttpServlet {
 		MemberDAO memberDao = MemberDAO.getInstance();
 		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
+		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		
 		try {
 			
@@ -263,13 +265,14 @@ public class MemberController extends HttpServlet {
 				String genderCode = mydata.getUserNo().substring(6,7);
 				String gender;
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
-				String url = "/upload/profile/default.png";
+				String url = userProfileImgDao.selectMyUrl(id);
 				
 				if(genderCode.equals("1")) {
 					gender="Male";
 				}else if(genderCode.equals("2")) {
 					gender="Female";
 				}else {gender="None";}
+				
 				
 				request.setAttribute("phone", phone);
 				request.setAttribute("birth", birth);

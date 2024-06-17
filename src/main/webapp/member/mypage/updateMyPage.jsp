@@ -170,7 +170,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
   <div class="container">
             <div class="col mydata_chage col1 col_attr"> 
                 <div class="col1_profile_img col1_sub">
-                	<img id="profile_img" src="${userProfileUrl}">
+                	<img id="profile_img" src="/upload/${userProfileUrl}">
                 </div>
                 <!-- 
                 <div class="col1_profile_update col1_sub">
@@ -275,6 +275,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 		//let left = Math.ceil(( window.screen.width - 400 )/2);
     	//let top = Math.ceil(( window.screen.height - 300 )/2); 
 		let new_window = window.open("/member/mypage/updateProfileImg.jsp","","height=" + popupHeight  + ", width=" + popupWidth  + ", left="+ popupX + ", top="+ popupY);
+		
+		
+		
 	})
 	
 	$("#password_btn").on("click",function(){
