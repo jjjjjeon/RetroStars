@@ -27,6 +27,7 @@ import dto.MemberDTO;
  * @author : Jin 
  * @version 1.0 
  */
+
 public class MemberDAO {
 	public static MemberDAO instance;
 	
@@ -197,6 +198,33 @@ public class MemberDAO {
         }
         return false;
     }
+    /** 
+     * @Method Name  : 닉네임 얻어오기
+     * @date : 2024. 6. 17. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 아이디에 따른 닉네임 가져오기
+     * @param 로그인 시 사용한 id
+     * @return 유저 닉네임
+     * @throws Exception 
+     */   
+    public String getNickname(String userId) throws Exception {
+        String sql = "select user_nickname FROM member WHERE user_id = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+            pstat.setString(1, userId);
+            try (ResultSet rs = pstat.executeQuery();) {
+                if (rs.next()) {
+                    String userNickname = rs.getString(1);
+                    return userNickname;
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+    
+    
+    
     /** 
      * @Method Name  : myData
      * @date : 2024. 6. 13. 
