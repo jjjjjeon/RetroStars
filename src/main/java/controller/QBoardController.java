@@ -41,13 +41,15 @@ public class QBoardController extends HttpServlet {
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
+				String writer=(String)request.getSession().getAttribute("loginID");
 				String userId=request.getParameter("userId");
 				int qBoardCategory= boarddao.getCategory(request.getParameter("qBoardCategory")) ;
 				String qBoardTitle= request.getParameter("qBoardTitle");
 				String qBoardContent= request.getParameter("qBoardContent");
 				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
 				boarddao.insert(new QBoardDTO(0,userId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
-			
+				response.sendRedirect("/list.qboard");
+				
 			}else if(cmd.equals("/list.qboard")) {
 				//받은 정보 처리하기
 				String strcpage=request.getParameter("cpage");
@@ -79,10 +81,24 @@ public class QBoardController extends HttpServlet {
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			
 			}else if(cmd.equals("/detail.qboard")) {
-				int seq=Integer.parseInt(request.getParameter("qBoardSeq"));
+				String writer=(String)request.getSession().getAttribute("loginID");
+				int seq=Integer.parseInt(request.getParameter("seq"));
 				QBoardDTO dto=boarddao.selectcontent(seq);
 				request.setAttribute("dto", dto);
+				
 				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
+			}else if(cmd.equals("/delete.qboard")) {
+				int seq=Integer.parseInt(request.getParameter("seq"));
+				int result=boarddao.deleteBySeq(seq);
+				response.sendRedirect("/list.qboard");
+				
+			}else if(cmd.equals("/update.qboard")) {
+				int seq=Integer.parseInt(request.getParameter("seq"));
+				String title=request.getParameter("title");
+				String content=request.getParameter("content");
+				int result=boarddao.updateBySeq(seq,title,content);
+				response.sendRedirect("/list.qboard");
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
