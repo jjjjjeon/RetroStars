@@ -46,7 +46,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         *{box-sizing: border-box;}
 
-        /* div{border: 1px solid red;} */
+        /*div{border: 1px solid red;}*/
 
         .container{height: 600px; width: 800px; margin:auto;display: flex; color:white;}
         .col{display: flex; justify-content: center; align-items: center;}
@@ -56,15 +56,19 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col1_sub{width: 100%;}
         .col1_profile_img{flex:4;display: flex; justify-content: center; align-items: center;}
         #profile_img{height:80%; width:80%; border-radius:10px;}
+        /*
         .col1_profile_update{margin-left:10px; flex:1; display: flex; justify-content: center; align-items: center;}
         .col1_file{width: 95%; font-size:15px;}
+        */
         .col1_id{flex:1; display: flex;}
         .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: center;}
         .col1_id_level{flex:4;display: flex; justify-content: center; align-items: center;}
         .col1_empty{flex:1;}
-        .col1_password_btn{flex:2; display: flex; justify-content: center; align-items: center;}
-		#password_btn{height:70%; width:100%; background-color: rgb(82, 11, 117); color:white; border:0px;}
+        .col1_btns{flex:3; display: flex; justify-content: space-evenly; align-items: center;}
+		#password_btn{height:60%; width:38%; background-color: rgb(82, 11, 117); color:white; border:0px;}
 		#password_btn:hover{cursor:pointer; background-color:rgb(82, 11, 100);}
+		#img_update_btn{height:60%; width:38%; background-color: rgb(82, 11, 117); color:white; border:0px;}
+		#img_update_btn:hover{cursor:pointer; background-color:rgb(82, 11, 100);}
         .col2{flex:0.3;}
 
         .col3{background-color: rgba(82, 11, 117, 0.8); flex:7;border-radius: 20px; display: flex; flex-direction: column;}
@@ -168,15 +172,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <div class="col1_profile_img col1_sub">
                 	<img id="profile_img" src="${userProfileUrl}">
                 </div>
+                <!-- 
                 <div class="col1_profile_update col1_sub">
                     <input type="file" class="col1_file">
                 </div>
+                 -->
                 <div class="col1_id col1_sub">
                     <div class="col1_id_id">${mydata.userId}</div>
                     <div class="col1_id_level">${mydata.userLevel}</div>
                 </div> 
                 <div class="col1_empty col1_sub"></div>
-                <div class="col1_password_btn">
+                <div class="col1_btns">
+                	<button id="img_update_btn" type="button">프로필 변경</button>
                 	<button id="password_btn" type="button">비밀번호 변경</button>
                 </div>
                  <div class="col1_empty col1_sub"></div>
@@ -253,6 +260,22 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script>
 	$(".value_content").attr("contenteditable", "true");
 	$(".value_content1").attr("contenteditable", "true");
+	
+	$("#img_update_btn").on("click",function(){
+		
+		let popupWidth = 500;
+		let popupHeight = 400;
+
+		let popupX = (window.innerWidth - popupWidth) / 2 + window.screenX;
+	    let popupY = (window.innerHeight - popupHeight) / 2 + window.screenY;
+		
+		//let popupX = (window.screen.width - popupWidth) / 2;
+	    //let popupY = (window.screen.height - popupHeight) / 2;
+		
+		//let left = Math.ceil(( window.screen.width - 400 )/2);
+    	//let top = Math.ceil(( window.screen.height - 300 )/2); 
+		let new_window = window.open("/member/mypage/updateProfileImg.jsp","","height=" + popupHeight  + ", width=" + popupWidth  + ", left="+ popupX + ", top="+ popupY);
+	})
 	
 	$("#password_btn").on("click",function(){
 		alert("비밀번호 변경 버튼 확인");
