@@ -296,7 +296,7 @@
             </div>
             <div class="addCommentBox">
                 <div id="addCommentInput" contenteditable="true"></div>
-                <button class="btn btn-primary" id="addCommentBtn">등록</button>
+                <button class="btn btn-primary" id="addCommentBtn" >등록</button>
             </div>
             <div class="commentListBox">
             </div>
@@ -336,7 +336,9 @@
 					loginId : '${loginId}',
 					comment : $('#addCommentInput').html().trim()
 				}
-			})/*.done(function(replydto) {
+			})
+			
+			/*.done(function(replydto) {
 				
 				let replycontainer =$("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
 				let col1=$("<div>").addClass("col1").html(addreply.writer+" "+replydto.qReplyDate+"<hr>");

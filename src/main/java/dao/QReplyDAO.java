@@ -47,7 +47,7 @@ public class QReplyDAO {
 		//1.  댓글 추가하기 insert
 		public QReplyDTO insert(QReplyDTO dto) throws Exception {
 		    String sql = "insert into q_reply values(q_reply_sequence.nextval,?,?,?,sysdate)";
-		    try (Connection con = this.getConnection(); PreparedStatement ps = con.prepareStatement(sql, new String[]{"seq", "write_date"})) {
+		    try (Connection con = this.getConnection(); PreparedStatement ps = con.prepareStatement(sql, new String[]{"q_reply_seq", "q_reply_date"})) {
 		        ps.setInt(1, dto.getqBoardSeq());
 		        ps.setString(2, dto.getUserId());
 		        ps.setString(3, dto.getqReplyContent());
@@ -55,9 +55,9 @@ public class QReplyDAO {
 		        
 		        try (ResultSet rs = ps.getGeneratedKeys()) {
 		            if (rs.next()) {
-		                int seq = rs.getInt(1);
-		                Timestamp writeDate = rs.getTimestamp(2);
-		                return new QReplyDTO(dto.getqReplySeq(), dto.getqBoardSeq(), dto.getUserId(), dto.getqReplyContent(), dto.getqReplyDate());
+		                int qReplySeq = rs.getInt(1);
+		                Timestamp qReplyDate = rs.getTimestamp(2);
+		                return new QReplyDTO(qReplySeq, dto.getqBoardSeq(), dto.getUserId(), dto.getqReplyContent(), qReplyDate);
 		            } else {
 		                return null;
 		            }

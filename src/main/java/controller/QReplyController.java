@@ -36,7 +36,7 @@ public class QReplyController extends HttpServlet {
 		QReplyDAO replydao=QReplyDAO.getInstance();
 		
 		try {
-			if(cmd.equals("insert.qreply")) {
+			if(cmd.equals("/insert.qreply")) {
 				String loginId=request.getParameter("loginId");
 				String comment=request.getParameter("comment");
 				int qBoardSeq=Integer.parseInt(request.getParameter("qBoardSeq"));
