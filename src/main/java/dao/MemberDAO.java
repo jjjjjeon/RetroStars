@@ -27,6 +27,7 @@ import dto.MemberDTO;
  * @author : Jin 
  * @version 1.0 
  */
+
 public class MemberDAO {
 	public static MemberDAO instance;
 	
@@ -197,6 +198,24 @@ public class MemberDAO {
         }
         return false;
     }
+    
+    public String isUserNickname(String userId) throws Exception {
+        String sql = "select user_nickname FROM member WHERE user_id = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+            pstat.setString(1, userId);
+            try (ResultSet rs = pstat.executeQuery();) {
+                if (rs.next()) {
+                    String userNickname = rs.getString(1);
+                    return userNickname;
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+    
+    
+    
     /** 
      * @Method Name  : myData
      * @date : 2024. 6. 13. 

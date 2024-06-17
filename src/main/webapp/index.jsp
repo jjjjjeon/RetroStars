@@ -314,18 +314,18 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">LIST</div>
-                <div class = "game" id="listgame1">> game 1 <</div> 
-                <div class = "game" id="listgame2">> game 2 <</div> 
-                <div class = "game" id="listgame3">> game 3 <</div> 
-                <div class = "game" id="listgame4">> game 4 <</div> 
-                <div class = "game" id="listgame5">> game 5 <</div> 
+                <a href="/viewGame.gboard?gameId=1"><div class = "game" id="listgame1">> Grimm worlds <</div></a> 
+                <div class = "game" id="listgame2">> The Sims4 <</div> 
+                <div class = "game" id="listgame3">> Apex 레전드 <</div> 
+                <div class = "game" id="listgame4">> 오버워치 <</div> 
+                <div class = "game" id="listgame5">> 배틀그라운드 <</div> 
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
                 <video src="/image/mainVideo.mp4" class="thumbnail" autoplay muted loop></video>
                 </div>
                 <div class="startbtn">
-                    <a href="/list.gboard"><img src="/image/startbtn.png" alt=""></a>
+                    <a href="/viewGame.gboard"><img src="/image/startbtn.png" alt=""></a>
                 </div>
             </div>
 

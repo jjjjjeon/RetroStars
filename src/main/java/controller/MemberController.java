@@ -20,8 +20,10 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import common.util;
+import dao.GameDAO;
 import dao.MemberDAO;
 import dto.CBoardBookmarkDTO;
+import dto.GameDTO;
 import dto.MemberDTO;
 
 /**
@@ -49,6 +51,7 @@ public class MemberController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String cmd = request.getRequestURI();
 		MemberDAO memberDao = MemberDAO.getInstance();
+		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
 		
 		try {
@@ -60,14 +63,25 @@ public class MemberController extends HttpServlet {
 				
 				boolean result = memberDao.loginId(id, pw);
 				System.out.println(result);
+			
 				if(result) {
 					System.out.println("로그인 성공");
+		            String loginResult = g.toJson(true);
+		    		PrintWriter pwt = response.getWriter();
+		    		pwt.append(loginResult);
+		    		
+		    		String nickname = memberDao.isUserNickname(id);
+		    		session.setAttribute("nickname", nickname);
 					session.setAttribute("loginId", id);
 					MemberDTO member = memberDao.myData(id);
+					System.out.println(nickname);
                     session.setAttribute("profileUrl", "/upload/profile/default.png");
 					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
+		            String loginResult = g.toJson(false);
+		    		PrintWriter pwt = response.getWriter();		    			
+		    		pwt.append(loginResult);	
 				}
 				response.sendRedirect("/index.jsp");
 				return;
