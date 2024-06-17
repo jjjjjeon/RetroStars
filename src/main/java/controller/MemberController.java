@@ -59,7 +59,8 @@ public class MemberController extends HttpServlet {
 			// 로그인 기능.
 			if(cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
+				String pw = util.getSHA512(request.getParameter("pw"));
+						
 				
 				boolean result = memberDao.loginId(id, pw);
 				System.out.println(result);
@@ -70,11 +71,11 @@ public class MemberController extends HttpServlet {
 		    		PrintWriter pwt = response.getWriter();
 		    		pwt.append(loginResult);
 		    		
-		    		String nickname = memberDao.isUserNickname(id);
+		    		String nickname = memberDao.getNickname(id);
 		    		session.setAttribute("nickname", nickname);
 					session.setAttribute("loginId", id);
 					MemberDTO member = memberDao.myData(id);
-					System.out.println(nickname);
+					System.out.println("닉네임 확인" + nickname);
                     session.setAttribute("profileUrl", "/upload/profile/default.png");
 					
 				}else {

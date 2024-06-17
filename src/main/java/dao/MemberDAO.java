@@ -198,8 +198,17 @@ public class MemberDAO {
         }
         return false;
     }
-    
-    public String isUserNickname(String userId) throws Exception {
+    /** 
+     * @Method Name  : 닉네임 얻어오기
+     * @date : 2024. 6. 17. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 아이디에 따른 닉네임 가져오기
+     * @param 로그인 시 사용한 id
+     * @return 유저 닉네임
+     * @throws Exception 
+     */   
+    public String getNickname(String userId) throws Exception {
         String sql = "select user_nickname FROM member WHERE user_id = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, userId);
