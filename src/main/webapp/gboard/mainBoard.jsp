@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,6 +15,7 @@
                font-family: 'Georgia', serif;
                background-image: url('/image/background.png');
                background-position: center;
+               background-size:100% 100%;
                color : white;
                margin-bottom : 120px;
             }
@@ -211,8 +213,6 @@
                     <li calss="nav-item">
                         <a class="nav-link" href="/member/login/login.jsp">로그인</a>
                     </li>
-
-                    <i class="fa-solid fa-user"></i>
 
                 </ul>
                 <ul class="navbar-nav ms-auto">

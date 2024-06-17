@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import common.util;
 import dao.MemberDAO;
 import dto.CBoardBookmarkDTO;
 import dto.MemberDTO;
@@ -121,8 +122,9 @@ public class MemberController extends HttpServlet {
             }			
 			else if(cmd.equals("/registerPw.member")) {
 				// 유저 패스워드 전송
-				String userPw = request.getParameter("userPw");
-				String confirmUserPw = request.getParameter("confirmUserPw");				
+				
+				String userPw = util.getSHA512(request.getParameter("userPw"));
+				String confirmUserPw = util.getSHA512(request.getParameter("confirmUserPw")); 				
 				if(userPw.equals(confirmUserPw)) {
 					// 패스워드 일치했을 때만 전송
 					session.setAttribute("userPw", userPw);

@@ -69,7 +69,7 @@
             <div class="input-group">
                 <label for="userPhone">폰 번호:</label>
                 <input type="text" id="userPhone" name="userPhone" placeholder="폰 번호">
-                <p id="phoneCheckText" class="checkText">폰 번호 형식이 맞지 않습니다. (예: 010-1234-5678)</p>
+                <p id="phoneCheckText" class="checkText">폰 번호 형식이 맞지 않습니다. (예: 01012345678)</p>
             </div>
             <button type="submit" id="nextButton" class="disabled-button">다음</button>
         </form>
@@ -86,7 +86,7 @@
     }
 
     function validateUserNo(userNoFront, userNoBack) {
-        let regexFront = /^\d{6}$/;
+        let regexFront = /\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])$/;
         let regexBack = /^[1-4]$/;
         return regexFront.test(userNoFront) && regexBack.test(userNoBack);
     }

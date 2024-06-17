@@ -222,6 +222,13 @@
             height: 100px;
             margin-left : 20px;
         }
+        
+        .thumbnail{
+        	border-radius: 20px;
+        	width: 356px;
+        	height: 230px;
+        	object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -315,7 +322,7 @@
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
-                play 영상 영역
+                <video src="/image/mainVideo.mp4" class="thumbnail" autoplay muted loop></video>
                 </div>
                 <div class="startbtn">
                     <a href="/list.gboard"><img src="/image/startbtn.png" alt=""></a>
