@@ -47,13 +47,14 @@ public class GBoardController extends HttpServlet {
         try {
             if (cmd.equals("/list.gboard")) {
                 System.out.println("확인");
-                List<GameDTO> games = gameDao.getAllGames(); // 모든 게임을 가져옴
-                request.setAttribute("games", games);
+                List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
+                request.setAttribute("listGame", listGame);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
             } else if (cmd.equals("/viewGame.gboard")) {
                 String gameId = request.getParameter("gameId");
-                GameDTO game = gameDao.getGameById(gameId);
+                String gameTestId = "G3";
+                GameDTO game = gameDao.getGameById(gameTestId);
                 request.setAttribute("game", game);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;

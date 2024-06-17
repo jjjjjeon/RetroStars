@@ -159,6 +159,7 @@
             method: 'get',
             data: { userNickname: userNickname },
             success: function(response) {
+            	console.log(response);
                 if (response === "true") {
                     nicknameCheckText.text("사용할 수 있는 닉네임입니다.");
                     nicknameCheckText.css('color', 'green');
