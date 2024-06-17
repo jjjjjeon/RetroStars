@@ -26,6 +26,7 @@ import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
 import dto.GameDTO;
 import dto.MemberDTO;
+import dto.UserProfileImgDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -60,27 +61,22 @@ public class MemberController extends HttpServlet {
 			
 			// 로그인 기능.
 			if(cmd.equals("/login.member")) {
+			
 				String id = request.getParameter("id");
+				System.out.println(id);
 				String pw = util.getSHA512(request.getParameter("pw"));
+
 						
 				
 				boolean result = memberDao.loginId(id, pw);
 				System.out.println(result);
-			
+
 				if(result) {
 					System.out.println("로그인 성공");
-		            String loginResult = g.toJson(true);
-		    		PrintWriter pwt = response.getWriter();
-		    		pwt.append(loginResult);
-
-					session.setAttribute("loginId", id);
-					MemberDTO member = memberDao.myData(id);
-                    session.setAttribute("profileUrl", "/upload/profile/default.png");
-					
+					session.setAttribute("loginId", id);					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
-		            
-					response.getWriter().print(false);
+		         
 				}
 				response.sendRedirect("/index.jsp");
 				return;
@@ -186,6 +182,11 @@ public class MemberController extends HttpServlet {
                 MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
                 memberDao.addMember(addMember);
                 
+                UserProfileImgDTO addDefault = new UserProfileImgDTO(0, userId, null, null);
+                System.out.println("기본 이미지 확인");
+                userProfileImgDao.updateImg(addDefault);
+                
+
                 // 세션 값 초기화
                 session.invalidate();
                 
