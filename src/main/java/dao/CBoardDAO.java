@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -34,8 +35,7 @@ public class CBoardDAO {
 	
 	//유저게시판 작성 글 DB에 저장
 	public void insertPost(CBoardDTO post) throws Exception{
-		String sql = "insert into c_board values(c_board_sequence.nextval, ?, ?, ?, ?, sysdate, 0, 0)";
-		String[] generatedColumns = {"parentSeq"};
+		String sql = "insert into c_board values(c_board_sequence.nextval, ?, ?, ?, ?, sysdate, 0, 0, 0)";
 		
 		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1, post.getUserId());
@@ -121,8 +121,9 @@ public class CBoardDAO {
 					Timestamp date = rs.getTimestamp(6);
 					int view = rs.getInt(7);
 					int report = rs.getInt(8);
+					int bookmark = rs.getInt(9);
 
-					CBoardDTO post = new CBoardDTO(seq, writer, postCategory, title, content ,date, view, report);
+					CBoardDTO post = new CBoardDTO(seq, writer, postCategory, title, content ,date, view, report, bookmark);
 					list.add(post);
 				}
 				return list;
@@ -168,8 +169,9 @@ public class CBoardDAO {
 					Timestamp date = rs.getTimestamp(6);
 					int view = rs.getInt(7);
 					int report = rs.getInt(8);
+					int bookmark = rs.getInt(9);
 
-					CBoardDTO post = new CBoardDTO(seq, writer, postCategory, title, content ,date, view, report);
+					CBoardDTO post = new CBoardDTO(seq, writer, postCategory, title, content ,date, view, report, bookmark);
 					list.add(post);
 				}
 				return list;
@@ -208,8 +210,9 @@ public class CBoardDAO {
 				Timestamp writeDate = rs.getTimestamp(6);
 				int view = rs.getInt(7);
 				int report = rs.getInt(8);
+				int bookmark = rs.getInt(9);
 
-				CBoardDTO ctt = new CBoardDTO(targetSeq, writer, category, title, contents, writeDate, view, report);
+				CBoardDTO ctt = new CBoardDTO(targetSeq, writer, category, title, contents, writeDate, view, report, bookmark);
 
 				return ctt;
 			}
@@ -245,6 +248,45 @@ public class CBoardDAO {
 			pstat.setString(1, post.getcBoardTitle());
 			pstat.setString(2, post.getcBoardContent());
 			pstat.setInt(3, post.getcBoardSeq());
+			pstat.executeUpdate();
+		}
+	}
+	
+	//접속 유저가 해당 유저게시판 글을 북마크했는지 조회
+	public int isBookmark(String id, int seq) throws Exception{
+		String sql = "select * from bookmark where user_id = ? and c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, id);
+			pstat.setInt(2, seq);
+			try(ResultSet rs = pstat.executeQuery();){
+				if(rs.next()) {
+					return 1;
+				}else {
+					return -1;
+				}
+			}
+		}
+	}
+	
+	//접속 유저의 해당 유저게시판 글 북마크 삭제
+	public void delBookmark(String id, int seq) throws Exception{
+		String sql = "delete from bookmark where user_id= ? and c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, id);
+			pstat.setInt(2, seq);
+			pstat.executeUpdate();
+		}
+	}
+	
+	//접속 유저의 해당 유저게시판 글 북마크 추가
+	public void addBookmark(String id, int seq) throws Exception{
+		String sql = "insert into bookmark values(bookmark_sequence.nextval, ?, ?)";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			pstat.setString(2, id);
 			pstat.executeUpdate();
 		}
 	}

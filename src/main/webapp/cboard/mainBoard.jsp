@@ -273,7 +273,7 @@
                 				<fmt:formatDate value="${DTO.cBoarDate}" pattern="yy. MM. dd" />
                 			</li>
                 			<li class="view"><i class="fa-regular fa-eye" style="color: #000000;"></i> ${DTO.cBoardView}</li>
-                			<li class="bookmark"><i class="fa-regular fa-bookmark" style="color: #000000;"></i> ${DTO.cBoardReport}</li>
+                			<li class="bookmark"><i class="fa-regular fa-bookmark" style="color: #000000;"></i> ${DTO.cBoardBookmark}</li>
             			</ul>
             		</c:forEach>
             	</c:otherwise>
