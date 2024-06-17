@@ -349,5 +349,32 @@ public class MemberDAO {
 		}
 
 	}
+    
+    /** 
+     * @Method Name  : updateData
+     * @date : 2024. 6. 17. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 개인 정보 수정 페이지 내 수정 기능
+     * @param MemberDTO dto
+     * @return void
+     * @throws Exception 
+     */ 
+    public void updateData(MemberDTO dto) throws Exception{
+    	
+    	String sql = "update member set user_name=?, user_nickname=?, user_no=?, user_email=?, user_phone=? where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,dto.getUserName());
+    		pstat.setString(2,dto.getUserNickname());
+    		pstat.setString(3,dto.getUserNo());
+    		pstat.setString(4,dto.getUserEmail());
+    		pstat.setString(5,dto.getUserPhone());
+    		pstat.setString(6,dto.getUserId());
+    		pstat.executeUpdate();
+    	}
+    	
+    }
 
 }
