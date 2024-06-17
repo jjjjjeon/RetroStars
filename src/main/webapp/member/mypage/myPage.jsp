@@ -106,7 +106,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
     .board_main{flex:8; width: 90%;border:1px solid white; overflow-y:auto; display:flex;flex-direction: column; justify-content: start; align-items: center;}
-	.board_bookmark_row{display:flex; width:100%; justify-content: center; align-items: center;}
+	.board_bookmark_row{display:flex; width:100%; justify-content: center; align-items: center; height:32px;}
     .board_bookmark_title{flex:6;display: flex; justify-content: center; align-items: center;}
     .board_bookmark_writer{flex:2;display: flex; justify-content: center; align-items: center;}
     .board_bookmark_date{flex:2;display: flex; justify-content: center; align-items: center;}
@@ -115,6 +115,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     .tipboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
 
+	.board_link{color:white; text-decoration-line: none;}
+	
     .footer{flex:0.5; width:90%; display: flex; justify-content: start; align-items: center;}
     .footer_delete_btn{flex:4;}
     .footer_gohome_btn{flex:6;display: flex; justify-content: end; align-items: center;}
@@ -216,7 +218,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <div class="profile">
                 <div class="main_profile">
                     <div class="profile_img">
-                        <img id="basic_img" src="${userProfileUrl}">
+                        <img id="basic_img" src="/upload/${userProfileUrl}">
                     </div>
                     <div class="profile_data">
                         <div class="user_value_box">
@@ -294,7 +296,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             
             	<c:forEach var="listCategory1" items="${listCategory1}">
 							<div class="free_row board_bookmark_row">
-								<div class="free_title board_bookmark_title">${listCategory1.cBoardTitle}</div>
+								<div class="free_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory1.cBoardSeq}">${listCategory1.cBoardTitle}</a></div>
 								<div class="free_writer board_bookmark_writer">${listCategory1.writerId}</div>
 								<div class="free_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory1.cBoardDate}" pattern="yy.MM.dd" />
@@ -313,7 +315,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 				</div>
             	<c:forEach var="listCategory2" items="${listCategory2}">
 							<div class="tip_row board_bookmark_row">
-								<div class="tip_title board_bookmark_title">${listCategory2.cBoardTitle}</div>
+								<div class="tip_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory2.cBoardSeq}">${listCategory2.cBoardTitle}</a></div>
 								<div class="tip_writer board_bookmark_writer">${listCategory2.writerId}</div>
 								<div class="tip_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />

@@ -138,7 +138,7 @@ public class MemberDTO {
 	}
 	
 	public MemberDTO(String userId, String userName, String userNickname, String userNo,
-			String userPhone, String userEmail) {
+			String userEmail,String userPhone) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
