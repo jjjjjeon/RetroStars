@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <di%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <!DOCTYPE html>
         <html>
 
@@ -41,9 +41,9 @@
                     box-sizing: border-box;
                 }
 
-                /*div {
+                div {
                  border: 1px solid red;
-             }*/
+                }
 
                 .container {
                     width: 1100px;
@@ -194,6 +194,24 @@
                 .btnsdiv>button{
                     margin-right: 5px;
                 }
+
+                .addCommentBox{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                #addCommentInput{
+                    width: 1000px;
+                    height: 100px;
+                    margin-right: 25px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+
+                #addCommentInput:active{
+                   border-color: #00d4ff;
+                }
             </style>
         </head>
 
@@ -276,6 +294,12 @@
                     </c:when>
                 </c:choose>
             </div>
+            <div class="addCommentBox">
+                <div id="addCommentInput" contenteditable="true"></div>
+                <button class="btn btn-primary" id="addCommentBtn">등록</button>
+            </div>
+            <div class="commentListBox">
+            </div>
             <div class="footer">
                 <div class="footerbox">
                     <div class="leftfooter">
@@ -297,11 +321,45 @@
             </div>
         </body>
         <script>
+        //댓글 등록 버튼을 클릭했을 때
+        console.log('${ dto.qBoardSeq }');
+        console.log('${ loginId }');
+        console.log( $('#addCommentInput').html());
+        
+        $("#addCommentBtn").on("click", function() {
+			$.ajax({
+				url : "/insert.qreply",
+                type: "GET",
+				dataType : "json",
+				data : {
+					qBoardSeq : '${dto.qBoardSeq}',
+					loginId : '${loginId}',
+					comment : $('#addCommentInput').html().trim()
+				}
+			})/*.done(function(replydto) {
+				
+				let replycontainer =$("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
+				let col1=$("<div>").addClass("col1").html(addreply.writer+" "+replydto.qReplyDate+"<hr>");
+				let col2=$("<div>").addClass("replycontents col2").html(replydto.qReplyContent);
+				replycontainer.append(col1,col2);
+				let col3=$("<div>").addClass("col3");
+				let replyupdatebtn=$("<button>").addClass("replyupdatebtn").html("수정");
+				let replydeletebtn=$("<button>").addClass("replydeletebtn").html("삭제");
+				col3.append(replyupdatebtn, replydeletebtn);
+				replycontainer.append(col3);
+				$(".commentListBox").after(replycontainer);
+				$(".addCommentInput").html("");
+			})*/
+			
+		})
+        
+		//게시판 수정 버튼을 클릭했을 때
 		$("#updatebtn").on("click", function() {
 			updatebtn = $(this);
 			deletebtn = $(this).next();
 
 			if (updatebtn.html() == "수정") {
+               // $(".post-detail").find("div[contenteditable]").attr("contenteditable", "true");
 				$("div[contenteditable]").attr("contenteditable", "true");
 				updatebtn.html("완료");
 				deletebtn.html("취소");
@@ -346,7 +404,9 @@
 				form.appendTo('body').submit();
 			}
 		})
-
+		
+		
+		//게시판 삭제 번튼을 클릭했을 때
 		$("#deletebtn").on("click", function() {
 			updatebtn = $(this).prev();
 			deletebtn = $(this);
