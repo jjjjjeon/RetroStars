@@ -28,7 +28,7 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.8);
             border-radius: 10px;
-            height:1200px;
+            height:700px;
         }
         
         .search{height:40px; width:100%; text-align:center;}
@@ -61,11 +61,11 @@
 
         .faq {margin-top: 20px;}
 
-        .faq-item { margin-bottom: 10px;}
+        .faq-item {margin-bottom:20px;}
 
-        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px;}
+        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px;}
 
-        .answer {display: none;background-color: #333;border-radius: 5px;}
+        .answer {display: none; background-color: #333;border-radius: 5px; padding:10px;}
     </style>
 </head>
 <body>
@@ -85,22 +85,21 @@
             <h3>게임</h3>
             <div class="faq">
                 <div class="faq-item">
-                    <div class="question">게임 관련 질문 1</div>
-                    <div class="answer">게임 관련 답변 1</div>
-                </div>
-                <div class="faq-item">
-                    <div class="question">게임 관련 질문 2</div>
-                    <div class="answer">게임 관련 답변 2</div>
+                	<c:forEach var="fboardCate1" items="${fboardCate1}">
+                    	<div class="question">${fboardCate1.fBoardQuestion}</div>
+                    	<div class="answer">${fboardCate1.fBoardAnswer}</div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
-
         <div id="free" class="tabcontent">
             <h3>자유</h3>
             <div class="faq">
-                <div class="faq-item">
-                    <div class="question">자유 관련 질문 1</div>
-                    <div class="answer">자유 관련 답변 1</div>
+                <div class="faq-item">                   
+               		 <c:forEach var="fboardCate2" items="${fboardCate2}">
+                    	<div class="question">${fboardCate2.fBoardQuestion}</div>
+                    	<div class="answer">${fboardCate2.fBoardAnswer}</div>
+                    </c:forEach>                   
                 </div>
             </div>
         </div>
@@ -108,9 +107,11 @@
         <div id="guide" class="tabcontent">
             <h3>공략</h3>
             <div class="faq">
-                <div class="faq-item">
-                    <div class="question">공략 관련 질문 1</div>
-                    <div class="answer">공략 관련 답변 1</div>
+                <div class="faq-item">  
+                    <c:forEach var="fboardCate3" items="${fboardCate3}">
+                    	<div class="question">${fboardCate3.fBoardQuestion}</div>
+                    	<div class="answer">${fboardCate3.fBoardAnswer}</div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -119,8 +120,10 @@
             <h3>기타</h3>
             <div class="faq">
                 <div class="faq-item">
-                    <div class="question">기타 관련 질문 1</div>
-                    <div class="answer">기타 관련 답변 1</div>
+                    <c:forEach var="fboardCate4" items="${fboardCate4}">
+                    	<div class="question">${fboardCate4.fBoardQuestion}</div>
+                    	<div class="answer">${fboardCate4.fBoardAnswer}</div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
