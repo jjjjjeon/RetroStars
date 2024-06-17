@@ -11,18 +11,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <style>
-        body{
-               font-family: 'Georgia', serif;
-               background-image: url('/image/background.png');
-               background-position: center;
-               background-size:100% 100%;
-               color : white;
-               margin-bottom : 120px;
-            }
-        nav{
+        body {
+            font-family: 'Georgia', serif;
+            background-image: url('/image/background.png');
+            background-position: center;
+            background-size: 100% 100%;
+            color: white;
+            margin-bottom: 120px;
+        }
+        nav {
             background-color: #323232;
-            
-            }
+        }
         .footer {
             width: 100%;
             height: 120px;
@@ -30,50 +29,46 @@
             position: fixed;
             bottom: 0;
             left: 0;
-        }            
-
-        .leftfooter{
-           color : white;
-           font-weight : bold;
-           margin-top: 20px;
+        }
+        .leftfooter {
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
         }
         .rightfooter {
-           display: flex;
-           align-items: center;       
-       }
-         .footerbox {
-           width: 1000px;
-           height: 100%;
-           margin: auto;
-           display: flex;
-           justify-content: space-between;
-           align-items: center;    
-       }
-
+            display: flex;
+            align-items: center;
+        }
+        .footerbox {
+            width: 1000px;
+            height: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .iconbox {
             display: flex;
             align-items: center;
         }
-
         .iconbox a {
             margin: 0 10px;
             font-size: 50px;
             color: white;
         }
-       .coinbox {
-           display: flex;
-           align-items: center;
-           margin-left: 20px;
-       }
+        .coinbox {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
         .coinbox img {
             width: 120px;
             height: 100px;
-            margin-left : 20px;
-        }   
+            margin-left: 20px;
+        }
         .container {
             margin: 20px auto;
             width: 90%;
-            
         }
         .header {
             text-align: center;
@@ -97,36 +92,31 @@
             padding: 5px 10px;
             text-decoration: none;
         }
-        
         .community-button:hover {
             background-color: #3a4b58;
         }
-        
-        .community-button .gameBtn{
-        	background-color : #6fa720;
+        .community-button .gameBtn {
+            background-color: #6fa720;
         }
-        
-        #gameBtn{
-        	background-color: #6fa720;
+        #gameBtn {
+            background-color: #6fa720;
         }
         .main-content {
             display: flex;
             gap: 20px;
         }
-        
         .review-content {
             display: flex;
             gap: 20px;
-            margin-top : 20px;
-        }        
-        .media-section{
+            margin-top: 20px;
+        }
+        .media-section {
             flex: 9;
             background-color: #2a475e;
             padding: 20px;
             border: 1px solid #3a4b58;
             border-radius: 5px;
         }
-        
         .description-section {
             flex: 1;
             background-color: #2a475e;
@@ -134,16 +124,13 @@
             border: 1px solid #3a4b58;
             border-radius: 5px;
         }
-        
-        .media-container{
+        .media-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; 
+            padding-bottom: 56.25%;
             background-color: #000;
             margin-bottom: 20px;
         }
-        
-
         .media-container iframe, .media-container img, .media-container video {
             position: absolute;
             top: 0;
@@ -161,7 +148,7 @@
             height: 56px;
             cursor: pointer;
             border: 2px solid transparent;
-            object-fit: cover; 
+            object-fit: cover;
         }
         .media-thumbnails .thumbnail.active {
             border-color: #007bff;
@@ -219,7 +206,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">마이페이지</a>
                     </li>
-                    <li calss="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="/member/login/login.jsp">로그인</a>
                     </li>
 
@@ -239,15 +226,23 @@
         </div>
         <div class="main-content">
             <div class="media-section">
-                <div class="media-container" id="media-container">   
-                    <img src="/image/hollow1.jpg" alt="Game Image" id="main-media">
+                <div class="media-container" id="media-container">
+                    <c:choose>
+                        <c:when test="${not empty videoUrl}">
+                            <video src="${videoUrl}" controls autoplay muted></video>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/image/default_image.jpg" alt="Game Image" id="main-media">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="media-thumbnails">
-                    <img src="/image/hollow1.jpg" alt="Thumbnail 1" class="thumbnail active" data-type="image" data-media="/image/hollow1.jpg">
-                    <img src="/image/hollow2.jpg" alt="Thumbnail 2" class="thumbnail" data-type="image" data-media="/image/hollow2.jpg">
-                    <img src="/image/hollow3.jpg" alt="Thumbnail 3" class="thumbnail" data-type="image" data-media="/image/hollow3.jpg">
-                    <img src="/image/hollow4.jpg" alt="Thumbnail 4" class="thumbnail" data-type="image" data-media="/image/hollow4.jpg">
-                    <video src="/image/video.mp4" alt="Thumbnail 5" class="thumbnail" data-type="video" data-media="/image/video.mp4"></video>
+                    <c:forEach var="image" items="${images}">
+                        <img src="${image}" alt="Thumbnail" class="thumbnail" data-type="image" data-media="${image}">
+                    </c:forEach>
+                    <c:if test="${not empty videoUrl}">
+                        <video src="${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="${videoUrl}"></video>
+                    </c:if>
                 </div>
             </div>
             <div class="description-section">
@@ -308,7 +303,7 @@
                 this.classList.add('active');
 
                 let mediaContainer = document.getElementById('media-container');
-                mediaContainer.innerHTML = ''; 
+                mediaContainer.innerHTML = '';
 
                 let mediaType = this.getAttribute('data-type');
                 let mediaSrc = this.getAttribute('data-media');

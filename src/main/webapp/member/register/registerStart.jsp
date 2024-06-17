@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
- 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - 약관 동의</title>
@@ -17,7 +17,6 @@
             width: 400px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-      
         }
 
         .logo {
@@ -172,7 +171,7 @@
                     <span class="sub-label">&gt;</span>
                 </label>
                 <label>
-                    <input type="checkbox" id="ads" name="ads" class="agree-checkbox"> 광고성 정보 수신 (선택)
+                    <input type="checkbox" id="ads" name="ads" class="agree-checkbox-ad"> 광고성 정보 수신 (선택)
                     <span class="sub-label">&gt;</span>
                 </label>
             </div>
@@ -183,10 +182,9 @@
     </div>
     <script>
         function toggleAllAgree() {
-        	console.log("모두 누르기")
             let agreeAllCheckbox = document.getElementById('agreeAll');
             let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-          
+
             agreeAllCheckbox.checked = !agreeAllCheckbox.checked;
             agreeCheckboxes.forEach(checkbox => {
                 checkbox.checked = agreeAllCheckbox.checked;
@@ -194,30 +192,29 @@
 
             toggleNextButton();
         }
-       
 
         function toggleAllAgreeCheckbox(event) {
             event.stopPropagation();
             let agreeAllCheckbox = document.getElementById('agreeAll');
             let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-            let agreeCheckboxesAd = document.querySelectorAll('.agree-checkbox-ad');
+            let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             
-            agreeAllCheckbox.checked = agreeCheckboxes.length === Array.from(agreeCheckboxes).filter(checkbox => checkbox.checked).length;
-           	
-            
-            console.log(agreeCheckboxes);
+            agreeAllCheckbox.checked = allChecked;
+
             toggleNextButton();
         }
 
         function toggleNextButton() {
-           let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-           let nextButton = document.getElementById('nextButton');
-           let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
-            nextButton.disabled = !allChecked;
+            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let nextButton = document.getElementById('nextButton');
+            let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
+            let requiredChecked = Array.from(agreeCheckboxes).filter(checkbox => !checkbox.classList.contains('agree-checkbox-ad')).every(checkbox => checkbox.checked);
+            
+            nextButton.disabled = !requiredChecked;
         }
 
-        document.querySelectorAll('.agree-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', toggleAllAgreeCheckbox);
+        $(document).ready(function() {
+            $('.agree-checkbox, .agree-checkbox-ad').change(toggleAllAgreeCheckbox);
         });
     </script>
 </body>

@@ -210,8 +210,8 @@
            $('#login-form').on('submit', function (event) {
                event.preventDefault(); 
 
-               var userId = $('#id').val();
-               var userPw = $('#password').val();
+               let userId = $('#id').val();
+               let userPw = $('#password').val();
 
                $.ajax({
                    url: '/login.member',

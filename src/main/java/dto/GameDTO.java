@@ -17,27 +17,16 @@ import java.sql.Timestamp;
  * @version 1.0 
  */
 public class GameDTO {
-	private String gameId;
+	private int gameSeq;
 	private String gameTitle;
 	private String gameDesc;
 	private String developer;
 	private Timestamp releaseDate;
-	public GameDTO(String gameId, String gameTitle, String gameDesc, String developer, Timestamp releaseDate) {
-		super();
-		this.gameId = gameId;
-		this.gameTitle = gameTitle;
-		this.gameDesc = gameDesc;
-		this.developer = developer;
-		this.releaseDate = releaseDate;
+	public int getGameSeq() {
+		return gameSeq;
 	}
-	public GameDTO() {
-		super();
-	}
-	public String getGameId() {
-		return gameId;
-	}
-	public void setGameId(String gameId) {
-		this.gameId = gameId;
+	public void setGameSeq(int gameSeq) {
+		this.gameSeq = gameSeq;
 	}
 	public String getGameTitle() {
 		return gameTitle;
@@ -63,6 +52,18 @@ public class GameDTO {
 	public void setReleaseDate(Timestamp releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+	public GameDTO(int gameSeq, String gameTitle, String gameDesc, String developer, Timestamp releaseDate) {
+		super();
+		this.gameSeq = gameSeq;
+		this.gameTitle = gameTitle;
+		this.gameDesc = gameDesc;
+		this.developer = developer;
+		this.releaseDate = releaseDate;
+	}
+	public GameDTO() {
+		super();
+	}
+
 	
 
 	

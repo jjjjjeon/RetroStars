@@ -52,10 +52,9 @@ public class GBoardController extends HttpServlet {
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
             } else if (cmd.equals("/viewGame.gboard")) {
-                String gameId = request.getParameter("gameId");
-                System.out.println(gameId);
-                String gameTestId = "G3";
-                GameDTO game = gameDao.getGameById(gameId);
+                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+                System.out.println(gameSeq);
+                GameDTO game = gameDao.getGameById(gameSeq);
                 request.setAttribute("game", game);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
