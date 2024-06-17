@@ -224,7 +224,6 @@ public class MemberDAO {
     }
     
     
-    
     /** 
      * @Method Name  : myData
      * @date : 2024. 6. 13. 
