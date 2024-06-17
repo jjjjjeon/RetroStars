@@ -44,7 +44,10 @@
 	})
 	
 	$("#complete").on("click",function(){
-	 	//alert("완료 변경 버튼 확인");
+		 self.close();
+		 if (window.opener && window.opener.parent) {
+		        window.opener.parent.location.reload();
+		    }
 		
 	})
 	
