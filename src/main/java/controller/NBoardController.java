@@ -30,7 +30,7 @@ public class NBoardController extends HttpServlet {
 				String nBoardTitle = request.getParameter("title");
 				String nBoardContent = request.getParameter("contents");
 				
-				int result = nManager.insert(new NBoardDTO(0,userId,nBoardTitle,nBoardTitle,null,0));
+				int result = nManager.insert(new NBoardDTO(0,userId,nBoardTitle,nBoardContent,null,0));
 				
 				System.out.println(userId);
 				System.out.println(nBoardTitle);
