@@ -9,9 +9,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="summernote/summernote-lite.js"></script>
-<script src="summernote/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="summernote/summernote-lite.css">
+<script src="cboard/summernote/summernote-lite.js"></script>
+<script src="cboard/summernote/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="cboard/summernote/summernote-lite.css">
 <title>글 작성 페이지</title>
 <style>
         * {
@@ -192,7 +192,7 @@
     </div>
     <form action="/write.cboard" method="post" id="writeForm" enctype="multipart/form-data">
 	    <div class="writeBoard">
-	        <h3>jkh28님의 글</h3>
+	        <h3>${nickname}님의 글</h3>
 	        <div class="category">
 	            <div class="form-check form-check-inline">
 	                <input class="form-check-input" type="radio" name="category" id="category1"
@@ -224,6 +224,7 @@
 	    	</div>
 	    </div>
 	    <input type="hidden" name="content" id="contentInput">
+	    <input type="hidden" name="nickname" id="nicknameInput">
     </form>
     <div class="footer">Footer</div>
     
@@ -339,6 +340,7 @@
 				e.preventDefault();
 ﻿			} else {
 				$("#contentInput").val($('#summernote').summernote('code'));
+				$("#nicknameInput").val("${nickname}");
 			}
 		});
         
