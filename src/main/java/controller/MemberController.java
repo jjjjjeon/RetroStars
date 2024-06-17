@@ -32,6 +32,7 @@ import dto.MemberDTO;
  * @author : Jin 
  * @version 1.0 
  */
+
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
 	
@@ -62,7 +63,7 @@ public class MemberController extends HttpServlet {
 					System.out.println("로그인 성공");
 					session.setAttribute("loginId", id);
 					MemberDTO member = memberDao.myData(id);
-                    session.setAttribute("profileUrl", member.getUserProfileUrl());
+                    session.setAttribute("profileUrl", "/upload/profile/default.png");
 					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
@@ -131,11 +132,13 @@ public class MemberController extends HttpServlet {
 					// 불일치했을 때 다시 패스워드 페이지로 이동
 					response.sendRedirect("/member/register/registerPw.jsp");
 				}
+				return;
 			} 
 			else if(cmd.equals("/registerEmail.member")) {
 				// 유저 이메일 전송
 				session.setAttribute("userEmail", request.getParameter("userEmail"));
 				response.sendRedirect("member/register/registerName.jsp");
+				return;
 			} 
 			else if(cmd.equals("/registerName.member")) {
 				// 이름, 닉네임, 주민등록번호, 폰 번호 전송
@@ -147,6 +150,7 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("userNo", userNo);
 				session.setAttribute("userPhone", request.getParameter("userPhone"));
 				response.sendRedirect("/member/register/registerComplete.jsp");
+				return;
 			} 
 			else if(cmd.equals("/registerComplete.member")) {
 				// session에 저장된 모든 정보 불러오기
@@ -160,18 +164,19 @@ public class MemberController extends HttpServlet {
                 String userNickname = (String) session.getAttribute("userNickname");
                 String userNo = (String) session.getAttribute("userNo");
                 String userPhone = (String) session.getAttribute("userPhone");
-                String userProfileUrl = "upload/profile/default.png";
+                //String userProfileUrl = "upload/profile/default.png";
                 System.out.println(term  + privacy +  ads + userId + userPw + userEmail +  userName + userNickname + userNo + userPhone);
                 
                 // 기본 값 제외하고 모두 변수에 담아 dao에 넣기.
-                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()), userProfileUrl);
+                MemberDTO addMember = new MemberDTO(userId, userPw, userName, userNickname, userNo, userPhone, userEmail, new Timestamp(System.currentTimeMillis()));
                 memberDao.addMember(addMember);
                 
                 // 세션 값 초기화
                 session.invalidate();
                 
                 // 완료 버튼을 누르면 메인화면으로 돌아감.
-                response.sendRedirect("/member/login/login.jsp");
+                request.getRequestDispatcher("/member/login/login.jsp").forward(request, response);
+                return;
 			}
 			else if(cmd.equals("/kakaoLogin.member")) {
 			    // 카카오 로그인 정보 처리
@@ -190,6 +195,7 @@ public class MemberController extends HttpServlet {
 			    session.setAttribute("nickname", nickname);
 			    System.out.println("카카오 로그인 성공");
 			    response.sendRedirect("/index.jsp");
+			    return;
 			}
 			
 			// 마이페이지 접속 시 정보 출력 기능
@@ -209,16 +215,18 @@ public class MemberController extends HttpServlet {
 				}else if(genderCode.equals("2")) {
 					gender="Female";
 				}else {gender="None";}
+				String url = "/upload/profile/default.png";
 				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
 				int count1 = listCategory1.size();
-				int count2 = listCategory2.size();
+				int count2 = listCategory2.size();				
 				
 				request.setAttribute("birth", birth);
 				request.setAttribute("phone", phone);
 				request.setAttribute("gender", gender);
 				request.setAttribute("mydata", mydata);
+				request.setAttribute("userProfileUrl", url);
 				request.setAttribute("listCategory1", listCategory1);
 				request.setAttribute("listCategory2", listCategory2);
 				request.setAttribute("count1", count1);
@@ -238,6 +246,7 @@ public class MemberController extends HttpServlet {
 				String genderCode = mydata.getUserNo().substring(6,7);
 				String gender;
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
+				String url = "/upload/profile/default.png";
 				
 				if(genderCode.equals("1")) {
 					gender="Male";
@@ -249,7 +258,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("birth", birth);
 				request.setAttribute("gender", gender);
 				request.setAttribute("mydata", mydata);
-				
+				request.setAttribute("userProfileUrl", url);
 				
 				request.getRequestDispatcher("/member/mypage/updateMyPage.jsp").forward(request, response);	
 				
