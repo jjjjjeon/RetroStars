@@ -290,6 +290,7 @@ public class MemberController extends HttpServlet {
 				String gender = request.getParameter("gender");
 				String email = request.getParameter("userEmail");
 				String phone = request.getParameter("userPhone");
+				String formattedPhone = phone.replaceAll("-", "");
 				String genderCode ="";
 				
 				if(gender.equals("Male")) {
@@ -298,13 +299,9 @@ public class MemberController extends HttpServlet {
 					genderCode="2";
 				}
 				
-				System.out.println(id +":"+name+":"+nickname+":"+email+":"+phone);
 				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
-				String userPhone = phone.substring(0,3)+phone.substring(4,8)+phone.substring(9,13);
-				System.out.println(userNo);
-				System.out.println(userPhone);
 				
-				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,userPhone));
+				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
 				request.getRequestDispatcher("/mypage.member").forward(request, response);	
 			}
 			
