@@ -70,19 +70,15 @@ public class MemberController extends HttpServlet {
 		            String loginResult = g.toJson(true);
 		    		PrintWriter pwt = response.getWriter();
 		    		pwt.append(loginResult);
-		    		
-		    		String nickname = memberDao.getNickname(id);
-		    		session.setAttribute("nickname", nickname);
+
 					session.setAttribute("loginId", id);
 					MemberDTO member = memberDao.myData(id);
-					System.out.println("닉네임 확인" + nickname);
                     session.setAttribute("profileUrl", "/upload/profile/default.png");
 					
 				}else {
 					System.out.println("로그인 실패. db 확인 부탁드려요.");
-		            String loginResult = g.toJson(false);
-		    		PrintWriter pwt = response.getWriter();		    			
-		    		pwt.append(loginResult);	
+		            
+					response.getWriter().print(false);
 				}
 				response.sendRedirect("/index.jsp");
 				return;

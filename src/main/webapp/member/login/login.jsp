@@ -241,14 +241,14 @@
                             pw: userPw
                         }                
                     }).done(function (data) {
+                    		alert(data)
     						console.log(data);
                             if (data === "false") 
                                 alert('잘못된 아이디이거나, 비밀번호가 틀렸습니다.');
                             else {
                             	console.log("로그인 성공")
                             	location.href = "/index.jsp";
-                            }
-                                
+                            }                                
                             });
                         };
                         
