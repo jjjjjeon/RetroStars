@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import common.Static;
+import dao.MemberDAO;
 import dao.QBoardDAO;
 import dto.QBoardDTO;
 
@@ -38,6 +39,7 @@ public class QBoardController extends HttpServlet {
 		String cmd=request.getRequestURI();
 		System.out.println(cmd);
 		QBoardDAO boarddao=QBoardDAO.getInstance();
+		
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
