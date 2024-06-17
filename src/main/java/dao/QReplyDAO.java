@@ -68,7 +68,7 @@ public class QReplyDAO {
 		
 		//2. 전체 댓글 출력하기 select(ALL)
 		public ArrayList<QReplyDTO> selectAll() throws Exception{
-			String sql="select * from q_reply order by 1";
+			String sql="select * from q_reply order by 1 desc";
 
 			try(Connection con=this.getConnection();
 					PreparedStatement ps=con.prepareStatement(sql);

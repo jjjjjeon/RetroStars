@@ -44,9 +44,9 @@ nav {
 	box-sizing: border-box;
 }
 
-div {
+/*div {
 	border: 1px solid red;
-}
+}*/
 
 .container {
 	width: 1100px;
@@ -69,7 +69,7 @@ div {
 	text-align: center;
 	font-size: 2.5rem;
 	color: #00d4ff;
-	border-bottom: 2px solid #00d4ff;
+	border-bottom: 2px solid white;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
@@ -206,22 +206,29 @@ div {
 	margin-right: 25px;
 	margin-top: 20px;
 	margin-bottom: 20px;
+	border: 1px solid white;
 }
 
+<!--클릭하면 색깔 바꾸게-->
 #addCommentInput:focus {
 	border: 2px solid #00d4ff;
 	border-color: #00d4ff;
 }
 
-.addCommentBtn{
-	height: 100px;
-	width: 55px;
-	background-color: #00d4ff;
-	color: black;
+
+
+.commentListBox{
+	flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .replyListBox {
-	padding-left: 150px;
+	flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .replycontainer {
@@ -232,13 +239,22 @@ div {
 	margin-bottom: 20px;
 }
 
-.replyupdatebtn {
-	float: right;
+.replycontainer>.col1, .replycontainer>.col2{
+	padding-left:20px;
 }
 
-.replydeletebtn {
-	float: right;
+.replycontainer>.col3{
+	display: flex;
+    justify-content: right;
+    padding-bottom: 10px;
+    padding-right: 30px;
 }
+
+
+.replyupdatebtn {
+	margin-right: 10px;
+}
+
 
 .replydatetext {
 	float: right;
@@ -297,7 +313,7 @@ div {
 	</nav>
 	<div class="container">
 		<div class="header">
-			<h3>글 작성하기</h3>
+			<h3 style="color:white">글 작성하기</h3>
 		</div>
 		<main class="main">
 			<div class="content">
@@ -364,14 +380,15 @@ div {
                             for (let reply of replylist) {
                                 if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
                 let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
-                let col1 = $("<div>").addClass("col1").html(reply.userId + " " + reply.qReplyDate + "<hr>");
+                let col1 = $("<div>").addClass("col1").html(reply.userId + " " + reply.qReplyDate);
+                let hr=$("<hr>");
                 let col2 = $("<div>").addClass("replycontents col2").html(reply.qReplyContent);
-                replycontainer.append(col1, col2);
+                replycontainer.append(col1, hr, col2);
                 $(".replyListBox").append(replycontainer);
                 if (reply.userId == loginId) {
                     let col3 = $("<div>").addClass("col3");
-                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn").html("수정");
-                    let replydeletebtn = $("<button>").addClass("replydeletebtn").html("삭제");
+                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
+                    let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
                     col3.append(replyupdatebtn, replydeletebtn);
                     replycontainer.append(col3);
                 }
@@ -458,18 +475,77 @@ div {
                     }
                 }).done(function (replydto) {
                     let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
-                    let col1 = $("<div>").addClass("col1").html(replydto.userId + " " + replydto.qReplyDate + "<hr>");
+                    let col1 = $("<div>").addClass("col1").html(replydto.userId + " " + replydto.qReplyDate);
+                    let hr=$("<hr>");
                     let col2 = $("<div>").addClass("replycontents col2").html(replydto.qReplyContent);
-                    replycontainer.append(col1, col2);
+                    replycontainer.append(col1, hr, col2);
                     let col3 = $("<div>").addClass("col3");
-                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn").html("수정");
-                    let replydeletebtn = $("<button>").addClass("replydeletebtn").html("삭제");
+                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
+                    let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
                     col3.append(replyupdatebtn, replydeletebtn);
                     replycontainer.append(col3);
                     $(".commentListBox").append(replycontainer);
                     $(".addCommentInput").html("");
-                })
+                    
+                    $(".replyupdatebtn").on("click", function () {
+                        let replyContainer = $(this).closest('.replycontainer');
+                        let replySeq = replyContainer.data("reply-seq");
+                        let replyContents = replyContainer.find('.col2');
+                        let updatebtn = $(this);
+                        let deletebtn = $(this).next();
 
+                        if (updatebtn.html() == "수정") {
+                            replyContents.attr("contenteditable", "true"); //편집 열기
+                            updatebtn.html("완료");
+                            deletebtn.html("취소");
+                        } else if (updatebtn.html() == "완료") {
+                            replyContents.attr("contenteditable", "false"); //편집 닫기
+                            updatebtn.html("수정");
+                            deletebtn.html("삭제");
+
+                            let form = $('<form>', {
+                                action: '/update.qreply',
+                                method: 'post'
+                            }); // 동적 form 생성
+
+                            let formData = [
+                                $('<input>', { type: 'hidden', name: 'replyseq', value: replySeq }),
+                                $('<input>', { type: 'hidden', name: 'boardseq', value: ${ dto.qBoardSeq }}),
+                        $('<input>', { type: 'hidden', name: 'replycontent', value: replyContents.html().trim() })
+                        ];
+
+                    form.append(formData);
+                    form.appendTo('body').submit();
+                    }
+                });
+
+                    $(".replydeletebtn").on("click", function () {
+                        let replyContainer = $(this).closest('.replycontainer');
+                        let replySeq = replyContainer.data("reply-seq");
+                        let updatebtn = $(this).prev();
+                        let deletebtn = $(this);
+
+                        if (deletebtn.html() == "삭제") {
+                            let result = confirm("정말 삭제하시겠습니까?");
+                            if (result) {
+                                let form = $('<form>', {
+                                    action: '/delete.qreply',
+                                    method: 'post'
+                                }); // 동적 form 생성
+
+                                let formData = [
+                                    $('<input>', { type: 'hidden', name: 'replyseq', value: replySeq }),
+                                    $('<input>', { type: 'hidden', name: 'boardseq', value: ${ dto.qBoardSeq } })
+                            ];
+
+                    form.append(formData);
+                    form.appendTo('body').submit();
+                        }
+                    } else if (deletebtn.html() == "취소") {
+                        location.href = "/detail.qboards?seq=${dto.qBoardSeq}";
+                    }
+                });
+                })
             })
 
             //게시판 수정 버튼을 클릭했을 때
