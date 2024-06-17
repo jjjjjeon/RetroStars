@@ -233,11 +233,11 @@
         <div class="title">
             <span>전체</span>
             
-			
+			<c:if test="${loginId == 'test'}">
 			<a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
     			<i class="fas fa-pencil-alt"></i> 글 작성
 			</a>
-			
+			</c:if>
 
             <form class="d-flex" role="search">
             	
