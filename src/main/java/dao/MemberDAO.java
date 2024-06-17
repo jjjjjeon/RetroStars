@@ -225,13 +225,12 @@ public class MemberDAO {
     			String phone =rs.getString(6);
     			String email=rs.getString(7);
     			Timestamp joinDate =rs.getTimestamp(8);
-    			String profile =rs.getString(9);
-    			String level =rs.getString(10);
-    			String admin =rs.getString(11);
-    			String black =rs.getString(12);
-    			String active =rs.getString(13);
+    			String level =rs.getString(9);
+    			String admin =rs.getString(10);
+    			String black =rs.getString(11);
+    			String active =rs.getString(12);
     			
-    			dto = new MemberDTO(userId, pw, name, nickName, no, phone, email, joinDate, profile, level, admin, black, active);
+    			dto = new MemberDTO(userId, pw, name, nickName, no, phone, email, joinDate, level, admin, black, active);
     			}
     			return dto;
     		}
