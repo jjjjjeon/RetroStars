@@ -229,6 +229,13 @@
         	height: 230px;
         	object-fit: cover;
         }
+        
+        a {
+		    text-decoration: none !important;
+		}
+		 a:link { color: white; text-decoration: none;}
+		 a:visited { color: white; text-decoration: none;}
+		 a:hover { color: white; text-decoration: underline;}
     </style>
 </head>
 <body>

@@ -14,6 +14,7 @@
             font-family: 'Georgia', serif;
                background-image: url('/image/background.png');
                background-position: center;
+               background-size:100% 100%;
                display: flex;
                height : 100vh;
                justify-content: center;
@@ -84,9 +85,13 @@
             position : absolute;
         }
         .container h1 {
-
-            color:white;
+            text-decoration: none !important; 
+            color:white !important;            
         }
+        
+        a {
+		    text-decoration: none !important;
+		}
         .container input {
             width: calc(100% - 20px);
             padding: 10px;
@@ -132,26 +137,33 @@
             margin: 0 10px;
             cursor: pointer;
         }
+        
+         #error-message {
+            color: red;
+            display: none;
+            margin: 10px 0;
+        }       
     </style>
 </head>
 <body>
 
-       <div class="container">       
-           <h1>Retro Stars 로그인</h1>
-           <form id="login-form" action="/login.member" method="post">
-               <input type="text" name="id" id="id" placeholder="아이디" required>
-               <input type="password" name="pw" id="password" placeholder="비밀번호" required>
-               <button type="submit">로그인</button>
-           </form>
-           <a href="/member/login/findId.jsp">아이디를 잊어버리셨나요?</a>   | 
-           <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
-           <div class="social-login">
-               <img src="/image/google_login.png" alt="Google">
-               <a href="javaScript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
-               <img src="/image/naver_login.png" alt="Line">
-           </div>
-           <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
-       </div>d
+    <div class="container">
+        <h1>Retro Stars 로그인</h1>
+        <form id="login-form">
+            <input type="text" name="id" id="id" placeholder="아이디" required>
+            <input type="password" name="pw" id="password" placeholder="비밀번호" required>
+            <span id="error-message">아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.</span>
+            <button type="submit">로그인</button>
+        </form>
+        <a href="/member/login/findId.jsp">아이디를 잊어버리셨나요?</a> |
+        <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
+        <div class="social-login">
+            <img src="/image/google_login.png" alt="Google">
+            <a href="javaScript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
+            <img src="/image/naver_login.png" alt="Line">
+        </div>
+        <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
+    </div>
 
     
 
@@ -193,19 +205,39 @@
            });
           
        }
-        $(document).ready(function(){
-            $('#login-form').submit(function(event){
-                const id = $('#id').val();
-                const password = $('#password').val();
-                if(id === "" || password === "") {
-                    event.preventDefault();
-                    alert("모든 필드를 입력해주세요.");
-                }
-            });
-            Kakao.init('9c567e58c04139a37cf1de438a4b6ffa');
+       
+       $(document).ready(function () {
+           $('#login-form').on('submit', function (event) {
+               event.preventDefault(); 
 
-            
-        });
-    </script>
+               var userId = $('#id').val();
+               var userPw = $('#password').val();
+
+               $.ajax({
+                   url: '/login.member',
+                   type: 'POST',
+                   dataType: 'json',
+                   data: {
+                       id: userId,
+                       pw: userPw
+                   }
+               }).done(function (response) {
+                   console.log(response); 
+                   if (response.success) {
+                       window.location.href = '/index.jsp';
+                   } else {
+                       $('#error-message').show().text(response.message);
+                   }
+               }).fail(function (jqXHR, textStatus, errorThrown) {
+                   console.error('Error:', textStatus, errorThrown);
+                   $('#error-message').show().text('로그인 중 오류가 발생했습니다. 다시 시도해 주세요.');
+               });
+           });
+
+           Kakao.init('9c567e58c04139a37cf1de438a4b6ffa');
+       });
+                   
+ 
+   </script>
 </body>
 </html>
