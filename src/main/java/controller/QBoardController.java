@@ -21,7 +21,7 @@ import dto.QBoardDTO;
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
  * History :
- *  - 작성자 : Sam, 날짜 : 2024. 6. 13., 설명 : 최초작성
+ *  - 작성자 : Sam, 날짜 : 2024. 6. 17., 설명 : CRUD완성
  *
  * @author : Sam
  * @version 1.0 
@@ -81,10 +81,11 @@ public class QBoardController extends HttpServlet {
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			
 			}else if(cmd.equals("/detail.qboard")) {
-				String writer=(String)request.getSession().getAttribute("loginID");
+				String loginId=(String)request.getSession().getAttribute("loginId");
 				int seq=Integer.parseInt(request.getParameter("seq"));
 				QBoardDTO dto=boarddao.selectcontent(seq);
 				request.setAttribute("dto", dto);
+				request.setAttribute("loginId", loginId);
 				
 				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
 			}else if(cmd.equals("/delete.qboard")) {
