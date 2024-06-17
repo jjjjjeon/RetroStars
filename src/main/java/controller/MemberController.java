@@ -234,7 +234,8 @@ public class MemberController extends HttpServlet {
 				}else if(genderCode.equals("2")) {
 					gender="Female";
 				}else {gender="None";}
-				String url = "/upload/profile/default.png";
+				
+				String url = userProfileImgDao.selectMyUrl(id);
 				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
@@ -282,12 +283,32 @@ public class MemberController extends HttpServlet {
 				
 				request.getRequestDispatcher("/member/mypage/updateMyPage.jsp").forward(request, response);	
 				
-			}else if(cmd.equals("/updateData")) {
+			}else if(cmd.equals("/updateData.member")) {
 				
 				String id = (String) request.getSession().getAttribute("loginId");
 				
-				System.out.println();
+				String name = request.getParameter("userName");
+				String nickname = request.getParameter("userNickname");
+				String birth = request.getParameter("userBirth");
+				String gender = request.getParameter("gender");
+				String email = request.getParameter("userEmail");
+				String phone = request.getParameter("userPhone");
+				String genderCode ="";
 				
+				if(gender.equals("Male")) {
+					genderCode="1";
+				}else if(gender.equals("Female")){
+					genderCode="2";
+				}
+				
+				System.out.println(id +":"+name+":"+nickname+":"+email+":"+phone);
+				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
+				String userPhone = phone.substring(0,3)+phone.substring(4,8)+phone.substring(9,13);
+				System.out.println(userNo);
+				System.out.println(userPhone);
+				
+				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,userPhone));
+				request.getRequestDispatcher("/mypage.member").forward(request, response);	
 			}
 			
 			

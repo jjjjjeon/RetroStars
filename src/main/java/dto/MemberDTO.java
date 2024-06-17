@@ -136,6 +136,18 @@ public class MemberDTO {
 		this.userNickname = userNickname;
 		this.userJoinDate = userJoinDate;
 	}
+	
+	public MemberDTO(String userId, String userName, String userNickname, String userNo,
+			String userPhone, String userEmail) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userNickname = userNickname;
+		this.userNo = userNo;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+	}
+	
 	private static final String DEFAULT_PROFILE_URL = "upload/profile/default.png";
 
 	public MemberDTO() {

@@ -61,7 +61,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col1_file{width: 95%; font-size:15px;}
         */
         .col1_id{flex:1; display: flex;}
-        .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: center;}
+        .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: center;  text-indent: 25px;}
         .col1_id_level{flex:4;display: flex; justify-content: center; align-items: center;}
         .col1_empty{flex:1;}
         .col1_btns{flex:3; display: flex; justify-content: space-evenly; align-items: center;}
@@ -98,7 +98,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     </style>
 </head>
 <body>
-<form>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/index.jsp">홈으로</a>
@@ -167,16 +167,13 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         </div>
     </nav>
   <div class="layout_empty_box"></div>
+  
+ <form action="/updateData.member" method="post">
   <div class="container">
             <div class="col mydata_chage col1 col_attr"> 
                 <div class="col1_profile_img col1_sub">
                 	<img id="profile_img" src="/upload/${userProfileUrl}">
                 </div>
-                <!-- 
-                <div class="col1_profile_update col1_sub">
-                    <input type="file" class="col1_file">
-                </div>
-                 -->
                 <div class="col1_id col1_sub">
                     <div class="col1_id_id">${mydata.userId}</div>
                     <div class="col1_id_level">${mydata.userLevel}</div>
@@ -194,15 +191,15 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <div class="col3_empty_box"></div>
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">이 름  : </div>
-                    <input type="text" class="user_name_value value_content input_bgc" value="${mydata.userName}">
+                    <input type="text" class="user_name_value value_content input_bgc" name="userName" value="${mydata.userName}">
                 </div>
                 <div class="col3_value_box value_box">
                     <div class="user_nickname value_title">닉네임  : </div>
-                    <input type="text" class="user_name_value value_content input_bgc" value="${mydata.userNickname}">
+                    <input type="text" class="user_name_value value_content input_bgc" name="userNickname" value="${mydata.userNickname}">
                 </div>
                 <div class="col3_value_box value_box">
                     <div class="user_birth value_title1">생년월일  : </div>
-                    <input type="text" class="user_brith_value value_content1 input_bgc" value="${birth}">
+                    <input type="text" class="user_brith_value value_content1 input_bgc" name="userBirth" value="${birth}">
                     <div class="user_gender value_title2">성별  : </div>
                     <div class="user_gender_value value_content2">
                     	<c:choose>
@@ -223,11 +220,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">이메일  : </div>
-                     <input type="text" class="user_name_value value_content input_bgc" value="${mydata.userEmail}">
+                     <input type="text" class="user_name_value value_content input_bgc" name="userEmail" value="${mydata.userEmail}">
                 </div>
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">핸드폰  : </div>
-                     <input type="text" class="user_name_value value_content input_bgc" value="${phone}">
+                     <input type="text" class="user_name_value value_content input_bgc" name="userPhone" value="${phone}">
                 </div>
                 <div class="col3_empty_box"></div>
                 <div class="col3_btn_box">
@@ -236,6 +233,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
             </div>           
    		 </div>
+    </form>
    	<div class="layout_empty_box"></div>
     <div class="footer">
         <div class="footerbox">
@@ -256,7 +254,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             </div>
         </div>
     </div>
-</form>
 	<script>
 	$(".value_content").attr("contenteditable", "true");
 	$(".value_content1").attr("contenteditable", "true");
