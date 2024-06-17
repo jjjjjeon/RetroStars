@@ -1,8 +1,3 @@
-///**
-// * 팀 별빛, Software License, Version 1.0
-// *
-// * Copyright (c) 팀 별빛, All rights reserved.
-// */
 //package filter;
 //
 //import java.io.IOException;
@@ -23,48 +18,69 @@
 // * History :
 // *  - 작성자 : Jin, 날짜 : 2024. 6. 15., 설명 : 최초작성
 // *
-// * @author : Jin 
 // * @version 1.0 
 // */
 //@WebFilter("/*")
 //public class LoginFilter implements Filter {
 //    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-////        HttpServletRequest req = (HttpServletRequest) request;
-////        HttpServletResponse res = (HttpServletResponse) response;
-////        HttpSession session = req.getSession(false);
-////        boolean loggedIn = (session != null && session.getAttribute("loginId") != null);
-////        boolean loginRequest = req.getRequestURI().equals("/index.jsp") || 
-////        					   req.getRequestURI().equals("/login.member") || 
-////                               req.getRequestURI().equals("/kakaoLogin.member") || 
-////                               req.getRequestURI().equals("/member/login/login.jsp") || 
-////                               req.getRequestURI().equals("/member/register/registerStart.jsp") ||
-////                               req.getRequestURI().equals("/member/register/registerId.jsp") ||
-////                               req.getRequestURI().equals("/member/register/registerPw.jsp") ||
-////                               req.getRequestURI().equals("/member/register/registerEmail.jsp") ||
-////                               req.getRequestURI().equals("/member/register/registerName.jsp") ||
-////                               req.getRequestURI().equals("/member/register/registerComplete.jsp");
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        HttpServletResponse res = (HttpServletResponse) response;
+//        HttpSession session = req.getSession(false);
+//        boolean loggedIn = (session != null && session.getAttribute("loginId") != null);
 //
-////        String url = req.getServletPath();
-////        
-////        try {
-////            System.out.println("## url: \t" + url);
-////        } catch (Exception e) {
-////            System.out.println("error : " + e);
-////        }
+//        String[] openUrls = {
+//            "/",
+//            "/index.jsp",
+//            "/login.member",
+//            "/kakaoLogin.member",
+//            "/member/login/login.jsp",
+//            "/member/register/registerStart.jsp",
+//            "/member/register/registerId.jsp",
+//            "/member/register/registerPw.jsp",
+//            "/member/register/registerEmail.jsp",
+//            "/member/register/registerName.jsp",
+//            "/member/register/registerComplete.jsp",
+//            "/term.member",
+//            "/checkUserId.member",
+//            "/checkUserNickname.member"
+//        };
 //
-////        boolean resourceRequest = req.getRequestURI().startsWith("/resources/") ||
-////                                  req.getRequestURI().endsWith(".css") ||
-////                                  req.getRequestURI().endsWith(".js") ||
-////                                  req.getRequestURI().endsWith(".png") ||
-////                                  req.getRequestURI().endsWith(".jpg") ||
-////                                  req.getRequestURI().endsWith(".jpeg") ||
-////                                  req.getRequestURI().endsWith(".gif");
-////
-////        if (loggedIn || loginRequest || resourceRequest) {
-////            chain.doFilter(request, response);
-////        } else {
-////            res.sendRedirect("/member/login/login.jsp");
-////        }
+//        String requestURI = req.getRequestURI();
+//        String contextPath = req.getContextPath();
+//        String path = requestURI.substring(contextPath.length());
+//
+//        boolean loginRequest = false;
+//        for (String url : openUrls) {
+//            System.out.println("Comparing path: " + path + " with url: " + url);
+//            if (path.equals(url)) {
+//                loginRequest = true;
+//                break;
+//            }
+//        }
+//        System.out.println("로그인 현재 어딘지: " + loginRequest);
+//
+//        String url = req.getServletPath();
+//        
+//        try {
+//            System.out.println("## url: \t" + url);
+//        } catch (Exception e) {
+//            System.out.println("error : " + e);
+//        }
+//
+//        boolean resourceRequest = req.getRequestURI().startsWith(contextPath + "/resources/") ||
+//                                  req.getRequestURI().endsWith(".css") ||
+//                                  req.getRequestURI().endsWith(".js") ||
+//                                  req.getRequestURI().endsWith(".png") ||
+//                                  req.getRequestURI().endsWith(".jpg") ||
+//                                  req.getRequestURI().endsWith(".jpeg") ||
+//                                  req.getRequestURI().endsWith(".gif");
+//
+//        if (loggedIn || loginRequest || resourceRequest) {
+//            chain.doFilter(request, response);
+//        } else {
+//            System.out.println("Redirecting to login page: " + req.getRequestURI());
+//            res.sendRedirect(contextPath + "/member/login/login.jsp");
+//        }
 //    }
 //
 //    @Override

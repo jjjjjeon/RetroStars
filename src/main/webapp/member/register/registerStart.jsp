@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+ 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - 약관 동의</title>
@@ -182,12 +183,15 @@
     </div>
     <script>
         function toggleAllAgree() {
+        	console.log("모두 누르기")
             let agreeAllCheckbox = document.getElementById('agreeAll');
             let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+          
             agreeAllCheckbox.checked = !agreeAllCheckbox.checked;
             agreeCheckboxes.forEach(checkbox => {
                 checkbox.checked = agreeAllCheckbox.checked;
             });
+
             toggleNextButton();
         }
        
@@ -196,14 +200,19 @@
             event.stopPropagation();
             let agreeAllCheckbox = document.getElementById('agreeAll');
             let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let agreeCheckboxesAd = document.querySelectorAll('.agree-checkbox-ad');
+            
             agreeAllCheckbox.checked = agreeCheckboxes.length === Array.from(agreeCheckboxes).filter(checkbox => checkbox.checked).length;
+           	
+            
+            console.log(agreeCheckboxes);
             toggleNextButton();
         }
 
         function toggleNextButton() {
-        	let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
-        	let nextButton = document.getElementById('nextButton');
-        	let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
+           let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+           let nextButton = document.getElementById('nextButton');
+           let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             nextButton.disabled = !allChecked;
         }
 
