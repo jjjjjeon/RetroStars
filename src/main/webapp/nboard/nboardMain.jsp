@@ -264,12 +264,14 @@
 			</a>
 
 
-            <form class="d-flex" role="search">
-            	
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="/search.nboard" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
                 <button class="btn btn-outline-success" type="submit" id="searchbtn">Search</button>
             </form>
+            
         </div>
+        
+        
         <div class="noticeContent">
             <div class="notiListItem">
                 <div class="notiCategory">공지</div>
@@ -278,7 +280,20 @@
                 <div class="notiDate">2024-06-12</div>
                 <div class="notiView">100</div>
             </div>
-
+            
+	 <c:choose>	
+		<c:when test="${not empty searchResult}">
+            <c:forEach var="dto" items="${searchResult}">
+                <div class="notiListContent">
+                    <div class="notiCategory">${dto.nBoardSeq}</div>
+                    <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
+                    <div class="notiAdmin">${dto.userId}</div>
+                    <div class="notiDate">${dto.nBoardDate}</div>
+                    <div class="notiView">${dto.nBoardView}</div>
+                </div>
+            </c:forEach>
+        </c:when>
+		<c:otherwise>
             <c:forEach var ="dto" items="${list}">
             	<div class = "notiListContent">
                  	
@@ -287,9 +302,10 @@
                 	<div class="notiAdmin">${dto.userId }</div>
                 	<div class="notiDate">${dto.nBoardDate }</div>
                 	<div class="notiView">${dto.nBoardView }</div>
-            	
             	</div>
             </c:forEach>
+        </c:otherwise>
+	</c:choose>
         </div>
         <div class="pagenavi" id="navi"></div>
     </div>

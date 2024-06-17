@@ -89,6 +89,15 @@ public class NBoardController extends HttpServlet {
 				response.sendRedirect("/detail.nboard?nBoardSeq="+seq);
 				
 
+			} else if(cmd.equals("/search.nboard")) {
+				System.out.println("search.nboard진입");
+				String keyword = request.getParameter("keyword");
+				System.out.println("keyword : "+keyword);
+				
+				List<NBoardDTO> searchResult = nManager.searchList(keyword);
+				request.setAttribute("searchResult", searchResult);
+				System.out.println("게시물 검색 성공");
+				response.sendRedirect("/list.nboard");
 			}
 			
 		} catch(Exception e) {
