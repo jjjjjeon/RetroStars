@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -63,6 +64,52 @@ public class QReplyDAO {
 		            }
 		        }
 		    }
+		}
+		
+		//2. 전체 댓글 출력하기 select(ALL)
+		public ArrayList<QReplyDTO> selectAll() throws Exception{
+			String sql="select * from q_reply order by 1";
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);
+					ResultSet rs=ps.executeQuery();){
+				ArrayList<QReplyDTO> list=new ArrayList<QReplyDTO>();
+				while(rs.next()){
+					int qReplySeq=rs.getInt(1);
+					int QBoardSeq=rs.getInt(2);
+					String userId=rs.getString(3);
+					String qReplyContent=rs.getString(4);
+					Timestamp qReplyDate=rs.getTimestamp(5);
+				
+
+					list.add(new QReplyDTO(qReplySeq, QBoardSeq, userId, qReplyContent, qReplyDate));
+
+				}
+				return list;
+			}
+		}
+		
+		//3. delete
+		public int deleteBySeq(int targetseq) throws Exception{
+			String sql="delete from q_reply where q_reply_seq=?";
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){
+				ps.setInt(1, targetseq);    
+				return ps.executeUpdate();
+			}
+		}
+
+		//4. update
+		public int updateBySeq(int targetseq, String targetcontents) throws Exception{
+			String sql="update q_reply set q_reply_content=? where q_reply_seq=? ";
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){
+				ps.setString(1, targetcontents);
+				ps.setInt(2, targetseq);
+				return ps.executeUpdate();
+
+			}
 		}
 
 

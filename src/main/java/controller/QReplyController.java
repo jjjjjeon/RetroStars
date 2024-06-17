@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import dao.QReplyDAO;
 import dto.QReplyDTO;
@@ -46,7 +48,39 @@ public class QReplyController extends HttpServlet {
 				PrintWriter pw=response.getWriter();
 				pw.append(g.toJson(qdto));
 				
+			}else if(cmd.equals("/select.qreply")) {
+				//받은 정보
+				int qBoardSeq=Integer.parseInt(request.getParameter("qBoardSeq"));
+				String loginId=(String)request.getSession().getAttribute("loginId"); 
+	
+				//보낼 정보
+				PrintWriter pw=response.getWriter();
+				ArrayList<QReplyDTO> replylist=replydao.selectAll();
+				
+				//직렬화
+				JsonObject obj=new JsonObject();
+				obj.addProperty("loginId", loginId);
+				obj.add("replylist", g.toJsonTree(replylist)); //이게 뭘까?
+				String result=g.toJson(obj);
+				pw.append(result);
+				
+			}else if(cmd.equals("/delete.qreply")) {
+				int replyseq=Integer.parseInt(request.getParameter("replyseq"));
+				int boardseq=Integer.parseInt(request.getParameter("boardseq"));
+				System.out.println(replyseq);
+				int result=replydao.deleteBySeq(replyseq);
+				request.getRequestDispatcher("/detail.qboard?seq="+boardseq).forward(request, response);
+				
+			}else if(cmd.equals("/update.qreply")) {
+				int replyseq=Integer.parseInt(request.getParameter("replyseq"));
+				int boardseq=Integer.parseInt(request.getParameter("boardseq"));
+				String replycontent=request.getParameter("replycontent");
+				System.out.println(replycontent);
+				int result=replydao.updateBySeq(replyseq, replycontent);
+				request.getRequestDispatcher("/detail.qboard?seq="+boardseq).forward(request, response);
+				
 			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
