@@ -36,10 +36,23 @@
     }
 
     .header {
-        height: 100px;
+        height: 220px;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    
+    .header .headerTitle{
+    	height : 150px;
+    	color : black;
+    	font-size : 32px;
+    	font-weight : bold;
+    	display : flex;
+    	align-items : center;
+    }
+    
+    .header #headerTitle{
+    	margin-top : 70px;
     }
 
     .navi {
@@ -216,20 +229,152 @@
 	    font-size: 14px;
 	}
 
+	.navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height:70px;
+    }
+    
+        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
+        .nav-link {
+            color: white !important;
+            /* margin-left: 20px; */
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
     .footer {
-        height: 300px;
+        height: 150px;
         margin-top: 160px;
-        padding-top: 50px;
         border-top: 1px solid #e0e2ec;
+        background-color: #323232;
         display: flex;
         justify-content: center;
         align-items: center;
+        position : relative;
+        bottom : 0;
     }
+    
+    .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
+        }
+        .rightfooter {
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
+
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }
 </style>
 </head>
 
 <body>
-    <div class="header">Header</div>
+    <div class="header">
+    	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                   
+
+                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+    </nav>
+    <div class="headerTitle"><p id="headerTitle">커뮤니티</p></div>
+    </div>
     <div class="navi">
         <a href="/list.cboard?category=0" id="viewAll">전체</a>
         <a href="/list.cboard?category=1" id="viewC1">자유</a>
@@ -268,7 +413,7 @@
                 			<li class="title" data-no="1224">
                     			<a href="/detail.cboard?category=${category}&cpage=${cpage}&seq=${DTO.cBoardSeq}">${DTO.cBoardTitle}</a>
                 			</li>
-                			<li class="author">${DTO.userId}</li>
+                			<li class="author">${DTO.userNickname}</li>
                 			<li class="date">
                 				<fmt:formatDate value="${DTO.cBoarDate}" pattern="yy. MM. dd" />
                 			</li>
@@ -284,10 +429,33 @@
         </div>
         <div class="pageNavi"></div>
     </div>
-    <div class="footer">Footer</div>
+    <div class="footer">
+    	<div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-		$("#writeBtn").on("click", function(){
-			location.href = "/goWrite.cboard";
+		$("#writeBtn").on("click", function(e){
+			if(${loginId == null}){
+				alert("로그인 후 이용해주세요!");
+				e.preventDefault();
+			}else{
+				location.href = "/goWrite.cboard";
+			}
 		});
 		
 		$("#searchForm").on("submit", function(e){
@@ -303,7 +471,6 @@
 		});
 		
 		function getNaviString() {
-			console.log($(".boardList").attr("data-category"));
 			let currentPage = ${cpage}
 			let recordTotalCount = ${record_total_count}
 			let recordCountPerPage = ${record_count_per_page}
@@ -315,7 +482,6 @@
 			} else {
 				pageTotalCount = Math.floor(recordTotalCount / recordCountPerPage) + 1;
 			}
-			console.log(pageTotalCount);
 			
 			let startNavi = Math.floor((currentPage - 1) / naviCountPerPage) * naviCountPerPage + 1;
 			let endNavi = startNavi + naviCountPerPage - 1;

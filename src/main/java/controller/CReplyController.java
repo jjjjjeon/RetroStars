@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import dao.CReplyDAO;
 import dao.MemberDAO;
+import dto.CReply2DTO;
 import dto.CReplyDTO;
 
 @WebServlet("*.reply")
@@ -26,10 +27,10 @@ public class CReplyController extends HttpServlet {
 		Gson g = new Gson();
 		
 		try {
-			//유저게시판 글의 댓글 목록을 json으로 클라이언트에게 반환
+			//유저게시판 글의 댓글 목록을 json으로 클라이언트에게 반환.
 			if(cmd.equals("/viewReple.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				List<CReplyDTO> repleList = manager.viewRepleList(seq);
+				List<CReply2DTO> repleList = manager.viewRepleList(seq);
 				
 				String result = g.toJson(repleList);
 				
@@ -37,10 +38,10 @@ public class CReplyController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 				
-			//유저게시판 글의 대댓글 목록을 json으로 클라이언트에게 반환
+			//유저게시판 글의 대댓글 목록을 json으로 클라이언트에게 반환.
 			}else if(cmd.equals("/viewRepleReple.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				List<CReplyDTO> replerepleList = manager.viewRepleRepleList(seq);
+				List<CReply2DTO> replerepleList = manager.viewRepleRepleList(seq);
 				
 				String result = g.toJson(replerepleList);
 				
@@ -48,18 +49,18 @@ public class CReplyController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 				
-			//유저게시판 글의 댓글 삭제
+			//유저게시판 글의 댓글 삭제.
 			}else if(cmd.equals("/delReple.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				manager.delReple(seq);
 				manager.delRepleChildren(seq);
 			
-			//유저게시판 글의 대댓글 삭제
+			//유저게시판 글의 대댓글 삭제.
 			}else if(cmd.equals("/delRepleReple.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				manager.delReple(seq);
 				
-			//유저게시판 글의 총 댓글 수 반환
+			//유저게시판 글의 총 댓글 수 반환.
 			}else if(cmd.equals("/countRepleList.reply")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				String result = "" + manager.countRepleList(seq);
@@ -85,18 +86,17 @@ public class CReplyController extends HttpServlet {
 		Gson g = new Gson();
 		
 		try {
-			//유저게시판 글에 댓글 추가
+			//유저게시판 글에 댓글 추가.
 			if (cmd.equals("/addReple.reply")) {
 				String id = (String) request.getSession().getAttribute("loginId");
-				String nickname = mManager.getNickname(id);
 
 				int parentSeq = Integer.parseInt(request.getParameter("parentSeq"));
 				String content = request.getParameter("content");
 
-				CReplyDTO rpl = new CReplyDTO(0, parentSeq, nickname, content, null, 0);
+				CReplyDTO rpl = new CReplyDTO(0, parentSeq, id, content, null, 0);
 				rManager.addReple(rpl);
 				
-				CReplyDTO addedReple = rManager.viewReple(nickname, parentSeq, 0);
+				CReply2DTO addedReple = rManager.viewReple(id, parentSeq, 0);
 				
 				String result = g.toJson(addedReple);
 				
@@ -104,18 +104,17 @@ public class CReplyController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 				
-			//유저게시판 글의 댓글에 답글 추가
+			//유저게시판 글의 댓글에 답글 추가.
 			}else if(cmd.equals("/addReplyReply.reply")) {
 				String id = (String) request.getSession().getAttribute("loginId");
-				String nickname = mManager.getNickname(id);
 				int boardSeq = Integer.parseInt(request.getParameter("parentBoardSeq"));
 				int replySeq = Integer.parseInt(request.getParameter("parentReplySeq"));
 				String content = request.getParameter("content");
 				
-				CReplyDTO rerpl = new CReplyDTO(0, boardSeq, nickname, content , null, replySeq);
+				CReplyDTO rerpl = new CReplyDTO(0, boardSeq, id, content , null, replySeq);
 				rManager.addReplyReply(rerpl);
 				
-				CReplyDTO addedReReple = rManager.viewReple(nickname, boardSeq, replySeq);
+				CReply2DTO addedReReple = rManager.viewReple(id, boardSeq, replySeq);
 				
 				String result = g.toJson(addedReReple);
 				

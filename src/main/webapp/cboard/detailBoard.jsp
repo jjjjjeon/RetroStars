@@ -25,13 +25,10 @@
 * {
 	box-sizing: border-box;
 	margin: 0;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .dropdown-toggle::after { display: none; }
-
-div {
-	font-family: 'Noto Sans KR', sans-serif;
-}
 
 ul {
 	list-style-type: none;
@@ -43,7 +40,7 @@ a {
 }
 
 .header {
-	height: 62px;
+	height: 70px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -161,6 +158,7 @@ a {
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
+	word-break : break-all;
 }
 
 .content .viewCont #addBookmarkBtn {
@@ -201,7 +199,7 @@ a {
 }
 
 #reportBtn {
-	width: 100px;
+	width: 120px;
 	height: 45px;
 	background: rgb(243, 66, 66);
 	color: #fff;
@@ -382,15 +380,76 @@ a {
 	margin-bottom: 10px;
 }
 
+.navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height:70px;
+    }
+    
+        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
+        .nav-link {
+            color: white !important;
+            /* margin-left: 20px; */
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
 .footer {
-	height: 300px;
-	margin-top: 160px;
-	padding-top: 50px;
-	border-top: 1px solid #e0e2ec;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+        height: 150px;
+        margin-top: 160px;
+        border-top: 1px solid #e0e2ec;
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position : relative;
+        bottom : 0;
+    }
+    
+    .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
+        }
+        .rightfooter {
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
+
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }
 
 #summernote{
 	display : none;
@@ -413,10 +472,214 @@ a {
     margin-left : 15px;
     cursor:pointer;
 }
+
+.top{
+	position:fixed;
+	width:50px;
+	height:50px;
+	border: 4px solid black;
+	right:1%;
+	bottom:18%;
+	text-align: center;
+	line-height: 40px;
+}
+
+.modal-content{
+            background-color: #303544;
+            color : white;
+            width : 720px;
+            padding : 15px;
+        }
+
+        .modal-body{
+            background-color: #f8f9fb;
+            color : black;
+        }
+
+        .modal-header h5{
+            margin-left : 45%;
+            font-size: 21px;
+        }
+
+        .modal-footer{
+            display: flex;
+            justify-content: center;
+        }
+
+        .modalInfoBox{
+            height: 56px;
+            width : 660px;
+            display: flex;
+            align-items: center;
+            border : 1px solid lightgray;
+            border-bottom: 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .modalInfoBox .infoTitle{
+            width : 160px;
+            padding-left : 30px;
+        }
+
+        .modalInfoBox .info{
+            width : 500px;
+            font-weight: bold;
+            padding-left: 10px;
+        }
+
+        .modal-footer{
+            padding : 0;
+            margin-top : 20px;
+            border : 0;
+        }
+
+        #reportCheckBox{
+            border-bottom : 1px solid lightgray;
+        }
+
+        .form-select{
+            width : 100%;
+            height: 50px;
+            font-weight: bold;
+        }
+
+        #reportFormBox{
+            padding : 10px 3px 10px 0;
+        }
+
+        .descBox{
+            height: 130px;
+            margin-top : 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .descBox .p1{
+            color : #898c92;
+            font-weight: 500;
+        }
 </style>
 <body>
+	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="modalInfoBox">
+                <div class="infoTitle">신고자</div>
+                <div class="info">${nickname}</div>
+              </div>
+              <div class="modalInfoBox">
+                <div class="infoTitle">신고 대상자</div>
+                <div class="info">${DTO.userNickname}</div>
+              </div>
+              <div class="modalInfoBox">
+                <div class="infoTitle">신고 제목</div>
+                <div class="info">${DTO.cBoardTitle}</div>
+              </div>
+              <div class="modalInfoBox" id="reportCheckBox">
+                <div class="infoTitle">신고사유</div>
+                <div class="info" id="reportFormBox">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="reportType">
+                        <option selected>신고 사유를 선택해주세요</option>
+                        <option value="1">스팸홍보/도배글입니다.</option>
+                        <option value="2">욕설/생명경시/혐오/차별적 표현입니다.</option>
+                        <option value="3">개인정보 노출 게시물입니다.</option>
+                        <option value="4">청소년에게 유해한 내용입니다.</option>
+                    </select>
+                </div>
+              </div>
+              <div class="descBox">
+                <p class="p1">신고할 내용을 다시 한번 확인해주세요.</p>
+                <p style="font-weight: bold;">허위 신고의 경우, 운영정책에 따라 서비스 이용에 제한을 받을 수 있습니다.</p>
+                <p class="p1">정말 위 내용으로 신고하시겠습니까?</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light btn-lg" data-bs-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-primary btn-lg" id="reportYesBtn">신고</button>
+            </div>
+          </div>
+        </div>
+      </div>
 	<form action="/correction.cboard" method="post" id="changeForm">
-		<div class="header">Header</div>
+		<div class="header" id="header">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                   
+
+                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+    </nav>
+		</div>
 		<div class="navi">
 			<a href="/list.cboard?category=0" id="viewAll">전체</a> <a
 				href="/list.cboard?category=1" id="viewC1">자유</a> <a
@@ -429,7 +692,7 @@ a {
 				<input type="hidden" id="titleInput" name="title">
 			</div>
 			<ul class="infoBox">
-				<li><span class="name">${DTO.userId}</span></li>
+				<li><span class="name">${DTO.userNickname}</span></li>
 				<li id=info2><span class="date"> <fmt:formatDate
 							value="${DTO.cBoarDate}" pattern="yyyy.MM.dd HH:mm" />
 				</span> <span class="view"> <i class="fa-regular fa-eye"
@@ -464,7 +727,7 @@ a {
 			<div id="summernote"></div>
 			<div class="btnBox">
 				<div class="leftBox">
-					<button type="button" id="reportBtn">신고하기</button>
+					<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고하기</button>
 				</div>
 				<div class="rightBox">
 					<button type="button" id="goListBtn">목록</button>
@@ -483,12 +746,12 @@ a {
 		<input type="hidden" id="contentInput" name="content">
 	</form>
 	<div class="commentBox">
-		<div class="commentTitle">댓글 (0) <a class="commentAnker">댓글쓰러가기</a></div>
+		<div class="commentTitle">댓글 (0) <a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a></div>
 		
 		<div class="commentList">
 		</div>
-		<div class="writeCmtBox">
-				<div class="writeCmtWriter">${loginUser}</div>
+		<div class="writeCmtBox" id="writeCmtBox">
+				<div class="writeCmtWriter">${nickname}</div>
 				<div class="writeCmtCttRow">
 					<textarea
 						placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
@@ -497,9 +760,56 @@ a {
 				</div>
 		</div>
 	</div>
-	<div class="footer">Footer</div>
+	<div class="top"><a id="topBtn" href="#header">TOP</a></div>
+	<div class="footer">
+		<div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
+	</div>
 
 	<script>
+		$("#reportYesBtn").on("click", function(e){
+			if(isNaN($("select[name=reportType]").val())){
+				alert("신고 사유를 선택해주세요!");
+				e.preventDefault();
+			}else{
+				$.ajax({
+					url : "/report.cboard",
+					data : {
+					seq : $("#delBtn").attr("data-seq"),
+					id : "${loginId}",
+					reportType : $("select[name=reportType]").val()
+					}
+				}).done(function(resp){
+					if(resp == "duplicated"){
+						alert("이미 신고한 글입니다!");
+						location.reload();
+					}else if(resp == "success"){
+						alert("신고 접수가 완료되었습니다.");
+						location.reload();
+					}else{
+						alert("신고 접수가 실패했습니다. 문제가 지속되면 관리자에게 문의해주세요.");
+						location.reload();
+					}
+				});
+			}
+		});
+	
+	
 		let totalReplyCount = 0;
 		
 		function getTotalReplyCount(){
@@ -510,12 +820,12 @@ a {
 				}
 			}).done(function(resp){
 				totalReplyCount = Number(resp);
-				$(".commentTitle").text("댓글 (" + totalReplyCount + ")" + <a class=`commentAnker`>댓글쓰러가기</a>);
+				$(".commentTitle").html("댓글 (" + totalReplyCount + ")").append($('<a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a>'));
 			});
 		};
 	
     	$("#writeBtn").on("click", function(){
-    		location.href = "cboard/writeBoard.jsp";
+    		location.href = "/goWrite.cboard";
     	})
     
 	    $(document).ready(function(){
@@ -602,6 +912,11 @@ a {
     		$("#titleInput").attr("type", "text");
     		
     		$('#summernote').summernote({
+    			placeholder : `1. 비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. <br>
+    	            2. 타인의 개인정보가 포함된 게시물을 올릴 경우, 개인 정보 보호법 제 59조 3호에 의해 5년 이하의 징역 또는 <br>
+    	              &nbsp;&nbsp; 5천만원 이하의 벌금이 부과될 수 있으니 유의하여 주시기 바랍니다. <br>
+    	            3. 모든 분들이 게시물을 불편없이 이용할 수 있도록 게시물에 대한 설명을 문자로 기재해 주시기 바랍니다. <br>
+    	            4. 최대 3000자까지 작성 가능합니다.`,
 				  height : '500px',   // 에디터 높이
 				  disableResizeEditor: true,    // 에디터 사이즈 조절 옵션 끄기
 				  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
@@ -617,27 +932,39 @@ a {
 					fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 					fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 					callbacks: {
-				          onKeydown: function(e) {
-				            let textLength = $('#summernote').next('.note-editor').find('.note-editable').text().length;
-				            if (textLength >= maxLength && e.keyCode !== 8 && e.keyCode !== 46) {
-				              e.preventDefault();
-				            }
-				          },
-				          onKeyup: function() {
-				            updateCharCount();
-				          },
-				          onPaste: function(e) {
-				            let clipboardData = e.originalEvent.clipboardData || window.clipboardData;
-				            let pastedData = clipboardData.getData('Text');
-				            let textLength = $('#summernote').next('.note-editor').find('.note-editable').text().length;
-				            if (textLength + pastedData.length > maxLength) {
-				              e.preventDefault();
-				              let allowedData = pastedData.substring(0, maxLength - textLength);
-				              document.execCommand('insertText', false, allowedData);
-				            }
-				            setTimeout(updateCharCount, 100); // 붙여넣기 후 글자 수 업데이트
-				          }
-				        }
+		                onKeydown: function (e) { 
+		                    var t = e.currentTarget.innerText; 
+		                    if (t.trim().length >= 3000) {
+		                        //delete keys, arrow keys, copy, cut, select all
+		                        if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
+		                        e.preventDefault(); 
+		                    } 
+		                },
+		                onKeyup: function (e) {
+		                    var t = e.currentTarget.innerText;
+		                    $('#maxContentPost').text(3000 - t.trim().length);
+		                },
+		                onPaste: function (e) {
+		                    var t = e.currentTarget.innerText;
+		                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+		                    e.preventDefault();
+		                    var maxPaste = bufferText.length;
+		                    if(t.length + bufferText.length > 3000){
+		                        maxPaste = 3000 - t.length;
+		                    }
+		                    if(maxPaste > 0){
+		                        document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+		                    }
+		                    $('#maxContentPost').text(3000 - t.length);
+		                },
+		                onInit: function () {
+		                    function isEditorEmpty() {
+		                        var code = elem.summernote("code");
+		                        return code === "<p><br></p>" || code === "";
+		                    }
+		                }
+		            }
+					
 				      });
     		$("#originTitle").remove();
 			$('#summernote').summernote('code', `${DTO.cBoardContent}`);
@@ -645,6 +972,9 @@ a {
 			$('.viewCont').remove();
 			$(".btnBox").css("margin-top", "15px");
 			$("#titleInput").focus();
+			let originTitle = $("#titleInput").val();
+			$("#titleInput").val("");
+			$("#titleInput").val(originTitle);
     	});
     	
     	$("#corNoBtn").on("click", function(){
@@ -697,15 +1027,13 @@ a {
     	                    let cmtGroup = $('<div>').addClass('cmtGroup');
     	                    cmtGroup.attr("id", dto.cReplySeq);
     	                    let commentDiv = $('<div>').addClass('comment');
-    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userId);
+    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userNickname);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
     	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
     	                    
-    	                    console.log("${loginUser}" == dto.userId);
-    	                    
-    	                    if("${loginUser}" == dto.userId){
+    	                    if("${nickname}" == dto.userNickname){
     	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
@@ -716,7 +1044,7 @@ a {
     	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
     	                    let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
+    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${nickname}님의 답글`);
     	                    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
     	                    let textarea = $('<textarea>')
     	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
@@ -763,12 +1091,12 @@ a {
 
     	                    let commentDiv = $('<div>').addClass('comment');
     	                    commentDiv.css("margin-top", "15px");
-    	                    let userId = dto.userId;
-    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
+    	                    let userNickname = dto.userNickname;
+    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname + "님의 답글");
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
     	                    
-    	                    if("${loginUser}" == dto.userId){
+    	                    if("${nickname}" == dto.userNickname){
     	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
@@ -797,12 +1125,32 @@ a {
     		getRepleList();
     		getTotalReplyCount();
     		
-    		if(${loginUser != DTO.userId}){
+    		if(${nickname == null}){
+    			$("#delBtn").css("display", "none");
+    			$("#corBtn").css("display", "none");
+    			$("#writeBtn").css("display", "none");
+    			$("#reportBtn").css("display", "none");
+    			$("#addBookmarkBtn").css("display", "none");
+    			$(".writeCmtBox").css("display", "none");
+    		}else if(${nickname != DTO.userNickname}){
     			$("#delBtn").css("display", "none");
     			$("#corBtn").css("display", "none");
     			$("#reportBtn").css("display", "block");
     		}
     		
+    		$(".scroll_move").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+            });
+    		
+    		$(window).scroll(function(){
+    			let scroll_height = $(document).scrollTop();
+    			if ( scroll_height >= 800){
+    				$(".top").fadeIn();
+    			}else{
+    				$(".top").fadeOut();
+    			}
+    		});
     	})
     	
     	$("#writeCmtBtn").on("click", function(e){
@@ -834,13 +1182,13 @@ a {
 	                let cmtGroup = $('<div>').addClass('cmtGroup');
 	                cmtGroup.attr("id", resp.cReplySeq);
 	                let commentDiv = $('<div>').addClass('comment');
-	                let cmtUserDiv = $('<div>').addClass('cmtUser').text(resp.userId);
+	                let cmtUserDiv = $('<div>').addClass('cmtUser').text(resp.userNickname);
 	                let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
 	                let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
 	                let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
 	                let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
 
-	                if("${loginUser}" == resp.userId){
+	                if("${nickanme}" == resp.userNickname){
 	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
 	                deleteButton.attr('data-repleSeq', resp.cReplySeq);
 	                cmtDateDiv.append(deleteButton);
@@ -851,7 +1199,7 @@ a {
 	                commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
 	                let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${loginUser}`);
+	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${nickname}님의 답글`);
 	                let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
 	                let textarea = $('<textarea>')
 	                    .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
@@ -862,7 +1210,7 @@ a {
 	                reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
 	                cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
 	                totalReplyCount = totalReplyCount + 1;
-					$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+	                $(".commentTitle").html("댓글 (" + totalReplyCount + ")").append($('<a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a>'));
 	                $('.commentList').append(cmtGroup);
 	                $('#repleContent').val("");
 				});
@@ -902,13 +1250,18 @@ a {
             }
             $(this).closest(".comment").remove();
             totalReplyCount = totalReplyCount - 1
-			$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+            $(".commentTitle").html("댓글 (" + totalReplyCount + ")").append($('<a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a>'));
         });
     	
-    	$(".commentList").on("click", ".openReReplyWriteBtn", function(){
-    		$(this).closest(".cmtGroup").find(".reReplyWriteBox").css("display", "block");
-    		$(this).attr("class", 'btn btn-outline-secondary closeReReplyWriteBtn');
-    		$(this).html("답글취소");
+    	$(".commentList").on("click", ".openReReplyWriteBtn", function(e){
+    		if(${nickname == null}){
+    			alert("로그인 후 이용해주세요!");
+    			e.preventDefault();
+    		}else{
+    			$(this).closest(".cmtGroup").find(".reReplyWriteBox").css("display", "block");
+        		$(this).attr("class", 'btn btn-outline-secondary closeReReplyWriteBtn');
+        		$(this).html("답글취소");
+    		}
     	})
     	
     	$(".commentList").on("click", ".closeReReplyWriteBtn", function(){
@@ -942,12 +1295,12 @@ a {
 
                 let commentDiv = $('<div>').addClass('comment');
                 commentDiv.css("margin-top", "15px");
-                let userId = resp.userId;
-                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userId);
+                let userNickname = resp.userNickname;
+                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname);
                 let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
                 let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
 
-                if("${loginUser}" == resp.userId){
+                if("${nickname}" == resp.userNickname){
                 	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
                     deleteButton.attr('data-repleSeq', resp.cReplySeq);
                     cmtDateDiv.append(deleteButton);
@@ -958,7 +1311,7 @@ a {
                 $("#" + resp.cReplyReply).append(commentDiv);
                 
                 totalReplyCount = totalReplyCount + 1;
-				$(".commentTitle").text("댓글 (" + totalReplyCount + ")");
+                $(".commentTitle").html("댓글 (" + totalReplyCount + ")").append($('<a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a>'));
 				
     		});
     		$(this).prev().val("");
@@ -967,8 +1320,14 @@ a {
     		$(this).closest(".cmtGroup").find(".closeReReplyWriteBtn").attr("class", 'btn btn-outline-secondary openReReplyWriteBtn');
     	});
     	
-    	
-    	
+    	$(".commentTitle").on("click", ".commentAnker", function(e){
+    		if(${nickname == null}){
+    			alert("로그인 후 이용해주세요!");
+    			e.preventDefault();
+    		}else{
+    			window.scrollTo(0, document.body.scrollHeight);
+    		}
+    	});
     </script>
 </body>
 </html>
