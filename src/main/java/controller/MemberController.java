@@ -23,9 +23,10 @@ import com.google.gson.JsonObject;
 import common.util;
 import dao.GameDAO;
 import dao.MemberDAO;
+import dao.PlayRecordDAO;
 import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
-import dto.GameDTO;
+import dto.GamePlayRecordDTO;
 import dto.MemberDTO;
 import dto.UserProfileImgDTO;
 
@@ -57,6 +58,7 @@ public class MemberController extends HttpServlet {
 		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
 		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
+		PlayRecordDAO playRecordDao = PlayRecordDAO.getInstance();
 		
 		try {
 			
@@ -241,6 +243,8 @@ public class MemberController extends HttpServlet {
 				}else {gender="None";}
 				
 				String url = userProfileImgDao.selectMyUrl(id);
+				GamePlayRecordDTO gprDto = playRecordDao.selectRecentlyPlayGame(id);
+				
 				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
@@ -256,6 +260,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("listCategory2", listCategory2);
 				request.setAttribute("count1", count1);
 				request.setAttribute("count2", count2);
+				request.setAttribute("gprDto", gprDto);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				
