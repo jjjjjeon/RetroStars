@@ -67,15 +67,15 @@ public class GameController extends HttpServlet {
 					String name = (String) files.nextElement();
 					String filename = multi.getFilesystemName(name);
 					if (name.startsWith("gameImages") && filename != null) { // 이미지 파일 여러개 추가할 때 새로운 로직 필요.
-						gameDao.insertGameImage(new GameImageDTO(0, gameSeq, "/GameImage/" + filename));
+						gameDao.insertGameImage(new GameImageDTO(0, gameSeq, filename));
 					} 
 					else if (name.startsWith("gameVideos") && filename != null) {
-						gameDao.insertGameVideo(new GameVideoDTO(0, gameSeq, "/GameImage/" + filename,
+						gameDao.insertGameVideo(new GameVideoDTO(0, gameSeq, filename,
 								new java.sql.Timestamp(System.currentTimeMillis())));
 					}
 				}
 
-				response.sendRedirect("/gboard/mainBoard.gboard");
+				response.sendRedirect("/gboard/addGame.jsp");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
