@@ -69,6 +69,7 @@ public class GBoardController extends HttpServlet {
             	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
             	
             	gameDao.addGameBookmark(id, gameSeq);
+            	System.out.println("북마크 완료");
             }
 
         } catch (Exception e) {

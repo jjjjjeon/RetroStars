@@ -253,8 +253,8 @@
                 <p>RELEASE DATE: <fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy"/></p>
                 <p>DEVELOPER: ${game.developer}</p>
                 <div class="buttons">
-                    <button class="btn community-button">찜하기</button>
-                    <button class="btn community-button">팔로우</button>
+                    <button class="btn community-button" id="addGameBookmarkBtn">찜하기</button>
+                    <button class="btn community-button" id="testSome">팔로우</button>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
             </div>
@@ -322,6 +322,27 @@
                 }
             });
         });
+        
+        $(document).ready(function () {
+        	$("#addGameBookmarkBtn").on("click", function(){
+        		$.ajax({
+        			url : "/addGameBookmark.gboard",
+        			dataType : "json",
+        			data : {
+        				gameSeq : ${game.gameSeq}
+        			}
+        			
+        		}).done(function(response){
+        			console.log(response);
+    				alert("해당 게임 북마크.");
+    			});
+        	});
+        	
+        	$("#testSome").on("click", function(){
+        		alert("확인");
+        	})
+        });
+        
     </script>
 </body>
 </html>

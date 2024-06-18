@@ -231,7 +231,7 @@ public class GameDAO {
      * @throws Exception 
      */ 
 	public void addGameBookmark(String id, int gameSeq) throws Exception{
-		String sql = "insert into g_bookmark vales(g_bookmark_sequence.nextval, ?, ?)";
+		String sql = "insert into g_bookmark values(g_bookmark_sequence.nextval, ?, ?)";
 		
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, gameSeq);
