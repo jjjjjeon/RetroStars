@@ -39,15 +39,16 @@ public class FBoardController extends HttpServlet {
 //				session = request.getSession();
 //				String id = (String) session.getAttribute("loginId");
 //				
+				List<FBoardDTO> fboardCate = fBoardDao.listCate();
 				List<FBoardDTO> fboardCate1 = fBoardDao.listCate1();
 				List<FBoardDTO> fboardCate2 = fBoardDao.listCate2();
 				List<FBoardDTO> fboardCate3 = fBoardDao.listCate3();
-				List<FBoardDTO> fboardCate4 = fBoardDao.listCate4();
+				
 				
 				request.setAttribute("fboardCate1", fboardCate1);
 				request.setAttribute("fboardCate2", fboardCate2);
 				request.setAttribute("fboardCate3", fboardCate3);
-				request.setAttribute("fboardCate4", fboardCate4);
+				request.setAttribute("fboardCate", fboardCate);
 				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);	
 				
 			}

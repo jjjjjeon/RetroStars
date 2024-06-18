@@ -92,7 +92,7 @@
     }
 
     function validatePhone(phone) {
-        let regex = /^01\d-?\d{4}-?\d{4}$/;
+        let regex = /^01([0|1|6|7|8|9])([0-9]{8})$/;
         return regex.test(phone);
     }
 

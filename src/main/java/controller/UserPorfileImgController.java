@@ -56,7 +56,7 @@ public class UserPorfileImgController extends HttpServlet {
 								imgDao.updateImg(new UserProfileImgDTO(0,id,oriname,sysname));
 								}
 						}
-				 request.getRequestDispatcher("/updateList.member").forward(request, response);
+				 request.getRequestDispatcher("/member/mypage/close.jsp").forward(request, response);
 			}	
 			
 		}catch(Exception e) {

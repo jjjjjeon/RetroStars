@@ -39,15 +39,5 @@ public class GBoardDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/oracle");
 		return ds.getConnection();
 	}
-    /** 
-     * @Method Name  : loginId 
-     * @date : 2024. 6. 13. 
-     * @author : Jin 
-     * @version : 
-     * @Method info : 로그인 기능.
-     * @param id
-     * @param pw
-     * @return boolean
-     * @throws Exception 
-     */ 
+ 
 }

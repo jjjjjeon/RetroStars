@@ -63,7 +63,7 @@ public class UserProfileImgDAO {
 	}
 	
 	private String insertImg(UserProfileImgDTO file) throws Exception {
-		String sql = "insert into user_profile_img values(user_profile_img_sequence.nextval, ?, '/upload/profile/default.png', '/upload/profile/default.png')";
+		String sql = "insert into user_profile_img values(user_profile_img_sequence.nextval, ?, 'default.png', 'default.png')";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, file.getUserId());

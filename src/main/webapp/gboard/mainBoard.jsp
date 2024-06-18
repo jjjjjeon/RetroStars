@@ -222,14 +222,14 @@
     <div class="container">
         <div class="nav-menu">
             <div class="game-title">${game.gameTitle}</div>
-            <a href="/cboard/mainBoard.jsp" class="community-button">커뮤니티 허브</a>
+            <a href="/list.cboard" class="community-button">커뮤니티 허브</a>
         </div>
         <div class="main-content">
             <div class="media-section">
                 <div class="media-container" id="media-container">
                     <c:choose>
                         <c:when test="${not empty videoUrl}">
-                            <video src="${videoUrl}" controls autoplay muted></video>
+                            <video src="/upload/${videoUrl}" controls autoplay muted loop></video>
                         </c:when>
                         <c:otherwise>
                             <img src="/image/default_image.jpg" alt="Game Image" id="main-media">
@@ -238,23 +238,23 @@
                 </div>
                 <div class="media-thumbnails">
                     <c:forEach var="image" items="${images}">
-                        <img src="${image}" alt="Thumbnail" class="thumbnail" data-type="image" data-media="${image}">
+                        <img src="/upload/${image}" alt="Thumbnail" class="thumbnail" data-type="image" data-media="${image}">
                     </c:forEach>
                     <c:if test="${not empty videoUrl}">
-                        <video src="${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="${videoUrl}"></video>
+                        <video src="/upload/${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="${videoUrl}"></video>
                     </c:if>
                 </div>
             </div>
             <div class="description-section">
                 <div class="media-container">
-                    <img src="/image/hollow.jpg" alt="Game Description Image">
+                    <img src="/upload/${images.get(1)}" alt="Game Description Image">
                 </div>
                 <p>${game.gameDesc}</p>
                 <p>RELEASE DATE: <fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy"/></p>
                 <p>DEVELOPER: ${game.developer}</p>
                 <div class="buttons">
-                    <button class="btn community-button">찜하기</button>
-                    <button class="btn community-button">팔로우</button>
+                    <button class="btn community-button" id="addGameBookmarkBtn">찜하기</button>
+                    <button class="btn community-button" id="testSome">팔로우</button>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
             </div>
@@ -322,6 +322,27 @@
                 }
             });
         });
+        
+        $(document).ready(function () {
+        	$("#addGameBookmarkBtn").on("click", function(){
+        		$.ajax({
+        			url : "/addGameBookmark.gboard",
+        			dataType : "json",
+        			data : {
+        				gameSeq : ${game.gameSeq}
+        			}
+        			
+        		}).done(function(response){
+        			console.log(response);
+    				alert("해당 게임 북마크.");
+    			});
+        	});
+        	
+        	$("#testSome").on("click", function(){
+        		alert("확인");
+        	})
+        });
+        
     </script>
 </body>
 </html>

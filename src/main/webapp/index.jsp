@@ -321,15 +321,20 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">LIST</div>
-                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameId=G1">> Grimm worlds <</a> </div>
-                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameId=G2">> The Sims4 <</a> </div>
-                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameId=G3">> Apex 레전드 <</a> </div>
-                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameId=G4">> 오버워치 <</a> </div>
-                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameId=G5">> 배틀그라운드 <</a> </div>
+                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1">> 오버워치 <</a> </div>
+                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2">> 심즈 4 <</a> </div>
+                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3">> Apex 레전드 <</a> </div>
+                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameSeq=4">> Grimm's Hollow <</a> </div>
+                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameSeq=5">> 배틀그라운드 <</a> </div>
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
-                <video src="/image/mainVideo.mp4" class="thumbnail" autoplay muted loop></video>
+                <video class="thumbnail" autoplay muted loop>
+                	<source id="gv1" src="/upload/G1.mp4"></source>
+                	<source id="gv2" src="/upload/G2.mp4"></source>
+                	<source id="gv3" src="/upload/G3.mp4"></source>
+                	<source id="gv4" src="/upload/G4.mp4"></source>
+                </video>                
                 </div>
                 <div class="startbtn">
                     <a href="/viewGame.gboard"><img src="/image/startbtn.png" alt=""></a>
@@ -359,5 +364,17 @@
         </div>
     </div>
 </body>
+
+<script>
+	$(function(){
+		$("#gv1").bind("ended", function(){
+			$("#gv2").play();
+		});
+		$("#gv2").bind("ended", function(){
+			$("#gv3").play();
+		})
+	})
+
+</script>
 
 </html>
