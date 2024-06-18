@@ -218,4 +218,30 @@ public class GameDAO {
 		}
 		return null;
 	}
+	
+	  /** 
+     * @Method Name  : 게임 게시판 북마크 
+     * @date : 2024. 6. 18. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : mainGboard.jsp 찜하기 누르면 북마크된다..
+     * @param id
+     * @param gameSeq
+     * @return 
+     * @throws Exception 
+     */ 
+	public void addGameBookmark(String id, int gameSeq) throws Exception{
+		String sql = "insert into g_bookmark vales(g_bookmark_sequence.nextval, ?, ?)";
+		
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, gameSeq);
+			pstat.setString(2, id);
+			pstat.executeUpdate();
+		}
+	}
+	
+	
+	
+	
+	
 }

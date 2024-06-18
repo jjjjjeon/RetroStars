@@ -64,6 +64,11 @@ public class GBoardController extends HttpServlet {
                 request.setAttribute("videoUrl", gameVideoStr);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
+            } else if (cmd.equals("/addGameBookmark.gboard")) {
+            	String id = (String) request.getSession().getAttribute("loginId");
+            	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+            	
+            	gameDao.addGameBookmark(id, gameSeq);
             }
 
         } catch (Exception e) {
