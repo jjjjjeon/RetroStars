@@ -108,6 +108,7 @@ public class CBoardController extends HttpServlet {
 			//게시글 내용 열람.
 			}else if(cmd.equals("/detail.cboard")) {
 				String id = (String) request.getSession().getAttribute("loginId");
+				String nickname = mManager.getNickname(id);
 				
 				String categoryStr = request.getParameter("category");
 				if(categoryStr == null) {
@@ -138,6 +139,7 @@ public class CBoardController extends HttpServlet {
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fileList", fileList);
 				request.setAttribute("loginId", id);
+				request.setAttribute("nickname", nickname);
 				request.setAttribute("DTO", post);
 				request.getRequestDispatcher("/cboard/detailBoard.jsp").forward(request, response);
 				
