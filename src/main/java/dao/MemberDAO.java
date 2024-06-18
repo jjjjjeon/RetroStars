@@ -377,5 +377,68 @@ public class MemberDAO {
     	}
     	
     }
+    
+    /** 
+     * @Method Name  : updatePw
+     * @date : 2024. 6. 18. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 비밀번호 변경
+     * @param1 String id
+     * @param2 String pw
+     * @return void
+     * @throws Exception 
+     */ 
+    public void updatePw(String id, String pw) throws Exception{
+    	
+    	String sql = "update member set user_pw=? where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,pw);
+    		pstat.setString(2,id);
+    		pstat.executeUpdate();
+    		
+    	}
+    	
+    }
+    
+    /** 
+     * @Method Name  : pwIsRight
+     * @date : 2024. 6. 18. 
+     * @author : kjy
+     * @version : 
+     * @Method info : 비밀번호 변경
+     * @param1 String id
+     * @param2 String pw
+     * @return void
+     * @throws Exception 
+     */ 
+    public String pwIsRight(String id, String pw) throws Exception{
+    	
+    	String sql = "select user_pw from member where user_id=?";
+    	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1,id);  
+    		
+    		try(ResultSet rs = pstat.executeQuery();){
+    			
+    			String dbPw =""; 
+    			
+    			while(rs.next()) { 
+    				dbPw = rs.getString(1);
+    				}
+    			if(dbPw.equals(pw)) {
+    				return "성공";
+    			}else {
+    				return "실패";}
+    			
+    		}
+    		
+    		
+    	}
+    	
+    }
 
 }
