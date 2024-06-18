@@ -23,20 +23,20 @@ public class GamePlayRecordDTO {
 	private Timestamp playDate;
 	private int playScore;
 	private String gameTitle;
-	private int gameSep;
+	private int gameSeq;
 	
 	public GamePlayRecordDTO() {
 		super();
 	}
 	public GamePlayRecordDTO(int playRecordSeq, String userId, Timestamp playDate, int playScore, String gameTitle,
-			int gameSep) {
+			int gameSeq) {
 		super();
 		this.playRecordSeq = playRecordSeq;
 		this.userId = userId;
 		this.playDate = playDate;
 		this.playScore = playScore;
 		this.gameTitle = gameTitle;
-		this.gameSep = gameSep;
+		this.gameSeq = gameSeq;
 	}
 	
 	public int getPlayRecordSeq() {
@@ -69,11 +69,11 @@ public class GamePlayRecordDTO {
 	public void setGameTitle(String gameTitle) {
 		this.gameTitle = gameTitle;
 	}
-	public int getGameSep() {
-		return gameSep;
+	public int getGameSeq() {
+		return gameSeq;
 	}
-	public void setGameSep(int gameSep) {
-		this.gameSep = gameSep;
+	public void setGameSeq(int gameSeq) {
+		this.gameSeq = gameSeq;
 	}
 	
 	
