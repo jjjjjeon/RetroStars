@@ -78,7 +78,7 @@ public class CReplyDAO {
 	public CReply2DTO viewReple(String id, int boardSeq, int ReplySeq) throws Exception{
 		String sql = null;
 		if(ReplySeq == 0) {
-			sql = "select c_reply.*, member.user_nickname from c_reply join member on c_reply.user_id = member.user_id where c_reply.c_board_seq = ? and c_reply.user_id = ? and c_reply.c_reply_reply is null order by c_reply.c_reply_seq desc;";
+			sql = "select c_reply.*, member.user_nickname from c_reply join member on c_reply.user_id = member.user_id where c_reply.c_board_seq = ? and c_reply.user_id = ? and c_reply.c_reply_reply is null order by c_reply.c_reply_seq desc";
 		}else {
 			sql = "select c_reply.*, member.user_nickname from c_reply join member on c_reply.user_id = member.user_id where c_reply.c_board_seq = ? and c_reply.user_id = ? and c_reply.c_reply_reply = ? order by c_reply.c_reply_seq desc";
 		}

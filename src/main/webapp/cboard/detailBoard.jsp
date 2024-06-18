@@ -36,48 +36,76 @@ ul {
 
 a {
 	text-decoration: none;
-	color: black;
+	color: #d3d3d3;
+}
+
+body{
+		background-color : #222; 
+}
+
+div{
+	color : #d3d3d3;
 }
 
 .header {
-	height: 70px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+        height: 220px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('/image/background.png');
+        background-size : cover;
+    }
+    
+    .header .headerTitle{
+    	height : 150px;
+    	color : #FFFFFF;
+    	font-size : 32px;
+    	font-weight : bold;
+    	display : flex;
+    	align-items : center;
+    }
+    
+    .header #headerTitle{
+    	margin-top : 70px;
+    }
+    
+ 
 
 .navi {
-	position: relative;
-	width: 100%;
-	height: 80px;
-	background: #f8f9fb;
-	border: 1px solid #e0e2ec;
-	text-align: center;
-	font-size: 0;
-}
+        position: relative;
+        width: 100%;
+        height: 80px;
+        background: #111;
+        border: 1px solid #5a5a64;
+        border-left : 0;
+        border-right : 0;
+        text-align: center;
+        font-size: 0;
+        
+    }
 
-.navi a {
-	display: inline-block;
-	margin: 0 25px;
-	color: #898c92;
-	font-size: 24px;
-	line-height: 77px;
-}
-
-.navi .active {
-	color: #36393f;
-	border-bottom: 2px solid #36393f;
-}
+    .navi a {
+        display: inline-block;
+        margin: 0 25px;
+        color: #898c92;
+        font-size: 24px;
+        line-height: 77px;
+    }
+    
+    .navi .active {
+	    color: white;
+	    border-bottom: 2px solid white;
+	}
 
 .content {
 	position: relative;
 	margin: 63px auto 0 auto;
-	width: 1300px;
+	width: 1302px;
 	min-height: 500px;
 }
 
 .content h3 {
-	color: #151518;
+	color: #d3d3d3;
 	font-size: 26px;
 	line-height: 34px;
 	font-weight: 300;
@@ -85,6 +113,7 @@ a {
 
 .content .titleBox {
 	padding-left: 50px;
+	padding-right : 5px;
 	height: 139px;
 	min-height : 139px;
 	border: 1px solid #eeedf2;
@@ -101,13 +130,14 @@ a {
 #titleInput{
 	height: 139px;
 	width:1300px;
-	min-height : 139px;
-	border: 1px solid #eeedf2;
+	min-height : 140px;
 	font-size: 22px;
 	display: flex;
 	align-items: center;
 	margin-top: 20px;
 	text-indent : 20px;
+	background-color : #222;
+	color : #d3d3d3;
 }
 
 .content .infoBox {
@@ -116,7 +146,7 @@ a {
 	justify-content: center;
 	padding: 0 50px 0 30px;
 	height: 59px;
-	color: #6a6e76;
+	color: #d3d3d3;
 	font-weight: 500;
 	border: 1px solid #eeedf2;
 	border-top: 0;
@@ -154,7 +184,7 @@ a {
 
 .content .viewCont {
 	padding: 45px 0 150px 0;
-	color: #36393f;
+	color: #d3d3d3;
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
@@ -166,13 +196,14 @@ a {
 	margin: 115px auto 0 auto;
 	width: 200px;
 	height: 60px;
-	background-color: #f8f9fb;
+	background-color: #d3d3d3;
 	border: 1px solid #e0e2ec;
 	border-radius: 30px;
 	text-align: center;
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 56px;
+	color : black;
 }
 
 .content .viewCont #delBookmarkBtn {
@@ -180,9 +211,9 @@ a {
 	margin: 115px auto 0 auto;
 	width: 200px;
 	height: 60px;
-	background-color: gray;
-	color : white;
-	border: 1px solid #e0e2ec;
+	background-color: black;
+	color : #d3d3d3;
+	border: 1px solid #d3d3d3;
 	border-radius: 30px;
 	text-align: center;
 	font-size: 16px;
@@ -203,7 +234,7 @@ a {
 	height: 45px;
 	background: rgb(243, 66, 66);
 	color: #fff;
-	border: 0;
+	border: 1px solid #B22222;
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
@@ -235,9 +266,9 @@ a {
 #goListBtn {
 	width: 120px;
 	height: 45px;
-	background: black;
+	background: #444;
 	color: #fff;
-	border: 0;
+	border: 1px solid #555;
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
@@ -248,7 +279,7 @@ a {
 	height: 45px;
 	background: #3392ff;
 	color: #fff;
-	border: 0;
+	border: 1px solid #1A6ED8;
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
@@ -261,7 +292,7 @@ a {
 	color: #fff;
 	border: 0;
 	font-size: 13px;
-	font-weight: bold;
+	font-weight: 500;
 	margin-right: 10px;
 	display: none;
 }
@@ -289,7 +320,7 @@ a {
 	position: relative;
 	margin-bottom: 20px;
 	width: 1300px;
-	color: #6a6e76;
+	color: #d3d3d3;
 	font-size: 18px;
 	font-weight: 400;
 	line-height: 36px;
@@ -300,7 +331,7 @@ a {
 	position: absolute;
 	right : 0;
 	margin-bottom: 20px;
-	color: #6a6e76;
+	color: #d3d3d3;
 	font-size: 18px;
 	font-weight: 400;
 	line-height: 36px;
@@ -308,8 +339,8 @@ a {
 
 .commentBox .commentList .cmtGroup {
 	padding: 35px 0 35px 30px;
-	border-top: 1px solid #eeedf2;
-	border-bottom: 1px solid #eeedf2;
+	border-top: 1px solid #5a5a64;
+	border-bottom: 1px solid #5a5a64;
 }
 
 .comment {
@@ -345,7 +376,7 @@ a {
 
 .writeCmtWriter {
 	height: 50px;
-	padding: 25px 0 0 25px;
+	padding: 20px 0 0 25px;
 	font-weight: bold;
 }
 
@@ -402,7 +433,7 @@ a {
 .footer {
         height: 150px;
         margin-top: 160px;
-        border-top: 1px solid #e0e2ec;
+        border-top: 1px solid #5a5a64;
         background-color: #323232;
         display: flex;
         justify-content: center;
@@ -477,11 +508,12 @@ a {
 	position:fixed;
 	width:50px;
 	height:50px;
-	border: 4px solid black;
+	border: 4px solid white;
 	right:1%;
 	bottom:18%;
 	text-align: center;
 	line-height: 40px;
+	display : none;
 }
 
 .modal-content{
@@ -561,6 +593,11 @@ a {
             color : #898c92;
             font-weight: 500;
         }
+        
+        .note-editable{
+	border : 1px solid #d3d3d3;
+}
+        
 </style>
 <body>
 	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -679,6 +716,7 @@ a {
             </div>
         </div>
     </nav>
+    <div class="headerTitle"><p id="headerTitle">커뮤니티</p></div>
 		</div>
 		<div class="navi">
 			<a href="/list.cboard?category=0" id="viewAll">전체</a> <a
@@ -696,9 +734,9 @@ a {
 				<li id=info2><span class="date"> <fmt:formatDate
 							value="${DTO.cBoarDate}" pattern="yyyy.MM.dd HH:mm" />
 				</span> <span class="view"> <i class="fa-regular fa-eye"
-						style="color: #36393f;"></i> ${DTO.cBoardView}
+						style="color: #d3d3d3;"></i> ${DTO.cBoardView}
 				</span> <span class="bookmark"> <i class="fa-regular fa-bookmark"
-						style="color: #36393f;"></i> ${DTO.cBoardBookmark}
+						style="color: #d3d3d3;"></i> ${DTO.cBoardBookmark}
 				</span></li>
 			</ul>
 			<c:choose>
@@ -751,7 +789,7 @@ a {
 		<div class="commentList">
 		</div>
 		<div class="writeCmtBox" id="writeCmtBox">
-				<div class="writeCmtWriter">${nickname}</div>
+				<div class="writeCmtWriter" style="color : black;">${nickname}</div>
 				<div class="writeCmtCttRow">
 					<textarea
 						placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
@@ -789,6 +827,7 @@ a {
 			}else{
 				$.ajax({
 					url : "/report.cboard",
+					async:false,
 					data : {
 					seq : $("#delBtn").attr("data-seq"),
 					id : "${loginId}",
@@ -848,6 +887,7 @@ a {
 				$("#delBookmarkBtn").on("click", function(){
 					$.ajax({
 						url : "/delBookmark.cboard",
+						async:false,
 						data : {
 						seq : $("#delBtn").attr("data-seq")
 						}
@@ -862,6 +902,7 @@ a {
     	$("#addBookmarkBtn").on("click", function(){
     		$.ajax({
 				url : "/addBookmark.cboard",
+				async:false,
 				data : {
 				seq : $("#delBtn").attr("data-seq")
 				}
@@ -1029,12 +1070,12 @@ a {
     	                    let commentDiv = $('<div>').addClass('comment');
     	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userNickname);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
-    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
+    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate).css("color", "#d3d3d3");
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
-    	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
+    	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기').css("color", "#d3d3d3");
     	                    
     	                    if("${nickname}" == dto.userNickname){
-    	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제').css("color", "#d3d3d3");
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
     	    	            }
@@ -1050,7 +1091,7 @@ a {
     	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
     	                        .addClass('writeCmtCtt')
     	                        .attr('maxlength', '1000');
-    	                    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-dark writeReplyReplyBtn').text('등록');
+    	                    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-light writeReplyReplyBtn').text('등록');
     	                    writeCmtCttRowDiv.append(textarea, submitButton);
     	                    reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
     	                    cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
@@ -1097,7 +1138,7 @@ a {
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
     	                    
     	                    if("${nickname}" == dto.userNickname){
-    	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+    	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제').css("color", "#d3d3d3");
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
     	    	            }
@@ -1162,6 +1203,7 @@ a {
 					type: 'post',
 					url : "/addReple.reply",
 					dataType: "json",
+					async:false,
 					data : {
 						parentSeq : $("#delBtn").attr("data-seq"),
 						content : $("#repleContent").val()
@@ -1186,10 +1228,10 @@ a {
 	                let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
 	                let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
 	                let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
-	                let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기');
+	                let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기').css("color", "#d3d3d3");
 
-	                if("${nickanme}" == resp.userNickname){
-	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제');
+	                if("${nickname}" == resp.userNickname){
+	                let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제').css("color", "#d3d3d3");
 	                deleteButton.attr('data-repleSeq', resp.cReplySeq);
 	                cmtDateDiv.append(deleteButton);
 	                }
@@ -1205,7 +1247,7 @@ a {
 	                    .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
 	                    .addClass('writeCmtCtt')
 	                    .attr('maxlength', '1000');
-	                let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-dark writeReplyReplyBtn').text('등록');
+	                let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-light writeReplyReplyBtn').text('등록');
 	                writeCmtCttRowDiv.append(textarea, submitButton);
 	                reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
 	                cmtGroup.append(commentDiv, reReplyWriteBoxDiv);
@@ -1275,6 +1317,7 @@ a {
     			url : "/addReplyReply.reply",
     			type : "post",
     			dataType: "json",
+    			async:false,
     			data : {
     			parentBoardSeq : $("#delBtn").attr("data-seq"),
     			parentReplySeq : $(this).closest(".cmtGroup").attr("id"),
@@ -1296,12 +1339,12 @@ a {
                 let commentDiv = $('<div>').addClass('comment');
                 commentDiv.css("margin-top", "15px");
                 let userNickname = resp.userNickname;
-                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname);
+                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname + "님의 답글");
                 let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
                 let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
 
                 if("${nickname}" == resp.userNickname){
-                	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제');
+                	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제').css("color", "#d3d3d3");
                     deleteButton.attr('data-repleSeq', resp.cReplySeq);
                     cmtDateDiv.append(deleteButton);
 	            }
