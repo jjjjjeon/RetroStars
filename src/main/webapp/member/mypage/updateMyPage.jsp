@@ -46,7 +46,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         *{box-sizing: border-box;}
 
-        /*div{border: 1px solid red;}*/
+        div{border: 1px solid red;}
 
         .container{height: 600px; width: 800px; margin:auto;display: flex; color:white;}
         .col{display: flex; justify-content: center; align-items: center;}
