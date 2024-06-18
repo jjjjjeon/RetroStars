@@ -329,7 +329,12 @@
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
-                <video src="/image/mainVideo.mp4" class="thumbnail" autoplay muted loop></video>
+                <video class="thumbnail" autoplay muted loop>
+                	<source id="gv1" src="/upload/G1.mp4"></source>
+                	<source id="gv2" src="/upload/G2.mp4"></source>
+                	<source id="gv3" src="/upload/G3.mp4"></source>
+                	<source id="gv4" src="/upload/G4.mp4"></source>
+                </video>                
                 </div>
                 <div class="startbtn">
                     <a href="/viewGame.gboard"><img src="/image/startbtn.png" alt=""></a>
@@ -359,5 +364,17 @@
         </div>
     </div>
 </body>
+
+<script>
+	$(function(){
+		$("#gv1").bind("ended", function(){
+			$("#gv2").play();
+		});
+		$("#gv2").bind("ended", function(){
+			$("#gv3").play();
+		})
+	})
+
+</script>
 
 </html>
