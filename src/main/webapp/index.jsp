@@ -260,7 +260,7 @@
                             게임
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="/gboard/addGame.jsp">게임 업로드</a></li>
                             <li><a class="dropdown-item" href="#">game2</a></li>
                             <li><a class="dropdown-item" href="#">game3</a></li>
                             <li><a class="dropdown-item" href="#">game4</a></li>

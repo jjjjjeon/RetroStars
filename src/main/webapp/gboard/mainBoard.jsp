@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,6 +18,9 @@
             background-size: 100% 100%;
             color: white;
             margin-bottom: 120px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         nav {
             background-color: #323232;
@@ -26,9 +29,8 @@
             width: 100%;
             height: 120px;
             background-color: #323232;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            position: relative;
+            margin-top: auto;
         }
         .leftfooter {
             color: white;
@@ -69,6 +71,7 @@
         .container {
             margin: 20px auto;
             width: 90%;
+            flex-grow: 1;
         }
         .header {
             text-align: center;
@@ -80,10 +83,6 @@
             align-items: center;
             margin-bottom: 20px;
         }
-        .nav-menu .game-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
         .community-button {
             background-color: #2a475e;
             color: #c7d5e0;
@@ -91,6 +90,9 @@
             border-radius: 5px;
             padding: 5px 10px;
             text-decoration: none;
+            height: 50px;
+            display: flex;
+            align-items: center;
         }
         .community-button:hover {
             background-color: #3a4b58;
@@ -162,6 +164,44 @@
         .buttons button {
             width: 100px;
         }
+        .bookmark-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            position: relative;
+            top: -40px;
+        }
+        .bookmark-item {
+            padding: 10px 20px;
+            background-color: #2a475e;
+            color: white;
+            border: 1px solid #3a4b58;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 50px;
+        }
+        .bookmark-item:hover, .bookmark-item.active {
+            background-color: #6fa720;
+            border-color: #6fa720;
+        }
+        .bookmark-item::before {
+            content: '';
+            width: 100%;
+            height: 20px;
+            background-color: #2a475e;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+        }
+        .bookmark-item:hover::before, .bookmark-item.active::before {
+            background-color: #6fa720;
+        }
     </style>
 </head>
 <body>
@@ -201,15 +241,11 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
-                    </li>
+                        <a class="nav-link">랭킹</a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
-                    </li>
+                        <a class="nav-link" href="#">마이페이지</a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/member/login/login.jsp">로그인</a>
-                    </li>
-
+                        <a class="nav-link" href="/member/login/login.jsp">로그인</a></li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -221,7 +257,13 @@
     </nav>
     <div class="container">
         <div class="nav-menu">
-            <div class="game-title">${game.gameTitle}</div>
+            <div class="bookmark-menu">
+                <c:forEach var="gameItem" items="${listGame}">
+                    <div class="bookmark-item ${gameItem.gameSeq == game.gameSeq ? 'active' : ''}" data-game-seq="${gameItem.gameSeq}">
+                        ${gameItem.gameTitle}
+                    </div>
+                </c:forEach>
+            </div>
             <a href="/list.cboard" class="community-button">커뮤니티 허브</a>
         </div>
         <div class="main-content">
@@ -238,10 +280,10 @@
                 </div>
                 <div class="media-thumbnails">
                     <c:forEach var="image" items="${images}">
-                        <img src="/upload/${image}" alt="Thumbnail" class="thumbnail" data-type="image" data-media="${image}">
+                        <img src="/upload/${image}" alt="Thumbnail" class="thumbnail" data-type="image" data-media="/upload/${image}">
                     </c:forEach>
                     <c:if test="${not empty videoUrl}">
-                        <video src="/upload/${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="${videoUrl}"></video>
+                        <video src="/upload/${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="/upload/${videoUrl}"></video>
                     </c:if>
                 </div>
             </div>
@@ -276,73 +318,73 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="footerbox">
-                <div class="leftfooter">
-                    <p>회사명: 팀별빛</p>
-                    <p>전화: 02-1234-5678</p>
-                    <p>이메일: info@example.com</p>
+    </div>
+    <div class="footer">
+        <div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
-                <div class="rightfooter">
-                    <div class="iconbox">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                    <div class="coinbox">
-                        <img src="/image/coin.png" alt="">
-                    </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
                 </div>
             </div>
         </div>
     </div>
     <script>
-        document.querySelectorAll('.thumbnail').forEach(thumbnail => {
-            thumbnail.addEventListener('click', function() {
-                document.querySelector('.thumbnail.active').classList.remove('active');
-                this.classList.add('active');
+        $(document).ready(function() {
+            $(document).on('click', '.bookmark-item', function() {
+                let gameSeq = $(this).data('game-seq');
+                window.location.href = "/viewGame.gboard?gameSeq=" + gameSeq;
+            });
 
-                let mediaContainer = document.getElementById('media-container');
-                mediaContainer.innerHTML = '';
+            $(document).on('click', '.thumbnail', function() {
+                $('.thumbnail.active').removeClass('active');
+                $(this).addClass('active');
 
-                let mediaType = this.getAttribute('data-type');
-                let mediaSrc = this.getAttribute('data-media');
+                let mediaContainer = $('#media-container');
+                mediaContainer.empty();
+
+                let mediaType = $(this).data('type');
+                let mediaSrc = $(this).data('media');
 
                 if (mediaType === 'image') {
-                    let img = document.createElement('img');
-                    img.src = mediaSrc;
-                    img.alt = 'Game Image';
-                    mediaContainer.appendChild(img);
+                    let img = $('<img>').attr('src', mediaSrc).attr('alt', 'Game Image');
+                    mediaContainer.append(img);
                 } else if (mediaType === 'video') {
-                    let video = document.createElement('video');
-                    video.src = mediaSrc;
-                    video.controls = true;
-                    video.autoplay = true;
-                    mediaContainer.appendChild(video);
+                    let video = $('<video>').attr('src', mediaSrc).attr('controls', true).attr('autoplay', true);
+                    mediaContainer.append(video);
                 }
             });
+
+            $("#addGameBookmarkBtn").on("click", function() {
+                $.ajax({
+                    url: "/addGameBookmark.gboard",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        gameSeq: ${game.gameSeq}
+                    }
+                }).done(function(response) {
+                    console.log(response);
+                    alert("해당 게임 북마크.");
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("에러: " + textStatus, errorThrown);
+                    alert("북마크 추가 중 오류가 발생했습니다.");
+                });
+            });
+
+            $("#testSome").on("click", function(){
+                alert("확인");
+            });
         });
-        
-        $(document).ready(function () {
-        	$("#addGameBookmarkBtn").on("click", function(){
-        		$.ajax({
-        			url : "/addGameBookmark.gboard",
-        			dataType : "json",
-        			data : {
-        				gameSeq : ${game.gameSeq}
-        			}
-        			
-        		}).done(function(response){
-        			console.log(response);
-    				alert("해당 게임 북마크.");
-    			});
-        	});
-        	
-        	$("#testSome").on("click", function(){
-        		alert("확인");
-        	})
-        });
-        
     </script>
 </body>
 </html>
