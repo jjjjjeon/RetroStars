@@ -19,6 +19,8 @@ import dao.GBoardDAO;
 import dao.GameDAO;
 import dao.MemberDAO;
 import dto.GameDTO;
+import dto.GameImageDTO;
+import dto.GameVideoDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -55,9 +57,19 @@ public class GBoardController extends HttpServlet {
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
                 System.out.println(gameSeq);
                 GameDTO game = gameDao.getGameById(gameSeq);
+                List<String> listGameImage = gameDao.getGameImages(gameSeq);
+                String gameVideoStr = gameDao.getGameVideo(gameSeq);
                 request.setAttribute("game", game);
+                request.setAttribute("images", listGameImage);
+                request.setAttribute("videoUrl", gameVideoStr);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
+            } else if (cmd.equals("/addGameBookmark.gboard")) {
+            	String id = (String) request.getSession().getAttribute("loginId");
+            	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+            	
+            	gameDao.addGameBookmark(id, gameSeq);
+            	System.out.println("북마크 완료");
             }
 
         } catch (Exception e) {

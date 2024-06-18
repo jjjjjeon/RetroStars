@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 		<!DOCTYPE html>
 		<html>
@@ -363,7 +364,7 @@
 														</c:when>
 													</c:choose>
 												</div>
-												<div class="list_data_writer center" style="flex: 1;">${nickname}</div>
+												<div class="list_data_writer center" style="flex: 1;">${dto.qBoardUserNickname}</div>
 												<div class="list_data_title center" style="flex: 4.5;">
 												${dto.qBoardTitle}
 													<c:choose>
@@ -375,7 +376,8 @@
 														</c:when>
 													</c:choose>
 												</div>
-												<div class="list_data_date center" style="flex: 1.5;">${dto.qBoardDate}
+												<div class="list_data_date center" style="flex: 1.5;">
+												<fmt:formatDate value="${dto.qBoardDate}" pattern="yyyy.MM.dd"></fmt:formatDate>
 												</div>
 												<div class="list_data_answer center" style="flex: 1;">
 												<c:choose>

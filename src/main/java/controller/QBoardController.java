@@ -1,15 +1,15 @@
 package controller;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -43,13 +43,15 @@ public class QBoardController extends HttpServlet {
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
-				String writer=(String)request.getSession().getAttribute("loginId");
-				String userId=request.getParameter("userId");
+				String loginId=(String)request.getSession().getAttribute("loginId");
+				String boardWriterNicname=request.getParameter("boardWriterNicname");
 				int qBoardCategory= boarddao.getCategory(request.getParameter("qBoardCategory")) ;
 				String qBoardTitle= request.getParameter("qBoardTitle");
 				String qBoardContent= request.getParameter("qBoardContent");
 				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
-				boarddao.insert(new QBoardDTO(0,userId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
+				
+				System.out.println(loginId+qBoardCategory+qBoardTitle+qBoardContent+qBoardSecret);	
+				boarddao.insert(new QBoardDTO(0,loginId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
 				response.sendRedirect("/list.qboard");
 				
 			}else if(cmd.equals("/list.qboard")) {
@@ -82,13 +84,14 @@ public class QBoardController extends HttpServlet {
 				String categoryName=boarddao.getCategoryCode(category);
 				request.setAttribute("categoryName", strcategory);
 				
+				
 				//게시판 전체 레코드 체크
 				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
 				//System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
-				ArrayList<QBoardDTO> list=boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
-										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);
+				ArrayList<HashMap<String,?>> list= boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
+										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);	
 				request.setAttribute("list", list);
-				//System.out.println(list);
+				System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			
 			}else if(cmd.equals("/detail.qboard")) {

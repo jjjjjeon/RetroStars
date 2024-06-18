@@ -17,16 +17,25 @@ import java.sql.Timestamp;
  * @version 1.0 
  */
 public class GameVideoDTO {
-	private int videoId;
+	private int videoSeq;
 	private int gameSeq;
 	private String videoUrl;
 	private Timestamp releaseDate;
-	
-	public int getVideoId() {
-		return videoId;
+	public GameVideoDTO(int videoSeq, int gameSeq, String videoUrl, Timestamp releaseDate) {
+		super();
+		this.videoSeq = videoSeq;
+		this.gameSeq = gameSeq;
+		this.videoUrl = videoUrl;
+		this.releaseDate = releaseDate;
 	}
-	public void setVideoId(int videoId) {
-		this.videoId = videoId;
+	public GameVideoDTO() {
+		super();
+	}
+	public int getVideoSeq() {
+		return videoSeq;
+	}
+	public void setVideoSeq(int videoSeq) {
+		this.videoSeq = videoSeq;
 	}
 	public int getGameSeq() {
 		return gameSeq;
@@ -46,14 +55,6 @@ public class GameVideoDTO {
 	public void setReleaseDate(Timestamp releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-	public GameVideoDTO(int videoId, int gameSeq, String videoUrl, Timestamp releaseDate) {
-		super();
-		this.videoId = videoId;
-		this.gameSeq = gameSeq;
-		this.videoUrl = videoUrl;
-		this.releaseDate = releaseDate;
-	}
-	public GameVideoDTO() {
-		super();
-	}
+	
+
 }

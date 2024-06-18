@@ -161,7 +161,7 @@ public class GameDAO {
      * @throws Exception 
      */
 	public void insertGameVideo(GameVideoDTO video) throws Exception {
-		String sql = "INSERT INTO game_video (video_id, game_seq, video_url, release_date) VALUES (game_video_sequence.nextval, ?, ?, ?)";
+		String sql = "insert into game_video (video_seq, game_seq, video_url, release_date) values (game_video_sequence.nextval, ?, ?, ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, video.getGameSeq());
 			pstat.setString(2, video.getVideoUrl());
@@ -218,4 +218,30 @@ public class GameDAO {
 		}
 		return null;
 	}
+	
+	  /** 
+     * @Method Name  : 게임 게시판 북마크 
+     * @date : 2024. 6. 18. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : mainGboard.jsp 찜하기 누르면 북마크된다..
+     * @param id
+     * @param gameSeq
+     * @return 
+     * @throws Exception 
+     */ 
+	public void addGameBookmark(String id, int gameSeq) throws Exception{
+		String sql = "insert into g_bookmark values(g_bookmark_sequence.nextval, ?, ?)";
+		
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, gameSeq);
+			pstat.setString(2, id);
+			pstat.executeUpdate();
+		}
+	}
+	
+	
+	
+	
+	
 }

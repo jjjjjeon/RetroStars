@@ -14,16 +14,28 @@
             position: relative;
             margin-bottom: 20px; 
         }
-        .pwShow {
+        .pwShow{
             position: absolute;
             right: 10px;
-            top: 50%;
+            top: 41%;
             transform: translateY(-50%);
             cursor: pointer;
             user-select: none;
             background: white; 
             padding: 0 5px; 
         }
+        
+        .pwShow2 {
+            position: absolute;
+            right: 10px;
+            top: 58%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            user-select: none;
+            background: white; 
+            padding: 0 5px;        
+        }
+    
         .rules, .checkText {
             font-size: 12px;
             color: grey;
@@ -58,7 +70,7 @@
             <div class="input-group">
                 <label for="confirmUserPw">비밀번호 확인:</label>
                 <input type="password" id="confirmUserPw" name="confirmUserPw" placeholder="비밀번호 확인" required>
-                <span class="pwShow" onclick="pwShowText('confirmUserPw')">보기</span>
+                <span class="pwShow2" onclick="pwShowText('confirmUserPw')">보기</span>
                 <p id="confirm-password-check" class="checkText">비밀번호가 일치하지 않습니다.</p>
             </div>
             <button type="submit" id="nextButton" class="disabled-button" disabled>다음</button>
@@ -97,7 +109,9 @@
             passwordField.attr('type', type);
 
             let toggleButton = passwordField.next('.pwShow');
+            let toggleButton2 = passwordField.next('.pwShow2');
             toggleButton.text(type === 'password' ? '보기' : '숨기기');
+            toggleButton2.text(type === 'password' ? '보기' : '숨기기');
         }
 
         $(document).ready(function() {

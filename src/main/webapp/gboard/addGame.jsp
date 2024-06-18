@@ -90,6 +90,10 @@
        .gameBtn {
             background-color: #6fa720;
         }
+        
+        #gameAdd{
+        	align-items : end; !important
+                }
     </style>
     <script>
         $(document).ready(function() {
@@ -212,7 +216,7 @@
                 </div>
             </div>
             <button type="button" id="addVideo" class="btn gameBtn">비디오 추가</button>
-            <button type="submit" class="btn gameBtn">게임 추가</button>
+            <button type="submit" class="btn gameBtn" id="gameAdd">게임 추가</button>
         </form>
     </div>
 </div>

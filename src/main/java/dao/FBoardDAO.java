@@ -62,9 +62,9 @@ public class FBoardDAO {
 	private List<FBoardDTO> listCate(String category) throws Exception {
         String sql = "select * from f_board where f_board_category=?";
         try (Connection con = this.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql)) {
+             PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, category);
-            try (ResultSet rs = pstat.executeQuery()) {
+            try (ResultSet rs = pstat.executeQuery();) {
                 List<FBoardDTO> list = new ArrayList<>();
                 while (rs.next()) {
                     int seq = rs.getInt(1);
@@ -123,19 +123,33 @@ public class FBoardDAO {
         return listCate("3");
     }
     /** 
-     * @Method Name  : listCate4
+     * @Method Name  : listCate
      * @date : 2024. 6. 16. 
      * @author : KJY
      * @version : 
-     * @Method info : FAQ 카테고리 4 질문 & 답변 출력
+     * @Method info : FAQ 카테고리 전체 질문 & 답변 출력
      * @param 
      * @param 
      * @return List<FBoardDTO>
      * @throws Exception 
      */ 
-    public List<FBoardDTO> listCate4() throws Exception {
-        return listCate("4");
+    public List<FBoardDTO> listCate() throws Exception {
+        String sql = "select * from f_board";
+        try (Connection con = this.getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql);
+            		 ResultSet rs = pstat.executeQuery();) {
+                List<FBoardDTO> list = new ArrayList<>();
+                while (rs.next()) {
+                    int seq = rs.getInt(1);
+                    String id = rs.getString(2);
+                    String categoryResult = rs.getString(3);
+                    String q = rs.getString(4);
+                    String a = rs.getString(5);
+                    list.add(new FBoardDTO(seq, id, categoryResult, q, a));
+                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
+                }
+                return list;
+            }
+        }
     }
 	
-
-}
