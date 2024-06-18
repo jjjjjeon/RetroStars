@@ -50,40 +50,19 @@ nav {
 
 .container {
 	width: 1100px;
-	height: 600px;
+	height: 750px;
 	display: flex;
 	flex-direction: column;
 	margin: auto;
-	justify-content: center;
 	align-items: center;
+	background-color:#323232;
 }
 
-.header {
-	width: 800px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1;
-	padding: 1rem;
-	background: #323232;
-	text-align: center;
-	font-size: 2.5rem;
-	color: #00d4ff;
-	border-bottom: 2px solid white;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-}
 
-.main {
-	display: flex;
-	flex: 9;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
-}
 
 .content {
 	height: 400px;
-	width: 800px;
+	width: 1100px;
 	background: #323232;
 	padding: 2rem;
 	border-radius: 15px;
@@ -92,7 +71,6 @@ nav {
 	text-align: center;
 	color: #00d4ff;
 	display: flex;
-	flex-direction: column;
 	gap: 2rem;
 }
 
@@ -103,7 +81,6 @@ nav {
 .post-header {
 	padding: 1rem;
 	background: #272727;
-	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -118,7 +95,6 @@ nav {
 	height: 250px;
 	padding: 1.5rem;
 	background: #272727;
-	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 	text-align: left;
 	line-height: 1.8;
@@ -128,6 +104,18 @@ nav {
 	font-size: 1.3rem;
 	margin: 0;
 	color: #ffffff;
+}
+
+.btnsdiv {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.btnsdiv>button {
+	margin-right: 5px;
 }
 
 .footer {
@@ -184,21 +172,21 @@ nav {
 	margin-left: 20px;
 }
 
-.btnsdiv {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
-.btnsdiv>button {
-	margin-right: 5px;
-}
 
 .addCommentBox {
+	width:1000px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
 }
+
+.addCommentBox>.btn {
+	height:100px;
+
+}
+
 
 #addCommentInput {
 	width: 1000px;
@@ -225,16 +213,24 @@ nav {
     align-items: center;
 }
 
+.replyListBoxBox{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .replyListBox {
 	flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 1100px;
+    background-color:#323232;
 }
 
 .replycontainer {
 	border: 1px solid white;
-	width: 1100px;
+	width: 1000px;
 	height: 130px;
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -314,10 +310,6 @@ nav {
 		</div>
 	</nav>
 	<div class="container">
-		<div class="header">
-			<h3 style="color:white">글 작성하기</h3>
-		</div>
-		<main class="main">
 			<div class="content">
 				<div class="post-detail" id="post-detail">
 					<div class="post-header">
@@ -328,9 +320,7 @@ nav {
 					</div>
 				</div>
 			</div>
-		</main>
-	</div>
-	<div class="btnsdiv">
+				<div class="btnsdiv">
 		<button class="backlist btn btn-secondary" type="button"
 			onclick="location.href='/list.qboard'">목록으로</button>
 
@@ -340,13 +330,16 @@ nav {
 				<button class="btn btn-secondary" id="deletebtn">삭제</button>
 			</c:when>
 		</c:choose>
-	</div>
-	<div class="addCommentBox">
+		</div>
+		<div class="addCommentBox">
 		<div id="addCommentInput" contenteditable="true"></div>
 		<button class="btn btn-secondary" id="addCommentBtn">등록</button>
+		</div>
 	</div>
 	<div class="commentListBox"></div>
-	<div class="replyListBox"></div>
+	<div class="replyListBoxBox">
+		<div class="replyListBox"></div>
+	</div>
 	<div class="footer">
 		<div class="footerbox">
 			<div class="leftfooter">
@@ -540,9 +533,9 @@ nav {
                                     $('<input>', { type: 'hidden', name: 'boardseq', value: ${ dto.qBoardSeq } })
                             ];
 
-                    form.append(formData);
-                    form.appendTo('body').submit();
-                        }
+                    		form.append(formData);
+                    		form.appendTo('body').submit();
+                        	}
                     } else if (deletebtn.html() == "취소") {
                         location.href = "/detail.qboards?seq=${dto.qBoardSeq}";
                     }

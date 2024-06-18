@@ -12,6 +12,9 @@
 <script src="cboard/summernote/summernote-lite.js"></script>
 <script src="cboard/summernote/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="cboard/summernote/summernote-lite.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 <title>글 작성 페이지</title>
 <style>
         * {
@@ -42,11 +45,24 @@
         }
 
         .header {
-            height: 100px;
+            height: 220px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        
+        .header .headerTitle{
+    		height : 150px;
+    		color : black;
+    		font-size : 32px;
+    		font-weight : bold;
+    		display : flex;
+    		align-items : center;
+    	}
+    
+    	.header #headerTitle{
+    		margin-top : 70px;
+    	}
 
         .navi {
             position: relative;
@@ -170,28 +186,167 @@
             font-size: 13px;
             font-weight: bold;
         }
+        
+        .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height:70px;
+    }
+    
+        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
+        .nav-link {
+            color: white !important;
+            /* margin-left: 20px; */
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
 
         .footer {
-            height: 300px;
-            margin-top: 160px;
-            padding-top: 50px;
-            border-top: 1px solid #e0e2ec;
+        height: 150px;
+        margin-top: 160px;
+        border-top: 1px solid #e0e2ec;
+        background-color: #323232;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position : relative;
+        bottom : 0;
+    }
+    
+    .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
+        }
+        .rightfooter {
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
+
+        .iconbox {
             display: flex;
-            justify-content: center;
             align-items: center;
         }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }
+        
+.note-placeholder{
+	font-size : 16px;
+	position : absolute;
+	padding : 55px 0 0 15px;
+}
+
     </style>
 </head>
 
 <body>
-    <div class="header">Header</div>
+    <div class="header">
+    	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                   
+
+                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+    </nav>
+    <div class="headerTitle"><p id="headerTitle">커뮤니티</p></div>
+    </div>
     <div class="navi">
         <a href="/list.cboard?category=0" data-category="category_0" id="naviAnker">전체</a>
         <a href="/list.cboard?category=1" data-category="category_1">자유</a>
         <a href="/list.cboard?category=2" data-category="category_2">공략</a>
     </div>
     <form action="/write.cboard" method="post" id="writeForm" enctype="multipart/form-data">
-	    <div class="writeBoard">
+	    <div class="writeBoard" id="writeBoard">
 	        <h3>${nickname}님의 글</h3>
 	        <div class="category">
 	            <div class="form-check form-check-inline">
@@ -224,9 +379,27 @@
 	    	</div>
 	    </div>
 	    <input type="hidden" name="content" id="contentInput">
-	    <input type="hidden" name="nickname" id="nicknameInput">
+	    <input type="hidden" name="userId" id="userIdInput">
     </form>
-    <div class="footer">Footer</div>
+    <div class="footer">
+    	<div class="footerbox">
+            <div class="leftfooter">
+                <p>회사명: 팀별빛</p>
+                <p>전화: 02-1234-5678</p>
+                <p>이메일: info@example.com</p>
+            </div>
+            <div class="rightfooter">
+                <div class="iconbox">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="coinbox">
+                    <img src="/image/coin.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     
 
     <script>
@@ -239,13 +412,12 @@
     	});
     
 	    $(document).ready(function(){
-	    	let maxLength = 3000;
-	    	function updateCharCount() {
-		        let textLength = $('#summernote').next('.note-editor').find('.note-editable').text().length;
-		        $('#charCount').text(textLength + '/' + maxLength + '자');
-		      }
-	    	
-	    	$('#summernote').summernote({
+	    	var elem = $('#summernote').summernote({
+	    	placeholder : `1. 비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. <br>
+	            2. 타인의 개인정보가 포함된 게시물을 올릴 경우, 개인 정보 보호법 제 59조 3호에 의해 5년 이하의 징역 또는 <br>
+	              &nbsp;&nbsp; 5천만원 이하의 벌금이 부과될 수 있으니 유의하여 주시기 바랍니다. <br>
+	            3. 모든 분들이 게시물을 불편없이 이용할 수 있도록 게시물에 대한 설명을 문자로 기재해 주시기 바랍니다. <br>
+	            4. 최대 3000자까지 작성 가능합니다.`,
 	    	height : '500px', // 에디터 높이
 	    	focus: true, // 에디터 로딩후 포커스를 맞출지 여부
 	    	lang: "ko-KR", // 한글 설정
@@ -260,36 +432,61 @@
 	    	fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	    	fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','32','36','48','60'],
 	    	callbacks: {
-		          onKeydown: function(e) {
-		            let textLength = $('#summernote').next('.note-editor').find('.note-editable').text().length;
-		            if (textLength >= maxLength && e.keyCode !== 8 && e.keyCode !== 46) {
-		              e.preventDefault();
-		            }
-		          },
-		          onKeyup: function() {
-		            updateCharCount();
-		          },
-		          onPaste: function(e) {
-		            let clipboardData = e.originalEvent.clipboardData || window.clipboardData;
-		            let pastedData = clipboardData.getData('Text');
-		            let textLength = $('#summernote').next('.note-editor').find('.note-editable').text().length;
-		            if (textLength + pastedData.length > maxLength) {
-		              e.preventDefault();
-		              let allowedData = pastedData.substring(0, maxLength - textLength);
-		              document.execCommand('insertText', false, allowedData);
-		            }
-		            setTimeout(updateCharCount, 100); // 붙여넣기 후 글자 수 업데이트
-		          }
-		        }
-		      }).on('summernote.change', function() {
-		        updateCharCount();
-		      });
+                onKeydown: function (e) { 
+                    let t = e.currentTarget.innerText;
+                    
+                    if(t.length > -1){
+                    	$(".note-placeholder").css("display", "none");
+                    }
+                    
+                    if (t.trim().length >= 3000) {
+                        //delete keys, arrow keys, copy, cut, select all
+                        if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
+                        e.preventDefault(); 
+                    } 
+                },
+                onKeyup: function (e) {
+                	let t = e.currentTarget.innerText;
+                    $('#maxContentPost').text(3000 - t.trim().length);
+                },
+                onPaste: function (e) {
+                    let t = e.currentTarget.innerText;
+                    let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    let maxPaste = bufferText.length;
+                    if(t.length + bufferText.length > 3000){
+                        maxPaste = 3000 - t.length;
+                    }
+                    if(maxPaste > 0){
+                        document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+                    }
+                    $('#maxContentPost').text(3000 - t.length);
+                },
+                onInit: function () {
+                    var editor = elem.next(),
+                    placeholder = editor.find(".note-placeholder");
+
+                    function isEditorEmpty() {
+                        var code = elem.summernote("code");
+                        return code === "<p><br></p>" || code === "";
+                    }
+
+                    editor.on("focusin focusout", ".note-editable", function (e) {
+                        if (isEditorEmpty()) {
+                            placeholder[e.type === "focusout" ? "show" : "hide"]();
+                        }
+                    });
+                }
+                
+            }
+	    	
+		    });
+	    	$('#summernote').summernote('code', '');
+	    	$('.note-editable').html('');
 	    	$('#summernote').summernote('fontSize', '16');
 	        $('#summernote').summernote('fontSizeUnit', 'pt');
-	    	});
+	    });
 	    
-	    
-    
         $("#formFileMultiple").on("input", function () {
             $("#removeFileBtn").css("display", "block");
         });
@@ -340,7 +537,7 @@
 				e.preventDefault();
 ﻿			} else {
 				$("#contentInput").val($('#summernote').summernote('code'));
-				$("#nicknameInput").val("${nickname}");
+				$("#userIdInput").val("${loginId}");
 			}
 		});
         
