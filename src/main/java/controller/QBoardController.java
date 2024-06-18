@@ -75,23 +75,13 @@ public class QBoardController extends HttpServlet {
 				request.setAttribute("record_count_per_page", Static.QBOARD_RECOD_COUNT_PER_PAGE);
 				request.setAttribute("navi_count_per_page", Static.QBOARD_NAVI_COUNT_PER_PAGE);
 				
-				//정보 변환시키고 태워서 보내기
-				//닉네임
-				String writer=(String)request.getSession().getAttribute("loginId");
-				String nickname=memberdao.getNickname(writer);
-				request.setAttribute("nickname", nickname);
-				//카테고리
-				String categoryName=boarddao.getCategoryCode(category);
-				request.setAttribute("categoryName", strcategory);
-				
-				
 				//게시판 전체 레코드 체크
 				request.setAttribute("record_total_count", boarddao.getRecordCount(category,searchBy,searchData));
 				//System.out.println(boarddao.getRecordCount(category,searchBy,searchData));
 				ArrayList<HashMap<String,?>> list= boarddao.select(cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE-(Static.QBOARD_RECOD_COUNT_PER_PAGE-1),
 										cpage*Static.QBOARD_RECOD_COUNT_PER_PAGE,category, searchBy, searchData);	
 				request.setAttribute("list", list);
-				System.out.println(list);
+				//System.out.println(list);
 				request.getRequestDispatcher("/qboard/mainBoard.jsp").forward(request, response);
 			
 			}else if(cmd.equals("/detail.qboard")) {
