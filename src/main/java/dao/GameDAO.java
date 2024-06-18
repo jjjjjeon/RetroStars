@@ -161,7 +161,7 @@ public class GameDAO {
      * @throws Exception 
      */
 	public void insertGameVideo(GameVideoDTO video) throws Exception {
-		String sql = "INSERT INTO game_video (video_id, game_seq, video_url, release_date) VALUES (game_video_sequence.nextval, ?, ?, ?)";
+		String sql = "insert into game_video (video_seq, game_seq, video_url, release_date) values (game_video_sequence.nextval, ?, ?, ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, video.getGameSeq());
 			pstat.setString(2, video.getVideoUrl());

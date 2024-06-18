@@ -20,61 +20,42 @@ public class GBoardDTO {
 	private int gBoardSeq;
 	private String gameId;
 	private String userId;
-	private String gVideo;
 	private Timestamp releaseDate;
-	
-	public GBoardDTO(int gBoardSeq, String gameId, String userId, String gVideo, Timestamp releaseDate) {
-		super();
-		this.gBoardSeq = gBoardSeq;
-		this.gameId = gameId;
-		this.userId = userId;
-		this.gVideo = gVideo;
-		this.releaseDate = releaseDate;
-	}
-
 	public int getgBoardSeq() {
 		return gBoardSeq;
 	}
-
 	public void setgBoardSeq(int gBoardSeq) {
 		this.gBoardSeq = gBoardSeq;
 	}
-
 	public String getGameId() {
 		return gameId;
 	}
-
 	public void setGameId(String gameId) {
 		this.gameId = gameId;
 	}
-
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-	public String getgVideo() {
-		return gVideo;
-	}
-
-	public void setgVideo(String gVideo) {
-		this.gVideo = gVideo;
-	}
-
 	public Timestamp getReleaseDate() {
 		return releaseDate;
 	}
-
 	public void setReleaseDate(Timestamp releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-
+	public GBoardDTO(int gBoardSeq, String gameId, String userId, Timestamp releaseDate) {
+		super();
+		this.gBoardSeq = gBoardSeq;
+		this.gameId = gameId;
+		this.userId = userId;
+		this.releaseDate = releaseDate;
+	}
 	public GBoardDTO() {
 		super();
 	}
+	
 
 
 	
