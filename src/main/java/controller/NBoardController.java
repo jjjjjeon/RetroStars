@@ -75,7 +75,6 @@ public class NBoardController extends HttpServlet {
 			} else if(cmd.equals("/boardOut.nboard")) {
 				int seq = Integer.parseInt(request.getParameter("nBoardSeq"));
 				nManager.removePage(seq);
-				System.out.println("게시물 삭제 성공");
 				response.sendRedirect("/list.nboard");
 				
 
@@ -85,19 +84,24 @@ public class NBoardController extends HttpServlet {
 				String title = request.getParameter("title");
 				String post = request.getParameter("post");
 				int result = nManager.updateNBoard(new NBoardDTO(seq,null,title,post,null,0));
-				System.out.println("게시물 수정 성공");
 				response.sendRedirect("/detail.nboard?nBoardSeq="+seq);
 				
 
 			} else if(cmd.equals("/search.nboard")) {
 				System.out.println("search.nboard진입");
 				String keyword = request.getParameter("keyword");
-				System.out.println("keyword : "+keyword);
+				System.out.println("keyword : "+ keyword);
 				
-				List<NBoardDTO> searchResult = nManager.searchList(keyword);
-				request.setAttribute("searchResult", searchResult);
-				System.out.println("게시물 검색 성공");
-				response.sendRedirect("/list.nboard");
+				List<NBoardDTO> searchResultList = nManager.searchList(keyword);
+				request.setAttribute("searchResult", searchResultList);
+				
+				request.setAttribute("cpage",1);
+				request.setAttribute("record_count_per_page", BoardConfig.recordCountPerPage);
+			    request.setAttribute("navi_count_per_page", BoardConfig.naviCountPerPage);
+			    request.setAttribute("record_total_count", searchResultList.size());
+				
+				request.getRequestDispatcher("/nboard/nboardMain.jsp").forward(request,response);
+				
 			}
 			
 		} catch(Exception e) {

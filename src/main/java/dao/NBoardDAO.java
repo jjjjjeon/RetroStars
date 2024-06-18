@@ -156,31 +156,39 @@ public class NBoardDAO {
 			}
 		}
 		
-		// 검색 기능
 		public List<NBoardDTO> searchList(String keyword) throws Exception {
-			 List<NBoardDTO> noticeList = new ArrayList<>();
-			  
-			 String sql = "select * from n_board where n_board_title LIKE ? OR n_board_date LIKE ?";
-			 try(Connection con= this.getConnection();
-						PreparedStatement pstat = con.prepareStatement(sql);){
-				 pstat.setString(1, "%" + keyword + "%"); // 제목에 대한 검색 조건
-				 pstat.setString(2, "%" + keyword + "%"); // 날짜에 대한 검색 조건
-					try(ResultSet rs = pstat.executeQuery()){
-						rs.next();
-						NBoardDTO searchDto = new NBoardDTO();
-						searchDto.setnBoardSeq(rs.getInt("n_board_seq"));
-						searchDto.setUserId(rs.getString("user_id"));
-						searchDto.setnBoardTitle(rs.getString("n_board_title"));
-						searchDto.setnBoardContent(rs.getString("n_board_content"));
-						searchDto.setnBoardDate(rs.getTimestamp("n_board_date"));
-						searchDto.setnBoardView(rs.getInt("n_board_view"));
-
-						   
-						noticeList.add(searchDto);
-					}
-				return noticeList; 
-			 }
+		    List<NBoardDTO> noticeList = new ArrayList<>();
+		    
+		    String sql = "SELECT * FROM n_board WHERE n_board_title LIKE ? OR n_board_seq LIKE ?";
+		    
+		    try (Connection con = this.getConnection();
+		         PreparedStatement pstat = con.prepareStatement(sql)) {
+		        
+		    	pstat.setString(1, "%" + keyword + "%"); // 제목에 대한 검색 조건
+		    	pstat.setString(2, "%" + keyword + "%" ); // 제목에 대한 검색 조건
+		        try (ResultSet rs = pstat.executeQuery()) {
+		            while (rs.next()) {
+		                NBoardDTO searchDto = new NBoardDTO();
+		                searchDto.setnBoardSeq(rs.getInt("n_board_seq"));
+		                searchDto.setUserId(rs.getString("user_id"));
+		                searchDto.setnBoardTitle(rs.getString("n_board_title"));
+		                searchDto.setnBoardContent(rs.getString("n_board_content"));
+		                searchDto.setnBoardDate(rs.getTimestamp("n_board_date"));
+		                searchDto.setnBoardView(rs.getInt("n_board_view"));
+		                
+		                noticeList.add(searchDto);
+		            }
+		            if (noticeList.isEmpty()) {
+		                // 검색 결과가 없을 때 처리할 메시지를 서버 콘솔에 출력
+		                System.out.println("검색 결과가 없음");
+		            }
+		        }
+		    }
+		    
+		    return noticeList;
 		}
+
+
 		
 		
 

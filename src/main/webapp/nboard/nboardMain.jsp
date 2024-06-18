@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +30,13 @@
 <style>
     body {
         background-image: url('image/background.png');
-        background-size:100% 100%;
+
         color:white;
         color: #333;
         margin-bottom: 120px; /* Footer 높이 만큼의 여백을 추가 */
+        background-size: cover; /* 이미지를 화면에 맞게 조정 */
+    	background-position: center; /* 이미지를 가운데 정렬 */
+		height: 100vh; /* 화면 높이의 100% */
     }
 	a{
 		color:white;
@@ -46,6 +50,7 @@
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-bottom: 200px;
+ 
     }
 
     .boardName {
@@ -97,7 +102,16 @@
         width: 300px;
         margin-right: 10px;
     }
+	.nonNotiListContent{
+	    border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #323232;
+        display: flex;
+        align-items: center;
 
+        
+	}
     .notiListItem {
         border: 1px solid #ddd;
         padding: 10px;
@@ -140,7 +154,8 @@
 
     .pagenavi {
         text-align: center;
-        margin-top: 20px;
+
+        
     }
 
     .footer {
@@ -281,31 +296,45 @@
                 <div class="notiView">100</div>
             </div>
             
-	 <c:choose>	
-		<c:when test="${not empty searchResult}">
-            <c:forEach var="dto" items="${searchResult}">
-                <div class="notiListContent">
-                    <div class="notiCategory">${dto.nBoardSeq}</div>
-                    <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
-                    <div class="notiAdmin">${dto.userId}</div>
-                    <div class="notiDate">${dto.nBoardDate}</div>
-                    <div class="notiView">${dto.nBoardView}</div>
-                </div>
-            </c:forEach>
-        </c:when>
-		<c:otherwise>
-            <c:forEach var ="dto" items="${list}">
-            	<div class = "notiListContent">
-                 	
-                 	<div class="notiCategory">${dto.nBoardSeq }</div>
-                	<div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle }</a></div>
-                	<div class="notiAdmin">${dto.userId }</div>
-                	<div class="notiDate">${dto.nBoardDate }</div>
-                	<div class="notiView">${dto.nBoardView }</div>
-            	</div>
-            </c:forEach>
-        </c:otherwise>
-	</c:choose>
+            
+
+<c:choose>
+    <c:when test="${not empty searchResult}">
+
+        
+        <c:forEach var="dto" items="${searchResult}">
+            <!-- 검색 결과 출력 -->
+            <div class="notiListContent">
+                <div class="notiCategory">${dto.nBoardSeq}</div>
+                <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
+                <div class="notiAdmin">${dto.userId}</div>
+                <div class="notiDate">${dto.nBoardDate}</div>
+                <div class="notiView">${dto.nBoardView}</div>
+            </div>
+        </c:forEach>
+        
+    </c:when>
+    
+    <c:otherwise>
+        <c:if test="${empty list}">
+			<div class="nonNotiListContent">
+				검색 결과가 없습니다.
+			</div>
+        </c:if>   
+        <c:forEach var="dto" items="${list}">
+            <div class="notiListContent">
+                <div class="notiCategory">${dto.nBoardSeq}</div>
+                <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
+                <div class="notiAdmin">${dto.userId}</div>
+                <div class="notiDate">${dto.nBoardDate}</div>
+                <div class="notiView">${dto.nBoardView}</div>
+            </div>
+        </c:forEach>
+    </c:otherwise>
+</c:choose>
+
+
+
         </div>
         <div class="pagenavi" id="navi"></div>
     </div>
