@@ -63,7 +63,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 	.emptybox{height:35px; width:100% };
     .header{flex:2; width: 100%;}
     .row{display: flex;}
-    .headertitle{width: 100%; display: flex; justify-content: start; align-items: center; font-size:30px; margin-bottom:20px;}
+    .headertitle{width: 100%; display: flex; justify-content: start; align-items: center; font-size:30px; margin-bottom:15px; margin-top:15px;}
     .header_user_id{width: inline; font-weight:600;}
 
     .profilebox{flex:2.5; width: 90%; border:1px solid white; display: flex; border-radius:10px;}
@@ -270,12 +270,30 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                     <div class="rpg_title">Recently Played Game</div>
                     <div class="rpg_main_box">
                         <div class="rpg_main_img">
-                            <div class="rpg_img">게임 타이틀 사진</div>
+                            <div class="rpg_img">
+                            	<c:choose>
+                            		<c:when test="${gprDto.gameSep == 1}">
+                            			이미지1
+                            		</c:when>
+                            		<c:when test="${gprDto.gameSep == 2}">
+                            			이미지2
+                            		</c:when>
+                            		<c:when test="${gprDto.gameSep == 3}">
+                            			이미지3
+                            		</c:when>
+                            		<c:when test="${gprDto.gameSep == 4}">
+                            			이미지4
+                            		</c:when>
+                            		<c:otherwise>
+                            			이미지5
+                            		</c:otherwise>
+                            	</c:choose>
+                            </div>
                         </div>
                         <div class="rpg_main_content">
-                            <div class="rpg_content_title rpg_content">Block Break!</div>
-                            <div class="rpg_content_date rpg_content">24.06.13</div>
-                            <div class="rpg_content_score rpg_content">123456</div>
+                            <div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            <div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            <div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
                         </div>
                     </div>
                 </div>
