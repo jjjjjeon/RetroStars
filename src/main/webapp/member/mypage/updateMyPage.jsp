@@ -46,7 +46,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         *{box-sizing: border-box;}
 
-        div{border: 1px solid red;}
+        /*div{border: 1px solid red;}*/
 
         .container{height: 600px; width: 800px; margin:auto;display: flex; color:white;}
         .col{display: flex; justify-content: center; align-items: center;}
@@ -55,14 +55,14 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col1{background-color: rgba(24, 6, 79, 0.9); flex:3; border-radius: 20px; display: flex; flex-direction: column; }
         .col1_sub{width: 100%;}
         .col1_profile_img{flex:4;display: flex; justify-content: center; align-items: center;}
-        #profile_img{height:80%; width:80%; border-radius:10px;}
+        #profile_img{height:85%; width:85%; border-radius:10px;}
         /*
         .col1_profile_update{margin-left:10px; flex:1; display: flex; justify-content: center; align-items: center;}
         .col1_file{width: 95%; font-size:15px;}
         */
         .col1_id{flex:1; display: flex;}
-        .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: center;  text-indent: 25px;}
-        .col1_id_level{flex:4;display: flex; justify-content: center; align-items: center;}
+        .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: start;  text-indent: 25px;}
+        .col1_id_level{flex:4;display: flex; justify-content: center; align-items: start;}
         .col1_empty{flex:1;}
         .col1_btns{flex:3; display: flex; justify-content: space-evenly; align-items: center;}
 		#password_btn{height:60%; width:38%; background-color: rgb(82, 11, 117); color:white; border:0px;}
@@ -73,11 +73,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         .col3{background-color: rgba(82, 11, 117, 0.8); flex:7;border-radius: 20px; display: flex; flex-direction: column;}
         .value_box{display:flex; width: 100%; font-size: 20px; flex:1.2;align-items: center;} 
-        .value_title{flex:3;display: flex; justify-content: start; align-items: center; text-indent: 70px;}
-        .value_content{height:80%; flex:7; display: flex; justify-content: start; align-items: center;}
-        .value_title1{flex:3.5; display: flex; justify-content: start; align-items: center; text-indent: 39px; }
-        .value_content1{height:80%; flex:1.5; display: flex; justify-content: center; align-items: center; text-indent: 20px; }
-        .value_title2{flex:2;display: flex; justify-content: start; align-items: center;}
+        .value_title{width:30%; display: flex; justify-content: start; align-items: center; text-indent: 70px;}
+        .value_content{height:80%; display: inline; justify-content: start; align-items: center;}
+        .value_title1{width:30%; display: flex; justify-content: start; align-items: center; text-indent: 50px; }
+        .value_content1{height:80%; width:30%; display: inline; justify-content: center; align-items: center;}
+        .value_title2{width:15%; display: flex; justify-content: start; align-items: center;}
         .value_content2{flex:3; display: flex; justify-content: start; align-items: center; height:100%;}
          #gender_box{width:85%; height:50%;}
         .col3_empty_box{flex:1.5; width:100%;}
@@ -278,7 +278,13 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 	})
 	
 	$("#password_btn").on("click",function(){
-		alert("비밀번호 변경 버튼 확인");
+		
+		let popupWidth = 500;
+		let popupHeight = 350;
+
+		let popupX = (window.innerWidth - popupWidth) / 2 + window.screenX;
+	    let popupY = (window.innerHeight - popupHeight) / 2 + window.screenY;
+	    let new_window = window.open("/member/mypage/pwIsRight.jsp","","height=" + popupHeight  + ", width=" + popupWidth  + ", left="+ popupX + ", top="+ popupY);
 	})
 	
 	$("#return_my_page").on("click",function(){

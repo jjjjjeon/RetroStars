@@ -25,14 +25,14 @@
 <form action="/upload.userprofileimg"  method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="img">
-            <img id="previewImg" src="/upload/profile/default.png" alt="이미지 미리보기">
+            <img id="previewImg" src="/upload/default.png" alt="이미지 미리보기">
         </div>
         <div class="input">
             <input type="file" id="uploadFile" name="uploadFile">
         </div>
         <div class="btns">
             <button id="cancle" type="button"> 취소 </button>
-            <button id="complete"> 완료 </button>
+            <button id="complete" type="btoon"> 완료 </button>
         </div>
     </div>
 </form>
@@ -44,11 +44,12 @@
 	})
 	
 	$("#complete").on("click",function(){
-		 self.close();
+		
+		$("#uploadForm").submit();
+
 		 if (window.opener && window.opener.parent) {
 		        window.opener.parent.location.reload();
-		    }
-		
+		        }
 	})
 	
 	 $("#uploadFile").change(function() {
