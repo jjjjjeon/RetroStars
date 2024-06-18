@@ -77,7 +77,7 @@ public static PlayRecordDAO instance;
 	                    int gameSeq = rs.getInt(6);
 	                    dto = new GamePlayRecordDTO(recordSeq, userId, date, score, title, gameSeq);
 	                }
-	                System.out.println(dto.getPlayRecordSeq() +":"+ dto.getUserId()+":"+ dto.getPlayDate()+":"+ dto.getPlayScore()+":"+ dto.getGameTitle()+":"+ dto.getGameSep());
+	                System.out.println(dto.getPlayRecordSeq() +":"+ dto.getUserId()+":"+ dto.getPlayDate()+":"+ dto.getPlayScore()+":"+ dto.getGameTitle()+":"+ dto.getGameSeq());
 	                return dto;
 	            }
 			
