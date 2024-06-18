@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import common.util;
 import dao.GameDAO;
@@ -60,27 +61,34 @@ public class MemberController extends HttpServlet {
 		try {
 			
 			// 로그인 기능.
-			if(cmd.equals("/login.member")) {
-			
-				String id = request.getParameter("id");
-				System.out.println(id);
-				String pw = util.getSHA512(request.getParameter("pw"));
+	        if(cmd.equals("/login.member")) {
 
-						
-				
-				boolean result = memberDao.loginId(id, pw);
-				System.out.println(result);
+	            String id = request.getParameter("id");
+	            String pw = util.getSHA512(request.getParameter("pw"));
 
-				if(result) {
-					System.out.println("로그인 성공");
-					session.setAttribute("loginId", id);					
-				}else {
-					System.out.println("로그인 실패. db 확인 부탁드려요.");
-		         
-				}
-				response.sendRedirect("/index.jsp");
-				return;
-			}
+	            boolean result = memberDao.loginId(id, pw);
+	            response.setContentType("application/json");
+	            response.setCharacterEncoding("UTF-8");
+	            PrintWriter pw1 = response.getWriter();
+
+	            JsonObject responseJson = new JsonObject();
+
+	            if(result) {
+	                session.setAttribute("loginId", id);
+	                
+	                String profileUrl = userProfileImgDao.selectMyUrl(id);
+                    session.setAttribute("profileUrl", profileUrl);
+                    
+	                responseJson.addProperty("success", true);
+	            } else {
+	                responseJson.addProperty("success", false);
+	                responseJson.addProperty("message", "아이디 또는 비밀번호를 잘못 입력했습니다.");
+	            }
+
+	            pw1.append(g.toJson(responseJson));
+	            pw1.flush();
+	            return;
+	        }
 			
 			// 로그아웃 기능.
 			if(cmd.equals("/logout.member")) {
