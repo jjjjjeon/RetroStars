@@ -12,10 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 import dto.QBoardDTO;
 
 /**
@@ -86,6 +88,9 @@ public class QBoardDAO {
 		}
 		return null;
 	}
+	
+	
+
 
 	//1. 글 추가하기 insert
 	public int insert(QBoardDTO dto) throws Exception{
@@ -108,14 +113,16 @@ public class QBoardDAO {
 
 
 	//2.페이지별 게시글 select 하기
-	public ArrayList<QBoardDTO> select(int startnum, int endnum, int category, String strsearchBy, String strsearchData) throws Exception {
-		ArrayList<QBoardDTO> list = new ArrayList<>();
+	public ArrayList<HashMap<String,?>> select(int startnum, int endnum, int category, String strsearchBy, String strsearchData) throws Exception {
+		ArrayList<HashMap<String,?>> list = new ArrayList<>();
+		
 		//전체 카테고리일 때
 		if(category==0) {
 			//검색이 있을 때
 			if(!(strsearchBy.equals("0"))) {
-				String sql= "SELECT * FROM ( SELECT q_board.*, row_number() "+ 
-						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board where "+strsearchBy+" Like ?) subquery "+
+				String sql= "SELECT s.*, m.user_nickname  as nickname FROM ( SELECT q_board.*, row_number() "+ 
+						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board where "+strsearchBy+" Like ?) s "+
+						"LEFT JOIN MEMBER m ON s.user_id=m.user_id "+
 						"WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
@@ -126,25 +133,29 @@ public class QBoardDAO {
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
-							int qBoardSeq = rs.getInt("q_board_seq");
-							String userId = rs.getString("user_id");
-							int qBoardCategory = rs.getInt("q_board_category");
-							String qBoardTitle = rs.getString("q_board_title");
-							String qBoardContent = rs.getString("q_board_content");
-							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-							String qBoardAnswer=rs.getString("q_board_answer");
-							String qBoardSecret=rs.getString("q_board_secret");
-							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+							HashMap map=new HashMap<>();
+							map.put("qBoardSeq", rs.getInt("q_board_seq"));
+							map.put("userId", rs.getString("user_id"));
+							map.put("qBoardCategory", rs.getInt("q_board_category"));
+							map.put("qBoardTitle", rs.getString("q_board_title"));
+							map.put("qBoardContent", rs.getString("q_board_content"));
+							map.put("qBoardDate", rs.getTimestamp("q_board_date"));
+							map.put("qBoardAnswer", rs.getString("q_board_answer"));
+							map.put("qBoardSecret", rs.getString("q_board_secret"));
+							map.put("qBoardUserNickname", rs.getString("nickname"));
+							list.add(map);
 						}
-						return list;
+
+				        return list;
 					}
 				}
 
 
 				//검색을 하지 않을 때
 			}else {
-				String sql = "SELECT * FROM ( SELECT q_board.*, row_number() "+
-						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board) subquery " +
+				String sql = "SELECT s.*, m.user_nickname as nickname FROM ( SELECT q_board.*, row_number() "+
+						"OVER (ORDER BY q_board_seq DESC) AS rown FROM q_board) s " +
+						"LEFT JOIN MEMBER m ON s.user_id=m.user_id "+
 						"WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
@@ -154,17 +165,20 @@ public class QBoardDAO {
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
-							int qBoardSeq = rs.getInt("q_board_seq");
-							String userId = rs.getString("user_id");
-							int qBoardCategory = rs.getInt("q_board_category");
-							String qBoardTitle = rs.getString("q_board_title");
-							String qBoardContent = rs.getString("q_board_content");
-							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-							String qBoardAnswer=rs.getString("q_board_answer");
-							String qBoardSecret=rs.getString("q_board_secret");
-							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+							HashMap map=new HashMap<>();
+							map.put("qBoardSeq", rs.getInt("q_board_seq"));
+							map.put("userId", rs.getString("user_id"));
+							map.put("qBoardCategory", rs.getInt("q_board_category"));
+							map.put("qBoardTitle", rs.getString("q_board_title"));
+							map.put("qBoardContent", rs.getString("q_board_content"));
+							map.put("qBoardDate", rs.getTimestamp("q_board_date"));
+							map.put("qBoardAnswer", rs.getString("q_board_answer"));
+							map.put("qBoardSecret", rs.getString("q_board_secret"));
+							map.put("qBoardUserNickname", rs.getString("nickname"));
+							list.add(map);
 						}
-						return list;
+
+				        return list;
 					}
 				}
 			}
@@ -173,9 +187,10 @@ public class QBoardDAO {
 		}else {
 			//검색이 있을 때
 			if(!(strsearchBy.equals("0"))) {
-				String sql = "SELECT * FROM ( SELECT q_board.*, row_number() "+
+				String sql = "SELECT s.*, m.user_nickname  as nickname FROM ( SELECT q_board.*, row_number() "+
 						"OVER (ORDER BY q_board_seq DESC) AS rown "+
-						"FROM q_board WHERE q_board_category=? AND "+strsearchBy+" LIKE ?) subquery " +
+						"FROM q_board WHERE q_board_category=? AND "+strsearchBy+" LIKE ?) s " +
+						"LEFT JOIN MEMBER m ON s.user_id=m.user_id "+
 						"WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
@@ -187,24 +202,28 @@ public class QBoardDAO {
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
-							int qBoardSeq = rs.getInt("q_board_seq");
-							String userId = rs.getString("user_id");
-							int qBoardCategory = rs.getInt("q_board_category");
-							String qBoardTitle = rs.getString("q_board_title");
-							String qBoardContent = rs.getString("q_board_content");
-							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-							String qBoardAnswer=rs.getString("q_board_answer");
-							String qBoardSecret=rs.getString("q_board_secret");
-							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+							HashMap map=new HashMap<>();
+							map.put("qBoardSeq", rs.getInt("q_board_seq"));
+							map.put("userId", rs.getString("user_id"));
+							map.put("qBoardCategory", rs.getInt("q_board_category"));
+							map.put("qBoardTitle", rs.getString("q_board_title"));
+							map.put("qBoardContent", rs.getString("q_board_content"));
+							map.put("qBoardDate", rs.getTimestamp("q_board_date"));
+							map.put("qBoardAnswer", rs.getString("q_board_answer"));
+							map.put("qBoardSecret", rs.getString("q_board_secret"));
+							map.put("qBoardUserNickname", rs.getString("nickname"));
+							list.add(map);
 						}
-						return list;
+
+				        return list;
 					}
 				}
 
 			}else {
-				String sql = "SELECT * FROM ( " +
+				String sql = "SELECT s.*, m.user_nickname  as nickname FROM ( " +
 						"SELECT q_board.*, row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
-						"FROM q_board WHERE q_board_category=?) subquery " +
+						"FROM q_board WHERE q_board_category=?) s " +
+						"LEFT JOIN MEMBER m ON s.user_id=m.user_id "+
 						"WHERE rown BETWEEN ? AND ?";
 
 				try (Connection con = this.getConnection();
@@ -215,17 +234,20 @@ public class QBoardDAO {
 
 					try (ResultSet rs = ps.executeQuery();) {
 						while (rs.next()) {
-							int qBoardSeq = rs.getInt("q_board_seq");
-							String userId = rs.getString("user_id");
-							int qBoardCategory = rs.getInt("q_board_category");
-							String qBoardTitle = rs.getString("q_board_title");
-							String qBoardContent = rs.getString("q_board_content");
-							Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-							String qBoardAnswer=rs.getString("q_board_answer");
-							String qBoardSecret=rs.getString("q_board_secret");
-							list.add(new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret));
+							HashMap map=new HashMap<>();
+							map.put("qBoardSeq", rs.getInt("q_board_seq"));
+							map.put("userId", rs.getString("user_id"));
+							map.put("qBoardCategory", rs.getInt("q_board_category"));
+							map.put("qBoardTitle", rs.getString("q_board_title"));
+							map.put("qBoardContent", rs.getString("q_board_content"));
+							map.put("qBoardDate", rs.getTimestamp("q_board_date"));
+							map.put("qBoardAnswer", rs.getString("q_board_answer"));
+							map.put("qBoardSecret", rs.getString("q_board_secret"));
+							map.put("qBoardUserNickname", rs.getString("nickname"));
+							list.add(map);
 						}
-						return list;
+
+				        return list;
 					}
 				}
 			}
@@ -350,20 +372,19 @@ public class QBoardDAO {
 
 
 
-	/*//더미데이터만들기
-	public static void main(String[] args) throws SQLException {
+	//더미데이터만들기
+	/*public static void main(String[] args) throws SQLException {
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String id="star";
 		String pw="star";
 
-		String sql="insert into q_board values(q_board_sequence.nextval,?,1,?,?,sysdate,'N','N')";
+		String sql="insert into q_board values(q_board_sequence.nextval,'sami3013',3,?,?,sysdate,'Y','Y')";
 
 		try(Connection con= DriverManager.getConnection(url, id, pw);
 				PreparedStatement pstat=con.prepareStatement(sql);){
 			for(int i=1; i<30; i++) {
-				pstat.setString(1, "test"+(i));
-				pstat.setString(2, "test"+(i));
-				pstat.setString(3, "test"+(i));
+				pstat.setString(1, "title"+(i));
+				pstat.setString(2, "content"+(i));
 				pstat.addBatch();
 			}
 			pstat.executeBatch();
