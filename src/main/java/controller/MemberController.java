@@ -59,6 +59,7 @@ public class MemberController extends HttpServlet {
 		Gson g = new Gson();
 		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		PlayRecordDAO playRecordDao = PlayRecordDAO.getInstance();
+		System.out.println(cmd);
 		
 		try {
 			
@@ -230,10 +231,8 @@ public class MemberController extends HttpServlet {
 				String id = (String) session.getAttribute("loginId");
 				
 				MemberDTO mydata = memberDao.myData(id);
-				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
 				String genderCode = mydata.getUserNo().substring(6,7);
-				System.out.println(genderCode);
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String gender;
 				if(genderCode.equals("1")) {
@@ -271,7 +270,6 @@ public class MemberController extends HttpServlet {
 				String id = (String) session.getAttribute("loginId");
 				
 				MemberDTO mydata = memberDao.myData(id);
-				System.out.println(mydata.getUserNo());
 				String birth = mydata.getUserNo().substring(0,2)+"."+mydata.getUserNo().substring(2,4)+"."+mydata.getUserNo().substring(4,6);
 				String genderCode = mydata.getUserNo().substring(6,7);
 				String gender;
@@ -315,7 +313,28 @@ public class MemberController extends HttpServlet {
 				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
 				
 				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
-				request.getRequestDispatcher("/mypage.member").forward(request, response);	
+				request.getRequestDispatcher("/mypage.member").forward(request, response);
+				
+			}else if(cmd.equals("/updatePw.member")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				String newPw = util.getSHA512(request.getParameter("newConfirmPw")); 
+				System.out.println(newPw);
+				
+				memberDao.updatePw(id, newPw);
+				
+			}else if(cmd.equals("/pwIsRight.member")) {
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				String Pw = util.getSHA512(request.getParameter("pw"));
+				
+				String result = memberDao.pwIsRight(id, Pw);
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter pw = response.getWriter();
+				pw.append(result);
+				
 			}
 			
 			

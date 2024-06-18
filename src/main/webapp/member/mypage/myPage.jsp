@@ -98,6 +98,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .rpg_content_title{flex:4; font-size: 25px; font-weight: 700; display: flex; justify-content: start; align-items: end;}
     .rpg_content_date{flex:2; font-size: 15px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
     .rpg_content_score{flex:4; font-size: 35px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
+    .no_data{display:flex; justify-content: center; align-items: center; font-size:20px;margin-bottom:20px;}
 
 	.favorite_game{flex:0.5; width: 80%; display: flex;}
 	.favorite_game_title{flex:2; font-size:25px; font-weight:700; display: flex; justify-content: start; align-items: center;}
@@ -170,7 +171,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                             <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
                             <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/lstt.fboard">FAQ게시판</a></li>
                             <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
                         </ul>
                     </li>
@@ -212,7 +213,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     <div class ="emptybox"></div>
     <div class="container">
         <div class="header row">
-            <div class="headertitle"><div class="header_user_id">${mydata.userId}</div> &nbsp;님의 My page</div>
+            <div class="headertitle"><div class="header_user_id">${mydata.userNickname}</div> &nbsp;님의 My page</div>
         </div> 
         <div class="profilebox">
             <div class="profile">
@@ -268,20 +269,27 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
                 <div class="rpg">
                     <div class="rpg_title">Recently Played Game</div>
+                    <c:choose>
+                    <c:when test="${gprDto.gameSeq == 0}">
+                     <div class="rpg_main_box no_data">
+                     	최근 play 기록이 없습니다.
+                     </div>
+                    </c:when>
+                    <c:otherwise>
                     <div class="rpg_main_box">
                         <div class="rpg_main_img">
                             <div class="rpg_img">
                             	<c:choose>
-                            		<c:when test="${gprDto.gameSep == 1}">
+                            		<c:when test="${gprDto.gameSeq == 1}">
                             			이미지1
                             		</c:when>
-                            		<c:when test="${gprDto.gameSep == 2}">
+                            		<c:when test="${gprDto.gameSeq == 2}">
                             			이미지2
                             		</c:when>
-                            		<c:when test="${gprDto.gameSep == 3}">
+                            		<c:when test="${gprDto.gameSeq == 3}">
                             			이미지3
                             		</c:when>
-                            		<c:when test="${gprDto.gameSep == 4}">
+                            		<c:when test="${gprDto.gameSeq == 4}">
                             			이미지4
                             		</c:when>
                             		<c:otherwise>
@@ -296,6 +304,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                             <div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
                         </div>
                     </div>
+                    </c:otherwise>
+                  </c:choose>
                 </div>
             </div>
         </div>
