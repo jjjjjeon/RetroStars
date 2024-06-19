@@ -62,9 +62,6 @@ public class QBoardController extends HttpServlet {
 				}else {
 					isAdmin=memberdao.isAdmin(loginId);
 				}
-					
-				
-				
 				
 				//받은 정보 처리하기
 				String strcpage=request.getParameter("cpage");
@@ -123,6 +120,7 @@ public class QBoardController extends HttpServlet {
 				//닉네임처리
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				String nickname=memberdao.getNickname(loginId);
+				
 				request.setAttribute("nickname", nickname);
 				request.getRequestDispatcher("/qboard/writeBoard.jsp").forward(request, response);
 				

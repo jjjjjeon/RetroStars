@@ -72,8 +72,6 @@ nav {
 	width: 1100px;
 	background: #323232;
 	padding: 2rem;
-	border-radius: 15px;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(10px);
 	text-align: center;
 	color: #00d4ff;
@@ -114,11 +112,12 @@ nav {
 }
 
 .btnsdiv {
-	display: flex;
+	/*display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center;*/
 	margin-top: 80px;
     margin-bottom: 40px;
+    width:1000px;
 }
 
 .btnsdiv>button {
@@ -196,7 +195,7 @@ nav {
 
 
 #addCommentInput {
-	width: 1000px;
+	width:900px;
 	height: 100px;
 	margin-right: 25px;
 	margin-top: 20px;
@@ -236,10 +235,8 @@ nav {
 }
 
 .replycontainer {
-	border: 1px solid white;
-	width: 1000px;
+	width: 900px;
 	height: 130px;
-	margin-top: 20px;
 	margin-bottom: 20px;
 	background-color:#272727;
 }
@@ -381,28 +378,28 @@ nav {
                     dataType: "json",
                     data: {
                         qBoardSeq: ${ dto.qBoardSeq }
-        }
-    }).done(function (data) {
-                            let replylist = data.replylist;
-                            let loginId = data.loginId;
-                            console.log(loginId);
-                            for (let reply of replylist) {
-                                if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
-                let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
-                let col1 = $("<div>").addClass("col1").html(reply.userId + " " + reply.qReplyDate);
-                let hr=$("<hr>");
-                let col2 = $("<div>").addClass("replycontents col2").html(reply.qReplyContent);
-                replycontainer.append(col1, hr, col2);
-                $(".replyListBox").append(replycontainer);
-                if (reply.userId == loginId) {
-                    let col3 = $("<div>").addClass("col3");
-                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
-                    let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
-                    col3.append(replyupdatebtn, replydeletebtn);
-                    replycontainer.append(col3);
-                }
-            }
-        }
+        		}
+    		}).done(function (data) {
+               let replylist = data.replylist;
+               let loginId = data.loginId;
+               //console.log(loginId);
+               for (let reply of replylist) {
+               if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
+	               let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
+	               let col1 = $("<div>").addClass("col1").html(reply.userId + " " + reply.qReplyDate);
+	               let hr=$("<hr>");
+	               let col2 = $("<div>").addClass("replycontents col2").html(reply.qReplyContent);
+	               replycontainer.append(col1, hr, col2);
+	               $(".replyListBox").append(replycontainer);
+	               if (reply.userId == loginId || ${isAdmin}==true) {
+	                  let col3 = $("<div>").addClass("col3");
+	                  let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
+	                  let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
+	                  col3.append(replyupdatebtn, replydeletebtn);
+	                  replycontainer.append(col3);
+	               }
+            	}
+        	}
 
             $(".replyupdatebtn").on("click", function () {
                 let replyContainer = $(this).closest('.replycontainer');
@@ -488,12 +485,14 @@ nav {
                     let hr=$("<hr>");
                     let col2 = $("<div>").addClass("replycontents col2").html(replydto.qReplyContent);
                     replycontainer.append(col1, hr, col2);
-                    let col3 = $("<div>").addClass("col3");
-                    let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
-                    let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
-                    col3.append(replyupdatebtn, replydeletebtn);
-                    replycontainer.append(col3);
-                    $(".commentListBox").append(replycontainer);
+                    if (replydto.userId == '${loginId}' || ${isAdmin}==true) {
+                    	let col3 = $("<div>").addClass("col3");
+                    	let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-secondary").html("수정");
+                    	let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-secondary").html("삭제");
+                    	col3.append(replyupdatebtn, replydeletebtn);
+                    	replycontainer.append(col3);
+                    }
+                    $(".replyListBox").prepend(replycontainer);
                     $(".addCommentInput").html("");
                     
                     $(".replyupdatebtn").on("click", function () {

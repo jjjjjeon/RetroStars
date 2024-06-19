@@ -378,12 +378,12 @@ public class QBoardDAO {
 		String id="star";
 		String pw="star";
 
-		String sql="insert into q_board values(q_board_sequence.nextval,'sami3013',3,?,?,sysdate,'Y','N')";
+		String sql="insert into q_board values(q_board_sequence.nextval,'test',3,?,?,sysdate,'Y','N')";
 
 		try(Connection con= DriverManager.getConnection(url, id, pw);
 				PreparedStatement pstat=con.prepareStatement(sql);){
 			for(int i=1; i<30; i++) {
-				pstat.setString(1, "title"+(i));
+				pstat.setString(1, "test"+(i));
 				pstat.setString(2, "content"+(i));
 				pstat.addBatch();
 			}
