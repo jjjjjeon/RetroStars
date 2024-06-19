@@ -30,6 +30,7 @@ body {
 	background-image: url('/image/background.png');
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	color: white;
+	background-size:100% 100%;
 }
 
 nav {

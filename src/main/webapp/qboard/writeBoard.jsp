@@ -19,6 +19,8 @@
 			
 			body{
 					background-image: url('/image/background.png');
+					background-size:100% 100%;
+					color:white;
 				}
 				
 				nav{
