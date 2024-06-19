@@ -400,6 +400,7 @@
             $(".tablink").first().click(); // 첫 번째 탭을 기본으로 열기
         });
 
+        
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -411,7 +412,7 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.style.backgroundColor = "#575757";
+            //evt.currentTarget.style.backgroundColor = "#575757";
         }
         
         $(document).ready(function () {
