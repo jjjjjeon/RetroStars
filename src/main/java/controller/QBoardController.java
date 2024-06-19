@@ -55,6 +55,9 @@ public class QBoardController extends HttpServlet {
 				response.sendRedirect("/list.qboard");
 				
 			}else if(cmd.equals("/list.qboard")) {
+				String loginId=(String)request.getSession().getAttribute("loginId");
+				if(loginId==null) {loginId="0";}
+				
 				//받은 정보 처리하기
 				String strcpage=request.getParameter("cpage");
 				if(strcpage==null) {strcpage="1";}
@@ -68,6 +71,7 @@ public class QBoardController extends HttpServlet {
 				if(searchData==null) {searchData="0";}		
 				
 				//보낼 정보 처리하기
+				request.setAttribute("loginId", loginId);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("category", category);
 				request.setAttribute("searchBy", searchBy);
@@ -106,8 +110,8 @@ public class QBoardController extends HttpServlet {
 				
 			}else if(cmd.equals("/gowrite.qboard")) {
 				//닉네임처리
-				String writer=(String)request.getSession().getAttribute("loginId");
-				String nickname=memberdao.getNickname(writer);
+				String loginId=(String)request.getSession().getAttribute("loginId");
+				String nickname=memberdao.getNickname(loginId);
 				request.setAttribute("nickname", nickname);
 				request.getRequestDispatcher("/qboard/writeBoard.jsp").forward(request, response);
 				

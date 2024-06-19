@@ -372,13 +372,13 @@
 			
 			
 		
-		   // .dropdown-item을 클릭했을 때
+		   //.dropdown-item을 클릭했을 때
 	       $(".dropdown-item").on("click", function (e) {
 	          e.preventDefault();
 	          $("#categoryToggle").html($(this).html());
 	       });
 			
-			//예외처리하기
+			
 
 				
 	

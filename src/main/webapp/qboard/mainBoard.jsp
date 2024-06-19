@@ -148,10 +148,10 @@ nav {
 	padding: 0;
 }
 
-.list_data_row {
+ .list_data_row {
 	border-bottom: 1px solid lightgray;
 	margin: 0;
-}
+ }
 
 		.list_data_writer {
 			    width: 93px;
@@ -367,6 +367,7 @@ nav {
 							style="flex: 1; height: 100%;">
 							<!--여기에 리스트 출력-->
 							<c:forEach var="dto" items="${list}">
+							<!--<c:if test="${dto.qBoar} eq ">-->
 								<a href="/detail.qboard?seq=${dto.qBoardSeq}" class="detailA">
 									<div class="list_data_row row"
 										style="height: 44px; width: 100%;">
@@ -420,8 +421,7 @@ nav {
 				</div>
 			</div>
 			<div class="btns_container" style="flex: 0.7; width: 100%;">
-				<button id="ask_btn" class="btn btn-primary"
-					onclick="location.href='/gowrite.qboard'">글쓰기</button>
+				<button id="ask_btn" class="btn btn-primary">글쓰기</button>
 			</div>
 			<div id="page_navi" class="page_container center"
 				style="flex: 0.7; width: 100%;"></div>
@@ -550,9 +550,20 @@ nav {
 		                if (e.key == "Enter") {
 		                    performSearch();
 		                }
-		            });
+		            });  
 		            
+		           
 				});
+				
+				//로그인 안 하고 글쓰기를 누를 경우 작성할 수 없게 하기
+				$("#ask_btn").on("click",function(){
+					if("${loginId}" == "0"){
+						alert("로그인이 필요한 서비스입니다.");
+						return false;
+					}
+					window.location.href="/gowrite.qboard";
+				});
+				
 
 				$(document).on('click', '.naviAn', function (e) {
 					e.preventDefault();
@@ -560,16 +571,6 @@ nav {
 					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
 				
-	          
-				
-				
-
-				
-
-		
-
-
-
 			</script>
 
 </body>
