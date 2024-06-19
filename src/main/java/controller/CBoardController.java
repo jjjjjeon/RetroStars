@@ -179,7 +179,7 @@ public class CBoardController extends HttpServlet {
 			//유저게시판 글 신고.
 			}else if(cmd.equals("/report.cboard")) {
 				int boardSeq = Integer.parseInt(request.getParameter("seq"));
-				String reporterId = request.getParameter("loginId");
+				String reporterId = request.getParameter("id");
 				int reportType = Integer.parseInt(request.getParameter("reportType"));
 				
 				if(rptManager.isDuplicate(boardSeq, reporterId)) {

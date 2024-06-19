@@ -17,8 +17,12 @@
 <style>
     * {
         box-sizing: border-box;
-        margin: 0
+        margin: 0;
     }
+
+	body{
+		background-color : #222; 
+	}
 
     div {
         /* border: 1px solid black; */
@@ -27,7 +31,7 @@
 
     a {
         text-decoration: none;
-        color: black;
+        color: #d3d3d3;
     }
 
     input[type="text" i] {
@@ -40,11 +44,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-image: url('/image/background.png');
+        background-size : cover;
     }
     
     .header .headerTitle{
     	height : 150px;
-    	color : black;
+    	color : #ffffff;
     	font-size : 32px;
     	font-weight : bold;
     	display : flex;
@@ -59,10 +65,13 @@
         position: relative;
         width: 100%;
         height: 80px;
-        background: #f8f9fb;
-        border: 1px solid #e0e2ec;
+        background: #111;
+        border: 1px solid #5a5a64;
+        border-left : 0;
+        border-right : 0;
         text-align: center;
         font-size: 0;
+        
     }
 
     .navi a {
@@ -74,8 +83,8 @@
     }
     
     .navi .active {
-	    color: #36393f;
-	    border-bottom: 2px solid #36393f;
+	    color: white;
+	    border-bottom: 2px solid white;
 	}
 
     .content {
@@ -83,13 +92,15 @@
         margin: 63px auto 0 auto;
         width: 1300px;
         min-height: 500px;
+        background-color : #222; 
+        color : #d3d3d3;
     }
 
     .content h3 {
-        color: #151518;
         font-size: 26px;
         line-height: 34px;
         font-weight: 500;
+        color : white;
     }
 
     .community_header {
@@ -97,15 +108,15 @@
         margin-top: 23px;
         width: 1300px;
         height: 58px;
-        border-bottom: 1px solid #eeedf2;
+        border-bottom: 1px solid #5a5a64;
     }
 
     .community_header select {
         width: 120px;
         height: 42px;
-        background: #f8f9fb;
-        border: 1px solid #e7e8ed;
-        color: #6a6e76;
+        background: #111;
+        border: 1px solid #5a5a64;
+        color: #d3d3d3;
         line-height: 39px;
         cursor: pointer;
         padding: 0 0 0 10px;
@@ -117,9 +128,9 @@
         width: 200px;
         height: 42px;
         border: none;
-        background: #f8f9fb;
-        color: #6a6e76;
-        border: 1px solid #e7e8ed;
+        background: #111;
+        color: #d3d3d3;
+        border: 1px solid #5a5a64;
         border-right: 0;
         font-size: 14px;
         line-height: 53px;
@@ -134,16 +145,16 @@
 
     .community_header #searchBtn {
         height: 42px;
-        background: #f8f9fb;
-        color: #6a6e76;
-        border: 1px solid #e7e8ed;
+        background: #111;
+        color: #d3d3d3;
+        border: 1px solid #5a5a64;
         border-left: 0;
     }
 
     .boardList {
         position: relative;
         width: 1300px;
-        border-top: 1px solid #eeedf2;
+        border-top: 1px solid #5a5a64;
         clear: both;
     }
 
@@ -151,7 +162,7 @@
         display: flex;
         align-items: center;
         padding: 17px 0 16px 0;
-        border-bottom: 1px solid #eeedf2;
+        border-bottom: 1px solid #5a5a64;
         list-style-type: none;
         margin-bottom:0;
     }
@@ -207,8 +218,8 @@
         width: 160px;
         height: 45px;
         background: #3392ff;
-        color: #fff;
-        border: 0;
+        color: white;
+        border: 1px solid #1A6ED8;
         font-size: 13px;
         font-weight: bold;
     }
@@ -390,7 +401,7 @@
                     <option value="writer">작성자</option>
                 </select>
                 <input type="text" id="searchInput" name="searchInput" autocomplete="off">
-                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass" style="color: #6a6e76;"></i></button>
+                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass" style="color: #d3d3d3;"></i></button>
                 <input type="hidden" name="category" id="srcCategoryInput">
             </form>
         </div>
@@ -417,8 +428,8 @@
                 			<li class="date">
                 				<fmt:formatDate value="${DTO.cBoarDate}" pattern="yy. MM. dd" />
                 			</li>
-                			<li class="view"><i class="fa-regular fa-eye" style="color: #000000;"></i> ${DTO.cBoardView}</li>
-                			<li class="bookmark"><i class="fa-regular fa-bookmark" style="color: #000000;"></i> ${DTO.cBoardBookmark}</li>
+                			<li class="view"><i class="fa-regular fa-eye" style="color: #d3d3d3;"></i> ${DTO.cBoardView}</li>
+                			<li class="bookmark"><i class="fa-regular fa-bookmark" style="color: #d3d3d3;"></i> ${DTO.cBoardBookmark}</li>
             			</ul>
             		</c:forEach>
             	</c:otherwise>
@@ -514,15 +525,15 @@
 			for (let i = startNavi; i <= endNavi; i++) {
 				if(${isSearchedList == 1}){
 					if(i == currentPage){
-						naviString = naviString + "<a class='fw-bold' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='text-reset fw-bold' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
 					}else{
-						naviString = naviString + "<a class='text-muted' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='text-reset' href = '/searchList.cboard?searchType=" + "${searchType}" + "&searchInput=" + "${searchInput}" + "&category=${category}" + "&cpage=" + i + "'>" + i + "</a> ";
 					}
 				}else{
 					if(i == currentPage){
-						naviString = naviString + "<a class='fw-bold' href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='text-reset fw-bold' href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + i + "'>" + i + "</a> ";
 					}else{
-						naviString = naviString + "<a class='text-muted' href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + i + "'>" + i + "</a> ";
+						naviString = naviString + "<a class='text-reset' href = '/list.cboard?" + "category="+ $(".boardList").attr("data-category") + "&cpage=" + i + "'>" + i + "</a> ";
 					}
 				}
 				

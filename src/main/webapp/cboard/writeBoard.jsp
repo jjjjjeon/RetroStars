@@ -22,12 +22,20 @@
             margin: 0
         }
 		
+		.note-editor.note-frame{
+			border : 0;
+		}
+		
 		.dropdown-toggle::after { display: none; }
 		
         input[type="text" i] {
             padding-block: 1px;
             padding-inline: 2px;
         }
+        
+        body{
+		background-color : #222; 
+		}
 
         div {
             /* border: 1px solid black; */
@@ -36,7 +44,7 @@
 
         a {
             text-decoration: none;
-            color: black;
+            color: #d3d3d3;
         }
 
         input[type="text" i] {
@@ -49,11 +57,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-image: url('/image/background.png');
+        	background-size : cover;
         }
         
         .header .headerTitle{
     		height : 150px;
-    		color : black;
+    		color : #ffffff;
     		font-size : 32px;
     		font-weight : bold;
     		display : flex;
@@ -68,8 +78,10 @@
             position: relative;
             width: 100%;
             height: 80px;
-            background: #f8f9fb;
-            border: 1px solid #e0e2ec;
+            background: #111;
+            border: 1px solid #5a5a64;
+        	border-left : 0;
+        	border-right : 0;
             text-align: center;
             font-size: 0;
         }
@@ -83,8 +95,8 @@
         }
         
         .navi #naviAnker{
-        	color: #36393f;
-	    	border-bottom: 2px solid #36393f;
+        	color: white;
+	    	border-bottom: 2px solid white;
         }
 
         .writeBoard {
@@ -95,7 +107,7 @@
         }
 
         .writeBoard h3 {
-            color: #151518;
+            color : white;
             font-size: 26px;
             line-height: 34px;
             font-weight: 300;
@@ -106,10 +118,11 @@
         .writeBoard .category {
             position: relative;
             padding-left: 9px;
-            border-top: 1px solid #eeedf2;
+            border-top: 1px solid #d3d3d3;
             height: 70px;
             display: flex;
             align-items: center;
+            color : #d3d3d3;
         }
 
         .writeBoard .title {
@@ -122,15 +135,15 @@
             line-height: 70px;
             border: none;
             font-size: 16px;
-            color: #6a6e76;
+            color: #d3d3d3;
             text-indent: 20px;
+            background-color : #222;
         }
 
         .writeBoard .fileBox {
             height: auto;
             width: 100%;
             border-top: 1px solid #eeedf2;
-            border-bottom: 1px solid #eeedf2;
             display: flex;
             flex-direction: column;
             padding: 10px 0;
@@ -145,6 +158,8 @@
 
         .writeBoard .fileBox .uploadCol input {
             margin-right: 10px;
+            background-color : #333;
+            color : #d3d3d3;
         }
 
         .writeBoard .fileBox .uploadCol button {
@@ -159,6 +174,7 @@
 		
 		.note-editable{
 			height : 500px;
+			color : white;
 		}
 
         .btnBox {
@@ -172,7 +188,7 @@
             height: 45px;
             background: gray;
             color: #fff;
-            border: 0;
+            border: 1px solid #888;;
             font-size: 13px;
             font-weight: bold;
             margin-right : 10px;
@@ -181,8 +197,8 @@
             width: 160px;
             height: 45px;
             background: #3392ff;
-            color: #fff;
-            border: 0;
+            color: white;
+            border: 1px solid #white;
             font-size: 13px;
             font-weight: bold;
         }
@@ -264,7 +280,10 @@
 	padding : 55px 0 0 15px;
 }
 
-    </style>
+.editorBox{
+	border : 1px solid #d3d3d3;
+}
+</style>
 </head>
 
 <body>
@@ -366,8 +385,8 @@
 	        <div class="fileBox">
 	            <div class="col-12 uploadCol">
 	                <input class="form-control" type="file" id="formFileMultiple" name="file">
-	                <button class="btn btn-danger" id="removeFileBtn" type="button">C</button>
-	                <button class="btn btn-primary" id="addFileTab" type="button">+</button>
+	                <button class="btn btn-secondary" id="removeFileBtn" type="button">C</button>
+	                <button class="btn btn-light" id="addFileTab" type="button">+</button>
 	            </div>
 	        </div>
 	        <div class="editorBox">
@@ -481,6 +500,7 @@
             }
 	    	
 		    });
+	    	$('#summernote').summernote('foreColor', 'white');
 	    	$('#summernote').summernote('code', '');
 	    	$('.note-editable').html('');
 	    	$('#summernote').summernote('fontSize', '16');
@@ -513,7 +533,7 @@
 
             let uploadDelButton = $("<button>");
             uploadDelButton.html("-");
-            uploadDelButton.attr("class", "btn btn-danger delUploadRow");
+            uploadDelButton.attr("class", "btn btn-secondary delUploadRow");
             uploadDelButton.attr("type", "button");
             uploadCol.append(uploadDelButton);
 
