@@ -483,7 +483,7 @@ public class MemberDAO {
         try (Connection conn = getConnection();
              PreparedStatement pstat = conn.prepareStatement(sql)) {
             pstat.setString(1, userNickname);
-            pstat.setString(2, userNickname);
+            pstat.setString(2, userId);
             try (ResultSet rs = pstat.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) == 0;

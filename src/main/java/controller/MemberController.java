@@ -348,7 +348,7 @@ public class MemberController extends HttpServlet {
                 
                 if(isExistCheck) {
                 	pw.append("true");
-                }else if( (isExistCheck == false) && (isMyNicknameCheck == true) ){
+                }else if( (isExistCheck == false) && (isMyNicknameCheck == false) ){
                 	// 존재하는데 내꺼일 경우
                 	pw.append("before");
                 }else {
