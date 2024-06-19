@@ -228,9 +228,9 @@ public class MemberDAO {
      * @date : 2024. 6. 17. 
      * @author : Jin 
      * @version : 
-     * @Method info : 아이디에 따른 닉네임 가져오기
+     * @Method info : userId로 관리자 여부 구별
      * @param 로그인 시 사용한 id
-     * @return 유저 닉네임
+     * @return boolean
      * @throws Exception 
      */   
     public boolean isAdmin(String userId) throws Exception {
@@ -254,20 +254,7 @@ public class MemberDAO {
     	
     }
     
-//	try(ResultSet rs = pstat.executeQuery();){
-//		
-//		String dbPw =""; 
-//		
-//		while(rs.next()) { 
-//			dbPw = rs.getString(1);
-//			}
-//		if(dbPw.equals(pw)) {
-//			return "성공";
-//		}else {
-//			return "실패";}
-//		
-//	}
-//    
+
 
     
     /** 
