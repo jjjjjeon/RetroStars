@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -67,22 +68,24 @@ public class QReplyDAO {
 		}
 		
 		//2. 전체 댓글 출력하기 select(ALL)
-		public ArrayList<QReplyDTO> selectAll() throws Exception{
-			String sql="select * from q_reply order by 1 desc";
+		public ArrayList<HashMap<String,?>> selectAll() throws Exception{
+			String sql="select q.*, m.user_nickname as nickname  from q_reply q "+
+					"left join member m on q.user_id = m.user_id "+
+					"order by 1 desc";
 
 			try(Connection con=this.getConnection();
 					PreparedStatement ps=con.prepareStatement(sql);
 					ResultSet rs=ps.executeQuery();){
-				ArrayList<QReplyDTO> list=new ArrayList<QReplyDTO>();
+				ArrayList<HashMap<String,?>> list = new ArrayList<>();
 				while(rs.next()){
-					int qReplySeq=rs.getInt(1);
-					int QBoardSeq=rs.getInt(2);
-					String userId=rs.getString(3);
-					String qReplyContent=rs.getString(4);
-					Timestamp qReplyDate=rs.getTimestamp(5);
-				
-
-					list.add(new QReplyDTO(qReplySeq, QBoardSeq, userId, qReplyContent, qReplyDate));
+					HashMap map=new HashMap<>();
+					map.put("qReplySeq", rs.getInt(1));
+					map.put("qBoardSeq", rs.getInt(2));
+					map.put("userId", rs.getString(3));
+					map.put("qReplyContent", rs.getString(4));
+					map.put("qReplyDate", rs.getTimestamp(5));
+					map.put("nickname", rs.getString(6));
+					list.add(map);
 
 				}
 				return list;
