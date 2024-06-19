@@ -380,9 +380,9 @@
             videoElement[0].play();
         }
 
-        $('#gameVideo').on('ended', function() {
-            setTimeout(playRandomVideo, 30000); // 30초 후에 다음 비디오 재생
-        });
+//         $('#gameVideo').on('ended', function() {
+//             setTimeout(playRandomVideo, 30000); // 30초 후에 다음 비디오 재생
+//         });
 
         playRandomVideo(); // 초기 비디오 재생
     });

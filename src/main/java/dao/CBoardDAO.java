@@ -46,15 +46,15 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 전체 글 수 반환.
+	//유저게시판 전체 글 수 반환
 	public int getRecordCount(int category) throws Exception{
 		String sql = null;
 		if(category == 0) {
-			sql = "select count(c_board_seq) from c_board";
+			sql = "select count(c_board_seq) from c_board where c_board_report < 5";
 		}else if (category == 1) {
-			sql = "select count(c_board_seq) from c_board where c_board_category = 1";
+			sql = "select count(c_board_seq) from c_board where c_board_category = 1 and c_board_report < 5";
 		}else {
-			sql = "select count(c_board_seq) from c_board where c_board_category = 2";
+			sql = "select count(c_board_seq) from c_board where c_board_category = 2 and c_board_report < 5";
 		}
 		
 		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);
@@ -64,26 +64,26 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 검색된 글 수 반환.
+	//유저게시판 검색된 글 수 반환
 	public int getSearchedCount(int category, String searchType, String searchInput) throws Exception{
 		String sql = null;
 		if(category == 0) {
 			if(searchType.equals("writer")) {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report < 5)";
 			}else {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_title like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_title like ? and c_board_report < 5)";
 			}
 		}else if(category == 1) {
 			if(searchType.equals("writer")) {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and user_nickname like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and user_nickname like ? and c_board_report < 5)";
 			}else {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_category = 1 and c_board_title like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_category = 1 and c_board_title like ? and c_board_report < 5)";
 			}
 		}else {
 			if(searchType.equals("writer")) {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and user_nickname like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and user_nickname like ? and c_board_report < 5)";
 			}else {
-				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_category = 2 and c_board_title like ?)";
+				sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board where c_board_category = 2 and c_board_title like ? and c_board_report < 5)";
 			}
 		}
 		
@@ -96,15 +96,15 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 전체 글 목록 반환.
+	//유저게시판 전체 글 목록 반환
 	public List<CBoard2DTO> viewList(int category, int startNum, int endNum) throws Exception {
 		String sql = null;
 		if(category == 0) {
-			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id) where rown between ? and ?";
+			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report < 5) where rown between ? and ?";
 		}else if (category == 1) {
-			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1) where rown between ? and ?";
+			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 where c_board_report < 5) where rown between ? and ?";
 		}else {
-			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2) where rown between ? and ?";
+			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 where c_board_report < 5) where rown between ? and ?";
 		}
 		
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -131,26 +131,26 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 검색된 글 목록 반환.
+	//유저게시판 검색된 글 목록 반환
 	public List<CBoard2DTO> viewSearchedList(int category, int startNum, int endNum, String searchType, String searchInput) throws Exception{
 		String sql = null;
 		if(category == 0) {
 			if(searchType.equals("writer")) {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report < 5) where rown between ? and ?";
 			}else {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_title like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_title like ? and c_board_report < 5) where rown between ? and ?";
 			}
 		}else if(category == 1) {
 			if(searchType.equals("writer")) {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and user_nickname like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and user_nickname like ? and c_board_report < 5) where rown between ? and ?";
 			}else {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and c_board_title like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and c_board_title like ? and c_board_report < 5) where rown between ? and ?";
 			}
 		}else {
 			if(searchType.equals("writer")) {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and user_nickname like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and user_nickname like ? and c_board_report < 5) where rown between ? and ?";
 			}else {
-				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and c_board_title like ?) where rown between ? and ?";
+				sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and c_board_title like ? and c_board_report < 5) where rown between ? and ?";
 			}
 		}
 		
@@ -179,7 +179,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저의 가장 마지막에 작성된 글 번호 반환.
+	//유저의 가장 마지막에 작성된 글 번호 반환
 	public int getLastSeq(String id, int category) throws Exception{
 		String sql = "select c_board_seq from c_board where user_id = ? and c_board_category = ? order by c_board_seq desc";
 		
@@ -194,7 +194,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 글 세부내용 반환.
+	//유저게시판 글 세부내용 반환
 	public CBoard2DTO viewPost(int seq) throws Exception{
 		String sql = "select c_board.*, member.user_nickname from c_board join member on c_board.user_id = member.user_id where c_board_seq = ?";
 
@@ -219,7 +219,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//유저게시판 글 조회수 증가.
+	//유저게시판 글 조회수 증가
 	public void upViewCount(int seq) throws Exception {
 		String sql = "update c_board set c_board_view = c_board_view + 1 where c_board_seq = ?";
 
@@ -230,7 +230,7 @@ public class CBoardDAO {
 
 	}
 	
-	//DB에서 유저게시판 게시글 삭제.
+	//DB에서 유저게시판 게시글 삭제
 	public void delPost(int seq) throws Exception {
 		String sql = "delete from c_board where c_board_seq = ?";
 		
@@ -240,7 +240,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//DB에서 유저게시판 게시글 수정.
+	//DB에서 유저게시판 게시글 수정
 	public void correctPost(CBoardDTO post) throws Exception{
 		String sql = "update c_board set c_board_title = ?, c_board_content = ?, c_board_date = sysdate where c_board_seq = ?";
 		
@@ -252,7 +252,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//접속 유저가 해당 유저게시판 글을 북마크했는지 조회.
+	//접속 유저가 해당 유저게시판 글을 북마크했는지 조회
 	public int isBookmark(String id, int seq) throws Exception{
 		String sql = "select * from bookmark where user_id = ? and c_board_seq = ?";
 		
@@ -269,7 +269,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//접속 유저의 해당 유저게시판 글 북마크 삭제.
+	//접속 유저의 해당 유저게시판 글 북마크 삭제
 	public void delBookmark(String id, int seq) throws Exception{
 		String sql = "delete from bookmark where user_id= ? and c_board_seq = ?";
 		
@@ -280,7 +280,7 @@ public class CBoardDAO {
 		}
 	}
 	
-	//접속 유저의 해당 유저게시판 글 북마크 추가.
+	//접속 유저의 해당 유저게시판 글 북마크 추가
 	public void addBookmark(String id, int seq) throws Exception{
 		String sql = "insert into bookmark values(bookmark_sequence.nextval, ?, ?)";
 		

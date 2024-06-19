@@ -189,11 +189,12 @@
     }
 
     .boardList ul li.author {
-        width: 160px;
+        width: 180px;
     }
 
     .boardList ul li.date {
         width: 160px;
+        text-align : center;
     }
 
     .boardList ul li.view {
@@ -571,7 +572,7 @@
 			}else if(${searchType == "writer"}){
 				$("#searchType").val("writer");
 			}
-			$("#searchInput").val(${searchInput});
+			$("#searchInput").val("${searchInput}");
 		});
     </script>
 </body>
