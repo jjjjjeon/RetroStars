@@ -223,6 +223,39 @@ public class MemberDAO {
         }
     }
     
+    /** 
+     * @Method Name  : 어드민 여부 알아오기.
+     * @date : 2024. 6. 17. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : userId로 관리자 여부 구별
+     * @param 로그인 시 사용한 id
+     * @return boolean
+     * @throws Exception 
+     */   
+    public boolean isAdmin(String userId) throws Exception {
+    	String sql = "select user_admin from member where user_id = ?";
+        try (Connection conn = getConnection();
+                PreparedStatement pstat = conn.prepareStatement(sql)) {
+            pstat.setString(1, userId);
+            try (ResultSet rs = pstat.executeQuery();) {
+            	
+            	String isYN = "";
+            	while(rs.next()) {
+            		isYN = rs.getString(1);
+            	}
+                if (isYN.equals("Y")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    	
+    }
+    
+
+
     
     /** 
      * @Method Name  : myData
