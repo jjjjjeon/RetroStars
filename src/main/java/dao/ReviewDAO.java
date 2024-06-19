@@ -45,32 +45,40 @@ public class ReviewDAO {
         return ds.getConnection();
     }
 
-    public ReviewDTO getMostLikedReview() throws Exception {
-        String sql = "SELECT * FROM review ORDER BY (review_like + review_dislike + review_funny) DESC FETCH FIRST 1 ROWS ONLY";
-        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql); ResultSet rs = pstat.executeQuery()) {
+    //가장 반응이 많은 리뷰
+    public ReviewDTO getMostLikedReview(int gameSeq) throws Exception {
+        String sql = "select rownum, review.* from (select * from review ORDER BY (review_like + review_dislike + review_funny) desc) review where rownum = 1 and game_seq = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+        	pstat.setInt(1, gameSeq);
+        	try (ResultSet rs = pstat.executeQuery()){
             if (rs.next()) {
                 return new ReviewDTO(
-                        rs.getInt("review_seq"),
-                        rs.getInt("g_board_seq"),
-                        rs.getString("user_id"),
-                        rs.getString("review_content"),
-                        rs.getInt("review_like"),
-                        rs.getInt("review_dislike"),
-                        rs.getInt("review_funny"),
-                        rs.getTimestamp("review_date")
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
                 );
+                
             }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
         }
         return null;
     }
 
+    // 가장 최신 리뷰
     public ReviewDTO getLatestReview() throws Exception {
         String sql = "SELECT * FROM review ORDER BY review_date DESC FETCH FIRST 1 ROWS ONLY";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql); ResultSet rs = pstat.executeQuery()) {
             if (rs.next()) {
                 return new ReviewDTO(
                         rs.getInt("review_seq"),
-                        rs.getInt("g_board_seq"),
+                        rs.getInt("game_seq"),
                         rs.getString("user_id"),
                         rs.getString("review_content"),
                         rs.getInt("review_like"),
@@ -83,6 +91,7 @@ public class ReviewDAO {
         return null;
     }
 
+    // 리뷰가 업데이트 될 때마다 나오기
     public void updateReviewLike(int reviewSeq, String type) throws Exception {
         String sql = "";
         if ("like".equals(type)) {
@@ -99,9 +108,9 @@ public class ReviewDAO {
     }
 
     public static void main(String[] args) throws Exception {
-        String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String id = "diary";
-        String pw = "diary";
+        String url = "jdbc:oracle:thin:@192.168.1.14:1521:xe";
+        String id = "star";
+        String pw = "star";
 
         String sql = "insert into review values(review_sequence.nextval, ?, ?, ?, ?, ?, ?, sysdate)";
 
@@ -110,8 +119,8 @@ public class ReviewDAO {
         try (Connection con = DriverManager.getConnection(url, id, pw);
              PreparedStatement pstat = con.prepareStatement(sql)) {
             
-            for (int i = 1; i <= 30; i++) {
-                pstat.setInt(1, i); 
+            for (int i = 1; i <= 50; i++) {
+                pstat.setInt(1, random.nextInt(5)+1); 
                 pstat.setString(2, "유저아이디" + i);
                 pstat.setString(3, "테스트용 내용 " + i);
                 pstat.setInt(4, random.nextInt(100)); 

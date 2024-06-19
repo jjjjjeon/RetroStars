@@ -18,24 +18,39 @@ import java.sql.Timestamp;
  */
 public class ReviewDTO {
 	private int reviewSeq;
-	private int gBoardSeq;
+	private int gameSeq;
 	private String userId;
 	private String reviewContent;
 	private int reviewLike;
 	private int reviewDislike;
 	private int reviewFunny;
 	private Timestamp reviewDate;
+	public ReviewDTO(int reviewSeq, int gameSeq, String userId, String reviewContent, int reviewLike, int reviewDislike,
+			int reviewFunny, Timestamp reviewDate) {
+		super();
+		this.reviewSeq = reviewSeq;
+		this.gameSeq = gameSeq;
+		this.userId = userId;
+		this.reviewContent = reviewContent;
+		this.reviewLike = reviewLike;
+		this.reviewDislike = reviewDislike;
+		this.reviewFunny = reviewFunny;
+		this.reviewDate = reviewDate;
+	}
+	public ReviewDTO() {
+		super();
+	}
 	public int getReviewSeq() {
 		return reviewSeq;
 	}
 	public void setReviewSeq(int reviewSeq) {
 		this.reviewSeq = reviewSeq;
 	}
-	public int getgBoardSeq() {
-		return gBoardSeq;
+	public int getGameSeq() {
+		return gameSeq;
 	}
-	public void setgBoardSeq(int gBoardSeq) {
-		this.gBoardSeq = gBoardSeq;
+	public void setGameSeq(int gameSeq) {
+		this.gameSeq = gameSeq;
 	}
 	public String getUserId() {
 		return userId;
@@ -73,20 +88,6 @@ public class ReviewDTO {
 	public void setReviewDate(Timestamp reviewDate) {
 		this.reviewDate = reviewDate;
 	}
-	public ReviewDTO(int reviewSeq, int gBoardSeq, String userId, String reviewContent, int reviewLike,
-			int reviewDislike, int reviewFunny, Timestamp reviewDate) {
-		super();
-		this.reviewSeq = reviewSeq;
-		this.gBoardSeq = gBoardSeq;
-		this.userId = userId;
-		this.reviewContent = reviewContent;
-		this.reviewLike = reviewLike;
-		this.reviewDislike = reviewDislike;
-		this.reviewFunny = reviewFunny;
-		this.reviewDate = reviewDate;
-	}
-	public ReviewDTO() {
-		super();
-	}
+
 	
 }
