@@ -31,6 +31,8 @@
 <style>
 body {
 	background-image: url('/image/background.png');
+	background-size: 100% 100%;
+	color: white;
 }
 
 nav {
@@ -151,26 +153,26 @@ nav {
 	margin: 0;
 }
 
-		.list_data_writer {
-			    width: 93px;
-			    height: 48px;
-    			overflow: hidden;
- 				white-space: nowrap;
-    			text-overflow: ellipsis;
-    			display: inline-block;
-    			line-height: 48px;
-        }
-        
-        .list_data_title{
-            	width: 335px;
-			    height: 48px;
-    			overflow: hidden;
- 				white-space: nowrap;
-    			text-overflow: ellipsis;
-    			display: inline-block;
-    			line-height: 48px; 
-    			text-align:center;  
-        }
+.list_data_writer {
+	width: 93px;
+	height: 48px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: inline-block;
+	line-height: 48px;
+}
+
+.list_data_title {
+	width: 335px;
+	height: 48px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: inline-block;
+	line-height: 48px;
+	text-align: center;
+}
 
 .detailA {
 	text-decoration: none;
@@ -363,11 +365,9 @@ nav {
 					<div class="list_detail_box_row row" style="flex: 9; width: 100%;">
 						<div class="list_detail_box_col col"
 							style="flex: 1; height: 100%;">
-							<!--여기에 리스트 출력-->
 							<c:forEach var="dto" items="${list}">
-								<a href="/detail.qboard?seq=${dto.qBoardSeq}" class="detailA">
-									<div class="list_data_row row"
-										style="height: 44px; width: 100%;">
+								<a class="detailA" data-postOwnerId="${dto.userId}" data-qBoardSeq="${dto.qBoardSeq}" data-qBoardSecret="${dto.qBoardSecret}">
+									<div class="list_data_row row" style="height: 44px; width: 100%;">
 										<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
 										<div class="list_data_category center" style="flex: 1;">
 											<c:choose>
@@ -400,14 +400,12 @@ nav {
 										</div>
 										<c:choose>
 											<c:when test="${dto.qBoardAnswer eq 'N'}">
-												<div class="list_data_answer center" style="flex: 1; color:orangered">
-													답변예정
-												</div>
+												<div class="list_data_answer center"
+													style="flex: 1; color: orangered">답변예정</div>
 											</c:when>
 											<c:when test="${dto.qBoardAnswer eq 'Y'}">
-												<div class="list_data_answer center" style="flex: 1; color:dodgerblue">
-													답변완료
-												</div>
+												<div class="list_data_answer center"
+													style="flex: 1; color: dodgerblue">답변완료</div>
 											</c:when>
 										</c:choose>
 									</div>
@@ -418,8 +416,7 @@ nav {
 				</div>
 			</div>
 			<div class="btns_container" style="flex: 0.7; width: 100%;">
-				<button id="ask_btn" class="btn btn-primary"
-					onclick="location.href='/gowrite.qboard'">글쓰기</button>
+				<button id="ask_btn" class="btn btn-primary">글쓰기</button>
 			</div>
 			<div id="page_navi" class="page_container center"
 				style="flex: 0.7; width: 100%;"></div>
@@ -548,9 +545,41 @@ nav {
 		                if (e.key == "Enter") {
 		                    performSearch();
 		                }
-		            });
+		            }); 
 		            
+		          //관리자라면 모든 권한을 갖는다(비밀글여부 상관없이 모든 디테일 페이지, 게시글 수정삭제와 댓글 수정삭제)
+					if(${isAdmin}==true){
+						alert("관리자 접속");
+					}
+		            
+		           
 				});
+				
+				//디테일페이지 앵커 권한 설정
+				$($(".detailA")).on("click",function(){
+					//유저이면서 내가 쓴 글이 아니고 비밀이라면 보지 못 한다.
+					if("${loginId}" != $(this).attr("data-postOwnerId") && $(this).attr("data-qBoardSecret")=="Y" && "${isAdmin}"==false){
+						alert("내가 쓴 글이 아니지만 비밀이라서 보지 못 합니다.");
+						return false;
+					}
+					
+					//내가 쓴 글이거나 비밀이 아닐 때, 관리자일 때
+					//볼 수 있는 경우는 모두 이동
+					window.location.href="/detail.qboard?seq="+$(this).attr("data-qBoardSeq");
+				});
+				
+				
+				
+				//로그인 안 하고 글쓰기를 누를 경우 작성할 수 없게 하기
+				$("#ask_btn").on("click",function(){
+					if("${loginId}" == "0"){
+						alert("로그인이 필요한 서비스입니다.");
+						return false;
+					}
+
+					window.location.href="/gowrite.qboard";
+				});
+				
 
 				$(document).on('click', '.naviAn', function (e) {
 					e.preventDefault();
@@ -558,16 +587,6 @@ nav {
 					window.location.href = "/list.qboard?cpage=1&category=" + category;
 				});
 				
-	          
-				
-				
-
-				
-
-		
-
-
-
 			</script>
 
 </body>
