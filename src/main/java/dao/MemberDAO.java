@@ -278,13 +278,10 @@ public class MemberDAO {
     
     public List<CBoardBookmarkDTO> selectCBoradCate1(String id) throws Exception {
 
-		String sql = "select "
-				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
-				+ "from "
-				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
-				+ "where "
-				+ "c.c_board_category = 1 and b.user_id = ? "
-				+ "order by 5 desc";
+		String sql = "select c.c_board_seq, b.user_id, c.user_nickname , c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "from (select b.*, m.user_nickname from c_board b full outer join member m on b.user_id = m.user_id) c "
+				+ "right outer join bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "where c.c_board_category = 1 and b.user_id = ? order by 5 desc";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -295,12 +292,12 @@ public class MemberDAO {
 				while (rs.next()) {
 					int seq = rs.getInt(1);
 					String userId = rs.getString(2);
-					int category = rs.getInt(3); 
-					String title = rs.getString(4);
-					String writerId = rs.getString(5);
-					Timestamp date = rs.getTimestamp(6);
-					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
-					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
+					String nickname = rs.getString(3);
+					int category = rs.getInt(4); 
+					String title = rs.getString(5);
+					String writerId = rs.getString(6);
+					Timestamp date = rs.getTimestamp(7);
+					list.add(new CBoardBookmarkDTO(seq,userId,nickname,category, title, writerId, date));
 					}
 				return list;
 			}
@@ -321,13 +318,10 @@ public class MemberDAO {
     
     public List<CBoardBookmarkDTO> selectCBoradCate2(String id) throws Exception {
 
-		String sql = "select "
-				+ "c.c_board_seq ,b.user_id, c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
-				+ "from "
-				+ "c_board c right outer join bookmark b on c.c_board_seq = b.c_board_seq "
-				+ "where "
-				+ "c.c_board_category = 2 and b.user_id = ? "
-				+ "order by 5 desc";
+		String sql = "select c.c_board_seq, b.user_id, c.user_nickname , c.c_board_category, c.c_board_title, c.user_id, c.c_board_date "
+				+ "from (select b.*, m.user_nickname from c_board b full outer join member m on b.user_id = m.user_id) c "
+				+ "right outer join bookmark b on c.c_board_seq = b.c_board_seq "
+				+ "where c.c_board_category = 2 and b.user_id = ? order by 5 desc";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -338,12 +332,12 @@ public class MemberDAO {
 				while (rs.next()) {
 					int seq = rs.getInt(1);
 					String userId = rs.getString(2);
-					int category = rs.getInt(3); 
-					String title = rs.getString(4);
-					String writerId = rs.getString(5);
-					Timestamp date = rs.getTimestamp(6);
-					list.add(new CBoardBookmarkDTO(seq,userId,category, title, writerId, date));
-					System.out.println(userId+":"+category+":"+title+":"+writerId+":"+date);
+					String nickname = rs.getString(3);
+					int category = rs.getInt(4); 
+					String title = rs.getString(5);
+					String writerId = rs.getString(6);
+					Timestamp date = rs.getTimestamp(7);
+					list.add(new CBoardBookmarkDTO(seq,userId,nickname,category, title, writerId, date));
 					}
 				return list;
 			}
