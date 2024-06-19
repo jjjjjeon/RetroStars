@@ -49,6 +49,12 @@ nav {
 	border: 1px solid red;
 }*/
 
+.center{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .container {
 	width: 1100px;
 	height: 750px;
@@ -326,15 +332,22 @@ nav {
 			onclick="location.href='/list.qboard'">목록으로</button>
 
 		<c:choose>
-			<c:when test="${loginId eq dto.userId}">
+			<c:when test="${loginId eq dto.userId or isAdmin eq true}">
 				<button class="btn btn-secondary" id="updatebtn">수정</button>
 				<button class="btn btn-secondary" id="deletebtn">삭제</button>
 			</c:when>
 		</c:choose>
 		</div>
 		<div class="addCommentBox">
-		<div id="addCommentInput" contenteditable="true"></div>
-		<button class="btn btn-secondary" id="addCommentBtn">등록</button>
+			<c:choose>
+				<c:when test="${loginId eq dto.userId or isAdmin eq true}">
+					<div id="addCommentInput" contenteditable="true"></div>
+					<button class="btn btn-secondary" id="addCommentBtn">등록</button>
+				</c:when>
+				<c:otherwise>
+					<div class="center" contenteditable="false" style="width:1000px; height:100px; border: 1px solid white">게시판 작성자만 댓글을 작성할 수 있습니다.</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<div class="commentListBox"></div>
