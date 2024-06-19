@@ -123,7 +123,7 @@
     				margin-right: 5px
 					border: none;
 					width: 450px;
-					text-align: center;
+					text-align: left;
 					border: none;
 				}
 
@@ -337,6 +337,7 @@
 			<script>
 			
 			 $("#insert_btn").on("click", function () {
+					console.log($("#categoryToggle").html());
 				 
 				 if( $("#categoryToggle").html()=="카테고리"){
 					 alert("카테고리를 선택해주세요.");
@@ -391,6 +392,7 @@
 	       $(".dropdown-item").on("click", function (e) {
 	          e.preventDefault();
 	          $("#categoryToggle").html($(this).html());
+	          console.log($("#categoryToggle").html());
 	       });
 		   
 		   
