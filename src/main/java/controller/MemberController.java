@@ -369,7 +369,25 @@ public class MemberController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 				
-			}
+			}else if(cmd.equals("/checkUserNicknameUpdate.member")) {
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+                String userNickname = request.getParameter("userNickname");
+                
+                boolean isExistCheck = memberDao.isUserNicknameCheck(userNickname);
+                boolean isMyNicknameCheck = memberDao.isUserNicknameCheckUpdate(userNickname, id);
+                PrintWriter pw = response.getWriter();
+                
+                if(isExistCheck) {
+                	pw.append("true");
+                }else if( (isExistCheck == false) && (isMyNicknameCheck == false) ){
+                	// 존재하는데 내꺼일 경우
+                	pw.append("before");
+                }else {
+                	// 그 외 모든 경우 수정 불가능
+                	pw.append("false");
+                }
+            }	
 			
 			
 		}catch(Exception e) {

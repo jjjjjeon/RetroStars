@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,26 +30,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-image: url('image/background.png');
-
-      color: white;
-      color: #333;
-      margin-bottom: 120px;
-      /* Footer 높이 만큼의 여백을 추가 */
-      background-size: cover;
-      /* 이미지를 화면에 맞게 조정 */
-      background-position: center;
-      /* 이미지를 가운데 정렬 */
-      height: 100vh;
-      /* 화면 높이의 100% */
-    }
+body{background-image:url("/image/background.png");
+ background-size:100% 100%;
+ color:white;
+ }
 
     a {
       color: white;
       text-decoration: none;
     }
+		/*    navbar css */
+    	.navbar {
+        	top: 0;
+        	width: 100%;
+        	z-index: 1000;
+        	height:70px;
+        	background-color : #323232;
+    	}
+    	.navbar-brand{
+    		color:white;
+    	}
+        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
+        .nav-link {
+            color: white !important;
+            /* margin-left: 20px; */
+        }
 
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+		.btn{
+			color:white;
+		}
+		.btn:hover{
+			color:white;
+		}
+		.dropdown-menu{
+			background-color: #323232;
+		}
+		.dropdown-item{
+			background-color: #323232;
+			color:white;
+		}
+		
+		
     .container {
       background-color: #323232;
       color: white;
@@ -57,6 +84,7 @@
       margin-top: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       margin-bottom: 200px;
+      height: 1200px;
 
     }
 
@@ -94,7 +122,8 @@
       background-color: #323232;
       color: white;
       border: 1px solid white;
-      margin-left: -600px;
+      margin-left: -200px;
+      margin-bottom: 20px;
     }
 
     .btn-write:hover {
@@ -178,11 +207,11 @@
 
     .footer {
       width: 100%;
-      height: 120px;
       background-color: #323232;
-      position: fixed;
+      position: relative;
       bottom: 0;
       left: 0;
+      margin-top: 40px;
     }
 
     .leftfooter {
@@ -230,101 +259,122 @@
     .dropdown{
     	margin-right: 5px;
     }
+    
+    #lang{
+        width: 90px;
+    	background-color: #eeeeee;
+   	 	margin-right: 5px;
+    }
   </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">ICON</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
-        aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              게임
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#">game1</a></li>
-              <li><a class="dropdown-item" href="#">game2</a></li>
-              <li><a class="dropdown-item" href="#">game3</a></li>
-              <li><a class="dropdown-item" href="#">game4</a></li>
-              <li><a class="dropdown-item" href="#">game5</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              게시판
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
-              <li><a class="dropdown-item" href="#">자유게시판</a></li>
-              <li><a class="dropdown-item" href="#">공략게시판</a></li>
-              <li><a class="dropdown-item" href="#">QA게시판</a></li>
-              <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-              <li><a class="dropdown-item" href="#">공지게시판</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">랭킹</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">마이페이지</a>
-          </li>
-          <li calss="nav-item">
-            <a class="nav-link" href="/member/login/login.jsp">로그인</a>
-          </li>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="#">game3</a></li>
+                            <li><a class="dropdown-item" href="#">game4</a></li>
+                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">랭킹</a>
+                    </li>
+                   
 
-          <i class="fa-solid fa-user"></i>
+                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+				        <li class="nav-item">
+				           <a class="nav-link" href="/mypage.member">
+				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           </a>
+				       </li>                  
+                      <li class="nav-item">
+                           <a class="nav-link" href="/mypage.member">마이페이지</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                       </li>
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
 
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            </div>
+        </div>
+    </nav>
   <div class="container">
     <div class="boardName">공지게시판</div>
     <div class="title">
       <span>전체</span>
 
+	<c:if test="${loginId eq 'admin'}">
+		      <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
+		        <i class="fas fa-pencil-alt"></i> 글 작성
+		      </a>
 
-      <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
-        <i class="fas fa-pencil-alt"></i> 글 작성
-      </a>
+	</c:if>
 
 
+
+		
+	
       <form action="/search.nboard" class="d-flex" role="search">
-
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            분류
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" id="filterTitle">제목</a></li>
-            <li><a class="dropdown-item" id="filterNumber">글번호</a></li>
-
-          </ul>
-        </div>
+      	
+   
+      	<select name="filter" id="lang" class="form-select" aria-label="Default select example">
+      		<option value="title">제목</option>
+      		<option value="post_number">글번호</option>
+		</select>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
         <button class="btn btn-outline-success" type="submit" id="searchbtn">Search</button>
       </form>
       <script>
       	$(document).ready(function(){
-      		$("#filterTitle").click(function(){
-      			$("form").attr("action","/search.nboard?filter=title");
-      		});
-      		$("#filterNumber").click(function(){
-      			$("form").attr("action","/search.nboard?filter=post_number");
-      		})
-      	})
+			$("#lang").change(function(){
+				var selectedOption = $(this).children("option:selected").val();
+				if(selectedOption === "title"){
+					$("form").attr("action","/search.nboard?filter=title");
+				} else if(selectedOption === "post_number"){
+					$("form").attr("action","/search.nboard?filter=post_number");
+				}
+			});
+      	});
       </script>
 
     </div>
@@ -332,11 +382,11 @@
 
     <div class="noticeContent">
       <div class="notiListItem">
-        <div class="notiCategory">공지</div>
+        <div class="notiCategory">번호</div>
         <div class="notiTitle">공지사항 제목</div>
-        <div class="notiAdmin">관리자</div>
-        <div class="notiDate">2024-06-12</div>
-        <div class="notiView">100</div>
+        <div class="notiAdmin">작성자</div>
+        <div class="notiDate">작성일</div>
+        <div class="notiView">조회</div>
       </div>
 
 
@@ -351,7 +401,9 @@
               <div class="notiCategory">${dto.nBoardSeq}</div>
               <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
               <div class="notiAdmin">${dto.userId}</div>
-              <div class="notiDate">${dto.nBoardDate}</div>
+              <div class="notiDate">
+              	<fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
+              </div>
               <div class="notiView">${dto.nBoardView}</div>
             </div>
           </c:forEach>
@@ -368,34 +420,25 @@
             <div class="notiListContent">
               <div class="notiCategory">${dto.nBoardSeq}</div>
               <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
-              <div class="notiAdmin">${dto.userId}</div>
-              <div class="notiDate">${dto.nBoardDate}</div>
+              <div class="notiAdmin">관리자</div>
+             <div class="notiDate">
+              	<fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
+              </div>
               <div class="notiView">${dto.nBoardView}</div>
             </div>
           </c:forEach>
         </c:otherwise>
       </c:choose>
-
-
-
     </div>
     <div class="pagenavi" id="navi"></div>
   </div>
 
   <script>
     window.onload = function () {
-      let cpage = $ {
-        cpage
-      }; // 현재 페이지
-      let recordTotalCount = $ {
-        record_total_count
-      }; // 전체 글의 개수
-      let recordCountPerPage = $ {
-        record_count_per_page
-      }; // 한 페이지에 보여줄 게시물 수
-      let naviCountPerPage = $ {
-        navi_count_per_page
-      }; // 페이지네비게이터 몇 개씩 보여줄 것인지
+      let cpage = ${cpage}; // 현재 페이지
+      let recordTotalCount = ${record_total_count}; // 전체 글의 개수
+      let recordCountPerPage = ${record_count_per_page}; // 한 페이지에 보여줄 게시물 수
+      let naviCountPerPage = ${navi_count_per_page}; // 페이지네비게이터 몇 개씩 보여줄 것인지
 
 
       // 필요한 전체 페이지 개수 = 게시글의 개수 / 한 페이지당 보여줄 게시글 + 1
