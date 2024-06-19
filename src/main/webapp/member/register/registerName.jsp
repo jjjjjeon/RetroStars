@@ -54,7 +54,7 @@
             <div class="input-group">
                 <label for="userNickname">닉네임:</label>
                 <input type="text" id="userNickname" name="userNickname" placeholder="닉네임" required>
-                <p id="nicknameCheckText" class="checkText">닉네임은 특수문자를 포함할 수 없습니다.</p>
+                <p id="nicknameCheckText" class="checkText">닉네임은 3~10글자의 한글, 영어만 가능합니다.</p>
             </div>
             <div class="input-group">
                 <label for="userNoFront">주민등록번호:</label>
@@ -81,7 +81,7 @@
     }
 
     function validateNickname(nickname) {
-        let regex = /^[a-zA-Z0-9가-힣]+$/;
+        let regex = /^[a-zA-Z0-9가-힣]{3,10}$/;
         return regex.test(nickname);
     }
 
@@ -146,7 +146,7 @@
         let nextButton = $('#nextButton');
 
         if (!validateNickname(userNickname)) {
-            nicknameCheckText.text("사용 불가능한 닉네임입니다.");
+            nicknameCheckText.text("닉네임은 3~10자리만 가능합니다.");
             nicknameCheckText.css('color', 'red');
             nicknameCheckText.css('visibility', 'visible');
             nextButton.addClass('disabled-button');

@@ -86,7 +86,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col_attr{ width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;}
 		.input_bgc{background-color: rgba(82, 11, 117, 0); border:0px; color:white; font-size:18px;}
 		
-		.footer {position : fixed; width: 100%;background-color: #323232; bottom:0;height: 150px;}
+		.footer {width: 100%;background-color: #323232; height: 150px;}
         .leftfooter{color : white;font-weight : bold;margin-top: 20px;}
         .rightfooter {display: flex; align-items: center; }
         .footerbox {width: 1000px;height: 100%;margin: auto;display: flex;justify-content: space-between;align-items: center;}
