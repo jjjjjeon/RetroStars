@@ -50,22 +50,34 @@ public class FBoardDAO {
 	}
 	
     /** 
-     * @Method Name  : listCate
-     * @date : 2024. 6. 16. 
+     * @Method Name  : listCateNtoM
+     * @date : 2024. 6. 19. 
      * @author : KJY
      * @version : 
-     * @Method info : FAQ 카테고리 별 질문 & 답변 출력
+     * @Method info : FAQ 카테고리 별 질문 & 답변 수 지정갯수만큼 출력
      * @param String category
-     * @param 
+     * @param int start
+     * @param int end
      * @return List<FBoardDTO>
      * @throws Exception 
      */ 
 	
-	private List<FBoardDTO> listCateNtoM(String category, int start, int end) throws Exception {
-        String sql = "select * from f_board where f_board_category=?";
+	public List<FBoardDTO> listCateNtoM(String category, int start, int end) throws Exception {
+        
+		String sql = "";
+		if(category.equals("0")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board) where row_count between ? and ?";
+		}else if(category.equals("1")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='1') where row_count between ? and ?";
+		}else if(category.equals("2")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='2') where row_count between ? and ?";
+		}else {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='3') where row_count between ? and ?";
+		}
         try (Connection con = this.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql);) {
-            pstat.setString(1, category);
+            pstat.setInt(1, start);
+            pstat.setInt(2, end);
             try (ResultSet rs = pstat.executeQuery();) {
                 List<FBoardDTO> list = new ArrayList<>();
                 while (rs.next()) {
@@ -75,90 +87,12 @@ public class FBoardDAO {
                     String q = rs.getString(4);
                     String a = rs.getString(5);
                     list.add(new FBoardDTO(seq, id, categoryResult, q, a));
-                    //System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
+                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
                 }
                 return list;
             }
         }
     }
-	
-	
-	
-//	/** 
-//     * @Method Name  : listCate1
-//     * @date : 2024. 6. 16. 
-//     * @author : KJY
-//     * @version : 
-//     * @Method info : FAQ 카테고리 1 질문 & 답변 출력
-//     * @param 
-//     * @param 
-//     * @return List<FBoardDTO>
-//     * @throws Exception 
-//     */ 
-//    public List<FBoardDTO> listCate1() throws Exception {
-//        return listCate("1");
-//    }
-//    /** 
-//     * @Method Name  : listCate2
-//     * @date : 2024. 6. 16. 
-//     * @author : KJY
-//     * @version : 
-//     * @Method info : FAQ 카테고리 2 질문 & 답변 출력
-//     * @param 
-//     * @param 
-//     * @return List<FBoardDTO>
-//     * @throws Exception 
-//     */ 
-//
-//    public List<FBoardDTO> listCate2() throws Exception {
-//        return listCate("2");
-//    }
-//    /** 
-//     * @Method Name  : listCate3
-//     * @date : 2024. 6. 16. 
-//     * @author : KJY
-//     * @version : 
-//     * @Method info : FAQ 카테고리 3 질문 & 답변 출력
-//     * @param 
-//     * @param 
-//     * @return List<FBoardDTO>
-//     * @throws Exception 
-//     */ 
-//    public List<FBoardDTO> listCate3() throws Exception {
-//        return listCate("3");
-//    }
-//    /** 
-//     * @Method Name  : listCate
-//     * @date : 2024. 6. 16. 
-//     * @author : KJY
-//     * @version : 
-//     * @Method info : FAQ 카테고리 전체 질문 & 답변 출력
-//     * @param 
-//     * @param 
-//     * @return List<FBoardDTO>
-//     * @throws Exception 
-//     */ 
-//    public List<FBoardDTO> listCate() throws Exception {
-//        String sql = "select * from f_board";
-//        try (Connection con = this.getConnection();
-//             PreparedStatement pstat = con.prepareStatement(sql);
-//            		 ResultSet rs = pstat.executeQuery();) {
-//                List<FBoardDTO> list = new ArrayList<>();
-//                while (rs.next()) {
-//                    int seq = rs.getInt(1);
-//                    String id = rs.getString(2);
-//                    String categoryResult = rs.getString(3);
-//                    String q = rs.getString(4);
-//                    String a = rs.getString(5);
-//                    list.add(new FBoardDTO(seq, id, categoryResult, q, a));
-//                   // System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
-//                }
-//                return list;
-//            }
-//        }
-//    
-//    
-    
     
     /** 
      * @Method Name  : listCate
@@ -172,10 +106,19 @@ public class FBoardDAO {
      * @throws Exception 
      */ 
     
-    public int getRecordCountAll() throws Exception {
-
-		String sql = "select count(*) from f_board";
-
+    public int getRecordCount(String category) throws Exception {
+    	
+    	String sql = "";
+    	
+    	if(category.equals("0")) {
+			sql = "select count(*) from f_board";
+		}else if(category.equals("1")) {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '1'";
+		}else if(category.equals("2")) {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '2'";
+		}else {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '3'";
+		}
 		try (Connection con = this.getConnection();
 				PreparedStatement pstst = con.prepareStatement(sql);
 				ResultSet rs = pstst.executeQuery()) {
@@ -185,32 +128,6 @@ public class FBoardDAO {
 			System.out.println(record);
 
 			return record;
-		}
-	}
-
-	public List<FBoardDTO> selectNtoM(int startNum, int endNum) throws Exception {
-
-		String sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board) where row_count between ? and ?";
-
-		try (Connection con = this.getConnection(); PreparedStatement pstst = con.prepareStatement(sql);) {
-
-			pstst.setInt(1, startNum);
-			pstst.setInt(2, endNum);
-
-			try (ResultSet rs = pstst.executeQuery();) {
-				List<FBoardDTO> list = new ArrayList<>();
-				while (rs.next()) {
-					int seq = rs.getInt(1);
-                    String id = rs.getString(2);
-                    String categoryResult = rs.getString(3);
-                    String q = rs.getString(4);
-                    String a = rs.getString(5);
-                    list.add(new FBoardDTO(seq, id, categoryResult, q, a));
-                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
-				}
-
-				return list;
-			}
 		}
 	}
     

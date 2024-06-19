@@ -21,11 +21,6 @@ import dto.FBoardDTO;
 public class FBoardController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doPost(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
@@ -44,27 +39,31 @@ public class FBoardController extends HttpServlet {
 //				List<FBoardDTO> fboardCate3 = fBoardDao.listCate3();
 				
 				String category = request.getParameter("category");
-				if(category==null) {category = "0";}
+				if(category == null) {category = "0";}
+				
 				
 				String pcpage = request.getParameter("cpage");
 				if (pcpage == null) {pcpage = "1";}
 				int cpage = Integer.parseInt(pcpage);
 				
+				System.out.println("dao 들어가기전 : "+category);
 				
-				List<FBoardDTO> fboardCate = fBoardDao.selectNtoM(
+				List<FBoardDTO> fboardCate = fBoardDao.listCateNtoM(category,
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
 				
 //				request.setAttribute("fboardCate1", fboardCate1);
 //				request.setAttribute("fboardCate2", fboardCate2);
 //				request.setAttribute("fboardCate3", fboardCate3);
+				System.out.println("dao 들어간 후 : "+category);
 				
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fboardCate", fboardCate);
 				request.setAttribute("recordCountPerPage", FBoardConfig.recordCountPerFPage);
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
-				request.setAttribute("recordTotalCount",fBoardDao.getRecordCountAll());
+				request.setAttribute("recordTotalCount",fBoardDao.getRecordCount(category));
+				
 				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
 				
 			}
@@ -73,8 +72,11 @@ public class FBoardController extends HttpServlet {
 			e.printStackTrace();
 			response.sendRedirect("error.jsp");
 		}
-		
-		
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doGet(request, response);
+}
+	
 }

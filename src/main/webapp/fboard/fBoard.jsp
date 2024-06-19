@@ -88,12 +88,6 @@
 
         .tablink:hover { background-color: #575757;}
 
-        .tabcontent {display: none;padding: 20px;animation: fadeEffect 0.5s;}
-
-        @keyframes fadeEffect {
-            from {opacity: 0;}
-			to {opacity: 1;}
-        }
 
         .faq {margin-top: 20px; margin-bottom:0px;}
 
@@ -207,8 +201,6 @@
                     <li class="nav-item">
                         <a class="nav-link">랭킹</a>
                     </li>
-                   
-
                 </ul>
                 <c:choose>
                    <c:when test="${not empty loginId}">
@@ -240,70 +232,70 @@
             </div>
         </div>
     </nav>
+    
+    
 	<div class="container">
-        <h1>FAQ 게시판</h1>
+        <h1>자주 찾는 질문</h1>
         
         <div class="search">검색 기능 구현</div>
         
         <div class="tabs">
-            <button class="tablink" onclick="openTab(event, 'all')">전체</button>
-            <button class="tablink" onclick="openTab(event, 'game')">게임</button>
-            <button class="tablink" onclick="openTab(event, 'board')">게시판</button>
-            <button class="tablink" onclick="openTab(event, 'etc')">기타</button>
+            <button class="tablink" id="all_tap">전체</button>
+            <button class="tablink" id="game_tap">게임</button>
+            <button class="tablink" id="board_tap">게시판</button>
+            <button class="tablink" id="etc_tap">기타</button>
         </div>
         
         <div class="content">
-
-        <div id="all" class="tabcontent">
-            <h3>전체</h3>
-            <div class="faq">
-                <div class="faq-item">
-                	<c:forEach var="fboardCate" items="${fboardCate}">
-                    	<div class="question">${fboardCate.fBoardQuestion}</div>
-                    	<div class="answer">${fboardCate.fBoardAnswer}</div>
-                    </c:forEach>
-                </div>
-            </div>
-            <div id="apage" class="page"> 페이지 네이션 자리 </div>
+        <div class="tabcontent">
+           <c:choose >
+          	<c:when test="${category.equals('1')}">
+            	<h3>게임</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                    		<div class="question">${fboardCate.fBoardQuestion}</div>
+                    		<div class="answer">${fboardCate.fBoardAnswer}</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('2')}">
+            	<h3>게시판</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                    		<div class="question">${fboardCate.fBoardQuestion}</div>
+                    		<div class="answer">${fboardCate.fBoardAnswer}</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('3')}">
+            	<h3>기타</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                    		<div class="question">${fboardCate.fBoardQuestion}</div>
+                    		<div class="answer">${fboardCate.fBoardAnswer}</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:otherwise>
+            	<h3>전체</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                    		<div class="question">${fboardCate.fBoardQuestion}</div>
+                    		<div class="answer">${fboardCate.fBoardAnswer}</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:otherwise>
+          </c:choose>
+			<div id="page" class="page"></div>
         </div>
-        <div id="game" class="tabcontent">
-            <h3>게임</h3>
-            <div class="faq">
-                <div class="faq-item">                   
-               		 <c:forEach var="fboardCate1" items="${fboardCate1}">
-                    	<div class="question">${fboardCate1.fBoardQuestion}</div>
-                    	<div class="answer">${fboardCate1.fBoardAnswer}</div>
-                    </c:forEach>                   
-                </div>
-            </div>
-            <div id="gpage" class="page"> 페이지 네이션 자리 </div>
-        </div>
-
-        <div id="board" class="tabcontent">
-            <h3>게시판</h3>
-            <div class="faq">
-                <div class="faq-item">  
-                    <c:forEach var="fboardCate2" items="${fboardCate2}">
-                    	<div class="question">${fboardCate2.fBoardQuestion}</div>
-                    	<div class="answer">${fboardCate2.fBoardAnswer}</div>
-                    </c:forEach>
-                </div>
-            </div>
-            <div id="bpage" class="page"> 페이지 네이션 자리 </div>
-        </div>
-
-        <div id="etc" class="tabcontent">
-            <h3>기타</h3>
-            <div class="faq">
-                <div class="faq-item">
-                    <c:forEach var="fboardCate3" items="${fboardCate3}">
-                    	<div class="question">${fboardCate3.fBoardQuestion}</div>
-                    	<div class="answer">${fboardCate3.fBoardAnswer}</div>
-                    </c:forEach>
-                </div>
-            </div>
-            <div id="epage" class="page"> 페이지 네이션 자리 </div>
-         </div>
        </div> 
     </div>
     <div class="footer">
@@ -328,97 +320,34 @@
 
     <script>
     
-    $(document).ready(function(){
-		
-		// 전체 글 개수
-		let record_total_count = ${recordTotalCount};
-		// 페이지 당 게시글 개수
-		let record_count_per_page = ${recordCountPerPage};
-		// 네비바 에 몇개씩 보여줄건지
-		let navi_count_per_page = ${naviCountPerPage}; 
-		// 현재 페이지
-		let cpage = ${cpage};
-		
-		createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage)
-		console.log(record_total_count);
-		console.log(record_count_per_page);
-		console.log(navi_count_per_page);
-		console.log(cpage);
-	})
-	
-
-		function createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage){
-			
-			let pageTotalCount=0;
-			
-			if(record_total_count % record_count_per_page > 0){
-				let beforepageTotalCount = record_total_count/record_count_per_page + 1;
-				pageTotalCount = Math.floor(beforepageTotalCount);
-				console.log(pageTotalCount+"if");
-			}else{
-				let beforepageTotalCount = record_total_count/record_count_per_page;
-				pageTotalCount = Math.floor(beforepageTotalCount)+1;
-				console.log(pageTotalCount+"else");
-			}
-			
-			let start = Math.floor((cpage-1) / navi_count_per_page) * navi_count_per_page+1;
-			let end = start + navi_count_per_page-1;
-			
-			if(end>pageTotalCount){end=pageTotalCount;}
-			
-			let needNext=true;
-			let needPrev=true;
-			
-			if (start == 1) {
-				needPrev = false;
-			}
-			if (end == pageTotalCount) {
-				needNext = false;
-			}
-			
-			let navi = $("#apage");
-			navi.empty();
-			
-			if (needPrev) {
-				$("#apage").append("<a href='/list.fboard?cpage=" + (start - navi_count_per_page) + "'><</a>&nbsp");
-			}
-			for (let i = start; i <= end; i++) {
-				$("#apage").append("<a href='/list.fboard?cpage=" + i + "'>" + i + "</a>&nbsp");
-			}
-			if (needNext) {
-				$("#apage").append("<a href='/list.fboard?cpage=" + (end + 1) + "'>></a>");
-			}
-		}
+    console.log(${category});
     
+    $("#all_tap").on("click",function(){
+    	location.href="/list.fboard?category=0";
+    })
+    $("#game_tap").on("click",function(){
+    	location.href="/list.fboard?category=1";
+    })
+    $("#board_tap").on("click",function(){
+    	location.href="/list.fboard?category=2";
+    })
+    $("#etc_tap").on("click",function(){
+    	location.href="/list.fboard?category=3";
+    })
+
     
         $(document).ready(function () {
             $(".question").click(function () {
                 $(this).next(".answer").slideToggle();
                 $(this).toggleClass("active");
             });
-
-            $(".tablink").first().click(); // 첫 번째 탭을 기본으로 열기
         });
 
-        
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].style.backgroundColor = "";
-            }
-            document.getElementById(tabName).style.display = "block";
-            //evt.currentTarget.style.backgroundColor = "#575757";
-        }
         
         $(document).ready(function () {
             $(".question").click(function () {
                 let $answer = $(this).next(".answer");
-                
+
                 $(".answer").not($answer).slideUp();
                 $(".question").not(this).removeClass("active");
 
@@ -435,12 +364,87 @@
                 $("#" + tabName + " .question:first-of-type").click();
             });
 
-            // 페이지 로드 시 첫 번째 탭의 첫 번째 질문의 답변만 엽니다.
-            $(".tablink:first-of-type").click();
         });
-       
-
         
+        $(document).ready(function(){
+    		
+    		// 전체 글 개수
+    		let record_total_count = ${recordTotalCount};
+    		// 페이지 당 게시글 개수
+    		let record_count_per_page = ${recordCountPerPage};
+    		// 네비바 에 몇개씩 보여줄건지
+    		let navi_count_per_page = ${naviCountPerPage}; 
+    		// 현재 페이지
+    		let cpage = ${cpage};
+    		
+    		createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage);
+    		
+    		console.log(record_total_count);
+    		console.log(record_count_per_page);
+    		console.log(navi_count_per_page);
+    		console.log(cpage);
+
+    	})
+    	
+    		function createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage){
+    			
+    			let pageTotalCount=0;
+    			let category=${category};
+    			
+    			if(record_total_count % record_count_per_page > 0){
+    				let beforepageTotalCount = record_total_count/record_count_per_page + 1;
+    				pageTotalCount = Math.floor(beforepageTotalCount);
+    				console.log(pageTotalCount+"if");
+    			}else{
+    				let beforepageTotalCount = record_total_count/record_count_per_page;
+    				pageTotalCount = Math.floor(beforepageTotalCount)+1;
+    				console.log(pageTotalCount+"else");
+    			}
+    			
+    			let start = Math.floor((cpage-1) / navi_count_per_page) * navi_count_per_page+1;
+    			let end = start + navi_count_per_page-1;
+    			
+    			if(end>pageTotalCount){end=pageTotalCount;}
+    			
+    			let needNext=true;
+    			let needPrev=true;
+    			
+    			if (start == 1) {
+    				needPrev = false;
+    			}
+    			if (end == pageTotalCount) {
+    				needNext = false;
+    			}
+    			
+    			let navi = $("#page");
+    			navi.empty();
+    			
+    			if (needPrev) {
+    				$("#page").append("<a href='/list.fboard?category="+category+"&cpage=" + (start - navi_count_per_page) + "'><</a>&nbsp");
+    			}
+    			for (let i = start; i <= end; i++) {
+    				$("#page").append("<a href='/list.fboard?category="+category+"&cpage=" + i + "'>" + i + "</a>&nbsp");
+    			}
+    			if (needNext) {
+    				$("#page").append("<a href='/list.fboard?category="+category+"&cpage=" + (end + 1) + "'>></a>");
+    			}
+    			
+    			console.log("record_total_count:", record_total_count);
+    		    console.log("record_count_per_page:", record_count_per_page);
+    		    console.log("navi_count_per_page:", navi_count_per_page);
+    		    console.log("cpage:", cpage);
+    		    console.log("pageTotalCount:", pageTotalCount);
+    		    console.log("start:", start);
+    		    console.log("end:", end);
+    		    console.log("needPrev:", needPrev);
+    		    console.log("needNext:", needNext);
+    		    console.log("category:", category);
+    		    
+    		}
+        
+        
+        
+      
     </script>
 	
 </body>
