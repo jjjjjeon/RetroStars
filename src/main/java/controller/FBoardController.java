@@ -37,34 +37,35 @@ public class FBoardController extends HttpServlet {
 		try {		
 			// FAQ 목록 출력
 			if(cmd.equals("/list.fboard")) {
-				
-//				session = request.getSession();
-//				String id = (String) session.getAttribute("loginId");
-//				
+			
 				//List<FBoardDTO> fboardCate = fBoardDao.listCate();
-				List<FBoardDTO> fboardCate1 = fBoardDao.listCate1();
-				List<FBoardDTO> fboardCate2 = fBoardDao.listCate2();
-				List<FBoardDTO> fboardCate3 = fBoardDao.listCate3();
+//				List<FBoardDTO> fboardCate1 = fBoardDao.listCate1();
+//				List<FBoardDTO> fboardCate2 = fBoardDao.listCate2();
+//				List<FBoardDTO> fboardCate3 = fBoardDao.listCate3();
+				
+				String category = request.getParameter("category");
+				if(category==null) {category = "0";}
 				
 				String pcpage = request.getParameter("cpage");
 				if (pcpage == null) {pcpage = "1";}
 				int cpage = Integer.parseInt(pcpage);
 				
+				
 				List<FBoardDTO> fboardCate = fBoardDao.selectNtoM(
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
 				
-				request.setAttribute("fboardCate1", fboardCate1);
-				request.setAttribute("fboardCate2", fboardCate2);
-				request.setAttribute("fboardCate3", fboardCate3);
+//				request.setAttribute("fboardCate1", fboardCate1);
+//				request.setAttribute("fboardCate2", fboardCate2);
+//				request.setAttribute("fboardCate3", fboardCate3);
 				
+				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fboardCate", fboardCate);
 				request.setAttribute("recordCountPerPage", FBoardConfig.recordCountPerFPage);
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
 				request.setAttribute("recordTotalCount",fBoardDao.getRecordCountAll());
 				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
-
 				
 			}
 			
