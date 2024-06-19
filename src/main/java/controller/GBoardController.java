@@ -59,6 +59,9 @@ public class GBoardController extends HttpServlet {
                 GameDTO game = gameDao.getGameById(gameSeq);
                 List<String> listGameImage = gameDao.getGameImages(gameSeq);
                 String gameVideoStr = gameDao.getGameVideo(gameSeq);
+                
+                List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
+                request.setAttribute("listGame", listGame);
                 request.setAttribute("game", game);
                 request.setAttribute("images", listGameImage);
                 request.setAttribute("videoUrl", gameVideoStr);

@@ -81,6 +81,8 @@ public class MemberController extends HttpServlet {
 	                
 	                String profileUrl = userProfileImgDao.selectMyUrl(id);
                     session.setAttribute("profileUrl", profileUrl);
+                    boolean result1 = memberDao.isAdmin(id);
+                    System.out.println(result1);
                     
 	                responseJson.addProperty("success", true);
 	            } else {
