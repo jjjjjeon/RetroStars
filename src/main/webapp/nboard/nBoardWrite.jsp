@@ -180,6 +180,7 @@
         	background-color:white;
         	color:#323232;
         }
+
     </style>
 </head>
 
