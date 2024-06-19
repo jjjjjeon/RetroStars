@@ -90,11 +90,22 @@ public class NBoardController extends HttpServlet {
 			} else if(cmd.equals("/search.nboard")) {
 				System.out.println("search.nboard진입");
 				String keyword = request.getParameter("keyword");
+				String filter = request.getParameter("filter");
+				
+				
 				System.out.println("keyword : "+ keyword);
+				System.out.println("filter : "+ filter);
 				
-				List<NBoardDTO> searchResultList = nManager.searchList(keyword);
-				request.setAttribute("searchResult", searchResultList);
 				
+				List<NBoardDTO> searchResultList = null;
+				
+				if(filter.equals("title")) {
+					searchResultList = nManager.searchListByTitle(keyword);
+				} else if(filter.equals("post_number")) {
+					searchResultList = nManager.searchListByPostNumber(keyword);
+				}
+				
+				request.setAttribute("searchResult",searchResultList);
 				request.setAttribute("cpage",1);
 				request.setAttribute("record_count_per_page", BoardConfig.recordCountPerPage);
 			    request.setAttribute("navi_count_per_page", BoardConfig.naviCountPerPage);

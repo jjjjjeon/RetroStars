@@ -25,7 +25,7 @@
 <form action="/upload.userprofileimg"  method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="img">
-            <img id="previewImg" src="/upload/default.png" alt="이미지 미리보기">
+            <img id="previewImg" src="/profile/default.png" alt="이미지 미리보기">
         </div>
         <div class="input">
             <input type="file" id="uploadFile" name="uploadFile">

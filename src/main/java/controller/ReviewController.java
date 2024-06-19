@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,15 +44,25 @@ public class ReviewController extends HttpServlet {
         String cmd = request.getRequestURI();
         System.out.println(cmd);
         ReviewDAO reviewDao = ReviewDAO.getInstance();
+        PrintWriter pw = response.getWriter();
 
         try {
+        	// 가장 반응이 많은 리뷰
             if (cmd.equals("/mostLiked.review")) {
-                ReviewDTO mostLikedReview = reviewDao.getMostLikedReview();
-                response.getWriter().write(g.toJson(mostLikedReview));
-            } else if (cmd.equals("/latest.review")) {
+            	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+                ReviewDTO mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
+                System.out.println(mostLikedReview.getUserId() + mostLikedReview.getReviewContent());
+                
+                String result = g.toJson(mostLikedReview);
+                pw.append(result);
+                System.out.println(result);
+            } 
+            // 최신 리뷰
+            else if (cmd.equals("/latest.review")) {
                 ReviewDTO latestReview = reviewDao.getLatestReview();
                 response.getWriter().write(g.toJson(latestReview));
-            } else if (cmd.equals("/updateReviewLike.review")) {
+            } 
+            else if (cmd.equals("/updateReviewLike.review")) {
                 int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
                 String type = request.getParameter("type");
                 reviewDao.updateReviewLike(reviewSeq, type);

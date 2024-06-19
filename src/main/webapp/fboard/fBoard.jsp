@@ -28,12 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
  <style>
  		
- 		.navbar {
-        	
-        	width: 100%;
-        	z-index: 1000;
-        	height:70px;
-    	}
+ 		.navbar {width: 100%;height:70px;}
     
         /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
         .nav-link {
@@ -75,6 +70,8 @@
         h3 {font-size:20px;}
 
         .tabs {overflow: hidden;border-bottom: 1px solid #ccc;}
+        .content{height:450px; }
+        .page{height:20px;}
 
         .tablink {
             background-color: #111;
@@ -98,9 +95,9 @@
 			to {opacity: 1;}
         }
 
-        .faq {margin-top: 20px;}
+        .faq {margin-top: 20px; margin-bottom:0px;}
 
-        .faq-item {margin-bottom:20px;}
+        .faq-item {margin-bottom:10px; overflow-y:auto;height:350px;}
 
         .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px;}
 
@@ -218,7 +215,9 @@
                    <ul class="navbar-nav ms-auto">
 				        <li class="nav-item">
 				           <a class="nav-link" href="/mypage.member">
+				               <!-- 
 				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           		 -->
 				           </a>
 				       </li>                  
                       <li class="nav-item">
@@ -252,6 +251,8 @@
             <button class="tablink" onclick="openTab(event, 'board')">게시판</button>
             <button class="tablink" onclick="openTab(event, 'etc')">기타</button>
         </div>
+        
+        <div class="content">
 
         <div id="all" class="tabcontent">
             <h3>전체</h3>
@@ -263,6 +264,7 @@
                     </c:forEach>
                 </div>
             </div>
+            <div id="apage" class="page"> 페이지 네이션 자리 </div>
         </div>
         <div id="game" class="tabcontent">
             <h3>게임</h3>
@@ -274,6 +276,7 @@
                     </c:forEach>                   
                 </div>
             </div>
+            <div id="gpage" class="page"> 페이지 네이션 자리 </div>
         </div>
 
         <div id="board" class="tabcontent">
@@ -286,6 +289,7 @@
                     </c:forEach>
                 </div>
             </div>
+            <div id="bpage" class="page"> 페이지 네이션 자리 </div>
         </div>
 
         <div id="etc" class="tabcontent">
@@ -298,7 +302,9 @@
                     </c:forEach>
                 </div>
             </div>
-        </div>
+            <div id="epage" class="page"> 페이지 네이션 자리 </div>
+         </div>
+       </div> 
     </div>
     <div class="footer">
         <div class="footerbox">
@@ -321,6 +327,70 @@
     </div>
 
     <script>
+    
+    $(document).ready(function(){
+		
+		// 전체 글 개수
+		let record_total_count = ${recordTotalCount};
+		// 페이지 당 게시글 개수
+		let record_count_per_page = ${recordCountPerPage};
+		// 네비바 에 몇개씩 보여줄건지
+		let navi_count_per_page = ${naviCountPerPage}; 
+		// 현재 페이지
+		let cpage = ${cpage};
+		
+		createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage)
+		console.log(record_total_count);
+		console.log(record_count_per_page);
+		console.log(navi_count_per_page);
+		console.log(cpage);
+	})
+	
+
+		function createPagenation(record_total_count,record_count_per_page,navi_count_per_page,cpage){
+			
+			let pageTotalCount=0;
+			
+			if(record_total_count % record_count_per_page > 0){
+				let beforepageTotalCount = record_total_count/record_count_per_page + 1;
+				pageTotalCount = Math.floor(beforepageTotalCount);
+				console.log(pageTotalCount+"if");
+			}else{
+				let beforepageTotalCount = record_total_count/record_count_per_page;
+				pageTotalCount = Math.floor(beforepageTotalCount)+1;
+				console.log(pageTotalCount+"else");
+			}
+			
+			let start = Math.floor((cpage-1) / navi_count_per_page) * navi_count_per_page+1;
+			let end = start + navi_count_per_page-1;
+			
+			if(end>pageTotalCount){end=pageTotalCount;}
+			
+			let needNext=true;
+			let needPrev=true;
+			
+			if (start == 1) {
+				needPrev = false;
+			}
+			if (end == pageTotalCount) {
+				needNext = false;
+			}
+			
+			let navi = $("#apage");
+			navi.empty();
+			
+			if (needPrev) {
+				$("#apage").append("<a href='/list.fboard?cpage=" + (start - navi_count_per_page) + "'><</a>&nbsp");
+			}
+			for (let i = start; i <= end; i++) {
+				$("#apage").append("<a href='/list.fboard?cpage=" + i + "'>" + i + "</a>&nbsp");
+			}
+			if (needNext) {
+				$("#apage").append("<a href='/list.fboard?cpage=" + (end + 1) + "'>></a>");
+			}
+		}
+    
+    
         $(document).ready(function () {
             $(".question").click(function () {
                 $(this).next(".answer").slideToggle();
@@ -343,6 +413,33 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.style.backgroundColor = "#575757";
         }
+        
+        $(document).ready(function () {
+            $(".question").click(function () {
+                let $answer = $(this).next(".answer");
+                
+                $(".answer").not($answer).slideUp();
+                $(".question").not(this).removeClass("active");
+
+                $answer.slide();
+                $(this).toggleClass("active");
+            });
+
+            $(".tablink").click(function() {
+            	
+                $(".answer").slideUp();
+                $(".question").removeClass("active");
+                
+                let tabName = $(this).attr("data-tab");
+                $("#" + tabName + " .question:first-of-type").click();
+            });
+
+            // 페이지 로드 시 첫 번째 탭의 첫 번째 질문의 답변만 엽니다.
+            $(".tablink:first-of-type").click();
+        });
+       
+
+        
     </script>
 	
 </body>

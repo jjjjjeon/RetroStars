@@ -107,6 +107,7 @@ public class CBoardController extends HttpServlet {
 
 			//게시글 내용 열람.
 			}else if(cmd.equals("/detail.cboard")) {
+				
 				String id = (String) request.getSession().getAttribute("loginId");
 				String nickname = mManager.getNickname(id);
 				
