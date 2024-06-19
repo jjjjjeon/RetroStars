@@ -6,8 +6,10 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +75,7 @@ public class FBoardDAO {
                     String q = rs.getString(4);
                     String a = rs.getString(5);
                     list.add(new FBoardDTO(seq, id, categoryResult, q, a));
-                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
+                    //System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
                 }
                 return list;
             }
@@ -146,10 +148,72 @@ public class FBoardDAO {
                     String q = rs.getString(4);
                     String a = rs.getString(5);
                     list.add(new FBoardDTO(seq, id, categoryResult, q, a));
-                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
+                   // System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
                 }
                 return list;
             }
         }
-    }
+    
+    
+    
+    
+    /** 
+     * @Method Name  : listCate
+     * @date : 2024. 6. 16. 
+     * @author : KJY
+     * @version : 
+     * @Method info : FAQ 카테고리 전체 질문 & 답변 출력
+     * @param 
+     * @param 
+     * @return List<FBoardDTO>
+     * @throws Exception 
+     */ 
+    
+    public int getRecordCountAll() throws Exception {
+
+		String sql = "select count(*) from f_board";
+
+		try (Connection con = this.getConnection();
+				PreparedStatement pstst = con.prepareStatement(sql);
+				ResultSet rs = pstst.executeQuery()) {
+
+			rs.next();
+			int record = rs.getInt("count(*)");
+			System.out.println(record);
+
+			return record;
+		}
+	}
+
+	public List<FBoardDTO> selectNtoM(int startNum, int endNum) throws Exception {
+
+		String sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board) where row_count between ? and ?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstst = con.prepareStatement(sql);) {
+
+			pstst.setInt(1, startNum);
+			pstst.setInt(2, endNum);
+
+			try (ResultSet rs = pstst.executeQuery();) {
+				List<FBoardDTO> list = new ArrayList<>();
+				while (rs.next()) {
+					int seq = rs.getInt(1);
+                    String id = rs.getString(2);
+                    String categoryResult = rs.getString(3);
+                    String q = rs.getString(4);
+                    String a = rs.getString(5);
+                    list.add(new FBoardDTO(seq, id, categoryResult, q, a));
+                    System.out.println(seq + ":" + id + ":" + categoryResult + ":" + q + ":" + a);
+				}
+
+				return list;
+			}
+		}
+	}
+    
+    
+ }
+
+
+
 	

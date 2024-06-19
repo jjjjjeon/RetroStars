@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,120 +35,128 @@
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-		}
-        /* thisboard section styling */
-        .thisboard {
-            padding: 20px;
-            margin: 20px auto;
-            width: 800px;
-            border: none;
-            height: 600px;
-            border-radius: 20px;
-            background-color: #323232;
             color:white;
-        }
-    
-        .detailtitle {
-            display: grid;
-            grid-template-columns: 1fr 3fr 1fr 1.5fr 1fr;
-            padding: 10px;
-            
-            border-bottom: 1px solid #ddd;
-            font-weight: bold;
-            font-size: 18px;
-        }
-    
-        .detailcontent {
-            padding: 20px;
-            font-size: 16px;
-            line-height: 1.5;
-            height: 400px;
-        }
-        .detailbtn{
-        	padding: 20px;
-        	display:flex;
-        	gap:10px;
+		}
 
-        }
-        #back{
-        	background-color: #323232;
-        	color: white;
-        	border: 1px solid white;
-        	border-radius: 10px;
-        	font-weight: bold;
-        }
-        #back:hover{
-        	background-color:white;
-        	padding: 10px;
-    		border: none;
-    		color: #323232;
-    		
-    		
-        }
-        #delete,
-        #edit,
-        #complete,
-        #cancel
-        {
-            padding: 10px;
-    		border: none;
-    		color: white;
-    		font-weight: bold;
-    		border-radius: 10px;
-    		background-color:#6c757d;
-        }
-               /* footer */
-        .footer {
-        	position: fixed;
-        	bottom: 0;
-            width: 100%;
-            height: 120px;
-            background-color: #323232;
-        }
+    .thisboard {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #323232;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+    }
 
-        .leftfooter {
-            color: white;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+    .detailtitle {
+        display: grid;
+        grid-template-columns: auto 1fr auto auto auto;
+        gap: 10px;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        font-weight: bold;
+        font-size: 18px;
+        color: white;
+    }
 
-        .rightfooter {
-            display: flex;
-            align-items: center;
+    .detailtitle > div {
+        padding: 10px;
+    }
 
-        }
+    .detailcontent {
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+        border-bottom: 1px solid #ddd;
+        color: white;
+    }
 
-        .footerbox {
-            width: 1000px;
-            height: 100%;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .detailbtn{
+    	padding: 20px;
+    	display:flex;
+    	gap:10px;
 
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
+    }
+    #back{
+    	background-color: #323232;
+    	color: white;
+    	border: 1px solid white;
+    	border-radius: 10px;
+    	font-weight: bold;
+    }
+    #back:hover{
+    	background-color:white;
+    	padding: 10px;
+		border: none;
+		color: #323232;
+		
+		
+    }
+    #delete,
+    #edit,
+    #complete,
+    #cancel
+    {
+        padding: 10px;
+		border: none;
+		color: white;
+		font-weight: bold;
+		border-radius: 10px;
+		background-color:#6c757d;
+    }
+          /* footer */
+    .footer {
+    	position: fixed;
+    	bottom: 0;
+        width: 100%;
+        height: 120px;
+        background-color: #323232;
+    }
 
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
+    .leftfooter {
+        color: white;
+        font-weight: bold;
+        margin-top: 20px;
+    }
 
-        .coinbox {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
+    .rightfooter {
+        display: flex;
+        align-items: center;
 
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left: 20px;
-        }
+    }
+
+    .footerbox {
+        width: 1000px;
+        height: 100%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .iconbox {
+        display: flex;
+        align-items: center;
+    }
+
+    .iconbox a {
+        margin: 0 10px;
+        font-size: 50px;
+        color: white;
+    }
+
+    .coinbox {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+    }
+
+    .coinbox img {
+        width: 120px;
+        height: 100px;
+        margin-left: 20px;
+    }
 </style>
 </head>
 <body>
@@ -212,9 +221,9 @@
     	<div class="detailtitle">
     		<div>${dto.nBoardSeq }</div>
     		<div class="ntitle" contenteditable="false">${dto.nBoardTitle }</div>
-    		<div>${dto.userId }</div>
-    		<div>${dto.nBoardDate }</div>
-    		<div>${dto.nBoardView }</div>
+    		<div>관리자</div>
+    		<div><fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" /></div>
+<%--     		<div>${dto.nBoardView }</div> --%>
     	</div>
     	<div class="detailcontent" contenteditable="false">
     		${dto.nBoardContent }

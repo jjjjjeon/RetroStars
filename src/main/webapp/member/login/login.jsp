@@ -175,6 +175,8 @@
                    Kakao.API.request({
                        url: '/v2/user/me',
                        success: function (response) {
+                    	   alert(JSON.stringify(response));
+                    	   console.log(JSON.stringify(response));
                      sendUserInfoToServer(response);
                        },
                        fail: function (error) {
@@ -189,15 +191,21 @@
        }
        
        function sendUserInfoToServer(userData){
+    	  
+    	  
           $.ajax({
              type:"post",
              url:"/kakaoLogin.member",
              data: {
                 id:userData.id,
-                nickname: userData.properties.nickname
+                name:userData.kakao_account.name,
+                nickname: userData.properties.nickname,
+                email:userData.kakao_account.email,
+                birthYear:userData.kakao_account.birthyear,
+                birthDay:userData.kakao_account.birthday,
+                gender:userData.kakao_account.gender
              }             
           }).done(function(data){
-               console.log("확인");
                window.location.href = "/index.jsp";
           }).fail(function(jqXHR, textStatus, errorThrown) {
                console.error("카카오 로그인 중 오류 발생 :", textStatus, errorThrown);
@@ -234,7 +242,7 @@
                });
            });
 
-           Kakao.init('9c567e58c04139a37cf1de438a4b6ffa');
+           Kakao.init('4b9bccad837f62946166c2a78ed8b481');
        });
                    
  

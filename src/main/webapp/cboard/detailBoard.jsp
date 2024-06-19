@@ -47,6 +47,7 @@ div{
 	color : #d3d3d3;
 }
 
+
 .header {
         height: 220px;
         display: flex;
@@ -543,21 +544,24 @@ div{
             width : 660px;
             display: flex;
             align-items: center;
-            border : 1px solid lightgray;
+            border : 1px solid gray;
             border-bottom: 0;
             font-size: 14px;
             font-weight: 500;
+            color : black;
         }
 
         .modalInfoBox .infoTitle{
             width : 160px;
             padding-left : 30px;
+            color : black;
         }
 
         .modalInfoBox .info{
             width : 500px;
             font-weight: bold;
             padding-left: 10px;
+            color : black;
         }
 
         .modal-footer{
@@ -567,7 +571,7 @@ div{
         }
 
         #reportCheckBox{
-            border-bottom : 1px solid lightgray;
+            border-bottom : 1px solid gray;
         }
 
         .form-select{
@@ -634,7 +638,7 @@ div{
               </div>
               <div class="descBox">
                 <p class="p1">신고할 내용을 다시 한번 확인해주세요.</p>
-                <p style="font-weight: bold;">허위 신고의 경우, 운영정책에 따라 서비스 이용에 제한을 받을 수 있습니다.</p>
+                <p style="font-weight: bold; color : black;">허위 신고의 경우, 운영정책에 따라 서비스 이용에 제한을 받을 수 있습니다.</p>
                 <p class="p1">정말 위 내용으로 신고하시겠습니까?</p>
               </div>
             </div>
