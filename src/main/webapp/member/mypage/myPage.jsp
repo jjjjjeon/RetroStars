@@ -219,7 +219,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <div class="profile">
                 <div class="main_profile">
                     <div class="profile_img">
-                        <img id="basic_img" src="/upload/${userProfileUrl}">
+                        <img id="basic_img" src="/profile/${userProfileUrl}">
                     </div>
                     <div class="profile_data">
                         <div class="user_value_box">

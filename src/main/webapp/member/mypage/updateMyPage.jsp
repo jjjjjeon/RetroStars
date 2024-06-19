@@ -193,7 +193,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
   <div class="container">
             <div class="col mydata_chage col1 col_attr"> 
                 <div class="col1_profile_img col1_sub">
-                	<img id="profile_img" src="/upload/${userProfileUrl}">
+                	<img id="profile_img" src="/profile/${userProfileUrl}">
                 </div>
                 <div class="col1_id col1_sub">
                     <div class="col1_id_id">${mydata.userId}</div>
