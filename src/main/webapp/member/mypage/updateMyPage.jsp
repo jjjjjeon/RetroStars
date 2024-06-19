@@ -52,7 +52,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col{display: flex; justify-content: center; align-items: center;}
         .layout_empty_box{height:49px;}
             
-        .col1{background-color: rgba(24, 6, 79, 0.9); flex:3; border-radius: 20px; display: flex; flex-direction: column; }
+        .col1{background-color: rgba(24, 6, 79, 1); flex:3; border-radius: 20px; display: flex; flex-direction: column; }
         .col1_sub{width: 100%;}
         .col1_profile_img{flex:4;display: flex; justify-content: center; align-items: center;}
         #profile_img{height:85%; width:85%; border-radius:10px;}
@@ -71,17 +71,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 		#img_update_btn:hover{cursor:pointer; background-color:rgb(82, 11, 100);}
         .col2{flex:0.3;}
 
-        .col3{background-color: rgba(82, 11, 117, 0.8); flex:7;border-radius: 20px; display: flex; flex-direction: column;}
-        .value_box{display:flex; width: 100%; font-size: 20px; flex:1.2;align-items: center;} 
+        .col3{background-color: rgba(82, 11, 117,1); flex:7;border-radius: 20px; display: flex; flex-direction: column;}
+        .value_box{display:flex; width: 100%; font-size: 20px; flex:2; align-items: center;} 
         .value_title{width:30%; display: flex; justify-content: start; align-items: center; text-indent: 70px;}
         .value_content{height:80%; display: inline; justify-content: start; align-items: center;}
         .value_title1{width:30%; display: flex; justify-content: start; align-items: center; text-indent: 50px; }
         .value_content1{height:80%; width:30%; display: inline; justify-content: center; align-items: center;}
         .value_title2{width:15%; display: flex; justify-content: start; align-items: center;}
         .value_content2{flex:3; display: flex; justify-content: start; align-items: center; height:100%;}
-         #gender_box{width:85%; height:50%;}
-        .col3_empty_box{flex:1.5; width:100%;}
-        .col3_btn_box{flex:1; width:100%; display: flex; justify-content: end; align-items: start; margin-right: 70px;}
+         #gender_box{width:85%; height:70%;}
+        .col3_empty_box{flex:1; width:100%;}
+        .col3_btn_box{flex:1.5; width:100%; display: flex; justify-content: end; align-items: start; margin-right: 70px;}
+		p{width:100%; height:10px; font-size:15px;}
 
         .col_attr{ width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;}
 		.input_bgc{background-color: rgba(82, 11, 117, 0); border:0px; color:white; font-size:18px;}
@@ -94,6 +95,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .iconbox a {margin: 0 10px;font-size: 50px;color: white;}
         .coinbox {display: flex;align-items: center; margin-left: 20px;}
         .coinbox img { width: 120px; height: 100px;margin-left : 20px;}
+        
+        input::placeholder{font-size:12px;}
+        
+        
+         .checkText {
+            visibility: hidden;
+            margin-top: 5px;
+            color: red;
+        }
+        .disabled-button {
+            background-color: purple;
+            cursor: not-allowed;
+            border:0px;
+        }
+        .btn-color{background-color: purple; border:0px;}
+        .btn-color:hover{back}
+        
+        
         
     </style>
 </head>
@@ -143,7 +162,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                    <ul class="navbar-nav ms-auto">
 				        <li class="nav-item">
 				           <a class="nav-link" href="/mypage.member">
+				               <!-- 
 				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+				           		 -->
 				           </a>
 				       </li>                  
                       <li class="nav-item">
@@ -168,7 +189,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     </nav>
   <div class="layout_empty_box"></div>
   
- <form action="/updateData.member" method="post">
+ <form action="/updateData.member" method="post" onsubmit="return validateForm()">
   <div class="container">
             <div class="col mydata_chage col1 col_attr"> 
                 <div class="col1_profile_img col1_sub">
@@ -191,15 +212,19 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 <div class="col3_empty_box"></div>
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">이 름  : </div>
-                    <input type="text" class="user_name_value value_content input_bgc" name="userName" value="${mydata.userName}">
+                    <input id="input_name" type="text" class="user_name_value value_content input_bgc" name="userName" value="${mydata.userName}" required>
                 </div>
+                <p id="nameCheckText" class="checkText">이름은 2~5글자의 한글만 가능합니다.</p>
+                
                 <div class="col3_value_box value_box">
                     <div class="user_nickname value_title">닉네임  : </div>
-                    <input type="text" class="user_name_value value_content input_bgc" name="userNickname" value="${mydata.userNickname}">
+                    <input id="input_nickname" type="text" class="user_name_value value_content input_bgc" name="userNickname" value="${mydata.userNickname}" required>
                 </div>
+                <p id="nicknameCheckText" class="checkText">닉네임은 3~10글자의 한글, 영어, 숫자만 가능합니다.</p>
+                
                 <div class="col3_value_box value_box">
                     <div class="user_birth value_title1">생년월일  : </div>
-                    <input type="text" class="user_brith_value value_content1 input_bgc" name="userBirth" value="${birth}">
+                    <input id="input_birth" type="text" class="user_birth_value value_content1 input_bgc" name="userBirth" value="${birth}" required>
                     <div class="user_gender value_title2">성별  : </div>
                     <div class="user_gender_value value_content2">
                     	<c:choose>
@@ -218,18 +243,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 						</c:choose>
 					</div>
                 </div>
+               <p id="birthCheckText" class="checkText">형식이 맞지 않습니다. (예: 98.12.12)</p>
+               
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">이메일  : </div>
-                     <input type="text" class="user_name_value value_content input_bgc" name="userEmail" value="${mydata.userEmail}">
+                     <input id="input_email" type="email" class="user_name_value value_content input_bgc" name="userEmail" value="${mydata.userEmail}" required>
                 </div>
+                 <p id="emailcheckText" class="checkText">유효하지 않은 이메일 형식입니다.</p>
+                 
                 <div class="col3_value_box value_box">
                     <div class="user_name value_title">핸드폰  : </div>
-                     <input type="text" class="user_name_value value_content input_bgc" name="userPhone" value="${phone}">
+                     <input id="input_phone" type="text" class="user_name_value value_content input_bgc" name="userPhone" value="${phone}" required>
                 </div>
+                <p id="phoneCheckText" class="checkText">폰 번호 형식이 맞지 않습니다. (예: 010-1234-5678)</p>
+                
                 <div class="col3_empty_box"></div>
                 <div class="col3_btn_box">
-                    <button id="return_my_page" type="button">돌아가기</button>
-                    <button id="complete">완료</button>
+                    <button id="return_my_page" type="button" class="btn btn-dark btn-color">돌아가기</button>
+                    <button id="complete" type="submit" class="disabled-button btn btn-dark btn-color">완료</button>
                 </div>
             </div>           
    		 </div>
@@ -266,15 +297,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 		let popupX = (window.innerWidth - popupWidth) / 2 + window.screenX;
 	    let popupY = (window.innerHeight - popupHeight) / 2 + window.screenY;
 		
-		//let popupX = (window.screen.width - popupWidth) / 2;
-	    //let popupY = (window.screen.height - popupHeight) / 2;
-		
-		//let left = Math.ceil(( window.screen.width - 400 )/2);
-    	//let top = Math.ceil(( window.screen.height - 300 )/2); 
 		let new_window = window.open("/member/mypage/updateProfileImg.jsp","","height=" + popupHeight  + ", width=" + popupWidth  + ", left="+ popupX + ", top="+ popupY);
-		
-		
-		
 	})
 	
 	$("#password_btn").on("click",function(){
@@ -289,8 +312,157 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 	
 	$("#return_my_page").on("click",function(){
 		location.href="/mypage.member";
-	})
+	})	
 	
+	function validateName(name) {
+        let regex = /^[가-힣]{2,5}$/;
+        return regex.test(name);
+    }
+
+    function validateNickname(nickname) {
+        let regex = /^[a-zA-Z0-9가-힣]{3,10}$/;
+        return regex.test(nickname);
+    }
+
+    function validateBirth(birth) {
+        let regex = /^\d{2}\.([0]\d|[1][0-2])\.([0][1-9]|[1-2]\d|[3][0-1])$/;
+        return regex.test(birth);
+    }
+    
+    function validateEmail(email) {
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function validatePhone(phone) {
+    	let regex = /^01[016789]-\d{3,4}-\d{4}$/
+        return regex.test(phone);
+    }
+
+    function validateForm() {
+    	
+        let valid = true;
+        
+        let name = $('#input_name').val();
+        let nickname = $('#input_nickname').val();
+        let birth= $('#input_birth').val();
+        let email = $('#input_email').val();
+        let phone = $('#input_phone').val();
+        
+
+        if (!validateName(name)) {
+            $('#nameCheckText').css('visibility', 'visible');
+            valid = false;
+        } else {
+            $('#nameCheckText').css('visibility', 'hidden');
+        }
+
+        if (!validateNickname(nickname)) {
+            $('#nicknameCheckText').css('visibility', 'visible');
+            valid = false;
+        } else {
+            $('#nicknameCheckText').css('visibility', 'hidden');
+        }
+
+        if (!validateBirth(birth)) {
+            $('#birthCheckText').css('visibility', 'visible');
+            valid = false;
+        } else {
+            $('#birthCheckText').css('visibility', 'hidden');
+        }
+
+        if (!validatePhone(phone)) {
+            $('#phoneCheckText').css('visibility', 'visible');
+            valid = false;
+        } else {
+            $('#phoneCheckText').css('visibility', 'hidden');
+        }
+
+        if (!validateEmail(email)) {
+        	 $('#emailcheckText').css('visibility', 'visible');
+        	 valid = false;
+        	 
+        } else {
+        	 $('#emailcheckText').css('visibility', 'hidden');
+            
+        }
+
+        $('#complete').prop('disabled', !valid);
+        $('#complete').toggleClass('disabled-button', !valid);
+
+        return valid;
+    }
+
+    function checkUserNickname() {
+    	
+        let userNickname = $('#input_nickname').val();
+        let nicknameCheckText = $('#nicknameCheckText');
+        let nextButton = $('#nickname_check');
+
+        if (!validateNickname(userNickname)) {
+            nicknameCheckText.text("닉네임은 3~10자리만 가능합니다.");
+            nicknameCheckText.css('color', 'red');
+            nicknameCheckText.css('visibility', 'visible');
+            nextButton.addClass('disabled-button');
+            nextButton.prop('disabled', true);
+            return;
+        }
+
+        $.ajax({
+            url: '/checkUserNicknameUpdate.member',
+            method: 'get',
+            data: { userNickname: userNickname },
+            success: function(response) {
+            	console.log(response);
+                if (response === "true") {
+                    nicknameCheckText.text("사용할 수 있는 닉네임입니다.");
+                    nicknameCheckText.css('color', 'green');
+                    nextButton.removeClass('disabled-button');
+                    nextButton.prop('disabled', false);
+                }else if (response === "before") {
+                    nicknameCheckText.text("기존 닉네임입니다.");
+                    nicknameCheckText.css('color', 'green');
+                    nextButton.removeClass('disabled-button');
+                    nextButton.prop('disabled', false);
+                }else {
+                    nicknameCheckText.text("이미 사용 중인 닉네임입니다.");
+                    nicknameCheckText.css('color', 'red');
+                    nextButton.addClass('disabled-button');
+                    nextButton.prop('disabled', true);
+                }
+                nicknameCheckText.css('visibility', 'visible');
+            },
+            error: function() {
+                nicknameCheckText.text("닉네임 확인 중 오류가 발생했습니다.");
+                nicknameCheckText.css('color', 'red');
+                nicknameCheckText.css('visibility', 'visible');
+                nextButton.addClass('disabled-button');
+                nextButton.prop('disabled', true);
+            }
+        });
+    }
+    
+    
+    $(document).ready(function(){
+    	
+        $('#input_name, #input_nickname, #input_birth, #input_phone, #input_email').on('input', function() {
+            validateForm();
+        });
+        $('#input_nickname').on('input', function() {
+            $('#nicknameCheckText').css('visibility', 'hidden');
+            $('#complete').addClass('disabled-button');
+            $('#complete').prop('disabled', true);
+
+            if (validateNickname($(this).val())) {
+                checkUserNickname();
+            } else {
+                $('#nicknameCheckText').text("사용 불가능한 닉네임입니다.");
+                $('#nicknameCheckText').css('color', 'red');
+                $('#nicknameCheckText').css('visibility', 'visible');
+            }
+        });
+    });
+
 	</script>
 </body>
 </html>
