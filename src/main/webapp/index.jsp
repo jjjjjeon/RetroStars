@@ -31,7 +31,6 @@
             box-sizing: border-box;
         }
 
-
         body {
             background-color: black;
             margin-bottom:0;
@@ -178,10 +177,9 @@
         .footer {
             width: 100%;
             background-color: #323232;
-            postion:fixed; 
-            bottom:0; 
+            position: relative;
+            margin-top: auto;
             height: 150px;
-            
         }
         .leftfooter{
            color : white;
@@ -329,15 +327,11 @@
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
-                <video class="thumbnail" autoplay muted loop>
-                	<source id="gv1" src="/upload/G1.mp4"></source>
-                	<source id="gv2" src="/upload/G2.mp4"></source>
-                	<source id="gv3" src="/upload/G3.mp4"></source>
-                	<source id="gv4" src="/upload/G4.mp4"></source>
-                </video>                
+                    <video class="thumbnail" id="gameVideo" autoplay muted loop>
+                    </video>                
                 </div>
                 <div class="startbtn">
-                    <a href="/viewGame.gboard"><img src="/image/startbtn.png" alt=""></a>
+                    <a id="startGameLink" href="#"><img src="/image/startbtn.png" alt=""></a>
                 </div>
             </div>
 
@@ -366,15 +360,32 @@
 </body>
 
 <script>
-	$(function(){
-		$("#gv1").bind("ended", function(){
-			$("#gv2").play();
-		});
-		$("#gv2").bind("ended", function(){
-			$("#gv3").play();
-		})
-	})
+    $(document).ready(function() {
+        var videoList = [
+            {src: "/upload/G1.mp4", seq: 1},
+            {src: "/upload/G2.mp4", seq: 2},
+            {src: "/upload/G3.mp4", seq: 3},
+            {src: "/upload/G4.mp4", seq: 4},
+            {src: "/upload/G5.mp4", seq: 5}
+        ];
 
+        function playRandomVideo() {
+            var randomIndex = Math.floor(Math.random() * videoList.length);
+            var videoElement = $('#gameVideo');
+            var selectedVideo = videoList[randomIndex];
+
+            videoElement.attr('src', selectedVideo.src);
+            $('#startGameLink').attr('href', '/viewGame.gboard?gameSeq=' + selectedVideo.seq);
+            videoElement[0].load();
+            videoElement[0].play();
+        }
+
+        $('#gameVideo').on('ended', function() {
+            setTimeout(playRandomVideo, 30000); // 30초 후에 다음 비디오 재생
+        });
+
+        playRandomVideo(); // 초기 비디오 재생
+    });
 </script>
 
 </html>

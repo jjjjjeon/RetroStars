@@ -223,6 +223,52 @@ public class MemberDAO {
         }
     }
     
+    /** 
+     * @Method Name  : 어드민 여부 알아오기.
+     * @date : 2024. 6. 17. 
+     * @author : Jin 
+     * @version : 
+     * @Method info : 아이디에 따른 닉네임 가져오기
+     * @param 로그인 시 사용한 id
+     * @return 유저 닉네임
+     * @throws Exception 
+     */   
+    public boolean isAdmin(String userId) throws Exception {
+    	String sql = "select user_admin from member where user_id = ?";
+        try (Connection conn = getConnection();
+                PreparedStatement pstat = conn.prepareStatement(sql)) {
+            pstat.setString(1, userId);
+            try (ResultSet rs = pstat.executeQuery();) {
+            	
+            	String isYN = "";
+            	while(rs.next()) {
+            		isYN = rs.getString(1);
+            	}
+                if (isYN.equals("Y")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    	
+    }
+    
+//	try(ResultSet rs = pstat.executeQuery();){
+//		
+//		String dbPw =""; 
+//		
+//		while(rs.next()) { 
+//			dbPw = rs.getString(1);
+//			}
+//		if(dbPw.equals(pw)) {
+//			return "성공";
+//		}else {
+//			return "실패";}
+//		
+//	}
+//    
+
     
     /** 
      * @Method Name  : myData
