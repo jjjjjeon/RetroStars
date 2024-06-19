@@ -325,7 +325,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             	<c:forEach var="listCategory1" items="${listCategory1}">
 							<div class="free_row board_bookmark_row">
 								<div class="free_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory1.cBoardSeq}">${listCategory1.cBoardTitle}</a></div>
-								<div class="free_writer board_bookmark_writer">${listCategory1.writerId}</div>
+								<div class="free_writer board_bookmark_writer">${listCategory1.userNickname}</div>
 								<div class="free_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory1.cBoardDate}" pattern="yy.MM.dd" />
 								</div>
@@ -344,7 +344,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             	<c:forEach var="listCategory2" items="${listCategory2}">
 							<div class="tip_row board_bookmark_row">
 								<div class="tip_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory2.cBoardSeq}">${listCategory2.cBoardTitle}</a></div>
-								<div class="tip_writer board_bookmark_writer">${listCategory2.writerId}</div>
+								<div class="tip_writer board_bookmark_writer">${listCategory2.userNickname}</div>
 								<div class="tip_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
 								</div>
