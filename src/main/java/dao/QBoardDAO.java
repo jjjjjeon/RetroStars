@@ -218,7 +218,7 @@ public class QBoardDAO {
 				        return list;
 					}
 				}
-
+			//검색이 없을 때
 			}else {
 				String sql = "SELECT s.*, m.user_nickname  as nickname FROM ( " +
 						"SELECT q_board.*, row_number() OVER (ORDER BY q_board_seq DESC) AS rown " +
@@ -372,13 +372,13 @@ public class QBoardDAO {
 
 
 
-	//더미데이터만들기
-	/*public static void main(String[] args) throws SQLException {
+	/*//더미데이터만들기
+	public static void main(String[] args) throws SQLException {
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
 		String id="star";
 		String pw="star";
 
-		String sql="insert into q_board values(q_board_sequence.nextval,'sami3013',3,?,?,sysdate,'Y','Y')";
+		String sql="insert into q_board values(q_board_sequence.nextval,'sami3013',3,?,?,sysdate,'Y','N')";
 
 		try(Connection con= DriverManager.getConnection(url, id, pw);
 				PreparedStatement pstat=con.prepareStatement(sql);){
