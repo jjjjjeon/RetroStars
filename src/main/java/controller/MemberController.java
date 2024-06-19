@@ -211,11 +211,43 @@ public class MemberController extends HttpServlet {
 			    // 카카오 로그인 정보 처리
 			    String kakaoId = request.getParameter("id");
 			    String nickname = request.getParameter("nickname");
+			    String name = request.getParameter("name");
+			    System.out.println(kakaoId);
+			    System.out.println(nickname);
+			    System.out.println(name);
+			    String email = request.getParameter("email");
+			    String birthYear = request.getParameter("birthYear");			    
+			    int checkGenderCode = Integer.parseInt(request.getParameter("birthYear"));
+			    System.out.println(checkGenderCode);
+			    String FrontBirth = birthYear.substring(2, 4);
+			    System.out.println(FrontBirth);
+			    String birthDay = request.getParameter("birthDay");
+			    System.out.println(birthDay);
+			    String birth = FrontBirth + birthDay;
+			    System.out.println(birth);
+
+			    
+			    String gender = request.getParameter("gender");
+			    String genderCode = null;
+			    if(gender.equals("male") && checkGenderCode < 2000) {
+			    	genderCode = "1";
+			    }else if(gender.equals("male") && checkGenderCode > 2000){
+			    	genderCode = "3";
+			    }else if(gender.equals("female") && checkGenderCode < 2000) {
+			    	genderCode = "2";
+			    }else if(gender.equals("female") && checkGenderCode < 2000) {
+			    	genderCode = "4";
+			    }
+			    System.out.println(genderCode);
+			    String userNo = birth + genderCode;
+			    System.out.println(userNo);
+			    
 
 			    // 회원이 이미 존재하는지 확인
 			    if(!memberDao.isMemberExists(kakaoId)) {
 			        // 회원이 존재하지 않으면 회원가입 진행
-			        MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
+			        MemberDTO addMember = new MemberDTO(kakaoId, "dummy", name, nickname, userNo, "dummy", email, new Timestamp(System.currentTimeMillis()));
+//			        MemberDTO addMember = new MemberDTO(kakaoId, "dummy", "dummy", nickname, "dummy", "dummy", "dummy", new Timestamp(System.currentTimeMillis()));
 			        memberDao.addMember(addMember);
 			    }
 
