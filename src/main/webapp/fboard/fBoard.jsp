@@ -53,14 +53,15 @@
         }
 
         .container {
-            max-width: 800px;
+            width: 1200px;
             margin: 0 auto;
             margin-top:24px;
             margin-bottom:25px;
-            padding: 20px;
+            padding: 40px;
             background: #323232;
             border-radius: 10px;
             height:650px;
+            
         }
         
         .search{height:40px; width:100%;}	
@@ -72,8 +73,8 @@
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
 
-        h1 {text-align: center; margin-bottom: 10px; font-size:28px;}
-        h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px;}
+        h1 {text-align: center; margin-bottom: 8px; font-size:25px;}
+        h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px; width:80%}
 
         .tabs {overflow: hidden; border-bottom: 1px solid #ccc;}
         .content{height:450px;}
@@ -81,6 +82,7 @@
 
         .tablink {
             background-color: #68686800;
+            height:45px;
             color: #fff;
             float: left;
             border: none;
