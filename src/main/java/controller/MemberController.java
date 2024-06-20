@@ -284,6 +284,7 @@ public class MemberController extends HttpServlet {
 				int count1 = listCategory1.size();
 				int count2 = listCategory2.size();	
 				List<String> seq = memberDao.gameBookmark(id);
+				int seqSize = seq.size();
 				
 				request.setAttribute("birth", birth);
 				request.setAttribute("phone", phone);
@@ -296,6 +297,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("count2", count2);
 				request.setAttribute("gprDto", gprDto);
 				request.setAttribute("seq", seq);
+				request.setAttribute("seqSize", seqSize);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				

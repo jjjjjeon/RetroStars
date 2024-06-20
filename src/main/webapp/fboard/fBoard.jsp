@@ -64,7 +64,7 @@
         }
         
         .search{height:40px; width:100%;}	
-        #search_box{display:flex; justify-content:space-evenly;}	
+        #search_box{display:flex; justify-content:space-evenly; margin-top:20px;}	
         #search_kind_box{width:20%; height:90%;} 
         #category_box{width:20%; height:90%;}       
         .search-place{width:45%;display:flex; height:90%;}
@@ -72,7 +72,7 @@
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
 
-        h1 {text-align: center; margin-bottom: 20px; font-size:28px;}
+        h1 {text-align: center; margin-bottom: 10px; font-size:28px;}
         h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px;}
 
         .tabs {overflow: hidden; border-bottom: 1px solid #ccc;}
@@ -240,7 +240,14 @@
 	<div class="container">
         <h1>자주 찾는 질문</h1>
         
-        <form action="/search.fboard">
+        <div class="tabs">
+            <button class="tablink" id="all_tap">전체</button>
+            <button class="tablink" id="game_tap">게임</button>
+            <button class="tablink" id="board_tap">게시판</button>
+            <button class="tablink" id="etc_tap">기타</button>
+        </div>
+        
+           <form action="/search.fboard">
         <div class="search" id="search_box">
              <select id="search_kind_box" class="form-select"  name="kind">
   				<option value="title" selected="selected">제목</option>
@@ -258,13 +265,6 @@
         	<input type="hidden" name="cpage" value="1"> 
         </div>
         </form>
-        
-        <div class="tabs">
-            <button class="tablink" id="all_tap">전체</button>
-            <button class="tablink" id="game_tap">게임</button>
-            <button class="tablink" id="board_tap">게시판</button>
-            <button class="tablink" id="etc_tap">기타</button>
-        </div>
         
         <div class="content">
         <div class="tabcontent">
