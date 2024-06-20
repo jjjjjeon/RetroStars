@@ -156,7 +156,8 @@ nav {
 }
 
 .list_data_writer {
-	width: 93px;
+	text-align:center;
+	width: 131px;
 	height: 48px;
 	overflow: hidden;
 	white-space: nowrap;

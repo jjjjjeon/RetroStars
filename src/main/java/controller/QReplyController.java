@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,7 +56,7 @@ public class QReplyController extends HttpServlet {
 	
 				//보낼 정보
 				PrintWriter pw=response.getWriter();
-				ArrayList<QReplyDTO> replylist=replydao.selectAll();
+				ArrayList<HashMap<String,?>> replylist=replydao.selectAll();
 				
 				//직렬화
 				JsonObject obj=new JsonObject();
