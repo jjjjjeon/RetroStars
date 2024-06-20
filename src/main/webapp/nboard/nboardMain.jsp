@@ -39,17 +39,17 @@ body{background-image:url("/image/background.png");
       color: white;
       text-decoration: none;
     }
-		/*    navbar css */
-    	.navbar {
-        	top: 0;
-        	width: 100%;
-        	z-index: 1000;
-        	height:70px;
-        	background-color : #323232;
-    	}
-    	.navbar-brand{
-    		color:white;
-    	}
+      /*    navbar css */
+       .navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
         /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
         .nav-link {
             color: white !important;
@@ -61,21 +61,21 @@ body{background-image:url("/image/background.png");
             border-radius: 10px;
         }
         
-		.btn{
-			color:white;
-		}
-		.btn:hover{
-			color:white;
-		}
-		.dropdown-menu{
-			background-color: #323232;
-		}
-		.dropdown-item{
-			background-color: #323232;
-			color:white;
-		}
-		
-		
+      .btn{
+         color:white;
+      }
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
+      
+      
     .container {
       background-color: #323232;
       color: white;
@@ -117,13 +117,13 @@ body{background-image:url("/image/background.png");
       background-color: white;
     }
 
-    /* 	글작성 btn */
+    /*    글작성 btn */
     .btn-write {
       background-color: #323232;
       color: white;
       border: 1px solid white;
-      margin-left: -200px;
-      margin-bottom: 20px;
+      margin-left: -500px;
+
     }
 
     .btn-write:hover {
@@ -191,7 +191,9 @@ body{background-image:url("/image/background.png");
       flex: 5;
       padding-left: 20px;
     }
-
+   .noticeContent{
+      max-height: 900px;
+   }
     .notiAdmin,
     .notiDate,
     .notiView {
@@ -257,13 +259,13 @@ body{background-image:url("/image/background.png");
       margin-left: 20px;
     }
     .dropdown{
-    	margin-right: 5px;
+       margin-right: 5px;
     }
     
     #lang{
         width: 90px;
-    	background-color: #eeeeee;
-   	 	margin-right: 5px;
+       background-color: #eeeeee;
+          margin-right: 5px;
     }
   </style>
 </head>
@@ -313,11 +315,11 @@ body{background-image:url("/image/background.png");
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
-				        <li class="nav-item">
-				           <a class="nav-link" href="/mypage.member">
-				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-				           </a>
-				       </li>                  
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                   </li>                  
                       <li class="nav-item">
                            <a class="nav-link" href="/mypage.member">마이페이지</a>
                        </li>
@@ -343,38 +345,38 @@ body{background-image:url("/image/background.png");
     <div class="title">
       <span>전체</span>
 
-	<c:if test="${loginId eq 'admin'}">
-		      <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
-		        <i class="fas fa-pencil-alt"></i> 글 작성
-		      </a>
+   <c:if test="${loginId eq 'admin'}">
+            <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
+              <i class="fas fa-pencil-alt"></i> 글 작성
+            </a>
 
-	</c:if>
+   </c:if>
 
 
 
-		
-	
-      <form action="/search.nboard" class="d-flex" role="search">
-      	
+      
    
-      	<select name="filter" id="lang" class="form-select" aria-label="Default select example">
-      		<option value="title">제목</option>
-      		<option value="post_number">글번호</option>
-		</select>
+      <form action="/search.nboard" class="d-flex" role="search">
+         
+   
+         <select name="filter" id="lang" class="form-select" aria-label="Default select example">
+            <option value="title">제목</option>
+            <option value="post_number">글번호</option>
+      </select>
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
         <button class="btn btn-outline-success" type="submit" id="searchbtn">Search</button>
       </form>
       <script>
-      	$(document).ready(function(){
-			$("#lang").change(function(){
-				var selectedOption = $(this).children("option:selected").val();
-				if(selectedOption === "title"){
-					$("form").attr("action","/search.nboard?filter=title");
-				} else if(selectedOption === "post_number"){
-					$("form").attr("action","/search.nboard?filter=post_number");
-				}
-			});
-      	});
+         $(document).ready(function(){
+         $("#lang").change(function(){
+            var selectedOption = $(this).children("option:selected").val();
+            if(selectedOption === "title"){
+               $("form").attr("action","/search.nboard?filter=title");
+            } else if(selectedOption === "post_number"){
+               $("form").attr("action","/search.nboard?filter=post_number");
+            }
+         });
+         });
       </script>
 
     </div>
@@ -400,9 +402,9 @@ body{background-image:url("/image/background.png");
             <div class="notiListContent">
               <div class="notiCategory">${dto.nBoardSeq}</div>
               <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
-              <div class="notiAdmin">${dto.userId}</div>
+              <div class="notiAdmin">관리자</div>
               <div class="notiDate">
-              	<fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
+                 <fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
               </div>
               <div class="notiView">${dto.nBoardView}</div>
             </div>
@@ -422,7 +424,7 @@ body{background-image:url("/image/background.png");
               <div class="notiTitle"><a href="/detail.nboard?nBoardSeq=${dto.nBoardSeq}">${dto.nBoardTitle}</a></div>
               <div class="notiAdmin">관리자</div>
              <div class="notiDate">
-              	<fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
+                 <fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" />
               </div>
               <div class="notiView">${dto.nBoardView}</div>
             </div>
@@ -491,6 +493,7 @@ body{background-image:url("/image/background.png");
 
     }
   </script>
+  
 
 
   <div class="footer">
