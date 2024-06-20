@@ -102,9 +102,9 @@ public class CBoardDAO {
 		if(category == 0) {
 			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report < 5) where rown between ? and ?";
 		}else if (category == 1) {
-			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 where c_board_report < 5) where rown between ? and ?";
+			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 1 and c_board_report < 5) where rown between ? and ?";
 		}else {
-			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 where c_board_report < 5) where rown between ? and ?";
+			sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_category = 2 and c_board_report < 5) where rown between ? and ?";
 		}
 		
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
