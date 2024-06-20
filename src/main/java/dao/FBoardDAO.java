@@ -6,8 +6,10 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,22 +50,34 @@ public class FBoardDAO {
 	}
 	
     /** 
-     * @Method Name  : listCate
-     * @date : 2024. 6. 16. 
+     * @Method Name  : listCateNtoM
+     * @date : 2024. 6. 19. 
      * @author : KJY
      * @version : 
-     * @Method info : FAQ 카테고리 별 질문 & 답변 출력
+     * @Method info : FAQ 카테고리 별 질문 & 답변 수 지정갯수만큼 출력
      * @param String category
-     * @param 
+     * @param int start
+     * @param int end
      * @return List<FBoardDTO>
      * @throws Exception 
      */ 
 	
-	private List<FBoardDTO> listCate(String category) throws Exception {
-        String sql = "select * from f_board where f_board_category=?";
+	public List<FBoardDTO> listCateNtoM(String category, int start, int end) throws Exception {
+        
+		String sql = "";
+		if(category.equals("0")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board) where row_count between ? and ?";
+		}else if(category.equals("1")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='1') where row_count between ? and ?";
+		}else if(category.equals("2")) {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='2') where row_count between ? and ?";
+		}else {
+			sql = "select * from (select f_board.*,row_number() over(order by f_board_seq desc) as row_count from f_board where f_board_category='3') where row_count between ? and ?";
+		}
         try (Connection con = this.getConnection();
              PreparedStatement pstat = con.prepareStatement(sql);) {
-            pstat.setString(1, category);
+            pstat.setInt(1, start);
+            pstat.setInt(2, end);
             try (ResultSet rs = pstat.executeQuery();) {
                 List<FBoardDTO> list = new ArrayList<>();
                 while (rs.next()) {
@@ -79,65 +93,134 @@ public class FBoardDAO {
             }
         }
     }
-	/** 
-     * @Method Name  : listCate1
-     * @date : 2024. 6. 16. 
-     * @author : KJY
-     * @version : 
-     * @Method info : FAQ 카테고리 1 질문 & 답변 출력
-     * @param 
-     * @param 
-     * @return List<FBoardDTO>
-     * @throws Exception 
-     */ 
-    public List<FBoardDTO> listCate1() throws Exception {
-        return listCate("1");
-    }
+    
     /** 
-     * @Method Name  : listCate2
+     * @Method Name  : getRecordCount
      * @date : 2024. 6. 16. 
      * @author : KJY
      * @version : 
-     * @Method info : FAQ 카테고리 2 질문 & 답변 출력
+     * @Method info : FAQ 카테고리 별 전체 레코드 수 출력
+     * @param String category
      * @param 
-     * @param 
-     * @return List<FBoardDTO>
+     * @return int
      * @throws Exception 
      */ 
+    
+    public int getRecordCount(String category) throws Exception {
+    	
+    	String sql = "";
+    	
+    	if(category.equals("0")) {
+			sql = "select count(*) from f_board";
+		}else if(category.equals("1")) {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '1'";
+		}else if(category.equals("2")) {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '2'";
+		}else {
+			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '3'";
+		}
+		try (Connection con = this.getConnection();
+				PreparedStatement pstst = con.prepareStatement(sql);
+				ResultSet rs = pstst.executeQuery()) {
 
-    public List<FBoardDTO> listCate2() throws Exception {
-        return listCate("2");
-    }
+			rs.next();
+			int record = rs.getInt("count(*)");
+			System.out.println(record);
+
+			return record;
+		}
+	}
+    
+    
     /** 
-     * @Method Name  : listCate3
-     * @date : 2024. 6. 16. 
+     * @Method Name  : listCateNtoM
+     * @date : 2024. 6. 19. 
      * @author : KJY
      * @version : 
-     * @Method info : FAQ 카테고리 3 질문 & 답변 출력
-     * @param 
-     * @param 
+     * @Method info : FAQ 카테고리 별 질문 & 답변 수 지정갯수만큼 출력
+     * @param String kind
+     * @param String category
+     * @param String search
+     * @param int start
+     * @param int end
      * @return List<FBoardDTO>
      * @throws Exception 
      */ 
-    public List<FBoardDTO> listCate3() throws Exception {
-        return listCate("3");
-    }
-    /** 
-     * @Method Name  : listCate
-     * @date : 2024. 6. 16. 
-     * @author : KJY
-     * @version : 
-     * @Method info : FAQ 카테고리 전체 질문 & 답변 출력
-     * @param 
-     * @param 
-     * @return List<FBoardDTO>
-     * @throws Exception 
-     */ 
-    public List<FBoardDTO> listCate() throws Exception {
-        String sql = "select * from f_board";
+	
+	public List<FBoardDTO> searchNtoM(String kind, String category, String search, int start, int end) throws Exception {
+        
+		String sql = "";
+		String searchContent = "%"+search+"%"; 
+		
+		if(kind.equals("title")) {
+			if(category.equals("1")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '1' AND f_board_question LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else if(category.equals("2")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '2' AND f_board_question LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else if(category.equals("3")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '3' AND f_board_question LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_question LIKE ?)"
+						+ "where row_count between ? and ?";
+			}
+		}else if(kind.equals("content")) {
+			if(category.equals("1")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '1' AND f_board_answer LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else if(category.equals("2")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '2' AND f_board_answer LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else if(category.equals("3")) {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_category = '3' AND f_board_answer LIKE ?)"
+						+ "where row_count between ? and ?";
+			}else {
+				sql = "select * from "
+						+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+						+ "FROM f_board "
+						+ "WHERE f_board_answer LIKE ?)"
+						+ "where row_count between ? and ?";
+			}
+		}else if(kind.equals("title_content")) {
+			if(category.equals("1")) {
+				sql = newString(category,search);
+			}else if(category.equals("2")) {
+				sql = newString(category,search);
+			}else if(category.equals("3")) {
+				sql = newString(category,search);
+			}else {
+				sql = newString("0",search);
+			}
+		}
         try (Connection con = this.getConnection();
-             PreparedStatement pstat = con.prepareStatement(sql);
-            		 ResultSet rs = pstat.executeQuery();) {
+             PreparedStatement pstat = con.prepareStatement(sql);) {
+        	pstat.setString(1, searchContent);
+            pstat.setInt(2, start);
+            pstat.setInt(3, end);
+            try (ResultSet rs = pstat.executeQuery();) {
                 List<FBoardDTO> list = new ArrayList<>();
                 while (rs.next()) {
                     int seq = rs.getInt(1);
@@ -151,5 +234,59 @@ public class FBoardDAO {
                 return list;
             }
         }
+        
+	}
+	
+	private String newString(String category,String search) throws Exception {
+    	
+		String sql = "";
+		
+		if(category.equals("0")) {
+			sql = "select * from "
+					+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+					+ "FROM f_board "
+					+ "WHERE f_board_question LIKE '"+search+"' or f_board_answer LIKE ?)"
+					+ "where row_count between ? and ?";
+		}else {
+			sql = "select * from "
+					+ "( select f_board.*, row_number() OVER (ORDER BY f_board_seq DESC) AS row_count "
+					+ "FROM f_board "
+					+ "WHERE f_board_category = '"+category+"' AND (f_board_question LIKE '"+search+"' or f_board_answer LIKE ? ))"
+					+ "where row_count between ? and ?";
+		}
+    	
+    	return sql;
+    	
     }
+	
+	
+//public int searchRecordCount(String category) throws Exception {
+//    	
+//    	String sql = "";
+//    	
+//    	if(category.equals("0")) {
+//			sql = "select count(*) from f_board";
+//		}else if(category.equals("1")) {
+//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '1'";
+//		}else if(category.equals("2")) {
+//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '2'";
+//		}else {
+//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '3'";
+//		}
+//		try (Connection con = this.getConnection();
+//				PreparedStatement pstst = con.prepareStatement(sql);
+//				ResultSet rs = pstst.executeQuery()) {
+//
+//			rs.next();
+//			int record = rs.getInt("count(*)");
+//			System.out.println(record);
+//
+//			return record;
+//		}
+//	}
+    
+ }
+
+
+
 	

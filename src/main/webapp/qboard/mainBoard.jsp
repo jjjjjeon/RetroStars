@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -67,8 +68,9 @@ nav {
 }
 
 .container {
-	width: 1100px;
-	height: 800px;
+	padding:0px;
+	width: 1500px;
+	height: 1100px;
 	margin: auto;
 	background-color: #323232;
 }
@@ -154,7 +156,8 @@ nav {
 }
 
 .list_data_writer {
-	width: 93px;
+	text-align:center;
+	width: 131px;
 	height: 48px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -180,7 +183,7 @@ nav {
 }
 
 .detailA:hover {
-	color: black;
+	background-color:dimgray;
 }
 
 .btns_container {
@@ -194,7 +197,17 @@ nav {
 #ask_btn {
 	width: 120px;
 	border-radius: 0;
+	color: white;
+    border: 1px solid white;
 }
+
+#ask_btn:hover {
+	width: 120px;
+	border-radius: 0;
+	color: #323232;
+    background-color: white;
+}
+
 
 #page_navi a {
 	display: inline-block;
@@ -312,13 +325,13 @@ nav {
 		</div>
 	</nav>
 	<div class="container col center">
-		<div class="col1 center" style="flex: 1; width: 100%;">
+		<div class="col1 center" style="flex: 1; width: 100%; background-color:#272727; border: 1px solid whitesmoke;">
 			<h4>
 				질문과 답변 <i class="fa-brands fa-quinscape"></i>
 			</h4>
 		</div>
 		<div class="col2 col" style="flex: 9; width: 100%;">
-			<div class="navi_container row" style="flex: 0.7; width: 100%;">
+			<div class="navi_container row" style="flex: 0.8; width: 100%;">
 				<div class="navi_total center" style="flex: 1;">
 					<a href="" class="naviAn" data-categoryCode="0">전체</a>
 				</div>
@@ -332,7 +345,7 @@ nav {
 					<a href="" class="naviAn" data-categoryCode="3">기타문의</a>
 				</div>
 			</div>
-			<div class="search_container row" style="flex: 1.0; width: 100%;">
+			<div class="search_container row" style="flex: 0.7; width: 100%;">
 				<div class="col1" style="flex: 1;"></div>
 				<div class="search_col2" style="flex: 1; padding-bottom: 15px;">
 					<div class="dropdown">
@@ -352,7 +365,7 @@ nav {
 					</div>
 				</div>
 			</div>
-			<div class="list_container_row row" style="flex: 6.9; width: 100%;">
+			<div class="list_container_row row" style="flex:7.0; width: 100%;">
 				<div class="list_container_col col" style="flex: 1; height: 100%;">
 					<div class="list_head row" style="flex: 1; width: 100%;">
 						<div class="list_head_seq center" style="flex: 1;">번호</div>
@@ -365,9 +378,11 @@ nav {
 					<div class="list_detail_box_row row" style="flex: 9; width: 100%;">
 						<div class="list_detail_box_col col"
 							style="flex: 1; height: 100%;">
+							<c:choose>
+							<c:when test="${fn:length(list) > 0 }">
 							<c:forEach var="dto" items="${list}">
 								<a class="detailA" data-postOwnerId="${dto.userId}" data-qBoardSeq="${dto.qBoardSeq}" data-qBoardSecret="${dto.qBoardSecret}">
-									<div class="list_data_row row" style="height: 44px; width: 100%;">
+									<div class="list_data_row row" style="height: 56px; width: 100%;">
 										<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
 										<div class="list_data_category center" style="flex: 1;">
 											<c:choose>
@@ -411,15 +426,20 @@ nav {
 									</div>
 								</a>
 							</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<div style="text-align:center; margin-top:10px">검색결과가 존재하지 않습니다.</div>
+							</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="btns_container" style="flex: 0.7; width: 100%;">
-				<button id="ask_btn" class="btn btn-primary">글쓰기</button>
+			<div class="btns_container" style="flex: 0.5; width: 100%;">
+				<button id="ask_btn" class="btn btn-outline-success">글쓰기</button>
 			</div>
 			<div id="page_navi" class="page_container center"
-				style="flex: 0.7; width: 100%;"></div>
+				style="flex: 1.0; width: 100%;"></div>
 		</div>
 	</div>
 	<div class="footer">
@@ -556,10 +576,10 @@ nav {
 				});
 				
 				//디테일페이지 앵커 권한 설정
-				$($(".detailA")).on("click",function(){
-					//유저이면서 내가 쓴 글이 아니고 비밀이라면 보지 못 한다.
-					if("${loginId}" != $(this).attr("data-postOwnerId") && $(this).attr("data-qBoardSecret")=="Y" && "${isAdmin}"==false){
-						alert("내가 쓴 글이 아니지만 비밀이라서 보지 못 합니다.");
+				$($(".detailA")).on("click",function(){	
+					//로그인하든 안하든 관리자가 아니고 내가 쓴 글이 아니고 비밀이라면 보지 못 한다.
+					if((("${loginId}" != "0")||("${loginId}" == "0"))&&("${loginId}" != $(this).attr("data-postOwnerId")) && ($(this).attr("data-qBoardSecret")=="Y") && (${isAdmin}==false)){
+						alert("비밀글입니다.");
 						return false;
 					}
 					

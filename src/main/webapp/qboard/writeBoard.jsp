@@ -60,7 +60,7 @@
     				padding-top: 30px;
 					background-color:#323232;
 					width: 1100px;
-					height: 750px;
+					height: 770px;
 					margin: auto;
 				}
 
@@ -84,7 +84,20 @@
 				.dropdown {
 					padding-left: 100px;
 					padding-right: 100px;
+					padding-bottom: 10px;
 				}
+				
+				
+
+ 				 /* 커스텀 체크박스 스타일 */
+  				.custom-checkbox {
+				    width: 20px;
+				    height: 20px;
+				    cursor: pointer;
+				    position: relative;
+				    top:4px;
+				    
+				 }
 
 				.title_container {
 					padding-left: 100px;
@@ -110,7 +123,7 @@
     				margin-right: 5px
 					border: none;
 					width: 450px;
-					text-align: center;
+					text-align: left;
 					border: none;
 				}
 
@@ -285,10 +298,10 @@
         </div>
         <div class="title_container" style="flex: 1; width: 100%">
             <div class="title_detail">
-                <div class="title_detailSpan">
+                <div class="title_detailSpan" style="margin-right: 15px;">
                     <input name="qBoardTitle" type="text" id="title_input" style="margin-right: 5px;" placeholder="제목을 입력하세요.">
                 </div>
-                <label for="secret" style="color:white;"><input name="qBoardSecret" type="checkbox" id="secret" style="margin-right:10px;">비밀글</label>
+                <label for="secret" style="color:white;"><input name="qBoardSecret" type="checkbox" id="secret" style="margin-right:10px;" class="custom-checkbox">비밀글</label>
             </div>
         </div>
         <div class="contents_container center" style="flex: 6; width: 100%;">
@@ -324,6 +337,24 @@
 			<script>
 			
 			 $("#insert_btn").on("click", function () {
+					console.log($("#categoryToggle").html());
+				 
+				 if( $("#categoryToggle").html()=="카테고리"){
+					 alert("카테고리를 선택해주세요.");
+					 return false;
+				 }
+				 
+				 if($("#title_input").val().trim()==""){
+					 alert("제목을 입력해주세요.");
+					 return false;
+				 }
+				 
+				 if($("#contents_detail").html().trim()==""){
+					 alert("내용을 입력해주세요.");
+					 return false;
+				 }
+				 
+				 
                    let form = $('<form>', {
                         action: '/insert.qboard',
                         method: 'post'
@@ -357,26 +388,14 @@
                  
          	});
 			 
-			//드랍다운 선택시 카테고리 텍스트 변경 이벤트
-			document.addEventListener("DOMContentLoaded", function () {
-					// 모든 드롭다운 항목에 이벤트 리스너 추가
-					let dropdownItems = document.querySelectorAll('.dropdown-item');
-					dropdownItems.forEach(function (item) {
-						item.addEventListener('click', function (event) {
-							// 버튼 텍스트 변경
-							let button = document.querySelector('#categoryToggle');
-							button.textContent = event.target.textContent;
-						});
-					});
-			})
-			
-			
-		
 		   //.dropdown-item을 클릭했을 때
 	       $(".dropdown-item").on("click", function (e) {
 	          e.preventDefault();
 	          $("#categoryToggle").html($(this).html());
+	          console.log($("#categoryToggle").html());
 	       });
+		   
+		   
 			
 			
 

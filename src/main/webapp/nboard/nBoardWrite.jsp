@@ -180,6 +180,7 @@
         	background-color:white;
         	color:#323232;
         }
+
     </style>
 </head>
 
@@ -260,7 +261,7 @@
         </div>
 		</form>
 		
- 
+
     </div>
         <div class="footer">
         <div class="footerbox">

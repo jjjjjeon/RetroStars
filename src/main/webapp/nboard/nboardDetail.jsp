@@ -70,6 +70,11 @@
         line-height: 1.6;
         border-bottom: 1px solid #ddd;
         color: white;
+        background-color:#323232;
+        width: 750px;
+        height: 400px;
+    	resize: vertical;
+    	overflow: auto;
     }
 
     .detailbtn{
@@ -84,6 +89,7 @@
     	border: 1px solid white;
     	border-radius: 10px;
     	font-weight: bold;
+    	padding:10px;
     }
     #back:hover{
     	background-color:white;
@@ -223,16 +229,18 @@
     		<div class="ntitle" contenteditable="false">${dto.nBoardTitle }</div>
     		<div>관리자</div>
     		<div><fmt:formatDate value="${dto.nBoardDate}" pattern="yyyy-MM-dd" /></div>
-<%--     		<div>${dto.nBoardView }</div> --%>
     	</div>
     	<div class="detailcontent" contenteditable="false">
     		${dto.nBoardContent }
     	</div>
     	<div class="detailbtn">
 			<input type="button" value="뒤로가기" id="back">
+			
+		<c:if test="${loginId eq 'admin'}">
 			<input type="button" value="삭제" id="delete" data-nboard-seq="${dto.nBoardSeq}">
 			<input type="button" value="수정" id="edit">
-    	    
+    	</c:if>    
+    	
     	    <form action="/update.nboard">
     			<input type="hidden" name="seq" value="${dto.nBoardSeq}">
     			<input type="hidden" name="title" id="hidden_title" value="${dto.nBoardTitle }">

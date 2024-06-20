@@ -59,7 +59,7 @@ public class QBoardDAO {
 		}		
 	}
 
-	//0. 카테고리 이름을 검색하는 함수
+	//0. 카테고리 코드를 검색하는 함수
 	public int getCategory(String categoryName) throws Exception{
 		String sql="select q_board_category from q_category where q_board_category_name=?";
 
@@ -77,7 +77,7 @@ public class QBoardDAO {
 
 	}
 	
-	//0.카테고리 코드를 검색하는 함수
+	//0.카테고리 이름을 검색하는 함수
 	public String getCategoryCode(int categoryCode) throws Exception{
 		if(categoryCode==1) {
 			return "게임문의";
@@ -324,23 +324,27 @@ public class QBoardDAO {
 	}
 
 	//4. 디테일페이지에서 내용 출력하기
-	public QBoardDTO selectcontent(int searchseq) throws Exception{
-		String sql="select * from q_board  where q_board_seq=?";
-
+	public HashMap<String,?> selectcontent(int searchseq) throws Exception{
+		String sql="select q.*, m.user_nickname as nickname from q_board q "+
+				 "left join member m on q.user_id = m.user_id "+   
+				 "where q_board_seq=? ";
+					
 		try(Connection con=this.getConnection();
 				PreparedStatement ps=con.prepareStatement(sql);){	
 			ps.setInt(1, searchseq);
 			try(ResultSet rs=ps.executeQuery();){
 				while(rs.next()) {
-					int qBoardSeq = rs.getInt("q_board_seq");
-					String userId = rs.getString("user_id");
-					int qBoardCategory = rs.getInt("q_board_category");
-					String qBoardTitle = rs.getString("q_board_title");
-					String qBoardContent = rs.getString("q_board_content");
-					Timestamp qBoardDate = rs.getTimestamp("q_board_date");
-					String qBoardAnswer=rs.getString("q_board_answer");
-					String qBoardSecret=rs.getString("q_board_secret");
-					return new QBoardDTO(qBoardSeq, userId, qBoardCategory, qBoardTitle, qBoardContent, qBoardDate, qBoardAnswer, qBoardSecret);
+					HashMap map=new HashMap<>();
+					map.put("qBoardSeq", rs.getInt("q_board_seq"));
+					map.put("userId", rs.getString("user_id"));
+					map.put("qBoardCategory", rs.getInt("q_board_category"));
+					map.put("qBoardTitle", rs.getString("q_board_title"));
+					map.put("qBoardContent", rs.getString("q_board_content"));
+					map.put("qBoardDate", rs.getTimestamp("q_board_date"));
+					map.put("qBoardAnswer", rs.getString("q_board_answer"));
+					map.put("qBoardSecret", rs.getString("q_board_secret"));
+					map.put("qBoardUserNickname", rs.getString("nickname"));
+					return map;
 				}
 				return null;
 			}
@@ -378,12 +382,12 @@ public class QBoardDAO {
 		String id="star";
 		String pw="star";
 
-		String sql="insert into q_board values(q_board_sequence.nextval,'sami3013',3,?,?,sysdate,'Y','N')";
+		String sql="insert into q_board values(q_board_sequence.nextval,'test',3,?,?,sysdate,'Y','N')";
 
 		try(Connection con= DriverManager.getConnection(url, id, pw);
 				PreparedStatement pstat=con.prepareStatement(sql);){
 			for(int i=1; i<30; i++) {
-				pstat.setString(1, "title"+(i));
+				pstat.setString(1, "test"+(i));
 				pstat.setString(2, "content"+(i));
 				pstat.addBatch();
 			}

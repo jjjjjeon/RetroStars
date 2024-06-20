@@ -45,13 +45,16 @@ public class QBoardController extends HttpServlet {
 			if(cmd.equals("/insert.qboard")){
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				String boardWriterNicname=request.getParameter("boardWriterNicname");
-				int qBoardCategory= boarddao.getCategory(request.getParameter("qBoardCategory")) ;
+				String strqBoardCategory=request.getParameter("qBoardCategory");
+				int intqBoardCategory= boarddao.getCategory(strqBoardCategory) ;
+				System.out.println(strqBoardCategory);
+				System.out.println(intqBoardCategory);
 				String qBoardTitle= request.getParameter("qBoardTitle");
 				String qBoardContent= request.getParameter("qBoardContent");
 				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
 				
-				System.out.println(loginId+qBoardCategory+qBoardTitle+qBoardContent+qBoardSecret);	
-				boarddao.insert(new QBoardDTO(0,loginId,qBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
+				System.out.println(loginId+intqBoardCategory+qBoardTitle+qBoardContent+qBoardSecret);	
+				boarddao.insert(new QBoardDTO(0,loginId,intqBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
 				response.sendRedirect("/list.qboard");
 				
 			}else if(cmd.equals("/list.qboard")) {
@@ -62,9 +65,6 @@ public class QBoardController extends HttpServlet {
 				}else {
 					isAdmin=memberdao.isAdmin(loginId);
 				}
-					
-				
-				
 				
 				//받은 정보 처리하기
 				String strcpage=request.getParameter("cpage");
@@ -101,7 +101,7 @@ public class QBoardController extends HttpServlet {
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				int seq=Integer.parseInt(request.getParameter("seq"));
 				boolean isAdmin=memberdao.isAdmin(loginId);
-				QBoardDTO dto=boarddao.selectcontent(seq);
+				HashMap<String,?> dto=boarddao.selectcontent(seq);
 				request.setAttribute("dto", dto);
 				request.setAttribute("loginId", loginId);
 				request.setAttribute("isAdmin", isAdmin);
@@ -123,6 +123,7 @@ public class QBoardController extends HttpServlet {
 				//닉네임처리
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				String nickname=memberdao.getNickname(loginId);
+				
 				request.setAttribute("nickname", nickname);
 				request.getRequestDispatcher("/qboard/writeBoard.jsp").forward(request, response);
 				

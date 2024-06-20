@@ -130,7 +130,7 @@ public class NBoardDAO {
 			}
 		}
 	}
-	
+		
 		// 게시글 수정
 		public int updateNBoard(NBoardDTO dto) throws Exception {
 		    String sql = "update n_board set n_board_title=?, n_board_content=? where n_board_seq=?";
@@ -157,16 +157,22 @@ public class NBoardDAO {
 		}
 		
 		// 제목으로 검색
-		public List<NBoardDTO> searchListByTitle(String keyword) throws Exception {
+		public List<NBoardDTO> searchListByTitle(String keyword, int start, int end) throws Exception {
 		    List<NBoardDTO> noticeList = new ArrayList<>();
 		    
-		    String sql = "SELECT * FROM n_board WHERE n_board_title LIKE ?";
+		    String sql = "SELECT * FROM (" +
+		                 "SELECT rownum AS rnum, a.* FROM (" +
+		                 "SELECT * FROM n_board WHERE n_board_title LIKE ? ORDER BY n_board_seq DESC" +
+		                 ") a WHERE rownum <= ?" +
+		                 ") WHERE rnum >= ?";
 		    
 		    try (Connection con = this.getConnection();
 		         PreparedStatement pstat = con.prepareStatement(sql)) {
 		        
-		    	pstat.setString(1, "%" + keyword + "%"); 
-		    	
+		        pstat.setString(1, "%" + keyword + "%");
+		        pstat.setInt(2, end);
+		        pstat.setInt(3, start);
+		        
 		        try (ResultSet rs = pstat.executeQuery()) {
 		            while (rs.next()) {
 		                NBoardDTO searchDto = new NBoardDTO();
@@ -178,10 +184,6 @@ public class NBoardDAO {
 		                searchDto.setnBoardView(rs.getInt("n_board_view"));
 		                
 		                noticeList.add(searchDto);
-		            }
-		            if (noticeList.isEmpty()) {
-		                // 검색 결과가 없을 때 처리할 메시지를 서버 콘솔에 출력
-		                System.out.println("검색 결과가 없음");
 		            }
 		        }
 		    }
@@ -190,16 +192,22 @@ public class NBoardDAO {
 		}
 
 		// 글번호로 검색
-		public List<NBoardDTO> searchListByPostNumber(String keyword) throws Exception {
+		public List<NBoardDTO> searchListByPostNumber(String keyword, int start, int end) throws Exception {
 		    List<NBoardDTO> noticeList = new ArrayList<>();
 		    
-		    String sql = "SELECT * FROM n_board WHERE n_board_seq LIKE ?";
+		    String sql = "SELECT * FROM (" +
+		                 "SELECT rownum AS rnum, a.* FROM (" +
+		                 "SELECT * FROM n_board WHERE n_board_seq LIKE ? ORDER BY n_board_seq DESC" +
+		                 ") a WHERE rownum <= ?" +
+		                 ") WHERE rnum >= ?";
 		    
 		    try (Connection con = this.getConnection();
 		         PreparedStatement pstat = con.prepareStatement(sql)) {
 		        
-		    	pstat.setString(1, "%" + keyword + "%"); 
-		    	
+		        pstat.setString(1, "%" + keyword + "%");
+		        pstat.setInt(2, end);
+		        pstat.setInt(3, start);
+		        
 		        try (ResultSet rs = pstat.executeQuery()) {
 		            while (rs.next()) {
 		                NBoardDTO searchDto = new NBoardDTO();
@@ -212,15 +220,43 @@ public class NBoardDAO {
 		                
 		                noticeList.add(searchDto);
 		            }
-		            if (noticeList.isEmpty()) {
-		                // 검색 결과가 없을 때 처리할 메시지를 서버 콘솔에 출력
-		                System.out.println("검색 결과가 없음");
-		            }
 		        }
 		    }
 		    
 		    return noticeList;
 		}
+
+		// 전체 검색 결과 수 계산하는 메서드
+		public int getSearchRecordCountByTitle(String keyword) throws Exception {
+		    String sql = "SELECT COUNT(*) FROM n_board WHERE n_board_title LIKE ?";
+		    
+		    try (Connection con = this.getConnection();
+		         PreparedStatement pstat = con.prepareStatement(sql)) {
+		        
+		        pstat.setString(1, "%" + keyword + "%");
+		        
+		        try (ResultSet rs = pstat.executeQuery()) {
+		            rs.next();
+		            return rs.getInt(1);
+		        }
+		    }
+		}
+
+		public int getSearchRecordCountByPostNumber(String keyword) throws Exception {
+		    String sql = "SELECT COUNT(*) FROM n_board WHERE n_board_seq LIKE ?";
+		    
+		    try (Connection con = this.getConnection();
+		         PreparedStatement pstat = con.prepareStatement(sql)) {
+		        
+		        pstat.setString(1, "%" + keyword + "%");
+		        
+		        try (ResultSet rs = pstat.executeQuery()) {
+		            rs.next();
+		            return rs.getInt(1);
+		        }
+		    }
+		}
+
 		
 
 		
