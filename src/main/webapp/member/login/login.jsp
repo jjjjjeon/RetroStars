@@ -5,10 +5,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="google-signin-client_id" content="221146540935-8ll5l96hjeedho45nrg19tpo350803sj.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 화면</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css">
     <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
     <style>  
       body{
             font-family: 'Georgia', serif;
@@ -157,8 +159,9 @@
         </form>
         <a href="/member/login/findId.jsp">아이디를 잊어버리셨나요?</a> |
         <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
+
         <div class="social-login">
-            <img src="/image/google_login.png" alt="Google">
+            <a href="javaScript:void(0)"><img src="/image/google_login.png" alt="Google" data-onsuccess="onSignIn"></a>
             <a href="javaScript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
             <img src="/image/naver_login.png" alt="Line">
         </div>
@@ -169,6 +172,42 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+    
+    function init() {
+    	gapi.load('auth2', function() {
+    		gapi.auth2.init();
+    		options = new gapi.auth2.SigninOptionsBuilder();
+    		options.setPrompt('select_account');
+            // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
+    		options.setScope('email profile openid https://www.googleapis.com/auth/user.birthday.read');
+            // 인스턴스의 함수 호출 - element에 로그인 기능 추가
+            // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
+    		gapi.auth2.getAuthInstance().attachClickHandler('GgCustomLogin', options, onSignIn, onSignInFailure);
+    	})
+    }
+
+    function onSignIn(googleUser) {
+    	var access_token = googleUser.getAuthResponse().access_token
+    	$.ajax({
+        	// people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
+    		url: 'https://people.googleapis.com/v1/people/me'
+            // key에 자신의 API 키를 넣습니다.
+    		, data: {personFields:'birthdays', key:'AIzaSyBOdmeC4SOSzXmPGLEM2vZueqiBSWKg3wk', 'access_token': access_token}
+    		, method:'GET'
+    	})
+    	.done(function(e){
+            //프로필을 가져온다.
+    		var profile = googleUser.getBasicProfile();
+    		console.log(profile)
+    	})
+    	.fail(function(e){
+    		console.log(e);
+    	})
+    }
+    function onSignInFailure(t){		
+    	console.log(t);
+    }
+  
        function kakaoLogin() {
            Kakao.Auth.login({
                success: function (response) {
