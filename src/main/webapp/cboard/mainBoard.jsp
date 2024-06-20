@@ -228,7 +228,7 @@
     .pageNavi {
         margin-top: 40px;
         display: flex;
-        justify-content: center;
+        justify-content: center;"src/main/java/dao/CBoardDAO.java"
         font-size: 20px;
     }
     
