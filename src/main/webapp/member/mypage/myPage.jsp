@@ -315,23 +315,20 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             	<c:forEach var="seq" items="${seq}">
             		<c:choose>
             			<c:when test="${seq.equals('1')}">
-            				<div class="game_seq">오버워치</div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=1">오버워치</a></div>
             			</c:when>
             			<c:when test="${seq.equals('2')}">
-            				<div class="game_seq">심즈</div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=2">심즈</a></div>
             			</c:when>
             			<c:when test="${seq.equals('3')}">
-            				<div class="game_seq">apex 레전드</div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=3">apex 레전드</a></div>
             			</c:when>
             			<c:when test="${seq.equals('4')}">
-            				<div class="game_seq">grimm's hollow</div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=4">grimm's hollow</a></div>
             			</c:when>
             			<c:when test="${seq.equals('5')}">
-            				<div class="game_seq">배틀 그라운드</div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=5">배틀 그라운드</a></div>
             			</c:when>
-            			<c:otherwise>
-            				<div class="game_seq">즐겨찾기를 하시면 바로 해당 게임으로 이동 됩니다.</div>
-            			</c:otherwise>
             		</c:choose>
             </c:forEach>
             </div>
