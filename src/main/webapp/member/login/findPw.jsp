@@ -140,12 +140,12 @@
     <div class="background"></div>
     <div class="container">
         <h1>비밀번호 찾기</h1>
-        <form id="find-password-form" action="/sendCode">
+        <form id="find-password-form" action="/findPwSendEmail.member">
             <div class="input-group">
                 <label for="email">이메일 주소 입력</label>
-                <input type="email" id="email" name="email" placeholder="이메일" required>
+                <input type="email" id="email" name="inputEmail" placeholder="이메일" required>
             </div>
-            <button type="submit">확인</button>
+            <button type="submit" id="pwCodeSend">확인</button>
         </form>
         <div class="links">
             <a href="/member/login/findId.jsp">아이디 찾기</a>
@@ -154,14 +154,14 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('#find-password-form').submit(function(event){
-                event.preventDefault();
-                const email = $('#email').val();
+        	
+            $('#pwCodeSend').on("click", function(){
+                let email = $('#email').val();
                 if(email === "") {
                     alert("이메일 주소를 입력해주세요.");
                 } else {
                     alert("입력한 이메일 주소로 비밀번호 찾기 이메일을 전송했습니다.");
-                    // 전송 로직 추가 예정
+                    
                 }
             });
         });

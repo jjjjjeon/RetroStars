@@ -91,9 +91,9 @@
         return regexFront.test(userNoFront) && regexBack.test(userNoBack);
     }
 
-    function validatePhone(phone) {
+    function validatePhone(콜) {
         let regex = /^01([0|1|6|7|8|9])([0-9]{8})$/;
-        return regex.test(phone);
+        return regex.test(콜);
     }
 
     function validateForm() {
@@ -106,32 +106,22 @@
         let phone = $('#userPhone').val();
 
         if (!validateName(name)) {
-            $('#nameCheckText').css('visibility', 'visible');
             valid = false;
-        } else {
-            $('#nameCheckText').css('visibility', 'hidden');
         }
 
         if (!validateNickname(nickname)) {
-            $('#nicknameCheckText').css('visibility', 'visible');
             valid = false;
-        } else {
-            $('#nicknameCheckText').css('visibility', 'hidden');
         }
 
         if (!validateUserNo(userNoFront, userNoBack)) {
-            $('#userNoCheckText').css('visibility', 'visible');
             valid = false;
+            $('#userNo').val('');
         } else {
-            $('#userNoCheckText').css('visibility', 'hidden');
             $('#userNo').val(userNoFront + userNoBack + '******');
         }
 
-        if (phone && !validatePhone(phone)) {
-            $('#phoneCheckText').css('visibility', 'visible');
+        if (phone && !validatePhone(콜)) {
             valid = false;
-        } else {
-            $('#phoneCheckText').css('visibility', 'hidden');
         }
 
         $('#nextButton').prop('disabled', !valid);
@@ -146,7 +136,7 @@
         let nextButton = $('#nextButton');
 
         if (!validateNickname(userNickname)) {
-            nicknameCheckText.text("닉네임은 3~10자리만 가능합니다.");
+            nicknameCheckText.text("닉네임은 3~10자 영문,한글만 가능합니다.");
             nicknameCheckText.css('color', 'red');
             nicknameCheckText.css('visibility', 'visible');
             nextButton.addClass('disabled-button');
@@ -159,7 +149,7 @@
             method: 'get',
             data: { userNickname: userNickname },
             success: function(response) {
-            	console.log(response);
+                console.log(response);
                 if (response === "true") {
                     nicknameCheckText.text("사용할 수 있는 닉네임입니다.");
                     nicknameCheckText.css('color', 'green');
@@ -184,22 +174,59 @@
     }
 
     $(document).ready(function(){
-        $('#userName, #userNickname, #userNoFront, #userNoBack, #userPhone').on('input', function() {
+        $('#userName').on('input', function() {
+            if (!validateName($(this).val())) {
+                $('#nameCheckText').css('visibility', 'visible');
+            } else {
+                $('#nameCheckText').css('visibility', 'hidden');
+            }
             validateForm();
+        }).on('focus', function() {
+            $('#nameCheckText').css('visibility', 'visible');
+        }).on('blur', function() {
+            $('#nameCheckText').css('visibility', 'hidden');
         });
 
         $('#userNickname').on('input', function() {
-            $('#nicknameCheckText').css('visibility', 'hidden');
-            $('#nextButton').addClass('disabled-button');
-            $('#nextButton').prop('disabled', true);
-
-            if (validateNickname($(this).val())) {
-                checkUserNickname();
-            } else {
-                $('#nicknameCheckText').text("사용 불가능한 닉네임입니다.");
+            if (!validateNickname($(this).val())) {
+                $('#nicknameCheckText').text("닉네임은 3~10자 영문,한글만 가능합니다.");
                 $('#nicknameCheckText').css('color', 'red');
                 $('#nicknameCheckText').css('visibility', 'visible');
+            } else {
+                $('#nicknameCheckText').css('visibility', 'hidden');
+                checkUserNickname();
             }
+            validateForm();
+        }).on('focus', function() {
+            $('#nicknameCheckText').css('visibility', 'visible');
+        }).on('blur', function() {
+            $('#nicknameCheckText').css('visibility', 'hidden');
+        });
+
+        $('#userNoFront, #userNoBack').on('input', function() {
+            if (!validateUserNo($('#userNoFront').val(), $('#userNoBack').val())) {
+                $('#userNoCheckText').css('visibility', 'visible');
+            } else {
+                $('#userNoCheckText').css('visibility', 'hidden');
+            }
+            validateForm();
+        }).on('focus', function() {
+            $('#userNoCheckText').css('visibility', 'visible');
+        }).on('blur', function() {
+            $('#userNoCheckText').css('visibility', 'hidden');
+        });
+
+        $('#userPhone').on('input', function() {
+            if ($(this).val() && !validatePhone($(this).val())) {
+                $('#phoneCheckText').css('visibility', 'visible');
+            } else {
+                $('#phoneCheckText').css('visibility', 'hidden');
+            }
+            validateForm();
+        }).on('focus', function() {
+            $('#phoneCheckText').css('visibility', 'visible');
+        }).on('blur', function() {
+            $('#phoneCheckText').css('visibility', 'hidden');
         });
     });
     </script>

@@ -290,9 +290,9 @@
                 <button id="categoryToggle" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false" style="border-radius:0 name="qBoardCategory">카테고리</button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">게임문의</a></li>
-                    <li><a class="dropdown-item">제휴문의</a></li>
-                    <li><a class="dropdown-item">기타문의</a></li>
+                    <li><a id="dropdown-item" class="dropdown-item">게임문의</a></li>
+                    <li><a id="dropdown-item" class="dropdown-item">제휴문의</a></li>
+                    <li><a id="dropdown-item" class="dropdown-item">기타문의</a></li>
                 </ul>
             </div>
         </div>
@@ -389,7 +389,7 @@
          	});
 			 
 		   //.dropdown-item을 클릭했을 때
-	       $(".dropdown-item").on("click", function (e) {
+	       $("#dropdown-item").on("click", function (e) {
 	          e.preventDefault();
 	          $("#categoryToggle").html($(this).html());
 	          console.log($("#categoryToggle").html());

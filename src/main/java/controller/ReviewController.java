@@ -7,6 +7,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,47 +33,73 @@ import dto.ReviewDTO;
 @WebServlet("*.review")
 public class ReviewController extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
+    }
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        Gson g = new Gson();
-        
+        Gson gson = new Gson();
+
         String cmd = request.getRequestURI();
         System.out.println(cmd);
         ReviewDAO reviewDao = ReviewDAO.getInstance();
         PrintWriter pw = response.getWriter();
 
         try {
-        	// 가장 반응이 많은 리뷰
             if (cmd.equals("/mostLiked.review")) {
-            	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
                 ReviewDTO mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
-                System.out.println(mostLikedReview.getUserId() + mostLikedReview.getReviewContent());
-                
-                String result = g.toJson(mostLikedReview);
+                String result = gson.toJson(mostLikedReview);
                 pw.append(result);
                 System.out.println(result);
-            } 
-            // 최신 리뷰
-            else if (cmd.equals("/latest.review")) {
+            } else if (cmd.equals("/latest.review")) {
                 ReviewDTO latestReview = reviewDao.getLatestReview();
-                response.getWriter().write(g.toJson(latestReview));
-            } 
-            else if (cmd.equals("/updateReviewLike.review")) {
+                String result = gson.toJson(latestReview);
+                pw.append(result);
+                System.out.println(result);
+            } else if (cmd.equals("/updateReviewLike.review")) {
                 int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
                 String type = request.getParameter("type");
                 reviewDao.updateReviewLike(reviewSeq, type);
-                response.getWriter().write("{\"result\":\"success\"}");
+                pw.append("{\"result\":\"success\"}");
+            } else if (cmd.equals("/list.review")) {
+                String sortType = request.getParameter("sortType") != null ? request.getParameter("sortType") : "review_like";
+                int cpage = request.getParameter("cpage") != null ? Integer.parseInt(request.getParameter("cpage")) : 1;
+                int startNum = cpage * 10 - 9;
+                int endNum = cpage * 10;
+
+                ArrayList<HashMap<String, ?>> list = reviewDao.getAllReviews(sortType, startNum, endNum);
+                int reviewCount = reviewDao.getReviewCount();
+
+                System.out.println(list);
+                request.setAttribute("list", list);
+                request.setAttribute("cpage", cpage);
+                request.setAttribute("reviewCount", reviewCount);
+                request.setAttribute("sortType", sortType);
+
+                request.getRequestDispatcher("/rboard/mainBoard.jsp").forward(request, response);
+            }else if (cmd.equals("/addReview.review")) {
+                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+                String reviewContent = request.getParameter("reviewContent");
+                String userId = (String) request.getSession().getAttribute("loginId"); // 로그인된 유저 아이디 가져오기
+
+                ReviewDTO newReview = new ReviewDTO();
+                newReview.setGameSeq(gameSeq);
+                newReview.setUserId(userId);
+                newReview.setReviewContent(reviewContent);
+
+                int result = reviewDao.addReview(newReview);
+                if (result > 0) {
+                    pw.append("{\"result\":\"success\"}");
+                } else {
+                    pw.append("{\"result\":\"error\"}");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write("{\"result\":\"error\"}");
+            pw.append("{\"result\":\"error\"}");
         }
-	}
-
+    }
 }
