@@ -352,7 +352,7 @@ nav {
 						<div id="post-header-title">
 							문의내용  &nbsp; 
 								<select id="selectBox" class="form-select"
-									aria-label="Default select example" style="width:130px; background-color:lightslategrey; color:white; margin-bottom:5px; border:none;">
+									aria-label="Default select example" style="width:130px; background-color:whitesmoke; color:black; margin-bottom:5px; border:none;">
 									<c:choose>
 										<c:when test="${dto.qBoardAnswer eq 'N'}">
 											<option selected>답변대기</option>
@@ -465,13 +465,19 @@ nav {
     		}).done(function (data) {
                let replylist = data.replylist;
                let loginId = data.loginId;
-               //console.log(loginId);
                for (let reply of replylist) {
                if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
-            	   console.log(reply.nickname);
-            	   console.log(reply.userId);
+            	   //console.log(reply.nickname);
+            	   //console.log(reply.userId);
+            	   //console.log(reply.admin);
 	               let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
 	               let col1 = $("<div>").addClass("col1").css("flex","1").html(reply.nickname);
+	               let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
+                   let useri=$("<i>").addClass("fa-solid fa-person-circle-question").css("color","#ffffff");
+	               if(reply.admin=='Y'){
+	            	   col1.append(admini);
+	               }
+            
 	               let span = $("<span>").css("float","right").html(reply.qReplyDate);
 	               col1.append(span);
 	               let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(reply.qReplyContent);
@@ -576,8 +582,10 @@ nav {
                     }
                 }).done(function (replydto) {
                     let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
-                    let col1 = $("<div>").addClass("col1").css("flex","1").html(replydto.nickname);
-                    let span = $("<span>").css("float","right").html(reply.qReplyDate);
+                    let col1 = $("<div>").addClass("col1").css("flex","1").html('${loginnickname}');
+                    let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
+                    let useri=$("<i>").addClass("fa-solid fa-person-circle-question").css("color","#ffffff");
+                    let span = $("<span>").css("float","right").html(replydto.qReplyDate);
  	                col1.append(span);
                     let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(replydto.qReplyContent);
                     replycontainer.append(col1, col2);
@@ -588,11 +596,13 @@ nav {
                     	col3.append(replyupdatebtn, replydeletebtn);
                     	replycontainer.append(col3);
                     }else if(${isAdmin}==true){
+                    	col1.append(admini);
                     	let col3 = $("<div>").addClass("col3").css("flex","1");
                     	let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-outline-success").html("삭제");
                     	col3.append(replydeletebtn);
                     	replycontainer.append(col3);
                     }else{
+                    	col1.append(useri);
                     	let col3 = $("<div>").addClass("col3").css("flex","1");
                     	replycontainer.append(col3);
                     }

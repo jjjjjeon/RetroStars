@@ -69,7 +69,7 @@ public class QReplyDAO {
 		
 		//2. 전체 댓글 출력하기 select(ALL)
 		public ArrayList<HashMap<String,?>> selectAll() throws Exception{
-			String sql="select q.*, m.user_nickname as nickname  from q_reply q "+
+			String sql="select q.*, m.user_nickname as nickname, m.user_admin as admin from q_reply q "+
 					"left join member m on q.user_id = m.user_id "+
 					"order by 1 desc";
 
@@ -85,6 +85,7 @@ public class QReplyDAO {
 					map.put("qReplyContent", rs.getString(4));
 					map.put("qReplyDate", rs.getTimestamp(5));
 					map.put("nickname", rs.getString(6));
+					map.put("admin", rs.getString(7));
 					list.add(map);
 
 				}
