@@ -101,10 +101,12 @@ public class QBoardController extends HttpServlet {
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				int seq=Integer.parseInt(request.getParameter("seq"));
 				boolean isAdmin=memberdao.isAdmin(loginId);
+				String loginnickname=memberdao.getNickname(loginId);
 				HashMap<String,?> dto=boarddao.selectcontent(seq);
 				request.setAttribute("dto", dto);
 				request.setAttribute("loginId", loginId);
 				request.setAttribute("isAdmin", isAdmin);
+				request.setAttribute("loginnickname", loginnickname);
 				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/delete.qboard")) {
