@@ -373,6 +373,23 @@ public class QBoardDAO {
 			return ps.executeUpdate();
 		}
 	}
+	
+	//6. updateAnswer
+		public int updateAnswer(int targetseq, String strselected) throws Exception{
+			String sql="";
+			if(strselected.equals("답변대기")) {
+				sql="update q_board set q_board_answer='N' where q_board_seq=? ";
+			}else if(strselected.equals("답변완료")) {
+				sql="update q_board set q_board_answer='Y' where q_board_seq=? ";
+			}
+			
+
+			try(Connection con=this.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql);){
+				ps.setInt(1, targetseq);
+				return ps.executeUpdate();
+			}
+		}
 
 
 
