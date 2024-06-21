@@ -6,12 +6,10 @@
 package controller;
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import java.io.PrintWriter;
-
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,7 +30,7 @@ import dto.PlayRecordDTO;
  * @author : KJY 
  * @version 1.0 
  */
-@WebServlet("*.playRecord")
+@WebServlet("*.playrecord")
 public class PlayRecordController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,23 +46,51 @@ public class PlayRecordController extends HttpServlet {
 	        String cmd = request.getRequestURI();
 	        PlayRecordDAO playRecordDao = PlayRecordDAO.getInstance();
 	        PrintWriter pw = response.getWriter();
+	        System.out.println(cmd);
 	        
 	        try {
 
 	        	// 랭킹 리스트 출력
 	        	if(cmd.equals("/list.playrecord")) {
 	        		
-	        		String gameSep = request.getParameter("gameSep");	        		
-					if(gameSep == null) {gameSep = "1";}
+	        		String gameSeq = request.getParameter("gameSeq");	        		
+					if(gameSeq == null) {gameSeq = "1";}
 					
-					List<HashMap<String,?>> ranks = playRecordDao.selectRank(gameSep);
+					List<HashMap<String,?>> ranks = playRecordDao.selectRank(gameSeq);
+					System.out.println(ranks.size());
+					
+					int count = 10 - ranks.size();
+					
+					List<HashMap<String,?>> rank = new ArrayList<>();
+					
+					if(ranks.size() == 10) {
+						
+						rank = ranks;
+						
+					}else {
+						int i = 10 - ranks.size();
+						System.out.println(i);
+						rank = ranks;
+						
+						for(int j = ranks.size(); j < 11 ; j++ ) {
+							
+							HashMap map=new HashMap<>();
+							map.put("rank", j);
+							map.put("id","미등록");
+							map.put("score","미등록");
+							map.put("gameCate","미등록");
+							map.put("url","default.png");
+							rank.add(map);
+							System.out.println(ranks.size());
+						}
+					}
 					
 					// 순서, 아이디, 스코어, 게임카테고리 순으로 전송
-	        		request.setAttribute("ranks",ranks);
+	        		request.setAttribute("ranks",rank);
 	        		request.getRequestDispatcher("/rboard/mainBoard.jsp").forward(request, response);
-	        		
+	        	}
 
-	        	if(cmd.equals("/write.playRecord")) {
+	        	if(cmd.equals("/write.playrecord")) {
 	        		int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
 	        		String playId = request.getParameter("id");
 	        		int gameTime = Integer.parseInt(request.getParameter("playtime"));
@@ -78,7 +104,6 @@ public class PlayRecordController extends HttpServlet {
 	                    pw.append("{\"result\":\"error\"}");
 	                }
 
-	        	}
 	        	}
 	        	
 	        }catch(Exception e) {

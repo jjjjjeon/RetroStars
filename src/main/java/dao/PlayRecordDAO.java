@@ -106,18 +106,16 @@ public static PlayRecordDAO instance;
 		
 		
 		String sql = "select * "
-				+ "from ("
-				+ "    select user_id, game_seq, max(play_score) as score, "
-				+ "    row_number() over (order by max(play_score) desc) as row_count "
-				+ "    from play_record "
-				+ "    where game_seq = ? "
-				+ "    group by user_id, game_seq "
-				+ ") ranked "
-				+ "where row_count between 1 and 10";
+				+ "from "
+				+ "(select user_id, game_seq, max(play_score) as score, row_number() over (order by max(play_score) desc) as row_count from play_record where game_seq = ? group by user_id, game_seq) r "
+				+ "left outer join user_profile_img i on i.user_id = r.user_id "
+				+ "where row_count between 1 and 10 order by row_count";
 		
 		try(Connection con = this.getConnection();
 	             PreparedStatement pstat = con.prepareStatement(sql);){
-			pstat.setString(1, gameSeq);
+			
+			int seq = Integer.parseInt(gameSeq);
+			pstat.setInt(1, seq);
 			
 			try(ResultSet rs = pstat.executeQuery();){
 							
@@ -127,16 +125,18 @@ public static PlayRecordDAO instance;
 					int rank = rs.getInt("row_count");
 					String id = rs.getString("user_id");
 					int score = rs.getInt("score");
-					int game = rs.getInt("game_seq");
-					
+					int game = rs.getInt("game_seq");	
+					String url = rs.getString("profile_img_oriname");
 					
 					HashMap map = new HashMap<>();	
+					
 					map.put("rank",rs.getInt("row_count"));
 					map.put("id",rs.getString("user_id"));
 					map.put("score",rs.getInt("score"));
 					map.put("gameCate",rs.getInt("game_seq"));
+					map.put("url", rs.getString(7));
 					list.add(map);
-					System.out.println(rank +":"+ id+":"+ score+":"+ game);
+					System.out.println(rank +":"+ id+":"+ score+":"+ game + ":" + url);
 				}
 				
 				return list;
@@ -146,9 +146,6 @@ public static PlayRecordDAO instance;
 		
 		
 	}
-	
-	
-	
 	
 
     /** 
