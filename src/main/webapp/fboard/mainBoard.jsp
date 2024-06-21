@@ -70,6 +70,8 @@
         #category_box{width:20%; height:90%;}       
         .search-place{width:45%;display:flex; height:90%;}
         #search_btn{width:10%;height:90%;}
+        #write_btn{ width:10%; height:90%}
+        #write_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
 
@@ -98,7 +100,7 @@
         .tablink:hover { background-color: #575757;}
         .faq {margin-top: 20px; margin-bottom:0px;}
         .faq-item {margin-bottom:10px; overflow-y:auto;height:350px;}
-        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px; width:95%;}
+        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px; width:100%;}
         .delete_btn{ height:100%;margin-top:7px;}
         .question_box{display:flex;}
         .answer {display: none; background-color: #333;border-radius: 5px; padding:10px;}
@@ -267,15 +269,21 @@
 			</select>
         	<input class="form-control me-2 search-place" type="search" name="search" placeholder="검색어를 입력해주세요" aria-label="Search">
         	<button class="btn btn-outline-light search_btn" id="search_btn" type="submit">검색</button>
+        	<c:if test="${isAdmin == 'admin'}">
+        		<button class="btn btn-outline-light search_btn" id="write_btn" type="button">글 쓰기</button>
+        	</c:if>
         	<input type="hidden" name="cpage" value="1"> 
         </div>
         </form>
         
+        
+       <c:choose>
+       <c:when test="${isAdmin =='admin'}"> 
         <div class="content">
         <div class="tabcontent">
            <c:choose >
           	<c:when test="${category.equals('1')}">
-            	<h3>게임</h3>
+            	<h3>게임 어드민</h3>
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
@@ -295,8 +303,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -306,8 +319,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -317,8 +335,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -328,8 +351,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -338,6 +366,99 @@
 			<div id="page" class="page"></div>
         </div>
        </div> 
+       </c:when>
+       
+       <c:otherwise>
+        <div class="content">
+        <div class="tabcontent">
+           <c:choose >
+          	<c:when test="${category.equals('1')}">
+            	<h3>게임</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+               
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('2')}">
+            	<h3>게시판</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('3')}">
+            	<h3>기타</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+             <c:when test="${category.equals('4')}">
+            	<h3>검색 결과</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:otherwise>
+            	<h3>전체</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:otherwise>
+          </c:choose>
+			<div id="page" class="page"></div>
+        </div>
+       </div>
+       </c:otherwise>
+       </c:choose>
+       
     </div>
     <div class="footer">
         <div class="footerbox">
@@ -361,46 +482,45 @@
 
     <script>
     
-    
-    $(".faq-item").on("click",".delete_btn",function(){
-    	alert("삭제!");
-    })
-       
-   
-    $("#all_tap").on("click",function(){
-    	location.href="/list.fboard?category=0";
-    })
-    $("#game_tap").on("click",function(){
-    	location.href="/list.fboard?category=1";
-    })
-    $("#board_tap").on("click",function(){
-    	location.href="/list.fboard?category=2";
-    })
-    $("#etc_tap").on("click",function(){
-    	location.href="/list.fboard?category=3";
-    })
 
     
+    $(".faq-item").on("click",".delete_btn",function(){    	
+    	
+    	let title = $(this).parent().text().trim();
+    	let category=${category};
+    	
+        console.log("위치파악중 :" + $(this).parent().text().trim());
+        location.href="/delete.fboard?category="+category+"&title="+title;
+        
+        });
+      
+    $("#all_tap").on("click",function(){
+    	location.href="/list.fboard?category=0";
+    });
+    $("#game_tap").on("click",function(){
+    	location.href="/list.fboard?category=1";
+    });
+    $("#board_tap").on("click",function(){
+    	location.href="/list.fboard?category=2";
+    });
+    $("#etc_tap").on("click",function(){
+    	location.href="/list.fboard?category=3";
+    });
+    $("#write_btn").on("click",function(){
+    	location.href="/goWriteFaq.fboard";
+    });
+
     
+
         $(document).ready(function () {
         	
             $(".question").click(function () {
                 $(this).parent().next(".answer").slideToggle();
                 $(this).toggleClass("active");
             });
+            
         });
     
-  	  	$(document).ready(function(){
-  		  
-  		  let adminYn = ${isAdmin}; 		  
-  		  console.log("adminYn:"+adminYn);
-  		  
-  		  if(adminYn == "false"){
-  			alert("삭제!");
-  		  }
-   	 		
-   		 });
-
         
         $(document).ready(function () {
         	
@@ -457,7 +577,7 @@
     				console.log(pageTotalCount+"if");
     			}else{
     				let beforepageTotalCount = record_total_count/record_count_per_page;
-    				pageTotalCount = Math.floor(beforepageTotalCount)+1;
+    				pageTotalCount = Math.floor(beforepageTotalCount);
     				console.log(pageTotalCount+"else");
     			}
     			
