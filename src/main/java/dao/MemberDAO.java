@@ -480,8 +480,8 @@ public class MemberDAO {
      */
     public boolean isUserNicknameCheckUpdate(String userNickname, String userId) {
         String sql = "select count(*) from member where user_nickname=? and user_id=? ";
-        try (Connection conn = getConnection();
-             PreparedStatement pstat = conn.prepareStatement(sql)) {
+        try (Connection con = getConnection();
+             PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setString(1, userNickname);
             pstat.setString(2, userId);
             try (ResultSet rs = pstat.executeQuery()) {
@@ -494,5 +494,37 @@ public class MemberDAO {
         }
         return false;
     }
+    
+    /** 
+     * @Method Name  : 닉네임 중복확인 (본인제외)
+     * @date : 2024. 6. 19. 
+     * @author : KJY 
+     * @version : 
+     * @Method info : 개인 정보 수정 시 닉네임이 존재하는 지 확인.
+     * @param String userNickname
+     * @param String userId
+     * @return boolean
+     * @throws Exception 
+     */
+    
+    public List<String> gameBookmark(String id) throws Exception{
+    	
+    	String sql = "select game_seq from g_bookmark where user_id=?";
+   	
+    	try(Connection con = this.getConnection(); 
+    			PreparedStatement pstat = con.prepareStatement(sql);){
+    		pstat.setString(1, id);    		
+    		try(ResultSet rs = pstat.executeQuery();){
+    			List<String> gameSeqs = new ArrayList<>();
+    			while(rs.next()) {
+    				String gameSeq = rs.getString(1);
+    				gameSeqs.add(new String(gameSeq));
+    				System.out.println(gameSeq);
+    			}
+    			return gameSeqs;    			
+    		}
+    	}
+    	
+    } 
 
 }

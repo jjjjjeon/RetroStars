@@ -280,16 +280,16 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                         <div class="rpg_main_img">
                             <div class="rpg_img">
                             	<c:choose>
-                            		<c:when test="${gprDto.gameSeq == 1}">
+                            		<c:when test="${gprDto.gameSeq.equals('1')}">
                             			이미지1
                             		</c:when>
-                            		<c:when test="${gprDto.gameSeq == 2}">
+                            		<c:when test="${gprDto.gameSeq.equals('2')}">
                             			이미지2
                             		</c:when>
-                            		<c:when test="${gprDto.gameSeq == 3}">
+                            		<c:when test="${gprDto.gameSeq.equals('3')}">
                             			이미지3
                             		</c:when>
-                            		<c:when test="${gprDto.gameSeq == 4}">
+                            		<c:when test="${gprDto.gameSeq.equals('4')}">
                             			이미지4
                             		</c:when>
                             		<c:otherwise>
@@ -311,7 +311,27 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         </div>
         <div class="favorite_game">
             <div class="favorite_game_title">Favorite Games</div>
-            <div class="favorite_game_main">게임을 찾아봅시다</div>
+            <div class="favorite_game_main">
+            	<c:forEach var="seq" items="${seq}">
+            		<c:choose>
+            			<c:when test="${seq.equals('1')}">
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=1">오버워치</a></div>
+            			</c:when>
+            			<c:when test="${seq.equals('2')}">
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=2">심즈</a></div>
+            			</c:when>
+            			<c:when test="${seq.equals('3')}">
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=3">apex 레전드</a></div>
+            			</c:when>
+            			<c:when test="${seq.equals('4')}">
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=4">grimm's hollow</a></div>
+            			</c:when>
+            			<c:when test="${seq.equals('5')}">
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=5">배틀 그라운드</a></div>
+            			</c:when>
+            		</c:choose>
+            </c:forEach>
+            </div>
         </div>
         <div class="freeboard">
             <div class="free_title board_title">Community Board (자유)</div>

@@ -261,7 +261,7 @@
         </div>
 		</form>
 		
- 
+
     </div>
         <div class="footer">
         <div class="footerbox">
@@ -283,7 +283,24 @@
         </div>
     </div>
 	<script>
-	
+		$("#submit").on("click",function(){
+			// 제목, 내용 공백 검사
+			let title = $("#nBoardTitle").val().trim();
+			let content = $("#nBoardContent").val().trim();
+			
+			if(title==='' || content === ''){
+				event.preventDefault();
+			if(title===''){
+					alert("제목은 필수 입력입니다.");
+				}
+			if(content === ''){
+				alert("내용은 필수 입력입니다.");
+				event.preventDefault();
+			}
+
+			
+			}
+		})
 	</script>
 </body>
 

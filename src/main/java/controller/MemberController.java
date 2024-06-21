@@ -269,9 +269,9 @@ public class MemberController extends HttpServlet {
 				String genderCode = mydata.getUserNo().substring(6,7);
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String gender;
-				if(genderCode.equals("1")) {
+				if(genderCode.equals("1")||genderCode.equals("3")) {
 					gender="Male";
-				}else if(genderCode.equals("2")) {
+				}else if(genderCode.equals("2")||genderCode.equals("4")) {
 					gender="Female";
 				}else {gender="None";}
 				
@@ -282,7 +282,9 @@ public class MemberController extends HttpServlet {
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
 				int count1 = listCategory1.size();
-				int count2 = listCategory2.size();				
+				int count2 = listCategory2.size();	
+				List<String> seq = memberDao.gameBookmark(id);
+				int seqSize = seq.size();
 				
 				request.setAttribute("birth", birth);
 				request.setAttribute("phone", phone);
@@ -294,6 +296,8 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("count1", count1);
 				request.setAttribute("count2", count2);
 				request.setAttribute("gprDto", gprDto);
+				request.setAttribute("seq", seq);
+				request.setAttribute("seqSize", seqSize);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				
@@ -310,9 +314,9 @@ public class MemberController extends HttpServlet {
 				String phone = mydata.getUserPhone().substring(0,3)+"-"+mydata.getUserPhone().substring(3,7)+"-"+mydata.getUserPhone().substring(7,11);
 				String url = userProfileImgDao.selectMyUrl(id);
 				
-				if(genderCode.equals("1")) {
+				if(genderCode.equals("1")||genderCode.equals("3")) {
 					gender="Male";
-				}else if(genderCode.equals("2")) {
+				}else if(genderCode.equals("2")||genderCode.equals("4")) {
 					gender="Female";
 				}else {gender="None";}
 				

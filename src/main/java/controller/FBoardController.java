@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import common.FBoardConfig;
 import dao.FBoardDAO;
+import dao.MemberDAO;
 import dto.FBoardDTO;
 
 @WebServlet("*.fboard")
@@ -27,36 +28,28 @@ public class FBoardController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String cmd = request.getRequestURI();
 		FBoardDAO fBoardDao = FBoardDAO.getInstance();
+		MemberDAO mBoardDao = MemberDAO.getInstance();
 		System.out.println(cmd);
 		
 		try {		
 			// FAQ 목록 출력
 			if(cmd.equals("/list.fboard")) {
-			
-				//List<FBoardDTO> fboardCate = fBoardDao.listCate();
-//				List<FBoardDTO> fboardCate1 = fBoardDao.listCate1();
-//				List<FBoardDTO> fboardCate2 = fBoardDao.listCate2();
-//				List<FBoardDTO> fboardCate3 = fBoardDao.listCate3();
 				
 				String category = request.getParameter("category");
 				if(category == null) {category = "0";}
-				
-				
 				String pcpage = request.getParameter("cpage");
 				if (pcpage == null) {pcpage = "1";}
-				int cpage = Integer.parseInt(pcpage);
+				int cpage = Integer.parseInt(pcpage);	
 				
-				System.out.println("dao 들어가기전 : "+category);
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");				
 				
+				boolean isAdmin = mBoardDao.isAdmin(id);
 				List<FBoardDTO> fboardCate = fBoardDao.listCateNtoM(category,
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
-				
-//				request.setAttribute("fboardCate1", fboardCate1);
-//				request.setAttribute("fboardCate2", fboardCate2);
-//				request.setAttribute("fboardCate3", fboardCate3);
-				System.out.println("dao 들어간 후 : "+category);
-				
+
+				request.setAttribute("isAdmin", isAdmin);
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fboardCate", fboardCate);
@@ -64,8 +57,42 @@ public class FBoardController extends HttpServlet {
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
 				request.setAttribute("recordTotalCount",fBoardDao.getRecordCount(category));
 				
+				
 				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
 				
+			}else if(cmd.equals("/search.fboard")) {
+				
+				String kind = request.getParameter("kind");
+				String category = request.getParameter("category");
+				String search = request.getParameter("search");
+				String pullCate = "4";
+				
+				String pcpage = request.getParameter("cpage");
+				
+				System.out.println(kind+":"+category+":"+search+":"+pullCate+":"+pcpage);
+				
+				
+				if (pcpage == "null") {pcpage = "1";}
+				int cpage = Integer.parseInt(pcpage);
+				
+				List<FBoardDTO> fboardCate = fBoardDao.searchNtoM(kind, category, search,
+						cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
+						cpage*FBoardConfig.recordCountPerFPage);				
+				int recordSize = fboardCate.size();
+				
+				System.out.println(recordSize);
+				
+				request.setAttribute("kind", kind);
+				request.setAttribute("search", search);
+				request.setAttribute("category", pullCate);
+				request.setAttribute("cpage", cpage);
+				request.setAttribute("fboardCate", fboardCate);
+				request.setAttribute("recordCountPerPage", FBoardConfig.recordCountPerFPage);
+				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
+				request.setAttribute("recordTotalCount",recordSize);
+				
+				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
+
 			}
 			
 		}catch(Exception e) {
