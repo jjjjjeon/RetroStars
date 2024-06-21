@@ -202,7 +202,9 @@ body{background-image:url("/image/background.png");
     }
 
     .pagenavi {
+      margin-top: 100px;
       text-align: center;
+     
 
 
     }
@@ -345,11 +347,11 @@ body{background-image:url("/image/background.png");
     <div class="title">
       <span>전체</span>
 
-   <c:if test="${loginId eq 'admin'}">
+
+   <c:if test="${sessionScope.isAdmin eq 'Y'}">
             <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
               <i class="fas fa-pencil-alt"></i> 글 작성
             </a>
-
    </c:if>
 
 
@@ -370,10 +372,12 @@ body{background-image:url("/image/background.png");
          $(document).ready(function(){
          $("#lang").change(function(){
             var selectedOption = $(this).children("option:selected").val();
+            var currentPage = ${cpage};
+            
             if(selectedOption === "title"){
-               $("form").attr("action","/search.nboard?filter=title");
+               $("form").attr("action","/search.nboard?filter=title&cpage=${currentPage}");
             } else if(selectedOption === "post_number"){
-               $("form").attr("action","/search.nboard?filter=post_number");
+               $("form").attr("action","/search.nboard?filter=post_number&cpage=${currentPage}");
             }
          });
          });
@@ -465,7 +469,9 @@ body{background-image:url("/image/background.png");
 
       let needPrev = true;
       let needNext = true;
-
+      
+      let isSearching = false;
+     
       //화살표 필요없을 때
       if (startNavi == 1) {
         needPrev = false
@@ -474,22 +480,43 @@ body{background-image:url("/image/background.png");
         needNext = false
       }
 
+      // 검색 중인 경우라면
+     // if (isSearching) {
+          if (needPrev) {
+              let needPreva = $("<a>").attr("href", "/search.nboard?filter=${filter}&keyword=${keyword}&cpage=" + (startNavi - 1)).html(" < ");
+              $("#navi").append(needPreva);
+          }
+
+          for (let i = startNavi; i <= endNavi; i++) {
+              let cpagea = $("<a>").attr("href", "/search.nboard?filter=${filter}&keyword=${keyword}&cpage=" + i).html(i + "&nbsp");
+              $("#navi").append(cpagea);
+          }
+
+          if (needNext) {
+              let needNexta = $("<a>").attr("href", "/search.nboard?filter=${filter}&keyword=${keyword}&cpage=" + (endNavi + 1)).html(" > ");
+              $("#navi").append(needNexta);
+          }
+     // } 
+      /*else { // 검색 중이 아닌 경우, 전체 리스트 페이지일 경우
+          if (needPrev) {
+              let needPreva = $("<a>").attr("href", "/list.nboard?cpage=" + (startNavi - 1)).html(" < ");
+              $("#navi").append(needPreva);
+          }
+
+          for (let i = startNavi; i <= endNavi; i++) {
+              let cpagea = $("<a>").attr("href", "/list.nboard?cpage=" + i).html(i + "&nbsp");
+              $("#navi").append(cpagea);
+          }
+
+          if (needNext) {
+              let needNexta = $("<a>").attr("href", "/list.nboard?cpage=" + (endNavi + 1)).html(" > ");
+              $("#navi").append(needNexta);
+          }
+      }*/
       // 출력
       // 왼쪽 화살표가 필요한 상황일때
-      if (needPrev) {
-        let needPreva = $("<a>").attr("href", "/list.nboard?cpage=" + (startNavi - 1)).html(" < ");
-        $("#navi").append(needPreva);
-      }
+      // 검색한 경우와 검색 안한 경우로 나눠야함. 
 
-      for (let i = startNavi; i <= endNavi; i++) {
-        let cpagea = $("<a>").attr("href", "/list.nboard?cpage=" + i).html(i + "&nbsp");
-        $("#navi").append(cpagea);
-      }
-
-      if (needNext) {
-        let needNexta = $("<a>").attr("href", "/list.nboard?cpage=" + (endNavi + 1)).html(" > ");
-        $("#navi").append(needNexta);
-      }
 
     }
   </script>
