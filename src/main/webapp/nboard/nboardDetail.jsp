@@ -236,7 +236,7 @@
     	<div class="detailbtn">
 			<input type="button" value="뒤로가기" id="back">
 			
-  		<c:if test="${sessionScope.isAdmin eq 'Y'}">
+  		<c:if test="${isAdmin eq true}">
 			<input type="button" value="삭제" id="delete" data-nboard-seq="${dto.nBoardSeq}">
 			<input type="button" value="수정" id="edit">
     	</c:if>    

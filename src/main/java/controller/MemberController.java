@@ -70,15 +70,17 @@ public class MemberController extends HttpServlet {
 	            String pw = util.getSHA512(request.getParameter("pw"));
 
 	            boolean result = memberDao.loginId(id, pw);
+	            boolean isAdmin = memberDao.isAdmin(id);
 	            response.setContentType("application/json");
 	            response.setCharacterEncoding("UTF-8");
+	            
 	            PrintWriter pw1 = response.getWriter();
 
 	            JsonObject responseJson = new JsonObject();
 
 	            if(result) {
 	                session.setAttribute("loginId", id);
-	                
+	                session.setAttribute("isAdmin", isAdmin);
 	                String profileUrl = userProfileImgDao.selectMyUrl(id);
                     session.setAttribute("profileUrl", profileUrl);
                     boolean result1 = memberDao.isAdmin(id);

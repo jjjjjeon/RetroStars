@@ -27,12 +27,11 @@ public class NBoardController extends HttpServlet {
       
       try {
          if(cmd.equals("/write.nboard")) {
-            HttpSession session = request.getSession();
+        
             
             String userId = (String)request.getSession().getAttribute("loginId");
             boolean isAdmin = mManager.isAdmin(userId);
-            session.setAttribute("isAdmin", isAdmin ? "Y" : "N");
-            
+         
             
             String nBoardTitle = request.getParameter("title");
             String nBoardContent = request.getParameter("contents");
@@ -47,11 +46,11 @@ public class NBoardController extends HttpServlet {
             
          } else if(cmd.equals("/list.nboard")) {
             System.out.println("list.nboard 들어감");
- HttpSession session = request.getSession();
+
             
             String userId = (String)request.getSession().getAttribute("loginId");
             boolean isAdmin = mManager.isAdmin(userId);
-            session.setAttribute("isAdmin", isAdmin ? "Y" : "N");
+        
             String pcpage = request.getParameter("cpage");
             
             if(pcpage==null) {pcpage="1";}
