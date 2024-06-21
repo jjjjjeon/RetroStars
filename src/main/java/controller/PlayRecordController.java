@@ -6,7 +6,12 @@
 package controller;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.List;
+
 import java.io.PrintWriter;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,6 +50,20 @@ public class PlayRecordController extends HttpServlet {
 	        PrintWriter pw = response.getWriter();
 	        
 	        try {
+
+	        	// 랭킹 리스트 출력
+	        	if(cmd.equals("/list.playrecord")) {
+	        		
+	        		String gameSep = request.getParameter("gameSep");	        		
+					if(gameSep == null) {gameSep = "1";}
+					
+					List<HashMap<String,?>> ranks = playRecordDao.selectRank(gameSep);
+					
+					// 순서, 아이디, 스코어, 게임카테고리 순으로 전송
+	        		request.setAttribute("ranks",ranks);
+	        		request.getRequestDispatcher("/rboard/mainBoard.jsp").forward(request, response);
+	        		
+
 	        	if(cmd.equals("/write.playRecord")) {
 	        		int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
 	        		String playId = request.getParameter("id");
@@ -58,6 +77,8 @@ public class PlayRecordController extends HttpServlet {
 	                } else {
 	                    pw.append("{\"result\":\"error\"}");
 	                }
+
+	        	}
 	        	}
 	        	
 	        }catch(Exception e) {
