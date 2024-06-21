@@ -98,9 +98,12 @@
         .tablink:hover { background-color: #575757;}
         .faq {margin-top: 20px; margin-bottom:0px;}
         .faq-item {margin-bottom:10px; overflow-y:auto;height:350px;}
-        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px;}
+        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px; width:95%;}
+        .delete_btn{ height:100%;margin-top:7px;}
+        .question_box{display:flex;}
         .answer {display: none; background-color: #333;border-radius: 5px; padding:10px;}
-        
+        .fa-x{widht:100%; height:100%;}
+        #delete{width:5%;}
         
         #page{display:flex; justify-content:center; align-items:center; font-size:20px;}
 
@@ -276,8 +279,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -353,8 +361,12 @@
 
     <script>
     
-    console.log(${category});
     
+    $(".faq-item").on("click",".delete_btn",function(){
+    	alert("삭제!");
+    })
+       
+   
     $("#all_tap").on("click",function(){
     	location.href="/list.fboard?category=0";
     })
@@ -369,20 +381,31 @@
     })
 
     
+    
         $(document).ready(function () {
+        	
             $(".question").click(function () {
-                $(this).next(".answer").slideToggle();
+                $(this).parent().next(".answer").slideToggle();
                 $(this).toggleClass("active");
             });
         });
+    
+  	  	$(document).ready(function(){
+  		  
+  		  let adminYn = ${isAdmin}; 		  
+  		  console.log("adminYn:"+adminYn);
+  		  
+  		  if(adminYn == "false"){
+  			alert("삭제!");
+  		  }
+   	 		
+   		 });
 
         
         $(document).ready(function () {
         	
-            $(".question").click(function () {
-                let answer = $($(this).next(".answer"));
-                
-                console.log("answer:"+answer);
+            	$(".question").click(function () {
+                let answer = $(this).parent().next(".answer");
 
                 $(".answer").not(answer).slideUp();
                 $(".question").not(this).removeClass("active");
@@ -394,7 +417,7 @@
             $(".tablink").click(function() {
             	
                 $(".answer").slideUp();
-                $(".question").removeClass("active");
+                $(".question_box").removeClass("active");
                 
                 let tabName = $(this).attr("data-tab");
                 $("#" + tabName + " .question:first-of-type").click();
@@ -481,6 +504,7 @@
     					$("#page").append("<a class='atag' href='/list.fboard?category="+category+"&cpage=" + (end + 1) + "'>></a>");
     				}
     			}
+
     			
     			console.log("record_total_count:", record_total_count);
     		    console.log("record_count_per_page:", record_count_per_page);
