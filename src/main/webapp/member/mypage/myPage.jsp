@@ -71,12 +71,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .main_profile{height: 100%;width: 50%;display: flex; justify-content: center; align-items: center}
     .profile_img{width:40%; height: 80%;display: flex;justify-content: center;align-items: center;}
     .profile_data{width:60%; height: 75%;}
-
     .user_value_box{display: flex; font-size: 17px; height: 42px;}
     .user_id{flex:1.5; display:flex; justify-content: start; text-indent: 5px;}
-    .user_id_value{flex:4;align-items: center}
-    .user_level{flex:2; display:flex; justify-content: end;}
-    .user_level_value{flex:2.5;text-indent: 5px; display:flex; justify-content: start;}
+    .user_id_value{flex:4; align-items: center}
+   
+    .user_level_value{flex:4.5;text-indent: 5px; display:flex; justify-content: start; margin-bottom:5px;}
 
     .value_title{flex:2.5; display:flex; justify-content: start;text-indent: 5px;}
     .value_content{flex:7.5;}
@@ -216,7 +215,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             <div class="headertitle"><div class="header_user_id">${mydata.userNickname}</div> &nbsp;님의 My page</div>
         </div> 
         <div class="profilebox">
-            <div class="profile">
+            <div class="profile"> 
                 <div class="main_profile">
                     <div class="profile_img">
                         <img id="basic_img" src="/profile/${userProfileUrl}">
@@ -225,8 +224,27 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                         <div class="user_value_box">
                             <div class="user_id">ID : </div>
                             <div class="user_id_value">${mydata.userId}</div>
-                            <div class="user_level">LEVEL</div>
-                            <div class="user_level_value">${mydata.userLevel}</div>
+
+                            <!-- <div class="user_level_value">${mydata.userLevel}</div> -->
+                            <div class="user_level_value">
+                            	<c:choose>
+                            		<c:when test="${mydata.userLevel=='1'}">
+                            			<img src="/image/level1.png">
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='2'}">
+                            			<img src="/image/level2.png">
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='3'}">
+                            			<img src="/image/level3.png">
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='4'}">
+                            			<img src="/image/level4.png">
+                            		</c:when>
+                            		<c:otherwise>
+                            			<img src="/image/level5.png">
+                            		</c:otherwise>
+                            	</c:choose>
+                            </div>
                         </div>
 
                         <div class="user_value_box">
