@@ -316,11 +316,13 @@
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
-                   <c:if test="${sessionScope.isAdmin eq 'Y'}">
+                   
+                   <c:if test="${isAdmin eq true}">
                     	<li class="nav-item">
-                           <a class="nav-link" href="/">관리자페이지</a>
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
                     	</li>
                    </c:if>	
+                   
                     <li class="nav-item">
                        <a class="nav-link" href="/mypage.member">
                            <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
