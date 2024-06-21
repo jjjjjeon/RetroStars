@@ -45,21 +45,30 @@ public class FBoardController extends HttpServlet {
 				String id = (String) session.getAttribute("loginId");				
 				
 				boolean isAdmin = mBoardDao.isAdmin(id);
+				String admin = "";
+				
+				if(isAdmin) {
+					admin = "admin";
+				}else {
+					admin="user";
+				}
+				
 				List<FBoardDTO> fboardCate = fBoardDao.listCateNtoM(category,
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
 
-				request.setAttribute("isAdmin", isAdmin);
+				request.setAttribute("isAdmin", admin);
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fboardCate", fboardCate);
 				request.setAttribute("recordCountPerPage", FBoardConfig.recordCountPerFPage);
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
 				request.setAttribute("recordTotalCount",fBoardDao.getRecordCount(category));
+				System.out.println("컨트롤ㄹ러 출력"+admin);
 				
-				
-				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
-				
+				request.getRequestDispatcher("/fboard/mainBoard.jsp").forward(request, response);
+			
+			// 검색 유형 및 카테고리 별 검색 기능
 			}else if(cmd.equals("/search.fboard")) {
 				
 				String kind = request.getParameter("kind");
@@ -91,8 +100,58 @@ public class FBoardController extends HttpServlet {
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
 				request.setAttribute("recordTotalCount",recordSize);
 				
-				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
+				request.getRequestDispatcher("/fboard/mainBoard.jsp").forward(request, response);
+				
+			// 게시글 작성 페이지 이동 시 관리자 유무 확인	
+			}else if(cmd.equals("/goWriteFaq.fboard")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");		
+				boolean adminYn = mBoardDao.isAdmin(id);
+				
+				
+				request.setAttribute("isAdmin", adminYn);
+				request.getRequestDispatcher("/fboard/writeBoard.jsp").forward(request, response);
+			
+			// 게시글 입력 (관리자)	
+			}else if(cmd.equals("/insert.fboard")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");	
+				
+				String category = request.getParameter("category");
+				String question = request.getParameter("question");
+				String answer = request.getParameter("answer");
+				
+				//System.out.println(id +":"+ category +":"+ question +":"+ answer);
+				
+				fBoardDao.insert(new FBoardDTO(0, id, category, question, answer));
+				
+				response.sendRedirect("/list.fboard");
+				
+			// 게시글 삭제 (관리자)	
+			}else if(cmd.equals("/delete.fboard")) {
+				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");
+				
+				boolean adminYn = mBoardDao.isAdmin(id);
+				
+				if(adminYn) {
+					
+					String title = request.getParameter("title");
+					String category = request.getParameter("category");					
+					System.out.println(title +":"+ category);
+					
+					fBoardDao.delete(title);
+					
+					request.getRequestDispatcher("/list.fboard?category"+category).forward(request, response);
 
+					
+				}else {
+					
+				} 
+				
 			}
 			
 		}catch(Exception e) {

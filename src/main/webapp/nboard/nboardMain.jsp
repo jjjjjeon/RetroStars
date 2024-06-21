@@ -53,28 +53,33 @@ body{background-image:url("/image/background.png");
         /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
         .nav-link {
             color: white !important;
-            /* margin-left: 20px; */
         }
 
         .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
         }
-        
-      .btn{
+      	.nav-item .btn{
          color:white;
-      }
-      .btn:hover{
-         color:white;
-      }
-      .dropdown-menu{
-         background-color: #323232;
-      }
-      .dropdown-item{
-         background-color: #323232;
-         color:white;
-      }
-      
+      	}
+      	.nav-item .btn:hover{
+         	color:white;
+      	}
+      	.dropdown-menu{
+         	background-color: #323232;
+      	}
+      	.dropdown-item{
+         	background-color: #323232;
+         	color:white;
+      	}
+        a {
+		    text-decoration: none !important;
+		}
+		 a:link { color: white; text-decoration: none;}
+		 a:visited { color: white; text-decoration: none;}
+		 a:hover { color: white; text-decoration: underline;}
+		/*end navbar css*/	 
+	
       
     .container {
       background-color: #323232;

@@ -6,10 +6,8 @@
 package dao;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,8 +131,8 @@ public class FBoardDAO {
     
     
     /** 
-     * @Method Name  : listCateNtoM
-     * @date : 2024. 6. 19. 
+     * @Method Name  : searchNtoM
+     * @date : 2024. 6. 20. 
      * @author : KJY
      * @version : 
      * @Method info : FAQ 카테고리 별 질문 & 답변 수 지정갯수만큼 출력
@@ -237,6 +235,18 @@ public class FBoardDAO {
         
 	}
 	
+	 /** 
+     * @Method Name  : newString
+     * @date : 2024. 6. 20. 
+     * @author : KJY
+     * @version : 
+     * @Method info : FAQ 카테고리 검색방식이 제목+내용일 때 질문 & 답변 수 지정갯수만큼 출력 sql 전달
+     * @param String category
+     * @param String search
+     * @return String
+     * @throws Exception 
+     */ 
+	
 	private String newString(String category,String search) throws Exception {
     	
 		String sql = "";
@@ -259,31 +269,57 @@ public class FBoardDAO {
     	
     }
 	
+	/** 
+     * @Method Name  : insert
+     * @date : 2024. 6. 21. 
+     * @author : KJY
+     * @version : 
+     * @Method info : FAQ 글 작성(관리자)
+     * @param fBoardDTO
+     * @return void
+     * @throws Exception 
+     */ 
 	
-//public int searchRecordCount(String category) throws Exception {
-//    	
-//    	String sql = "";
-//    	
-//    	if(category.equals("0")) {
-//			sql = "select count(*) from f_board";
-//		}else if(category.equals("1")) {
-//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '1'";
-//		}else if(category.equals("2")) {
-//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '2'";
-//		}else {
-//			sql = "select count(*) from f_board group by F_BOARD_CATEGORY having F_BOARD_CATEGORY = '3'";
-//		}
-//		try (Connection con = this.getConnection();
-//				PreparedStatement pstst = con.prepareStatement(sql);
-//				ResultSet rs = pstst.executeQuery()) {
-//
-//			rs.next();
-//			int record = rs.getInt("count(*)");
-//			System.out.println(record);
-//
-//			return record;
-//		}
-//	}
+	public void insert(FBoardDTO dto) throws Exception{
+		
+		String sql = "insert into f_board values(f_board_sequence.nextval,?,?,?,?)";
+		
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, dto.getUserId());
+        	pstat.setString(2, dto.getfBoardCategory());
+            pstat.setString(3, dto.getfBoardQuestion());
+            pstat.setString(4, dto.getfBoardAnswer());
+            pstat.executeUpdate();}
+		
+	} 
+	
+	/** 
+     * @Method Name  : delete
+     * @date : 2024. 6. 21. 
+     * @author : KJY
+     * @version : 
+     * @Method info : FAQ 글 삭제(관리자)
+     * @param String title
+     * @return void
+     * @throws Exception 
+     */ 
+	public void delete(String title) throws Exception{
+		
+		String sql = "delete from f_board where f_board_question=?";
+		
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, title);
+            pstat.executeUpdate();}
+		
+	}
+	
+	
+	
+	
+	
+
     
  }
 
