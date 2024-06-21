@@ -1,427 +1,464 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script src="cboard/summernote/summernote-lite.js"></script>
 <script src="cboard/summernote/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="cboard/summernote/summernote-lite.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <title>글 작성 페이지</title>
 <style>
-        * {
-            box-sizing: border-box;
-            margin: 0
-        }
-		
-		.note-editor.note-frame{
-			border : 0;
-		}
-		
-		.dropdown-toggle::after { display: none; }
-		
-        input[type="text" i] {
-            padding-block: 1px;
-            padding-inline: 2px;
-        }
-        
-        body{
-		background-color : #222; 
-		}
-
-        div {
-            /* border: 1px solid black; */
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        a {
-            text-decoration: none;
-            color: #d3d3d3;
-        }
-
-        input[type="text" i] {
-            padding-block: 1px;
-            padding-inline: 2px;
-        }
-
-        .header {
-            height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: url('/image/background.png');
-        	background-size : cover;
-        }
-        
-        .header .headerTitle{
-    		height : 150px;
-    		color : #ffffff;
-    		font-size : 32px;
-    		font-weight : bold;
-    		display : flex;
-    		align-items : center;
-    	}
-    
-    	.header #headerTitle{
-    		margin-top : 70px;
-    	}
-
-        .navi {
-            position: relative;
-            width: 100%;
-            height: 80px;
-            background: #111;
-            border: 1px solid #5a5a64;
-        	border-left : 0;
-        	border-right : 0;
-            text-align: center;
-            font-size: 0;
-        }
-
-        .navi a {
-            display: inline-block;
-            margin: 0 25px;
-            color: #898c92;
-            font-size: 24px;
-            line-height: 77px;
-        }
-        
-        .navi #naviAnker{
-        	color: white;
-	    	border-bottom: 2px solid white;
-        }
-
-        .writeBoard {
-            position: relative;
-            margin: 63px auto 0 auto;
-            width: 1300px;
-            min-height: 500px;
-        }
-
-        .writeBoard h3 {
-            color : white;
-            font-size: 26px;
-            line-height: 34px;
-            font-weight: 300;
-            padding-bottom: 20px;
-            padding-left: 10px;
-        }
-
-        .writeBoard .category {
-            position: relative;
-            padding-left: 9px;
-            border-top: 1px solid #d3d3d3;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            color : #d3d3d3;
-        }
-
-        .writeBoard .title {
-            border-top: 1px solid #eeedf2;
-        }
-
-        .writeBoard .title input {
-            width: 100%;
-            height: 70px;
-            line-height: 70px;
-            border: none;
-            font-size: 16px;
-            color: #d3d3d3;
-            text-indent: 20px;
-            background-color : #222;
-        }
-
-        .writeBoard .fileBox {
-            height: auto;
-            width: 100%;
-            border-top: 1px solid #eeedf2;
-            display: flex;
-            flex-direction: column;
-            padding: 10px 0;
-        }
-
-        .writeBoard .fileBox .uploadCol {
-            display: flex;
-            align-items: center;
-            padding: 1px;
-            flex: 1;
-        }
-
-        .writeBoard .fileBox .uploadCol input {
-            margin-right: 10px;
-            background-color : #333;
-            color : #d3d3d3;
-        }
-
-        .writeBoard .fileBox .uploadCol button {
-            width: 37px;
-        }
-
-
-        .writeBoard .fileBox .uploadCol #removeFileBtn {
-            display: none;
-            margin-right: 5px;
-        }
-		
-		.note-editable{
-			height : 500px;
-			color : white;
-		}
-
-        .btnBox {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .btnBox #writeNoBtn {
-            width: 160px;
-            height: 45px;
-            background: gray;
-            color: #fff;
-            border: 1px solid #888;;
-            font-size: 13px;
-            font-weight: bold;
-            margin-right : 10px;
-        }
-        .btnBox #writeYesBtn {
-            width: 160px;
-            height: 45px;
-            background: #3392ff;
-            color: white;
-            border: 1px solid #white;
-            font-size: 13px;
-            font-weight: bold;
-        }
-        
-        .navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        height:70px;
-    }
-    
-        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
-        .nav-link {
-            color: white !important;
-            /* margin-left: 20px; */
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
-
-        .footer {
-        height: 150px;
-        margin-top: 160px;
-        border-top: 1px solid #e0e2ec;
-        background-color: #323232;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position : relative;
-        bottom : 0;
-    }
-    
-    .leftfooter{
-           color : white;
-           font-weight : bold;
-           margin-top: 20px;
-        }
-        .rightfooter {
-           display: flex;
-           align-items: center;
-       
-       }
-         .footerbox {
-           width: 1000px;
-           height: 100%;
-           margin: auto;
-           display: flex;
-           justify-content: space-between;
-           align-items: center;    
-       }
-
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
-
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-       .coinbox {
-           display: flex;
-           align-items: center;
-           margin-left: 20px;
-       }
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left : 20px;
-        }
-        
-.note-placeholder{
-	font-size : 16px;
-	position : absolute;
-	padding : 55px 0 0 15px;
+* {
+	box-sizing: border-box;
+	margin: 0
 }
 
-.editorBox{
-	border : 1px solid #d3d3d3;
+.note-editor.note-frame {
+	border: 0;
+}
+
+.dropdown-toggle::after {
+	display: none;
+}
+
+input[type="text" i] {
+	padding-block: 1px;
+	padding-inline: 2px;
+}
+
+body {
+	background-color: #222;
+}
+
+div {
+	/* border: 1px solid black; */
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #d3d3d3;
+}
+
+input[type="text" i] {
+	padding-block: 1px;
+	padding-inline: 2px;
+}
+
+.header {
+	height: 220px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: url('/image/background.png');
+	background-size: cover;
+}
+
+.header .headerTitle {
+	height: 150px;
+	color: #ffffff;
+	font-size: 32px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+}
+
+.header #headerTitle {
+	margin-top: 70px;
+}
+
+.navi {
+	position: relative;
+	width: 100%;
+	height: 80px;
+	background: #111;
+	border: 1px solid #5a5a64;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+	font-size: 0;
+}
+
+.navi a {
+	display: inline-block;
+	margin: 0 25px;
+	color: #898c92;
+	font-size: 24px;
+	line-height: 77px;
+}
+
+.navi #naviAnker {
+	color: white;
+	border-bottom: 2px solid white;
+}
+
+.writeBoard {
+	position: relative;
+	margin: 63px auto 0 auto;
+	width: 1300px;
+	min-height: 500px;
+}
+
+.writeBoard h3 {
+	color: white;
+	font-size: 26px;
+	line-height: 34px;
+	font-weight: 300;
+	padding-bottom: 20px;
+	padding-left: 10px;
+}
+
+.writeBoard .category {
+	position: relative;
+	padding-left: 9px;
+	border-top: 1px solid #d3d3d3;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	color: #d3d3d3;
+}
+
+.writeBoard .title {
+	border-top: 1px solid #eeedf2;
+}
+
+.writeBoard .title input {
+	width: 100%;
+	height: 70px;
+	line-height: 70px;
+	border: none;
+	font-size: 16px;
+	color: #d3d3d3;
+	text-indent: 20px;
+	background-color: #222;
+}
+
+.writeBoard .fileBox {
+	height: auto;
+	width: 100%;
+	border-top: 1px solid #eeedf2;
+	display: flex;
+	flex-direction: column;
+	padding: 10px 0;
+}
+
+.writeBoard .fileBox .uploadCol {
+	display: flex;
+	align-items: center;
+	padding: 1px;
+	flex: 1;
+}
+
+.writeBoard .fileBox .uploadCol input {
+	margin-right: 10px;
+	background-color: #333;
+	color: #d3d3d3;
+}
+
+.writeBoard .fileBox .uploadCol button {
+	width: 37px;
+}
+
+.writeBoard .fileBox .uploadCol #removeFileBtn {
+	display: none;
+	margin-right: 5px;
+}
+
+.note-editable {
+	height: 500px;
+	color: white;
+}
+
+.btnBox {
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+}
+
+.btnBox #writeNoBtn {
+	width: 160px;
+	height: 45px;
+	background: gray;
+	color: #fff;
+	border: 1px solid #888;;
+	font-size: 13px;
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.btnBox #writeYesBtn {
+	width: 160px;
+	height: 45px;
+	background: #3392ff;
+	color: white;
+	border: 1px solid #white;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.navbar {
+	position:fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+	height: 70px;
+	background-color: #323232;
+}
+
+.navbar-brand {
+	color: white;
+}
+
+.nav-link {
+	color: white !important;
+}
+
+.nav-link:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+}
+
+.btn {
+	color: white;
+}
+
+.btn:hover {
+	color: white;
+}
+
+.dropdown-menu {
+	background-color: #323232;
+}
+
+.dropdown-item {
+	background-color: #323232;
+	color: white;
+}
+
+.footer {
+	height: 150px;
+	margin-top: 160px;
+	border-top: 1px solid #e0e2ec;
+	background-color: #323232;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	bottom: 0;
+}
+
+.leftfooter {
+	color: white;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.rightfooter {
+	display: flex;
+	align-items: center;
+}
+
+.footerbox {
+	width: 1000px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.iconbox {
+	display: flex;
+	align-items: center;
+}
+
+.iconbox a {
+	margin: 0 10px;
+	font-size: 50px;
+	color: white;
+}
+
+.coinbox {
+	display: flex;
+	align-items: center;
+	margin-left: 20px;
+}
+
+.coinbox img {
+	width: 120px;
+	height: 100px;
+	margin-left: 20px;
+}
+
+.note-placeholder {
+	font-size: 16px;
+	position: absolute;
+	padding: 55px 0 0 15px;
+}
+
+.editorBox {
+	border: 1px solid #d3d3d3;
 }
 </style>
 </head>
 
 <body>
-    <div class="header">
-    	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게임
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게시판
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
-                    </li>
-                   
+	<div class="header">
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/index.jsp">홈으로</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
+					aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+								aria-expanded="false">게임</button>
 
-                </ul>
-                <c:choose>
-                   <c:when test="${not empty loginId}">
-                   <ul class="navbar-nav ms-auto">
-				        <li class="nav-item">
-				           <a class="nav-link" href="/mypage.member">
-				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-				           </a>
-				       </li>                  
-                      <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">마이페이지</a>
-                       </li>
-                       <li class="nav-item">
-                           <a class="nav-link" href="/logout.member">로그아웃</a>
-                       </li>
-                   </ul>                          
-                   </c:when>
-                   <c:otherwise>
-                      <ul class="navbar-nav ms-auto">
-                          <li class="nav-item">
-                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                          </li>
-                      </ul>
-                   </c:otherwise>
-                </c:choose>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">game1</a></li>
+								<li><a class="dropdown-item" href="#">game2</a></li>
+								<li><a class="dropdown-item" href="#">game3</a></li>
+								<li><a class="dropdown-item" href="#">game4</a></li>
+								<li><a class="dropdown-item" href="#">game5</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+								aria-expanded="false">게시판</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+								<li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+								<li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+								<li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+								<li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+								<li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link">랭킹</a></li>
 
-            </div>
-        </div>
-    </nav>
-    <div class="headerTitle"><p id="headerTitle">커뮤니티</p></div>
-    </div>
-    <div class="navi">
-        <a href="/list.cboard?category=0" data-category="category_0" id="naviAnker">전체</a>
-        <a href="/list.cboard?category=1" data-category="category_1">자유</a>
-        <a href="/list.cboard?category=2" data-category="category_2">공략</a>
-    </div>
-    <form action="/write.cboard" method="post" id="writeForm" enctype="multipart/form-data">
-	    <div class="writeBoard" id="writeBoard">
-	        <h3>${nickname}님의 글</h3>
-	        <div class="category">
-	            <div class="form-check form-check-inline">
-	                <input class="form-check-input" type="radio" name="category" id="category1"
-	                    value="option1">
-	                <label class="form-check-label" for="inlineRadio1">자유</label>
-	            </div>
-	            <div class="form-check form-check-inline">
-	                <input class="form-check-input" type="radio" name="category" id="category2"
-	                    value="option2">
-	                <label class="form-check-label" for="inlineRadio2">공략</label>
-	            </div>
-	        </div>
-	        <div class="title">
-	            <input type="text" placeholder="제목을 입력해 주세요" name="title" id="titleInput" maxlength="100">
-	        </div>
-	        <div class="fileBox">
-	            <div class="col-12 uploadCol">
-	                <input class="form-control" type="file" id="formFileMultiple" name="file">
-	                <button class="btn btn-secondary" id="removeFileBtn" type="button">C</button>
-	                <button class="btn btn-light" id="addFileTab" type="button">+</button>
-	            </div>
-	        </div>
-	        <div class="editorBox">
-	        	<div id="summernote"></div>
-	        </div>
-	        <div class="btnBox">
-	        	<button type="button" id="writeNoBtn">취소</button>
-	        	<button id="writeYesBtn">등록</button>
-	    	</div>
-	    </div>
-	    <input type="hidden" name="content" id="contentInput">
-	    <input type="hidden" name="userId" id="userIdInput">
-    </form>
-    <div class="footer">
-    	<div class="footerbox">
-            <div class="leftfooter">
-                <p>회사명: 팀별빛</p>
-                <p>전화: 02-1234-5678</p>
-                <p>이메일: info@example.com</p>
-            </div>
-            <div class="rightfooter">
-                <div class="iconbox">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="coinbox">
-                    <img src="/image/coin.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-    
 
-    <script>
+					</ul>
+					<c:choose>
+						<c:when test="${not empty loginId}">
+							<ul class="navbar-nav ms-auto">
+
+								<c:if test="${isAdmin eq true}">
+									<li class="nav-item"><a class="nav-link"
+										href="/dashBoard.admin" target="_blank">관리자페이지</a></li>
+								</c:if>
+
+								<li class="nav-item"><a class="nav-link"
+									href="/mypage.member"> <img
+										src="/profile/${userProfileUrl}" class="rounded-circle"
+										width="40" height="40" alt="Profile">
+								</a></li>
+								<li class="nav-item"><a class="nav-link"
+									href="/mypage.member">마이페이지</a></li>
+								<li class="nav-item"><a class="nav-link"
+									href="/logout.member">로그아웃</a></li>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<ul class="navbar-nav ms-auto">
+								<li class="nav-item"><a class="nav-link"
+									href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+								</li>
+							</ul>
+						</c:otherwise>
+					</c:choose>
+
+				</div>
+			</div>
+		</nav>
+		<div class="headerTitle">
+			<p id="headerTitle">커뮤니티</p>
+		</div>
+	</div>
+	<div class="navi">
+		<a href="/list.cboard?category=0" data-category="category_0"
+			id="naviAnker">전체</a> <a href="/list.cboard?category=1"
+			data-category="category_1">자유</a> <a href="/list.cboard?category=2"
+			data-category="category_2">공략</a>
+	</div>
+	<form action="/write.cboard" method="post" id="writeForm"
+		enctype="multipart/form-data">
+		<div class="writeBoard" id="writeBoard">
+			<h3>${nickname}님의글</h3>
+			<div class="category">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="category"
+						id="category1" value="option1"> <label
+						class="form-check-label" for="inlineRadio1">자유</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="category"
+						id="category2" value="option2"> <label
+						class="form-check-label" for="inlineRadio2">공략</label>
+				</div>
+			</div>
+			<div class="title">
+				<input type="text" placeholder="제목을 입력해 주세요" name="title"
+					id="titleInput" maxlength="100">
+			</div>
+			<div class="fileBox">
+				<div class="col-12 uploadCol">
+					<input class="form-control" type="file" id="formFileMultiple"
+						name="file">
+					<button class="btn btn-secondary" id="removeFileBtn" type="button">C</button>
+					<button class="btn btn-light" id="addFileTab" type="button">+</button>
+				</div>
+			</div>
+			<div class="editorBox">
+				<div id="summernote"></div>
+			</div>
+			<div class="btnBox">
+				<button type="button" id="writeNoBtn">취소</button>
+				<button id="writeYesBtn">등록</button>
+			</div>
+		</div>
+		<input type="hidden" name="content" id="contentInput"> <input
+			type="hidden" name="userId" id="userIdInput">
+	</form>
+	<div class="footer">
+		<div class="footerbox">
+			<div class="leftfooter">
+				<p>회사명: 팀별빛</p>
+				<p>전화: 02-1234-5678</p>
+				<p>이메일: info@example.com</p>
+			</div>
+			<div class="rightfooter">
+				<div class="iconbox">
+					<a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
+						class="fab fa-instagram"></i></a> <a href="#"><i
+						class="fab fa-youtube"></i></a>
+				</div>
+				<div class="coinbox">
+					<img src="/image/coin.png" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
     	$("#writeNoBtn").on("click", function(){
 			let isCancel = confirm("작성중인 글은 사라집니다. 계속하시겠습니까?");
 			
