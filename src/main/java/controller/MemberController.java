@@ -9,7 +9,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -70,17 +77,19 @@ public class MemberController extends HttpServlet {
 	            String pw = util.getSHA512(request.getParameter("pw"));
 
 	            boolean result = memberDao.loginId(id, pw);
+	            boolean isAdmin = memberDao.isAdmin(id);
 	            response.setContentType("application/json");
 	            response.setCharacterEncoding("UTF-8");
+	            
 	            PrintWriter pw1 = response.getWriter();
 
 	            JsonObject responseJson = new JsonObject();
 
 	            if(result) {
 	                session.setAttribute("loginId", id);
-	                
+	                session.setAttribute("isAdmin", isAdmin);
 	                String profileUrl = userProfileImgDao.selectMyUrl(id);
-                    session.setAttribute("profileUrl", profileUrl);
+                    session.setAttribute("userProfileUrl", profileUrl);
                     boolean result1 = memberDao.isAdmin(id);
                     System.out.println(result1);
                     
@@ -259,6 +268,113 @@ public class MemberController extends HttpServlet {
 			    return;
 			}
 			
+			// 
+			else if(cmd.equals("/findPwSendEmail.member")) {
+            	String inputEmail = request.getParameter("inputEmail");
+            	System.out.println(inputEmail);
+            	String subject = "[RetroStars] 비밀번호 찾기 이메일 인증번호";
+            	
+            	String fromEmail = "TeamStarlight0531@gmail.com";
+            	String fromUsername = "RetroStars 관리자";
+            	String toEmail = inputEmail;
+            	
+            	final String stmpEmail = "TeamStarlight0531@gmail.com";
+            	final String password = "qbdnjjotwiwdagsn";
+            	
+            	Properties p = System.getProperties();
+            	p.setProperty("mail.transport.protocol", "smtp");
+            	p.put("mail.smtp.host", "smtp.gmail.com");
+            	p.put("mail.smtp.port", "587");
+            	p.put("mail.smtp.auth", "true");
+            	p.put("mail.smtp.debug", "true");
+            	p.put("mail.smtp.starttls.enable", "true");
+            	p.put("mail.smtp.ssl.protocols", "TLSv1.2");
+            	p.put("mail.smtp.socketFactory.port", "587");
+            	p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            	
+            	Session smtpSession = Session.getDefaultInstance(p);
+            	
+            	MimeMessage msg = new MimeMessage(smtpSession); //MimeMessage 객체 생성
+            	
+            	msg.setFrom(new InternetAddress(fromEmail, fromUsername));
+            	msg.addRecipient(RecipientType.TO, new InternetAddress(toEmail));
+            	msg.setSubject(subject);
+            	
+            	String cNumber="";
+            	Random rnd = new Random();
+            	for (int i = 0; i < 8; i++) {
+            		int sel1 = (int)(Math.random() * 3);
+            		
+            		if(sel1 == 0) {
+            			int num = (int)(Math.random() * 10);
+            			cNumber += num;
+            		}else {
+            			char ch = (char)(Math.random() * 26 + 65);
+            			int sel2 = (int)(Math.random() * 2);
+            			if(sel2 == 0) {
+            				ch = (char)(ch + ('a' - 'A'));
+            				
+            			}
+            			cNumber += ch;
+            		}
+            	}
+            	
+            	String AuthenticationKey = cNumber.toString();
+            	System.out.println(AuthenticationKey);
+            	System.out.println("이메일 : " + inputEmail);
+            	
+            	StringBuffer sb = new StringBuffer(); //가변성 문자열 저장 객체
+            	sb.append("<h3>[웹 게임 포털 사이트 RetroStars] 비밀번호 찾기 인증 번호입니다.</h3>\n");
+            	sb.append("<h3>인증 번호 : <span style='color:red'>" + cNumber + "</span></h3>\n");
+            	msg.setText("인증 번호는 [" + cNumber + "] 입니다.");
+            	
+            	Transport t = smtpSession.getTransport("smtp");
+            	t.connect(stmpEmail, password);
+            	t.sendMessage(msg, msg.getAllRecipients());
+            	t.close();
+            	
+            	session.setAttribute("authCode", cNumber);
+            	session.setAttribute("inputEmail", inputEmail);
+            	
+            	response.sendRedirect("/member/login/pwVerifyCode.jsp");
+//            	int result2 = memberDao.insertCertification(inputEmail, cNumber); // dao 안에 넣기. 
+//            	response.getWriter().print(result2); // 오류 없이 실행될 경우 sucess : function()의 매개변수로 들어감.
+            	
+            }else if(cmd.equals("/pwVerifyCode.member") ) {
+            	String code = request.getParameter("code");
+            	System.out.println(code);
+            	String authCode = (String) session.getAttribute("authCode");
+ 
+            	if(code.equals(authCode)) {
+            		response.sendRedirect("/member/login/resetPassword.jsp");
+            	} else {
+            		response.getWriter().println("인증코드가 올바르지 않습니다.");
+            		}
+            }else if(cmd.equals("/resetPassword")) {
+            	String pw = util.getSHA512(request.getParameter("password"));
+            	System.out.println(pw);
+            	String inputEmail = (String) session.getAttribute("inputEmail");
+            	int result = memberDao.resetPw(pw, inputEmail);
+            	System.out.println(result);
+            	
+            	response.sendRedirect("/member/login/login.jsp");
+            	
+            }
+            
+            else if(cmd.equals("/findId.member")) {
+            	String name = request.getParameter("name");
+            	String email = request.getParameter("email");
+            	
+            	String foundId = memberDao.findIdByNameAndEmail(name, email);
+            	if(foundId != null) {
+            		request.setAttribute("message", "찾은 아이디: " + foundId);
+            	} else {
+            		request.setAttribute("message", "해당 정보로 등록된 아이디가 없습니다.");
+            	}
+            	request.getRequestDispatcher("/member/login/findIdResult.jsp").forward(request, response);
+            	
+            }
+			
 			// 마이페이지 접속 시 정보 출력 기능
 			if(cmd.equals("/mypage.member")) {
 				session = request.getSession();
@@ -391,8 +507,7 @@ public class MemberController extends HttpServlet {
                 	// 그 외 모든 경우 수정 불가능
                 	pw.append("false");
                 }
-            }	
-			
+            }
 			
 		}catch(Exception e) {
 			e.printStackTrace();

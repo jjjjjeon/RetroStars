@@ -19,7 +19,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url(images/main_background.png);
+            background-image: url(/image/background.png);
             color: #333;
             background-size: cover;
         }
@@ -112,7 +112,7 @@
         .highContent {
             display: flex;
             justify-content: space-around;
-            /* padding: 10px 20px 10px 20px; */
+            background-color:white;
         }
 
         .highScore.firstBox {
@@ -398,42 +398,40 @@
         </div>
     </nav>
     <nav class="nav nav-pills nav-fill" id="gamenav">
-        <a class="nav-link" href="#">Game1</a>
-        <a class=" nav-link" href="#">Game2</a>
-        <a class="nav-link" href="#">Game3</a>
-        <a class="nav-link" href="#">Game4</a>
-        <a class="nav-link" href="#">Game5</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=1">Game1</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=2">Game2</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=3">Game3</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=4">Game4</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=5">Game5</a>
     </nav>
 
     <div class="wrapper">
         <div class="highUserBox">
             <div class="rankingimg">
-                <img src="images/단상22.png" alt="ranking stage">
+                <img src="/image/단상22.png" alt="ranking stage">
             </div>
             <div class="highContent">
                 <div class="highScore firstBox">
                     <div class="userimg">
-                        <img src="images/user.jpeg" alt="user image">
+                        <img src="/image/user.jpeg" alt="user image">
                     </div>
-                    <div class="username">username3</div>
-                    <div class="userscore">userscore3</div>
+                    <div class="username">${ranks[1].id}</div>
+                    <div class="userscore">${ranks[1].score}</div>
 
                 </div>
                 <div class="highScore secondBox">
                     <div class="userimg">
-                        <img src="images/user.jpeg" alt="user image">
+                        <img src="/image/user.jpeg" alt="user image">
                     </div>
-                    <div class="username">username1</div>
-                    <div class="userscore">userscore1</div>
+                    <div class="username">${ranks[0].id}</div>
+                    <div class="userscore">${ranks[0].score}</div>
                 </div>
                 <div class="highScore thirdBox">
                     <div class="userimg">
-                        <img src="images/user.jpeg" alt="user image">
+                        <img src="/image/user.jpeg" alt="user image">
                     </div>
-                    <div class="username">username2</div>
-                    <div class="userscore">userscore2</div>
-
-
+                    <div class="username">${ranks[2].id}</div>
+                    <div class="userscore">${ranks[2].score}</div>
                 </div>
             </div>
         </div>
@@ -441,58 +439,10 @@
             <div class="rankList">
                 <div class="ranknum">4</div>
                 <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
+                    <img src="/image/user.jpeg" alt="ranking profile">
                 </div>
                 <div class="username">username4</div>
                 <div class="rankscore">ranking score4</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">5</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username5</div>
-                <div class="rankscore">ranking score5</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">6</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username6</div>
-                <div class="rankscore">ranking score6</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">7</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username7</div>
-                <div class="rankscore">ranking score7</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">8</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username8</div>
-                <div class="rankscore">ranking score8</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">9</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username9</div>
-                <div class="rankscore">ranking score9</div>
-            </div>
-            <div class="rankList">
-                <div class="ranknum">10</div>
-                <div class="rankimg">
-                    <img src="images/user.jpeg" alt="ranking profile">
-                </div>
-                <div class="username">username10</div>
-                <div class="rankscore">ranking score10</div>
             </div>
         </div>
     </div>

@@ -353,7 +353,7 @@ body{background-image:url("/image/background.png");
       <span>전체</span>
 
 
-   <c:if test="${sessionScope.isAdmin eq 'Y'}">
+   <c:if test="${isAdmin eq true}">
             <a href="/nboard/nBoardWrite.jsp" class="btn btn-primary btn-write">
               <i class="fas fa-pencil-alt"></i> 글 작성
             </a>
