@@ -87,7 +87,7 @@
     <div class="container">
         <h1>아이디 찾기 결과</h1>
         <p>${message}</p>
-        <button onclick="location.href='/members/login.jsp'">로그인 페이지로 이동</button>
+        <button onclick="location.href='/member/login/login.jsp'">로그인 페이지로 이동</button>
     </div>
 </body>
 </html>

@@ -37,16 +37,16 @@
             padding:0;
         }
 
-   .video-background{
-      position : fixed;
-      top : 0;
-      left : 0;
-      min-width : 100%;
-      min-height : 100%;
-      width: auto;
-      height : auto;
-      z-index: -1;
-   }
+	   .video-background{
+	      position : fixed;
+	      top : 0;
+	      left : 0;
+	      min-width : 100%;
+	      min-height : 100%;
+	      width: auto;
+	      height : auto;
+	      z-index: -1;
+	   }
     .navbar {
         position: fixed;
         top: 0;
@@ -222,18 +222,18 @@
         }
         
         .thumbnail{
-        	border-radius: 20px;
-        	width: 356px;
-        	height: 230px;
-        	object-fit: cover;
+           border-radius: 20px;
+           width: 356px;
+           height: 230px;
+           object-fit: cover;
         }
         
         a {
-		    text-decoration: none !important;
-		}
-		 a:link { color: white; text-decoration: none;}
-		 a:visited { color: white; text-decoration: none;}
-		 a:hover { color: white; text-decoration: underline;}
+          text-decoration: none !important;
+      }
+       a:link { color: white; text-decoration: none;}
+       a:visited { color: white; text-decoration: none;}
+       a:hover { color: white; text-decoration: underline;}
     </style>
 </head>
 <body>
@@ -259,7 +259,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li><a class="dropdown-item" href="/gboard/addGame.jsp">게임 업로드</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
+                            <li><a class="dropdown-item" href="/list.review">리뷰 게시판</a></li>
                             <li><a class="dropdown-item" href="#">game3</a></li>
                             <li><a class="dropdown-item" href="#">game4</a></li>
                             <li><a class="dropdown-item" href="#">game5</a></li>
@@ -287,11 +287,11 @@
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
-				        <li class="nav-item">
-				           <a class="nav-link" href="/mypage.member">
-				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-				           </a>
-				       </li>                  
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/upload/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                   </li>                  
                       <li class="nav-item">
                            <a class="nav-link" href="/mypage.member">마이페이지</a>
                        </li>
@@ -370,9 +370,9 @@
         ];
 
         function playRandomVideo() {
-            var randomIndex = Math.floor(Math.random() * videoList.length);
-            var videoElement = $('#gameVideo');
-            var selectedVideo = videoList[randomIndex];
+            let randomIndex = Math.floor(Math.random() * videoList.length); // 비디오 랜덤 재상
+            let videoElement = $('#gameVideo');
+            let selectedVideo = videoList[randomIndex];
 
             videoElement.attr('src', selectedVideo.src);
             $('#startGameLink').attr('href', '/viewGame.gboard?gameSeq=' + selectedVideo.seq);
@@ -381,10 +381,10 @@
         }
 
 //         $('#gameVideo').on('ended', function() {
-//             setTimeout(playRandomVideo, 30000); // 30초 후에 다음 비디오 재생
+//             setTimeout(playRandomVideo, 30000); // 나중에 클릭 후 애니메이션 줄 때 사용 예정
 //         });
 
-        playRandomVideo(); // 초기 비디오 재생
+        playRandomVideo(); 
     });
 </script>
 

@@ -243,6 +243,23 @@
         height: 100px;
         margin-left: 20px;
     }
+    
+    .like{
+    	backgroud-color : blue;
+    }
+    
+     .dislike{
+    	backgroud-color : red;
+    } 
+    
+    #likeImg{
+    	width:40px;
+    	height:40px;
+    }
+    #dislikeImg{
+    	width:40px;
+    	height:40px;
+    }      
 </style>
 </head>
 
@@ -335,7 +352,7 @@
                     <c:forEach var="review" items="${list}">
                         <div class="review-item">
                             <div class="review-author">
-                                <img src="/profile/${review.profileUrl}" alt="Profile">
+                                <img src="/upload/${review.profileUrl}" alt="Profile">
                                 ${review.userNickname}
                             </div>
                             <div class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></div>
@@ -353,8 +370,8 @@
                                     <span>싫어요: ${review.reviewDislike}</span>
                                 </div>
                                 <div>
-                                    <button>도움이 돼요</button>
-                                    <button>도움 안 돼요</button>
+                                    <img id="likeImg" src="/upload/like.png" alt="좋아요">
+                                    <img id="dislikeImg" src="/upload/dislike.png" alt="좋아요">
                                 </div>
                             </div>
                         </div>

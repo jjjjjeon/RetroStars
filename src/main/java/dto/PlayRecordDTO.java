@@ -18,10 +18,10 @@ import java.sql.Timestamp;
  */
 public class PlayRecordDTO {
 	private int playRecordSeq;
-	private String gameId;
+	private int gameSeq;
 	private String userId;
 	private Timestamp playDate;
-	private String playDuration;
+	private int playDuration;
 	private int playScore;
 	public int getPlayRecordSeq() {
 		return playRecordSeq;
@@ -29,11 +29,11 @@ public class PlayRecordDTO {
 	public void setPlayRecordSeq(int playRecordSeq) {
 		this.playRecordSeq = playRecordSeq;
 	}
-	public String getGameId() {
-		return gameId;
+	public int getGameSeq() {
+		return gameSeq;
 	}
-	public void setGameId(String gameId) {
-		this.gameId = gameId;
+	public void setGameSeq(int gameSeq) {
+		this.gameSeq = gameSeq;
 	}
 	public String getUserId() {
 		return userId;
@@ -47,10 +47,10 @@ public class PlayRecordDTO {
 	public void setPlayDate(Timestamp playDate) {
 		this.playDate = playDate;
 	}
-	public String getPlayDuration() {
+	public int getPlayDuration() {
 		return playDuration;
 	}
-	public void setPlayDuration(String playDuration) {
+	public void setPlayDuration(int playDuration) {
 		this.playDuration = playDuration;
 	}
 	public int getPlayScore() {
@@ -59,11 +59,11 @@ public class PlayRecordDTO {
 	public void setPlayScore(int playScore) {
 		this.playScore = playScore;
 	}
-	public PlayRecordDTO(int playRecordSeq, String gameId, String userId, Timestamp playDate, String playDuration,
+	public PlayRecordDTO(int playRecordSeq, int gameSeq, String userId, Timestamp playDate, int playDuration,
 			int playScore) {
 		super();
 		this.playRecordSeq = playRecordSeq;
-		this.gameId = gameId;
+		this.gameSeq = gameSeq;
 		this.userId = userId;
 		this.playDate = playDate;
 		this.playDuration = playDuration;
@@ -72,7 +72,6 @@ public class PlayRecordDTO {
 	public PlayRecordDTO() {
 		super();
 	}
-	
-	
+		
 	
 }

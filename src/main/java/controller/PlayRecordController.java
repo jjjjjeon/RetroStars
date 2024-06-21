@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.PlayRecordDAO;
+import dto.PlayRecordDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -25,7 +27,7 @@ import dao.PlayRecordDAO;
  * @author : KJY 
  * @version 1.0 
  */
-@WebServlet("*.playrecord")
+@WebServlet("*.playRecord")
 public class PlayRecordController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,8 +42,23 @@ public class PlayRecordController extends HttpServlet {
 	        HttpSession session = request.getSession();
 	        String cmd = request.getRequestURI();
 	        PlayRecordDAO playRecordDao = PlayRecordDAO.getInstance();
+	        PrintWriter pw = response.getWriter();
 	        
 	        try {
+	        	if(cmd.equals("/write.playRecord")) {
+	        		int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+	        		String playId = request.getParameter("id");
+	        		int gameTime = Integer.parseInt(request.getParameter("playtime"));
+	        		int gameScore = Integer.parseInt(request.getParameter("score"));
+	        		int result = playRecordDao.addPlayRecord(new PlayRecordDTO(0, gameSeq, playId, null, gameTime, gameScore));
+	                System.out.println(gameSeq + playId + gameTime + gameScore);
+	                System.out.println(result);
+	        		if (result > 0) {
+	                    pw.append("{\"result\":\"success\"}");
+	                } else {
+	                    pw.append("{\"result\":\"error\"}");
+	                }
+	        	}
 	        	
 	        }catch(Exception e) {
 	        	e.printStackTrace();

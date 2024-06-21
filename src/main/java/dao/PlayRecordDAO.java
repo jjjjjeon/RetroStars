@@ -15,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.GamePlayRecordDTO;
+import dto.PlayRecordDTO;
+import dto.ReviewDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -85,5 +87,26 @@ public static PlayRecordDAO instance;
 		
 		
 	}
+
+    /** 
+     * @Method Name  : 플레이 기록 입력
+     * @date : 2024. 6. 21. 
+     * @author : JJH
+     * @param PlayRecordDTO record
+     * @param 
+     * @return int
+     */ 
+    public int addPlayRecord(PlayRecordDTO record) throws Exception {
+        String sql = "insert into play_record values (play_record_sequence.nextval, ?, ?, sysdate, ?, ?)";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, record.getGameSeq());
+            pstat.setString(2, record.getUserId());
+            pstat.setInt(3, record.getPlayDuration());
+            pstat.setInt(4, record.getPlayScore());
+            
+            return pstat.executeUpdate();
+        }
+    }
+
 
 }

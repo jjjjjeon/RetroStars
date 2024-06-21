@@ -14,14 +14,23 @@
     <style>  
       body{
             font-family: 'Georgia', serif;
-               background-image: url('/image/background.png');
-               background-position: center;
                background-size:100% 100%;
                display: flex;
                height : 100vh;
                justify-content: center;
              align-items: center;
             }
+            
+	   .video-background{
+	      position : fixed;
+	      top : 0;
+	      left : 0;
+	      min-width : 100%;
+	      min-height : 100%;
+	      width: auto;
+	      height : auto;
+	      z-index: -1;
+	   }                  
       nav{
                background-color: #323232;
             
@@ -148,6 +157,11 @@
     </style>
 </head>
 <body>
+
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
 
     <div class="container">
         <h1>Retro Stars 로그인</h1>

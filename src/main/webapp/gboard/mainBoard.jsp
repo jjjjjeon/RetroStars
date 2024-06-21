@@ -137,11 +137,12 @@ nav {
     color: #c7d5e0;
     border: 1px solid #3a4b58;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 5px 10px;   
     text-decoration: none;
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content : center;
 }
 
 .community-button:hover {
@@ -154,6 +155,10 @@ nav {
 
 #gameBtn {
     background-color: #6fa720;
+}
+
+.steamBtn {
+	background-color : #6fa720;
 }
 
 .main-content {
@@ -227,6 +232,12 @@ nav {
 .buttons button {
     width: 100px;
 }
+        a {
+          text-decoration: none !important;
+      }
+       a:link { color: white; text-decoration: none;}
+       a:visited { color: white; text-decoration: none;}
+       a:hover { color: white; text-decoration: underline;}
 </style>
 </head>
 <body>
@@ -285,7 +296,7 @@ nav {
                     <div class="bookmark-item ${gameItem.gameSeq == game.gameSeq ? 'active' : ''}" data-game-seq="${gameItem.gameSeq}">${gameItem.gameTitle}</div>
                 </c:forEach>
             </div>
-            <a href="/list.cboard" class="community-button">커뮤니티 허브</a>
+            <a href="/list.cboard?category=1" class="community-button">커뮤니티</a>
         </div>
         <div class="main-content">
             <div class="media-section">
@@ -306,7 +317,7 @@ nav {
                     <c:if test="${not empty videoUrl}">
                         <video src="/upload/${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="/upload/${videoUrl}"></video>
                     </c:if>
-                    <button id="writeReviewBtn" class="btn btn-primary ms-3">리뷰 작성</button> <!-- 버튼 추가 -->
+                    <button id="writeReviewBtn" class="btn steamBtn">리뷰 작성</button> 
                 </div>
             </div>
             <div class="description-section">
@@ -320,7 +331,7 @@ nav {
                 <p>DEVELOPER: ${game.developer}</p>
                 <div class="buttons">
                     <button class="btn community-button" id="addGameBookmarkBtn">찜하기</button>
-                    <button class="btn community-button" id="testSome">팔로우</button>
+                    <a href="/list.cboard?category=2" ><button class="btn community-button">공략보기</button></a>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
             </div>

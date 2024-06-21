@@ -11,14 +11,23 @@
     <style>
 		body{
 			   font-family: 'Georgia', serif;
-               background-image: url('/image/background.png');
-               background-position: center;
                display: flex;
                height : 100vh;
                justify-content: center;
 		       align-items: center;
 		       color : white;
             }
+            
+	   .video-background{
+	      position : fixed;
+	      top : 0;
+	      left : 0;
+	      min-width : 100%;
+	      min-height : 100%;
+	      width: auto;
+	      height : auto;
+	      z-index: -1;
+	   }            
 		nav{
                background-color: #323232;
             
@@ -84,6 +93,7 @@
         }
         
         .input-group {
+        	position : relative;
             margin-bottom: 20px;
         }
         
@@ -96,11 +106,13 @@
         .input-group input {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 0 auto;
+            margin-top : 15px;
             border: none;
             border-radius: 5px;
             background: #333;
             color: white;
+            gap: 20px;
+            
         }
         
         button {
@@ -137,10 +149,15 @@
     </style>
 </head>
 <body>
+
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
     <div class="background"></div>
     <div class="container">
         <h1>아이디 찾기</h1>
-        <form id="find-id-form" action="/findId" method="post">
+        <form id="find-id-form" action="/findId.member" method="post">
             <div class="input-group">
                 <input type="text" id="name" name="name" placeholder="이름" required>
                 <br>
