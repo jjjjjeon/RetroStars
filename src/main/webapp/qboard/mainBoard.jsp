@@ -353,9 +353,9 @@ nav {
 							class="btn btn-secondary dropdown-toggle" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false">분류</button>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#"
+							<li><a id="dropdown-item" class="dropdown-item" href="#"
 								data-searchBy="q_board_title">제목</a></li>
-							<li><a class="dropdown-item" href="#"
+							<li><a id="dropdown-item" class="dropdown-item" href="#"
 								data-searchBy="q_board_content">내용</a></li>
 						</ul>
 					</div>
@@ -416,7 +416,7 @@ nav {
 										<c:choose>
 											<c:when test="${dto.qBoardAnswer eq 'N'}">
 												<div class="list_data_answer center"
-													style="flex: 1; color: orangered">답변예정</div>
+													style="flex: 1; color: orangered">답변대기</div>
 											</c:when>
 											<c:when test="${dto.qBoardAnswer eq 'Y'}">
 												<div class="list_data_answer center"
@@ -532,8 +532,8 @@ nav {
 					}
 					
 					
-					 // .dropdown-item을 클릭했을 때
-		            $(".dropdown-item").on("click", function (e) {
+					 // #dropdown-item을 클릭했을 때
+		            $("#dropdown-item").on("click", function (e) {
 		                e.preventDefault();
 		                $("#searchToggle").html($(this).html());
 		                searchBy = $(this).attr("data-searchBy");

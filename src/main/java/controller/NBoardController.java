@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import common.BoardConfig;
+import dao.MemberDAO;
 import dao.NBoardDAO;
 import dto.NBoardDTO;
 
@@ -20,13 +21,18 @@ public class NBoardController extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8");
       NBoardDAO nManager = NBoardDAO.getInstance();
+      MemberDAO mManager = MemberDAO.getInstance();
+      
       String cmd = request.getRequestURI();
       
       try {
          if(cmd.equals("/write.nboard")) {
-            HttpSession session = request.getSession();
+        
             
             String userId = (String)request.getSession().getAttribute("loginId");
+            boolean isAdmin = mManager.isAdmin(userId);
+         
+            
             String nBoardTitle = request.getParameter("title");
             String nBoardContent = request.getParameter("contents");
             
@@ -40,7 +46,11 @@ public class NBoardController extends HttpServlet {
             
          } else if(cmd.equals("/list.nboard")) {
             System.out.println("list.nboard 들어감");
+
             
+            String userId = (String)request.getSession().getAttribute("loginId");
+            boolean isAdmin = mManager.isAdmin(userId);
+        
             String pcpage = request.getParameter("cpage");
             
             if(pcpage==null) {pcpage="1";}
@@ -91,20 +101,27 @@ public class NBoardController extends HttpServlet {
         	    System.out.println("search.nboard진입");
         	    String keyword = request.getParameter("keyword");
         	    String filter = request.getParameter("filter");
-        	    
-        	    System.out.println("keyword : " + keyword);
-        	    System.out.println("filter : " + filter);
-        	    
         	    String pcpage = request.getParameter("cpage");
+        	    
         	    if(pcpage == null) {
         	        pcpage = "1";
         	    }
         	    int cpage = Integer.parseInt(pcpage);
         	    
-        	    List<NBoardDTO> searchResultList = null;
+        	   
+        	    List<NBoardDTO> searchResultList = 
+                        nManager.selectNtoM(
+                        cpage*BoardConfig.recordCountPerPage-(BoardConfig.recordCountPerPage-1),
+                        cpage*BoardConfig.recordCountPerPage
+                  );
         	    int totalRecordCount = 0;
-        	    
-        	    if(filter.equals("title")) {
+        	    if(filter.equals("")) {
+        	    	 searchResultList = nManager.searchListByTitle(keyword, 
+             	            cpage * BoardConfig.recordCountPerPage - (BoardConfig.recordCountPerPage - 1),
+             	            cpage * BoardConfig.recordCountPerPage);
+             	        totalRecordCount = nManager.getSearchRecordCountByTitle(keyword);
+        	    }
+        	    else if(filter.equals("title")) {
         	        searchResultList = nManager.searchListByTitle(keyword, 
         	            cpage * BoardConfig.recordCountPerPage - (BoardConfig.recordCountPerPage - 1),
         	            cpage * BoardConfig.recordCountPerPage);
@@ -115,6 +132,7 @@ public class NBoardController extends HttpServlet {
         	            cpage * BoardConfig.recordCountPerPage);
         	        totalRecordCount = nManager.getSearchRecordCountByPostNumber(keyword);
         	    }
+        	   
         	    
         	    request.setAttribute("searchResult", searchResultList);
         	    request.setAttribute("cpage", cpage);
@@ -124,6 +142,7 @@ public class NBoardController extends HttpServlet {
         	    
         	    request.setAttribute("filter", filter);
         	    request.setAttribute("keyword", keyword);
+        	    request.setAttribute("cpage",cpage);
         	    
         	    request.getRequestDispatcher("/nboard/nboardMain.jsp").forward(request, response);
         	}

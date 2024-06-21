@@ -77,15 +77,17 @@ public class MemberController extends HttpServlet {
 	            String pw = util.getSHA512(request.getParameter("pw"));
 
 	            boolean result = memberDao.loginId(id, pw);
+	            boolean isAdmin = memberDao.isAdmin(id);
 	            response.setContentType("application/json");
 	            response.setCharacterEncoding("UTF-8");
+	            
 	            PrintWriter pw1 = response.getWriter();
 
 	            JsonObject responseJson = new JsonObject();
 
 	            if(result) {
 	                session.setAttribute("loginId", id);
-	                
+	                session.setAttribute("isAdmin", isAdmin);
 	                String profileUrl = userProfileImgDao.selectMyUrl(id);
                     session.setAttribute("userProfileUrl", profileUrl);
                     boolean result1 = memberDao.isAdmin(id);
@@ -398,6 +400,7 @@ public class MemberController extends HttpServlet {
 				int count1 = listCategory1.size();
 				int count2 = listCategory2.size();	
 				List<String> seq = memberDao.gameBookmark(id);
+				int seqSize = seq.size();
 				
 				request.setAttribute("birth", birth);
 				request.setAttribute("phone", phone);
@@ -410,6 +413,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("count2", count2);
 				request.setAttribute("gprDto", gprDto);
 				request.setAttribute("seq", seq);
+				request.setAttribute("seqSize", seqSize);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				

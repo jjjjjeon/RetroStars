@@ -53,27 +53,30 @@
         }
 
         .container {
-            max-width: 800px;
+            width: 1200px;
             margin: 0 auto;
             margin-top:24px;
             margin-bottom:25px;
-            padding: 20px;
+            padding: 40px;
             background: #323232;
             border-radius: 10px;
             height:650px;
+            
         }
         
         .search{height:40px; width:100%;}	
-        #search_box{display:flex; justify-content:space-evenly;}	
+        #search_box{display:flex; justify-content:space-evenly; margin-top:20px;}	
         #search_kind_box{width:20%; height:90%;} 
         #category_box{width:20%; height:90%;}       
         .search-place{width:45%;display:flex; height:90%;}
         #search_btn{width:10%;height:90%;}
+        #write_btn{ width:10%; height:90%}
+        #write_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
 
-        h1 {text-align: center; margin-bottom: 20px; font-size:28px;}
-        h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px;}
+        h1 {text-align: center; margin-bottom: 8px; font-size:25px;}
+        h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px; width:80%}
 
         .tabs {overflow: hidden; border-bottom: 1px solid #ccc;}
         .content{height:450px;}
@@ -81,6 +84,7 @@
 
         .tablink {
             background-color: #68686800;
+            height:45px;
             color: #fff;
             float: left;
             border: none;
@@ -96,9 +100,12 @@
         .tablink:hover { background-color: #575757;}
         .faq {margin-top: 20px; margin-bottom:0px;}
         .faq-item {margin-bottom:10px; overflow-y:auto;height:350px;}
-        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px;}
+        .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px; width:100%;}
+        .delete_btn{ height:100%;margin-top:7px;}
+        .question_box{display:flex;}
         .answer {display: none; background-color: #333;border-radius: 5px; padding:10px;}
-        
+        .fa-x{widht:100%; height:100%;}
+        #delete{width:5%;}
         
         #page{display:flex; justify-content:center; align-items:center; font-size:20px;}
 
@@ -240,7 +247,14 @@
 	<div class="container">
         <h1>자주 찾는 질문</h1>
         
-        <form action="/search.fboard">
+        <div class="tabs">
+            <button class="tablink" id="all_tap">전체</button>
+            <button class="tablink" id="game_tap">게임</button>
+            <button class="tablink" id="board_tap">게시판</button>
+            <button class="tablink" id="etc_tap">기타</button>
+        </div>
+        
+           <form action="/search.fboard">
         <div class="search" id="search_box">
              <select id="search_kind_box" class="form-select"  name="kind">
   				<option value="title" selected="selected">제목</option>
@@ -255,27 +269,31 @@
 			</select>
         	<input class="form-control me-2 search-place" type="search" name="search" placeholder="검색어를 입력해주세요" aria-label="Search">
         	<button class="btn btn-outline-light search_btn" id="search_btn" type="submit">검색</button>
+        	<c:if test="${isAdmin == 'admin'}">
+        		<button class="btn btn-outline-light search_btn" id="write_btn" type="button">글 쓰기</button>
+        	</c:if>
         	<input type="hidden" name="cpage" value="1"> 
         </div>
         </form>
         
-        <div class="tabs">
-            <button class="tablink" id="all_tap">전체</button>
-            <button class="tablink" id="game_tap">게임</button>
-            <button class="tablink" id="board_tap">게시판</button>
-            <button class="tablink" id="etc_tap">기타</button>
-        </div>
         
+       <c:choose>
+       <c:when test="${isAdmin =='admin'}"> 
         <div class="content">
         <div class="tabcontent">
            <c:choose >
           	<c:when test="${category.equals('1')}">
-            	<h3>게임</h3>
+            	<h3>게임 어드민</h3>
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -285,8 +303,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -296,8 +319,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -307,8 +335,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -318,8 +351,13 @@
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
-                    		<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
-                    		<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				<button class="btn btn-outline-light delete_btn" id="delete"><i class="fa-solid fa-x"></i></button>
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
                    		 </c:forEach>
                		</div>
             	</div>
@@ -328,6 +366,99 @@
 			<div id="page" class="page"></div>
         </div>
        </div> 
+       </c:when>
+       
+       <c:otherwise>
+        <div class="content">
+        <div class="tabcontent">
+           <c:choose >
+          	<c:when test="${category.equals('1')}">
+            	<h3>게임</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+               
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('2')}">
+            	<h3>게시판</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:when test="${category.equals('3')}">
+            	<h3>기타</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+             <c:when test="${category.equals('4')}">
+            	<h3>검색 결과</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:when>
+            <c:otherwise>
+            	<h3>전체</h3>
+            	<div class="faq">
+                	<div class="faq-item">		
+                		<c:forEach var="fboardCate" items="${fboardCate}">
+                			<div class=faq_box>
+                				<div class="question_box">
+                    				<div class="question"><i class="fa-solid fa-q"></i> &nbsp;${fboardCate.fBoardQuestion}</div>
+                    				
+                    			</div>
+                    			<div class="answer"><i class="fa-solid fa-a"></i> &nbsp;${fboardCate.fBoardAnswer}</div>
+                   		 	</div>
+                   		 </c:forEach>
+               		</div>
+            	</div>
+            </c:otherwise>
+          </c:choose>
+			<div id="page" class="page"></div>
+        </div>
+       </div>
+       </c:otherwise>
+       </c:choose>
+       
     </div>
     <div class="footer">
         <div class="footerbox">
@@ -351,36 +482,50 @@
 
     <script>
     
-    console.log(${category});
+
     
+    $(".faq-item").on("click",".delete_btn",function(){    	
+    	
+    	let title = $(this).parent().text().trim();
+    	let category=${category};
+    	
+        console.log("위치파악중 :" + $(this).parent().text().trim());
+        location.href="/delete.fboard?category="+category+"&title="+title;
+        
+        });
+      
     $("#all_tap").on("click",function(){
     	location.href="/list.fboard?category=0";
-    })
+    });
     $("#game_tap").on("click",function(){
     	location.href="/list.fboard?category=1";
-    })
+    });
     $("#board_tap").on("click",function(){
     	location.href="/list.fboard?category=2";
-    })
+    });
     $("#etc_tap").on("click",function(){
     	location.href="/list.fboard?category=3";
-    })
+    });
+    $("#write_btn").on("click",function(){
+    	location.href="/goWriteFaq.fboard";
+    });
 
     
-        $(document).ready(function () {
-            $(".question").click(function () {
-                $(this).next(".answer").slideToggle();
-                $(this).toggleClass("active");
-            });
-        });
 
-        
         $(document).ready(function () {
         	
             $(".question").click(function () {
-                let answer = $($(this).next(".answer"));
-                
-                console.log("answer:"+answer);
+                $(this).parent().next(".answer").slideToggle();
+                $(this).toggleClass("active");
+            });
+            
+        });
+    
+        
+        $(document).ready(function () {
+        	
+            	$(".question").click(function () {
+                let answer = $(this).parent().next(".answer");
 
                 $(".answer").not(answer).slideUp();
                 $(".question").not(this).removeClass("active");
@@ -392,7 +537,7 @@
             $(".tablink").click(function() {
             	
                 $(".answer").slideUp();
-                $(".question").removeClass("active");
+                $(".question_box").removeClass("active");
                 
                 let tabName = $(this).attr("data-tab");
                 $("#" + tabName + " .question:first-of-type").click();
@@ -432,7 +577,7 @@
     				console.log(pageTotalCount+"if");
     			}else{
     				let beforepageTotalCount = record_total_count/record_count_per_page;
-    				pageTotalCount = Math.floor(beforepageTotalCount)+1;
+    				pageTotalCount = Math.floor(beforepageTotalCount);
     				console.log(pageTotalCount+"else");
     			}
     			
@@ -479,6 +624,7 @@
     					$("#page").append("<a class='atag' href='/list.fboard?category="+category+"&cpage=" + (end + 1) + "'>></a>");
     				}
     			}
+
     			
     			console.log("record_total_count:", record_total_count);
     		    console.log("record_count_per_page:", record_count_per_page);

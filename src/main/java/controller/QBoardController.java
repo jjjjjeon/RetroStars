@@ -105,8 +105,8 @@ public class QBoardController extends HttpServlet {
 				request.setAttribute("dto", dto);
 				request.setAttribute("loginId", loginId);
 				request.setAttribute("isAdmin", isAdmin);
-				
 				request.getRequestDispatcher("/qboard/detailBoard.jsp").forward(request, response);
+				
 			}else if(cmd.equals("/delete.qboard")) {
 				int seq=Integer.parseInt(request.getParameter("seq"));
 				int result=boarddao.deleteBySeq(seq);
@@ -127,7 +127,13 @@ public class QBoardController extends HttpServlet {
 				request.setAttribute("nickname", nickname);
 				request.getRequestDispatcher("/qboard/writeBoard.jsp").forward(request, response);
 				
-				
+			}else if(cmd.equals("/selectAnswer.qboard")) {
+				String strselected=request.getParameter("selected");
+				int qBoardSeq= Integer.parseInt(request.getParameter("qBoardSeq"));
+				System.out.println(strselected+qBoardSeq);
+				int result=boarddao.updateAnswer(qBoardSeq, strselected);
+				response.sendRedirect("/list.qboard");
+				//System.out.println(result);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

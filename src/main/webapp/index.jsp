@@ -37,35 +37,70 @@
             padding:0;
         }
 
-	   .video-background{
-	      position : fixed;
-	      top : 0;
-	      left : 0;
-	      min-width : 100%;
-	      min-height : 100%;
-	      width: auto;
-	      height : auto;
-	      z-index: -1;
-	   }
-    .navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        height:70px;
-    }
+   		.video-background{
+      		position : fixed;
+      		top : 0;
+      		left : 0;
+      		min-width : 100%;
+      		min-height : 100%;
+      		width: auto;
+      		height : auto;
+      		z-index: -1;
+   		}
+    	.navbar {
+        	position: fixed;
+        	top: 0;
+        	width: 100%;
+        	z-index: 1000;
+        	height:70px;
+    	}
+
     
-        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
-        .nav-link {
-            color: white !important;
-            /* margin-left: 20px; */
-        }
+      /*    navbar css */
+       .navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
+       .nav-link {
+            color: white !important;			
+       }
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+       .nav-link:hover {
+ 			background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-        }
+       }
+       
 
+      .btn{
+         color:white;
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
+      a {
+		  text-decoration: none !important;
+	  }
+	  
+	  a:link { color: white; text-decoration: none;}
+ 	  a:visited { color: white; text-decoration: none;}
+	  a:hover { color: white; text-decoration: underline;}
+      /*    end navbar css */
+
+	/*container css*/
         .container {
             display: flex;
             justify-content: center;
@@ -137,10 +172,10 @@
            transition: background-color 0.3s ease;
         }
         
-    .gamelist .game:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
-    }
+    	.gamelist .game:hover {
+        	background-color: rgba(255, 255, 255, 0.2);
+        	border-radius: 10px;
+    	}
 
 
         .gameintro {
@@ -228,12 +263,15 @@
            object-fit: cover;
         }
         
+
         a {
           text-decoration: none !important;
       }
        a:link { color: white; text-decoration: none;}
        a:visited { color: white; text-decoration: none;}
        a:hover { color: white; text-decoration: underline;}
+
+
     </style>
 </head>
 <body>
@@ -243,7 +281,7 @@
            Your browser does not support the video tag.
        </video>
        
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="/index.jsp">홈으로</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -254,22 +292,23 @@
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게임
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/gboard/addGame.jsp">게임 업로드</a></li>
-                            <li><a class="dropdown-item" href="/list.review">리뷰 게시판</a></li>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">game1</a></li>
+                            <li><a class="dropdown-item" href="#">game2</a></li>
                             <li><a class="dropdown-item" href="#">game3</a></li>
                             <li><a class="dropdown-item" href="#">game4</a></li>
                             <li><a class="dropdown-item" href="#">game5</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게시판
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
+                        <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
@@ -287,17 +326,24 @@
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                   
                     <li class="nav-item">
                        <a class="nav-link" href="/mypage.member">
-                           <img src="/upload/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
                        </a>
-                   </li>                  
-                      <li class="nav-item">
+                    </li>                  
+                    <li class="nav-item">
                            <a class="nav-link" href="/mypage.member">마이페이지</a>
-                       </li>
-                       <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                            <a class="nav-link" href="/logout.member">로그아웃</a>
-                       </li>
+                     </li>
                    </ul>                          
                    </c:when>
                    <c:otherwise>
