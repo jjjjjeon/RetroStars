@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import common.FBoardConfig;
 import dao.FBoardDAO;
+import dao.MemberDAO;
 import dto.FBoardDTO;
 
 @WebServlet("*.fboard")
@@ -27,6 +28,7 @@ public class FBoardController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String cmd = request.getRequestURI();
 		FBoardDAO fBoardDao = FBoardDAO.getInstance();
+		MemberDAO mBoardDao = MemberDAO.getInstance();
 		System.out.println(cmd);
 		
 		try {		
@@ -37,18 +39,24 @@ public class FBoardController extends HttpServlet {
 				if(category == null) {category = "0";}
 				String pcpage = request.getParameter("cpage");
 				if (pcpage == null) {pcpage = "1";}
-				int cpage = Integer.parseInt(pcpage);		
+				int cpage = Integer.parseInt(pcpage);	
 				
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");				
+				
+				boolean isAdmin = mBoardDao.isAdmin(id);
 				List<FBoardDTO> fboardCate = fBoardDao.listCateNtoM(category,
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
 
+				request.setAttribute("isAdmin", isAdmin);
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("fboardCate", fboardCate);
 				request.setAttribute("recordCountPerPage", FBoardConfig.recordCountPerFPage);
 				request.setAttribute("naviCountPerPage", FBoardConfig.naviCountPerFPage);
 				request.setAttribute("recordTotalCount",fBoardDao.getRecordCount(category));
+				
 				
 				request.getRequestDispatcher("/fboard/fBoard.jsp").forward(request, response);
 				

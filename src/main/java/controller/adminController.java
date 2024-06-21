@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import dto.ReportDTO;
 public class adminController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		adminDAO aManager = adminDAO.getInstance();
 		Gson g = new Gson();
@@ -158,7 +161,7 @@ public class adminController extends HttpServlet {
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
 
-				// 신고 현황 : 신고된 글 목록 출력 
+				// 신고 현황 : 신고된 글 목록 출력
 			} else if (cmd.equals("/reportList.admin")) {
 				String id = (String) request.getSession().getAttribute("loginId");
 
@@ -183,10 +186,9 @@ public class adminController extends HttpServlet {
 				request.setAttribute("isSearchedList", 0);
 
 				request.getRequestDispatcher("/admin/reportManagement.jsp").forward(request, response);
-			
-				
+
 				// 신고 현황 : 검색된 작성자명으로 신고된 글 목록 출력
-			}else if (cmd.equals("/searchPostList.admin")) {
+			} else if (cmd.equals("/searchPostList.admin")) {
 				String id = (String) request.getSession().getAttribute("loginId");
 
 				String cpageStr = request.getParameter("cpage");
@@ -210,18 +212,32 @@ public class adminController extends HttpServlet {
 				request.setAttribute("searchInput", searchInput);
 
 				request.getRequestDispatcher("/admin/reportManagement.jsp").forward(request, response);
-				
-				
+
 				// 신고 현황 : 신고된 글의 신고 내역 출력
-			}else if (cmd.equals("/viewReport.admin")) {
+			} else if (cmd.equals("/viewReport.admin")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
-				
+
 				List<ReportDTO> list = aManager.viewReportList(seq);
-				
+
 				String result = g.toJson(list);
-				
+
 				PrintWriter pw = response.getWriter();
 				pw.append(result);
+
+				// 대시보드 이동
+			} else if (cmd.equals("/dashBoard.admin")) {
+				int[] gameNumberOfArr = aManager.getGameNumberOfUse();
+				int[] ageNumberOfArr = aManager.getAgeNumberOfUse();
+				int[] genderRatioOfMem = aManager.getGenderRatioOfMem();
+				float[] gameAvgOfTime = aManager.getGameAvgOfTime();
+				ArrayList<HashMap<String, ?>> list = aManager.getUnresolvedQBoard();
+				System.out.println(list);
+				request.setAttribute("gameNumberOfArr", gameNumberOfArr);
+				request.setAttribute("ageNumberOfArr", ageNumberOfArr);
+				request.setAttribute("genderRatioOfMem", genderRatioOfMem);
+				request.setAttribute("gameAvgOfTime", gameAvgOfTime);
+				request.setAttribute("list", list);
+				request.getRequestDispatcher("/admin/dashBoard.jsp").forward(request, response);
 			}
 
 		} catch (Exception e) {
