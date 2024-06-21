@@ -70,6 +70,7 @@
                         width: 80%;
                         margin: 20px auto 0 auto;
                         border: 1px solid black;
+                        background-color : #ddd;
                     }
 
                     .main .navi .profileBox .name {
@@ -215,11 +216,13 @@
                 <div class="main">
                     <div class="navi">
                         <div class="profileBox">
-                            <div class="profile"></div>
+                            <div class="profile">
+                            	<img src="/image/admin.png" style="width : 100%; height : 100%; padding : 40px;">
+                            </div>
                             <div class="name">${loginId} 관리자님, 환영합니다!</div>
                         </div>
                         <div class="naviBox">
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
+                            <a href="/dashBoard.admin" class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
                                 id="dashboard">대시보드</a>
                             <a
                                 class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
