@@ -236,7 +236,7 @@
     	<div class="detailbtn">
 			<input type="button" value="뒤로가기" id="back">
 			
-		<c:if test="${loginId eq 'admin'}">
+  		<c:if test="${sessionScope.isAdmin eq 'Y'}">
 			<input type="button" value="삭제" id="delete" data-nboard-seq="${dto.nBoardSeq}">
 			<input type="button" value="수정" id="edit">
     	</c:if>    
@@ -286,6 +286,16 @@
     	});
     	// 완료 버튼 클릭 시
     	$("#complete").on("click",function(){
+    		
+    		let title = $(".ntitle").text().trim();
+    		let content = $(".detailcontent").text().trim();
+    		
+    		if(title === '' || content === ''){
+    			alert("제목과 내용은 필수 입력입니다.");
+    			event.preventDefault();
+    			return;
+    		}
+    		
     		$("#hidden_title").val($(".ntitle").text().trim());
     		$("#hidden_post").val($(".detailcontent").text().trim());
     		$("#edit").show();
