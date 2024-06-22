@@ -35,6 +35,8 @@
             background-color: black;
             margin-bottom:0;
             padding:0;
+           	color:white;	/*헤더 글자색 흰색으로 */
+           
         }
 
    		.video-background{
@@ -75,7 +77,10 @@
  			background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
        }
-       
+       .nav-item{
+           align-items: center;
+    	   display: flex;
+       }
 
       .btn{
          color:white;
@@ -86,11 +91,15 @@
       }
       .dropdown-menu{
          background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
       }
       .dropdown-item{
          background-color: #323232;
          color:white;
       }
+
+
       a {
 		  text-decoration: none !important;
 	  }
@@ -283,7 +292,8 @@
        
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -309,16 +319,16 @@
                             게시판
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
+                        <a class="nav-link" href="/list.rboard">랭킹</a>
                     </li>
                    
 
@@ -332,18 +342,17 @@
                            <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
                     	</li>
                    </c:if>	
-                   
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
                     <li class="nav-item">
                        <a class="nav-link" href="/mypage.member">
                            <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
                        </a>
                     </li>                  
-                    <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">마이페이지</a>
-                    </li>
-                    <li class="nav-item">
-                           <a class="nav-link" href="/logout.member">로그아웃</a>
-                     </li>
+
+
                    </ul>                          
                    </c:when>
                    <c:otherwise>
@@ -364,7 +373,7 @@
         <div class="mainbox">
 
             <div class="gamelist">
-                <div class="listtitle zen-dots-regular">LIST</div>
+                <div class="listtitle zen-dots-regular">GAME LIST</div>
                 <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1">> 오버워치 <</a> </div>
                 <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2">> 심즈 4 <</a> </div>
                 <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3">> Apex 레전드 <</a> </div>
