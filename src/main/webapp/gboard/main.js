@@ -199,7 +199,7 @@ class Main extends Phaser.Scene {
 
 
              $.ajax({
-                 url : "/write.playRecord",
+                 url : "/write.playrecord",
                  data : {
                  id :  'test',
                  gameSeq : 1,

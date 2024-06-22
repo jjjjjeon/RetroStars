@@ -79,7 +79,7 @@ public class ReviewController extends HttpServlet {
                 request.setAttribute("reviewCount", reviewCount);
                 request.setAttribute("sortType", sortType);
 
-                request.getRequestDispatcher("/rboard/mainBoard.jsp").forward(request, response);
+                request.getRequestDispatcher("/rboard/reviewBoard.jsp").forward(request, response);
             }else if (cmd.equals("/addReview.review")) {
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
                 String reviewContent = request.getParameter("reviewContent");

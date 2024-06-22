@@ -45,7 +45,7 @@ public class PlayRecordController extends HttpServlet {
 	        PrintWriter pw = response.getWriter();
 	        
 	        try {
-	        	if(cmd.equals("/write.playRecord")) {
+	        	if(cmd.equals("/write.playrecord")) {
 	        		int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
 	        		String playId = request.getParameter("id");
 	        		int gameTime = Integer.parseInt(request.getParameter("playtime"));

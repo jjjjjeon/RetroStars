@@ -583,12 +583,14 @@ nav {
 
                 let containerWidth = mediaContainer.width();
                 let containerHeight = mediaContainer.height();
+                console.log(containerWidth);
+                console.log(containerHeight);
 
                 if (!containerWidth || containerWidth <= 0) {
                     containerWidth = 500;  
                 }
                 if (!containerHeight || containerHeight <= 0) {
-                    containerHeight = 600; 
+                    containerHeight = 500; 
                 }
 
                 let config = {
