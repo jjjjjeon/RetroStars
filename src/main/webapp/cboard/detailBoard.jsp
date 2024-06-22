@@ -28,7 +28,9 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.dropdown-toggle::after { display: none; }
+.dropdown-toggle::after {
+	display: none;
+}
 
 ul {
 	list-style-type: none;
@@ -39,64 +41,60 @@ a {
 	color: #d3d3d3;
 }
 
-body{
-		background-color : #222; 
+body {
+	background-color: #222;
 }
 
-div{
-	color : #d3d3d3;
+div {
+	color: #d3d3d3;
 }
-
 
 .header {
-        height: 220px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-image: url('/image/background.png');
-        background-size : cover;
-    }
-    
-    .header .headerTitle{
-    	height : 150px;
-    	color : #FFFFFF;
-    	font-size : 32px;
-    	font-weight : bold;
-    	display : flex;
-    	align-items : center;
-    }
-    
-    .header #headerTitle{
-    	margin-top : 70px;
-    }
-    
- 
+	height: 220px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: url('/image/background.png');
+	background-size: cover;
+}
+
+.header .headerTitle {
+	height: 150px;
+	color: #FFFFFF;
+	font-size: 32px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+}
+
+.header #headerTitle {
+	margin-top: 70px;
+}
 
 .navi {
-        position: relative;
-        width: 100%;
-        height: 80px;
-        background: #111;
-        border: 1px solid #5a5a64;
-        border-left : 0;
-        border-right : 0;
-        text-align: center;
-        font-size: 0;
-        
-    }
+	position: relative;
+	width: 100%;
+	height: 80px;
+	background: #111;
+	border: 1px solid #5a5a64;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+	font-size: 0;
+}
 
-    .navi a {
-        display: inline-block;
-        margin: 0 25px;
-        color: #898c92;
-        font-size: 24px;
-        line-height: 77px;
-    }
-    
-    .navi .active {
-	    color: white;
-	    border-bottom: 2px solid white;
-	}
+.navi a {
+	display: inline-block;
+	margin: 0 25px;
+	color: #898c92;
+	font-size: 24px;
+	line-height: 77px;
+}
+
+.navi .active {
+	color: white;
+	border-bottom: 2px solid white;
+}
 
 .content {
 	position: relative;
@@ -114,9 +112,9 @@ div{
 
 .content .titleBox {
 	padding-left: 50px;
-	padding-right : 5px;
+	padding-right: 5px;
 	height: 139px;
-	min-height : 139px;
+	min-height: 139px;
 	border: 1px solid #eeedf2;
 	font-size: 22px;
 	display: flex;
@@ -124,21 +122,21 @@ div{
 	margin-top: 20px;
 }
 
-#originTitle{
-	margin-top : 20px;
+#originTitle {
+	margin-top: 20px;
 }
 
-#titleInput{
+#titleInput {
 	height: 139px;
-	width:1300px;
-	min-height : 140px;
+	width: 1300px;
+	min-height: 140px;
 	font-size: 22px;
 	display: flex;
 	align-items: center;
 	margin-top: 20px;
-	text-indent : 20px;
-	background-color : #222;
-	color : #d3d3d3;
+	text-indent: 20px;
+	background-color: #222;
+	color: #d3d3d3;
 }
 
 .content .infoBox {
@@ -189,7 +187,7 @@ div{
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
-	word-break : break-all;
+	word-break: break-all;
 }
 
 .content .viewCont #addBookmarkBtn {
@@ -204,7 +202,7 @@ div{
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 56px;
-	color : black;
+	color: black;
 }
 
 .content .viewCont #delBookmarkBtn {
@@ -213,7 +211,7 @@ div{
 	width: 200px;
 	height: 60px;
 	background-color: black;
-	color : #d3d3d3;
+	color: #d3d3d3;
 	border: 1px solid #d3d3d3;
 	border-radius: 30px;
 	text-align: center;
@@ -239,7 +237,7 @@ div{
 	font-size: 13px;
 	font-weight: bold;
 	margin-right: 10px;
-	display : none;
+	display: none;
 }
 
 #delBtn {
@@ -330,7 +328,7 @@ div{
 .commentBox .commentTitle .commentAnker {
 	height: 36px;
 	position: absolute;
-	right : 0;
+	right: 0;
 	margin-bottom: 20px;
 	color: #d3d3d3;
 	font-size: 18px;
@@ -413,314 +411,347 @@ div{
 }
 
 .navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        height:70px;
-    }
-    
-        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
-        .nav-link {
-            color: white !important;
-            /* margin-left: 20px; */
-        }
+	position:fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+	height: 70px;
+	background-color: #323232;
+}
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
+.navbar-brand {
+	color: white;
+}
+
+.nav-link {
+	color: white !important;
+}
+
+.nav-link:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+}
+
+.naviBtn {
+	color: white;
+}
+
+.naviBtn:hover {
+	color: white;
+}
+
+.dropdown-menu {
+	background-color: #323232;
+}
+
+.dropdown-item {
+	background-color: #323232;
+	color: white;
+}
 
 .footer {
-        height: 150px;
-        margin-top: 160px;
-        border-top: 1px solid #5a5a64;
-        background-color: #323232;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position : relative;
-        bottom : 0;
-    }
-    
-    .leftfooter{
-           color : white;
-           font-weight : bold;
-           margin-top: 20px;
-        }
-        .rightfooter {
-           display: flex;
-           align-items: center;
-       
-       }
-         .footerbox {
-           width: 1000px;
-           height: 100%;
-           margin: auto;
-           display: flex;
-           justify-content: space-between;
-           align-items: center;    
-       }
-
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
-
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-       .coinbox {
-           display: flex;
-           align-items: center;
-           margin-left: 20px;
-       }
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left : 20px;
-        }
-
-#summernote{
-	display : none;
+	height: 150px;
+	margin-top: 160px;
+	border-top: 1px solid #5a5a64;
+	background-color: #323232;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	bottom: 0;
 }
 
-.reReplyWriteBox{
-	display : none;
+.leftfooter {
+	color: white;
+	font-weight: bold;
+	margin-top: 20px;
 }
 
-.delRepleBtn{
-	color : black;
-    font-weight: bold;
-    margin-left : 15px;
-    cursor:pointer;
+.rightfooter {
+	display: flex;
+	align-items: center;
 }
 
-.delRepleRepleBtn{
-	color : black;
-    font-weight: bold;
-    margin-left : 15px;
-    cursor:pointer;
+.footerbox {
+	width: 1000px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.top{
-	position:fixed;
-	width:50px;
-	height:50px;
+.iconbox {
+	display: flex;
+	align-items: center;
+}
+
+.iconbox a {
+	margin: 0 10px;
+	font-size: 50px;
+	color: white;
+}
+
+.coinbox {
+	display: flex;
+	align-items: center;
+	margin-left: 20px;
+}
+
+.coinbox img {
+	width: 120px;
+	height: 100px;
+	margin-left: 20px;
+}
+
+#summernote {
+	display: none;
+}
+
+.reReplyWriteBox {
+	display: none;
+}
+
+.delRepleBtn {
+	color: black;
+	font-weight: bold;
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.delRepleRepleBtn {
+	color: black;
+	font-weight: bold;
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.top {
+	position: fixed;
+	width: 50px;
+	height: 50px;
 	border: 4px solid white;
-	right:1%;
-	bottom:18%;
+	right: 1%;
+	bottom: 18%;
 	text-align: center;
 	line-height: 40px;
-	display : none;
+	display: none;
 }
 
-.modal-content{
-            background-color: #303544;
-            color : white;
-            width : 720px;
-            padding : 15px;
-        }
-
-        .modal-body{
-            background-color: #f8f9fb;
-            color : black;
-        }
-
-        .modal-header h5{
-            margin-left : 45%;
-            font-size: 21px;
-        }
-
-        .modal-footer{
-            display: flex;
-            justify-content: center;
-        }
-
-        .modalInfoBox{
-            height: 56px;
-            width : 660px;
-            display: flex;
-            align-items: center;
-            border : 1px solid gray;
-            border-bottom: 0;
-            font-size: 14px;
-            font-weight: 500;
-            color : black;
-        }
-
-        .modalInfoBox .infoTitle{
-            width : 160px;
-            padding-left : 30px;
-            color : black;
-        }
-
-        .modalInfoBox .info{
-            width : 500px;
-            font-weight: bold;
-            padding-left: 10px;
-            color : black;
-        }
-
-        .modal-footer{
-            padding : 0;
-            margin-top : 20px;
-            border : 0;
-        }
-
-        #reportCheckBox{
-            border-bottom : 1px solid gray;
-        }
-
-        .form-select{
-            width : 100%;
-            height: 50px;
-            font-weight: bold;
-        }
-
-        #reportFormBox{
-            padding : 10px 3px 10px 0;
-        }
-
-        .descBox{
-            height: 130px;
-            margin-top : 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .descBox .p1{
-            color : #898c92;
-            font-weight: 500;
-        }
-        
-        .note-editable{
-	border : 1px solid #d3d3d3;
+.modal-content {
+	background-color: #303544;
+	color: white;
+	width: 720px;
+	padding: 15px;
 }
-        
+
+.modal-body {
+	background-color: #f8f9fb;
+	color: black;
+}
+
+.modal-header h5 {
+	margin-left: 45%;
+	font-size: 21px;
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: center;
+}
+
+.modalInfoBox {
+	height: 56px;
+	width: 660px;
+	display: flex;
+	align-items: center;
+	border: 1px solid gray;
+	border-bottom: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: black;
+}
+
+.modalInfoBox .infoTitle {
+	width: 160px;
+	padding-left: 30px;
+	color: black;
+}
+
+.modalInfoBox .info {
+	width: 500px;
+	font-weight: bold;
+	padding-left: 10px;
+	color: black;
+}
+
+.modal-footer {
+	padding: 0;
+	margin-top: 20px;
+	border: 0;
+}
+
+#reportCheckBox {
+	border-bottom: 1px solid gray;
+}
+
+.form-select {
+	width: 100%;
+	height: 50px;
+	font-weight: bold;
+}
+
+#reportFormBox {
+	padding: 10px 3px 10px 0;
+}
+
+.descBox {
+	height: 130px;
+	margin-top: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.descBox .p1 {
+	color: #898c92;
+	font-weight: 500;
+}
+
+.note-editable {
+	border: 1px solid #d3d3d3;
+}
 </style>
 <body>
-	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="modalInfoBox">
-                <div class="infoTitle">신고자</div>
-                <div class="info">${nickname}</div>
-              </div>
-              <div class="modalInfoBox">
-                <div class="infoTitle">신고 대상자</div>
-                <div class="info">${DTO.userNickname}</div>
-              </div>
-              <div class="modalInfoBox">
-                <div class="infoTitle">신고 제목</div>
-                <div class="info">${DTO.cBoardTitle}</div>
-              </div>
-              <div class="modalInfoBox" id="reportCheckBox">
-                <div class="infoTitle">신고사유</div>
-                <div class="info" id="reportFormBox">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="reportType">
-                        <option selected>신고 사유를 선택해주세요</option>
-                        <option value="1">스팸홍보/도배글입니다.</option>
-                        <option value="2">욕설/생명경시/혐오/차별적 표현입니다.</option>
-                        <option value="3">개인정보 노출 게시물입니다.</option>
-                        <option value="4">청소년에게 유해한 내용입니다.</option>
-                    </select>
-                </div>
-              </div>
-              <div class="descBox">
-                <p class="p1">신고할 내용을 다시 한번 확인해주세요.</p>
-                <p style="font-weight: bold; color : black;">허위 신고의 경우, 운영정책에 따라 서비스 이용에 제한을 받을 수 있습니다.</p>
-                <p class="p1">정말 위 내용으로 신고하시겠습니까?</p>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light btn-lg" data-bs-dismiss="modal">취소</button>
-              <button type="button" class="btn btn-primary btn-lg" id="reportYesBtn">신고</button>
-            </div>
-          </div>
-        </div>
-      </div>
+	<div class="modal" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+					<button type="button" class="btn-close btn-close-white"
+						data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="modalInfoBox">
+						<div class="infoTitle">신고자</div>
+						<div class="info">${nickname}</div>
+					</div>
+					<div class="modalInfoBox">
+						<div class="infoTitle">신고 대상자</div>
+						<div class="info">${DTO.userNickname}</div>
+					</div>
+					<div class="modalInfoBox">
+						<div class="infoTitle">신고 제목</div>
+						<div class="info">${DTO.cBoardTitle}</div>
+					</div>
+					<div class="modalInfoBox" id="reportCheckBox">
+						<div class="infoTitle">신고사유</div>
+						<div class="info" id="reportFormBox">
+							<select class="form-select form-select-sm"
+								aria-label=".form-select-sm example" name="reportType">
+								<option selected>신고 사유를 선택해주세요</option>
+								<option value="1">스팸홍보/도배글입니다.</option>
+								<option value="2">욕설/생명경시/혐오/차별적 표현입니다.</option>
+								<option value="3">개인정보 노출 게시물입니다.</option>
+								<option value="4">청소년에게 유해한 내용입니다.</option>
+							</select>
+						</div>
+					</div>
+					<div class="descBox">
+						<p class="p1">신고할 내용을 다시 한번 확인해주세요.</p>
+						<p style="font-weight: bold; color: black;">허위 신고의 경우, 운영정책에
+							따라 서비스 이용에 제한을 받을 수 있습니다.</p>
+						<p class="p1">정말 위 내용으로 신고하시겠습니까?</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light btn-lg modalCancelBtn"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary btn-lg"
+						id="reportYesBtn">신고</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<form action="/correction.cboard" method="post" id="changeForm">
 		<div class="header" id="header">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게임
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게시판
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
-                    </li>
-                   
+			<nav class="navbar navbar-expand-lg">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/index.jsp">홈으로</a>
+					<button class="navbar-toggler naviBtn" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
+						aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle naviBtn" data-bs-toggle="dropdown"
+									aria-expanded="false">게임</button>
 
-                </ul>
-                <c:choose>
-                   <c:when test="${not empty loginId}">
-                   <ul class="navbar-nav ms-auto">
-				        <li class="nav-item">
-				           <a class="nav-link" href="/mypage.member">
-				               <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-				           </a>
-				       </li>                  
-                      <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">마이페이지</a>
-                       </li>
-                       <li class="nav-item">
-                           <a class="nav-link" href="/logout.member">로그아웃</a>
-                       </li>
-                   </ul>                          
-                   </c:when>
-                   <c:otherwise>
-                      <ul class="navbar-nav ms-auto">
-                          <li class="nav-item">
-                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                          </li>
-                      </ul>
-                   </c:otherwise>
-                </c:choose>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">game1</a></li>
+									<li><a class="dropdown-item" href="#">game2</a></li>
+									<li><a class="dropdown-item" href="#">game3</a></li>
+									<li><a class="dropdown-item" href="#">game4</a></li>
+									<li><a class="dropdown-item" href="#">game5</a></li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<button class="btn dropdown-toggle naviBtn" data-bs-toggle="dropdown"
+									aria-expanded="false">게시판</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
+									<li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
+									<li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
+									<li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+									<li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+									<li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+								</ul>
+							</li>
+							<li class="nav-item"><a class="nav-link">랭킹</a></li>
 
-            </div>
-        </div>
-    </nav>
-    <div class="headerTitle"><p id="headerTitle">커뮤니티</p></div>
+
+						</ul>
+						<c:choose>
+							<c:when test="${not empty loginId}">
+								<ul class="navbar-nav ms-auto">
+
+									<c:if test="${isAdmin eq true}">
+										<li class="nav-item"><a class="nav-link"
+											href="/dashBoard.admin" target="_blank">관리자페이지</a></li>
+									</c:if>
+
+									<li class="nav-item"><a class="nav-link"
+										href="/mypage.member"> <img
+											src="/profile/${userProfileUrl}" class="rounded-circle"
+											width="40" height="40" alt="Profile">
+									</a></li>
+									<li class="nav-item"><a class="nav-link"
+										href="/mypage.member">마이페이지</a></li>
+									<li class="nav-item"><a class="nav-link"
+										href="/logout.member">로그아웃</a></li>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<ul class="navbar-nav ms-auto">
+									<li class="nav-item"><a class="nav-link"
+										href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+									</li>
+								</ul>
+							</c:otherwise>
+						</c:choose>
+
+					</div>
+				</div>
+			</nav>
+			<div class="headerTitle">
+				<p id="headerTitle">커뮤니티</p>
+			</div>
 		</div>
 		<div class="navi">
 			<a href="/list.cboard?category=0" id="viewAll">전체</a> <a
@@ -730,8 +761,9 @@ div{
 		<div class="content">
 			<h3 id="boardTitleH3">전체</h3>
 			<div class="titleBox">
-				<p id="originTitle">${DTO.cBoardTitle}<p>
-				<input type="hidden" id="titleInput" name="title">
+				<p id="originTitle">${DTO.cBoardTitle}
+				<p>
+					<input type="hidden" id="titleInput" name="title">
 			</div>
 			<ul class="infoBox">
 				<li><span class="name">${DTO.userNickname}</span></li>
@@ -749,7 +781,7 @@ div{
 						▼ 첨부파일 목록 열기 <span style="color: blue;">(${fn:length(fileList)})</span>
 					</p>
 				</c:when>
-	
+
 			</c:choose>
 			<div class="fileBox">
 				<c:forEach var="files" items="${fileList}" varStatus="status">
@@ -760,16 +792,15 @@ div{
 			</div>
 			<div class="viewCont">
 				${DTO.cBoardContent}
-				<button type="button" id="addBookmarkBtn" style="clear: both;
-				"> 
-				<i class="fa-regular fa-bookmark" style="color: #000000;"></i>
-				 북마크
+				<button type="button" id="addBookmarkBtn" style="clear: both;">
+					<i class="fa-regular fa-bookmark" style="color: #000000;"></i> 북마크
 				</button>
 			</div>
 			<div id="summernote"></div>
 			<div class="btnBox">
 				<div class="leftBox">
-					<button type="button" id="reportBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고하기</button>
+					<button type="button" id="reportBtn" data-bs-toggle="modal"
+						data-bs-target="#staticBackdrop">신고하기</button>
 				</div>
 				<div class="rightBox">
 					<button type="button" id="goListBtn">목록</button>
@@ -782,45 +813,48 @@ div{
 				<div class="rightBtnBox"></div>
 			</div>
 		</div>
-		<input type="hidden" id="categoryInput" name="category">
-		<input type="hidden" id="cpageInput" name="cpage">
-		<input type="hidden" id="seqInput" name="seq">
-		<input type="hidden" id="contentInput" name="content">
+		<input type="hidden" id="categoryInput" name="category"> <input
+			type="hidden" id="cpageInput" name="cpage"> <input
+			type="hidden" id="seqInput" name="seq"> <input type="hidden"
+			id="contentInput" name="content">
 	</form>
 	<div class="commentBox">
-		<div class="commentTitle">댓글 (0) <a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a></div>
-		
-		<div class="commentList">
+		<div class="commentTitle">
+			댓글 (0) <a class="commentAnker scroll_move" href="#writeCmtBox">댓글쓰러가기</a>
 		</div>
+
+		<div class="commentList"></div>
 		<div class="writeCmtBox" id="writeCmtBox">
-				<div class="writeCmtWriter" style="color : black;">${nickname}</div>
-				<div class="writeCmtCttRow">
-					<textarea
-						placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
-						class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
-					<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
-				</div>
+			<div class="writeCmtWriter" style="color: black;">${nickname}</div>
+			<div class="writeCmtCttRow">
+				<textarea
+					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
+					class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
+				<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
+			</div>
 		</div>
 	</div>
-	<div class="top"><a id="topBtn" href="#header">TOP</a></div>
+	<div class="top">
+		<a id="topBtn" href="#header">TOP</a>
+	</div>
 	<div class="footer">
 		<div class="footerbox">
-            <div class="leftfooter">
-                <p>회사명: 팀별빛</p>
-                <p>전화: 02-1234-5678</p>
-                <p>이메일: info@example.com</p>
-            </div>
-            <div class="rightfooter">
-                <div class="iconbox">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="coinbox">
-                    <img src="/image/coin.png" alt="">
-                </div>
-            </div>
-        </div>
+			<div class="leftfooter">
+				<p>회사명: 팀별빛</p>
+				<p>전화: 02-1234-5678</p>
+				<p>이메일: info@example.com</p>
+			</div>
+			<div class="rightfooter">
+				<div class="iconbox">
+					<a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
+						class="fab fa-instagram"></i></a> <a href="#"><i
+						class="fab fa-youtube"></i></a>
+				</div>
+				<div class="coinbox">
+					<img src="/image/coin.png" alt="">
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script>
@@ -1078,10 +1112,12 @@ div{
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
     	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기').css("color", "#d3d3d3");
     	                    
-    	                    if("${nickname}" == dto.userNickname){
+    	                    if(("${nickname}" == dto.userNickname) || ${isAdmin}){
     	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제').css("color", "#d3d3d3");
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
+    	    	            }else if ("${nickname}" != dto.userNickname){
+    	    	            	replyButton.css("display", "none");
     	    	            }
 
     	                    cmtBtnBoxDiv.append(replyButton);
@@ -1141,7 +1177,7 @@ div{
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
     	                    
-    	                    if("${nickname}" == dto.userNickname){
+    	                    if(("${nickname}" == dto.userNickname) || ${isAdmin}){
     	                    	let deleteButton = $('<a>').attr('class', 'delRepleRepleBtn').text('삭제').css("color", "#d3d3d3");
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
@@ -1174,9 +1210,12 @@ div{
     			$("#delBtn").css("display", "none");
     			$("#corBtn").css("display", "none");
     			$("#writeBtn").css("display", "none");
-    			$("#reportBtn").css("display", "none");
     			$("#addBookmarkBtn").css("display", "none");
     			$(".writeCmtBox").css("display", "none");
+    		}else if(${isAdmin}){
+    			$("#corBtn").css("display", "none");
+    			$("#writeBtn").css("display", "none");
+    			$("#addBookmarkBtn").css("display", "none");
     		}else if(${nickname != DTO.userNickname}){
     			$("#delBtn").css("display", "none");
     			$("#corBtn").css("display", "none");
