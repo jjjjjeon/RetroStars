@@ -1,384 +1,409 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-            <!DOCTYPE html>
-            <html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
 
-            <head>
-                <meta charset="UTF-8">
-                <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-                <title>관리자페이지 커뮤니티 신고현황</title>
-                <style>
-                    * {
-                        box-sizing: border-box;
-                        margin: 0;
-                        padding: 0;
-                    }
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<title>관리자페이지 커뮤니티 신고현황</title>
+<style>
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 
-                    div {
-                        /* border: 1px solid black; */
-                        font-family: 'Noto Sans KR', sans-serif;
-                    }
+div {
+	/* border: 1px solid black; */
+	font-family: 'Noto Sans KR', sans-serif;
+}
 
-                    a {
-                        text-decoration: none;
-                        color: black;
-                    }
+a {
+	text-decoration: none;
+	color: black;
+}
 
-                    /* 현재 사이트를 표시 */
-                    .active {
-                        border-bottom: 0;
-                        background-color: #888;
-                    }
+/* 현재 사이트를 표시 */
+.active {
+	border-bottom: 0;
+	background-color: #888;
+}
 
-                    .header {
-                        height: 100px;
-                        display: flex;
-                        font-size: 36px;
-                        align-items: center;
-                        padding-left: 40px;
-                        font-weight: bold;
-                        background-color: #f4f4f4;
-                        border-bottom: 2px solid gray;
-                    }
+.header {
+	height: 100px;
+	display: flex;
+	font-size: 36px;
+	align-items: center;
+	padding-left: 40px;
+	font-weight: bold;
+	background-color: #f4f4f4;
+	border-bottom: 2px solid gray;
+}
 
-                    .main {
-                        display: flex;
-                    }
+.main {
+	display: flex;
+}
 
-                    .main .navi {
-                        flex: 1;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        background-color: #E2E3E5;
-                        border-bottom: 2px solid gray;
-                    }
+.main .navi {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #E2E3E5;
+	border-bottom: 2px solid gray;
+}
 
-                    .main .navi .profileBox {
-                        width: 85%;
-                        height: 350px;
-                        margin-top: 30px;
-                        background-color: white;
-                        border: 1px solid black;
-                    }
+.main .navi .profileBox {
+	width: 85%;
+	height: 350px;
+	margin-top: 30px;
+	background-color: white;
+	border: 1px solid black;
+}
 
-                    .main .navi .profileBox .profile {
-                        height: 250px;
-                        width: 80%;
-                        margin: 20px auto 0 auto;
-                        border: 1px solid black;
-                        background-color : #ddd;
-                    }
+.main .navi .profileBox .profile {
+	height: 250px;
+	width: 80%;
+	margin: 20px auto 0 auto;
+	border: 1px solid black;
+	background-color: #ddd;
+}
 
-                    .main .navi .profileBox .name {
-                        text-align: center;
-                        height: 70px;
-                        padding-top: 20px;
-                        font-size: 16px;
-                        font-weight: bold;
-                        margin-top: 10px;
-                    }
+.main .navi .profileBox .name {
+	text-align: center;
+	height: 70px;
+	padding-top: 20px;
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 10px;
+}
 
-                    .main .navi .naviBox {
-                        width: 85%;
-                        height: 450px;
-                        margin-top: 30px;
-                    }
+.main .navi .naviBox {
+	width: 85%;
+	height: 450px;
+	margin-top: 30px;
+}
 
-                    .main .navi .naviBox .bigNavi {
-                        height: 70px;
-                        border-top: 2px solid gray;
-                        border-bottom: 2px solid gray;
-                        display: flex;
-                        align-items: center;
-                        font-size: 24px;
-                        font-weight: bold;
-                        padding-left: 20px;
-                    }
+.main .navi .naviBox .bigNavi {
+	height: 70px;
+	border-top: 2px solid gray;
+	border-bottom: 2px solid gray;
+	display: flex;
+	align-items: center;
+	font-size: 24px;
+	font-weight: bold;
+	padding-left: 20px;
+}
 
-                    .main .navi .naviBox .smallNavi {
-                        height: 40px;
-                        display: flex;
-                        align-items: center;
-                        font-size: 20px;
-                        font-weight: bold;
-                        padding-left: 20px;
-                    }
+.main .navi .naviBox .smallNavi {
+	height: 40px;
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	font-weight: bold;
+	padding-left: 20px;
+}
 
-                    .main .contentBox {
-                        flex: 5;
-                        border: 2px solid gray;
-                        border-right: 0;
-                        border-top: 0;
-                    }
+.main .contentBox {
+	flex: 5;
+	border: 2px solid gray;
+	border-right: 0;
+	border-top: 0;
+}
 
-                    .main .contentBox .contentTitle {
-                        height: 150px;
-                        border-bottom: 2px solid gray;
-                        font-size: 48px;
-                        font-weight: bold;
-                        display: flex;
-                        align-items: center;
-                        padding-left: 40px;
-                        background-color: lightgray;
-                        color: rgb(59, 59, 59);
-                    }
+.main .contentBox .contentTitle {
+	height: 150px;
+	border-bottom: 2px solid gray;
+	font-size: 48px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	padding-left: 40px;
+	background-color: lightgray;
+	color: rgb(59, 59, 59);
+}
 
-                    #dashboard {
-                        border-bottom: 0;
-                    }
+#dashboard {
+	border-bottom: 0;
+}
 
-                    .postBox {
-                        width: 95%;
-                        margin: 20px auto 0 auto;
-                    }
+.postBox {
+	width: 95%;
+	margin: 20px auto 0 auto;
+}
 
-                    .postBox .postHeader {
-                        height: 60px;
-                        display: flex;
-                        border-bottom: 2px solid gray;
-                    }
+.postBox .postHeader {
+	height: 60px;
+	display: flex;
+	border-bottom: 2px solid gray;
+}
 
-                    .postBox .postHeader div {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 18px;
-                        font-weight: bold;
-                    }
+.postBox .postHeader div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	font-weight: bold;
+}
 
-                    .postBox .postList {
-                        min-height: 600px;
-                    }
+.postBox .postList {
+	min-height: 600px;
+}
 
-                    .postBox .post {
-                        border-top: 0;
-                        height: 60px;
-                        display: flex;
-                        border-bottom: 1px solid gray;
-                        padding: 30px 0 30px 0;
-                    }
+.postBox .post {
+	border-top: 0;
+	height: 60px;
+	display: flex;
+	border-bottom: 1px solid gray;
+	padding: 30px 0 30px 0;
+}
 
-                    .postBox .post div {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 18px;
-                    }
+.postBox .post div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+}
 
-                    .searchBox {
-                        display: flex;
-                        justify-content: end;
-                        align-items: center;
-                        height: 60px;
-                        margin-top: 20px;
-                        margin-right: 20px;
-                    }
+.searchBox {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	height: 60px;
+	margin-top: 20px;
+	margin-right: 20px;
+}
 
-                    .searchBox input {
-                        width: 300px;
-                        border: 1px solid gray;
-                    }
+.searchBox input {
+	width: 300px;
+	border: 1px solid gray;
+}
 
-                    .pageNavi {
-                        margin: 60px 0 40px 0;
-                        display: flex;
-                        justify-content: center;
-                        font-size: 24px;
-                    }
+.pageNavi {
+	margin: 60px 0 40px 0;
+	display: flex;
+	justify-content: center;
+	font-size: 24px;
+}
 
-                    .pageNavi a {
-                        display: inline-block;
-                        padding: 0 10px;
-                        min-width: 38px;
-                        height: 36px;
-                        line-height: 35px;
-                        font-size: 24px;
-                    }
+.pageNavi a {
+	display: inline-block;
+	padding: 0 10px;
+	min-width: 38px;
+	height: 36px;
+	line-height: 35px;
+	font-size: 24px;
+}
 
-                    .modal-content {
-                        background-color: #303544;
-                        color: white;
-                        width: 720px;
-                        padding: 15px;
-                    }
+.modal-content {
+	background-color: #303544;
+	color: white;
+	width: 720px;
+	padding: 15px;
+}
 
-                    .modal-body {
-                        background-color: #f8f9fb;
-                        color: black;
-                    }
+.modal-body {
+	background-color: #f8f9fb;
+	color: black;
+}
 
-                    .modal-header h5 {
-                        margin-left: 45%;
-                        font-size: 21px;
-                    }
+.modal-header h5 {
+	margin-left: 45%;
+	font-size: 21px;
+}
 
-                    .modal-footer {
-                        display: flex;
-                        justify-content: center;
-                    }
+.modal-footer {
+	display: flex;
+	justify-content: center;
+}
 
-                    .modalInfoBox {
-                        height: 56px;
-                        width: 660px;
-                        display: flex;
-                        align-items: center;
-                        border: 2px solid gray;
-                        border-bottom: 0;
-                        font-size: 14px;
-                        font-weight: 500;
-                        color: black;
-                    }
+.modalInfoBox {
+	height: 56px;
+	width: 660px;
+	display: flex;
+	align-items: center;
+	border: 2px solid gray;
+	border-bottom: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: black;
+}
 
-                    .modalInfoBox .infoTitle {
-                        width: 160px;
-                        padding-left: 30px;
-                        color: black;
-                    }
+.modalInfoBox .infoTitle {
+	width: 160px;
+	padding-left: 30px;
+	color: black;
+}
 
-                    .modalInfoBox .info {
-                        width: 500px;
-                        font-weight: bold;
-                        padding-left: 10px;
-                        color: black;
-                    }
+.modalInfoBox .info {
+	width: 500px;
+	font-weight: bold;
+	padding-left: 10px;
+	color: black;
+}
 
-                    #reportBoxtitle {
-                        margin: 20px 0 0 10px;
-                        font-weight: 500;
-                    }
+#reportBoxtitle {
+	margin: 20px 0 0 10px;
+	font-weight: 500;
+}
 
-                    .reportBox {
-                        width: 660px;
-                        height: 282px;
-                        margin-top: 10px;
-                        overflow-y: auto;
-                        border-top: 1px solid gray;
-                    }
+.reportBox {
+	width: 660px;
+	height: 282px;
+	margin-top: 10px;
+	overflow-y: auto;
+	border-top: 1px solid gray;
+}
 
-                    .report {
-                        display: flex;
-                        height: 56px;
-                        border: 1px solid gray;
-                        border-top: 0;
-                        font-size: 14px;
-                    }
+.report {
+	display: flex;
+	height: 56px;
+	border: 1px solid gray;
+	border-top: 0;
+	font-size: 14px;
+}
 
-                    .report div:not(.rTitle) {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
+.report div:not(.rTitle) {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-                    .report .rTitle {
-                        display: flex;
-                        align-items: center;
-                        padding-left: 50px;
-                    }
-                </style>
-            </head>
+.report .rTitle {
+	display: flex;
+	align-items: center;
+	padding-left: 50px;
+}
 
-            <body>
-                <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">신고 현황</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="modalInfoBox">
-                                    <div class="infoTitle">신고 대상자</div>
-                                    <div class="info" id="reportedPerson"></div>
-                                </div>
-                                <div class="modalInfoBox" style="border-bottom: 2px solid gray;">
-                                    <div class="infoTitle">신고 제목</div>
-                                    <div class="info" id="reportedTitle"></div>
-                                </div>
-                                <h5 id="reportBoxtitle">신고 내역</h5>
-                                <div class="reportBox"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header">관리자페이지</div>
-                <div class="main">
-                    <div class="navi">
-                        <div class="profileBox">
-                            <div class="profile">
-                            	<img src="/image/admin.png" style="width : 100%; height : 100%; padding : 40px;">
-                            </div>
-                            <div class="name">${loginId} 관리자님, 환영합니다!</div>
-                        </div>
-                        <div class="naviBox">
-                            <a href="/dashBoard.admin" class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
-                                id="dashboard">대시보드</a>
-                            <a
-                                class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
-                            <a href="/memberList.admin"
-                                class="list-group-item list-group-item-action list-group-item-secondary smallNavi">회원
-                                목록</a>
-                            <a href="/reportList.admin"
-                                class="list-group-item list-group-item-action list-group-item-secondary smallNavi active">신고
-                                현황</a>
-                            <a href="/blackList.admin"
-                                class="list-group-item list-group-item-action list-group-item-secondary smallNavi">블랙회원
-                                관리</a>
-                            <a href="/index.jsp" target="_blank"
-                                class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-                                이동</a>
-                        </div>
-                    </div>
-                    <div class="contentBox">
-                        <div class="contentTitle">신고 현황</div>
-                        <div class="content">
-                            <form action="/searchPostList.admin" id="searchForm">
-                                <div class="searchBox">
-                                    <input class="form-control me-2" type="search" placeholder="작성자명 검색"
-                                        aria-label="Search" name="searchInput" id="searchInput">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </div>
-                            </form>
-                            <div class="postBox">
-                                <div class="postHeader">
-                                    <div class="col-1">글번호</div>
-                                    <div class="col-5" style="justify-content: start; padding-left : 100px;">제목</div>
-                                    <div class="col-2">작성자</div>
-                                    <div class="col-2">작성일</div>
-                                    <div class="col-2">신고 횟수</div>
-                                </div>
-                                <div class="postList">
-                                    <c:forEach var="DTO" items="${list}">
-                                        <div class="post">
-                                            <div class="col-1 postSeq">${DTO.cBoardSeq}</div>
-                                            <div class="col-5 postTitle"
-                                                style="justify-content: start; padding-left : 100px;">
-                                                <a href="/detail.cboard?seq=${DTO.cBoardSeq}" target="_blank"
-                                                    style="text-decoration-line: underline; font-weight: bold;">${DTO.cBoardTitle}</a>
-                                            </div>
-                                            <div class="col-2 postWriter">${DTO.userNickname}</div>
-                                            <div class="col-2 postWriteDate">
-                                                <fmt:formatDate value="${DTO.cBoarDate}" pattern="yy. MM. dd" />
-                                            </div>
-                                            <div class="col-2 postReportCount">
-                                                <button type="button" class="btn btn-link viewReportBtn"
-                                                    style="font-weight: bold;">${DTO.cBoardReport}</button>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                                
-                            </div>
-                            <div class="pageNavi"></div>
-                        </div>
-                    </div>
-                </div>
-                <script>
+.btnBox {
+	margin-top: 20px;
+}
+
+.delAllBtn {
+	margin-left: 40px;
+}
+</style>
+</head>
+
+<body>
+	<div class="modal" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">신고 현황</h5>
+					<button type="button" class="btn-close btn-close-white"
+						data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="modalInfoBox">
+						<div class="infoTitle">신고 대상자</div>
+						<div class="info" id="reportedPerson"></div>
+					</div>
+					<div class="modalInfoBox" style="border-bottom: 2px solid gray;">
+						<div class="infoTitle">신고 제목</div>
+						<div class="info" id="reportedTitle"></div>
+					</div>
+					<h5 id="reportBoxtitle">신고 내역</h5>
+					<div class="reportBox"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="header">관리자페이지</div>
+	<div class="main">
+		<div class="navi">
+			<div class="profileBox">
+				<div class="profile">
+					<img src="/image/admin.png"
+						style="width: 100%; height: 100%; padding: 40px;">
+				</div>
+				<div class="name">${loginId}관리자님, 환영합니다!</div>
+			</div>
+			<div class="naviBox">
+				<a href="/dashBoard.admin"
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
+					id="dashboard">대시보드</a> <a
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
+				<a href="/memberList.admin"
+					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">회원
+					목록</a> <a href="/reportList.admin"
+					class="list-group-item list-group-item-action list-group-item-secondary smallNavi active">신고
+					현황</a> <a href="/blackList.admin"
+					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">블랙회원
+					관리</a> <a href="/index.jsp" target="_blank"
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
+					이동</a>
+			</div>
+		</div>
+		<div class="contentBox">
+			<div class="contentTitle">신고 현황</div>
+			<div class="content">
+				<form action="/searchPostList.admin" id="searchForm">
+					<div class="searchBox">
+						<input class="form-control me-2" type="search"
+							placeholder="작성자명 검색" aria-label="Search" name="searchInput"
+							id="searchInput">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</div>
+				</form>
+				<div class="postBox">
+					<div class="postHeader">
+						<div class="col-1">글번호</div>
+						<div class="col-5"
+							style="justify-content: start; padding-left: 100px;">제목</div>
+						<div class="col-2">작성자</div>
+						<div class="col-2">작성일</div>
+						<div class="col-2">신고 횟수</div>
+					</div>
+					<div class="postList">
+						<c:choose>
+							<c:when test="${fn:length(list) == 0}">
+								<p style="text-align: center; margin-top: 20px; font-size: 18px;">신고된 게시글이 없습니다.</p>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="DTO" items="${list}">
+									<div class="post">
+										<div class="col-1 postSeq">${DTO.cBoardSeq}</div>
+										<div class="col-5 postTitle"
+											style="justify-content: start; padding-left: 100px;">
+											<a href="/detail.cboard?seq=${DTO.cBoardSeq}" target="_blank"
+												style="text-decoration-line: underline; font-weight: bold;">${DTO.cBoardTitle}</a>
+										</div>
+										<div class="col-2 postWriter">${DTO.userNickname}</div>
+										<div class="col-2 postWriteDate">
+											<fmt:formatDate value="${DTO.cBoarDate}" pattern="yy. MM. dd" />
+										</div>
+										<div class="col-2 postReportCount">
+											<button type="button" class="btn btn-link viewReportBtn"
+												style="font-weight: bold;">${DTO.cBoardReport}</button>
+										</div>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+				</div>
+				<div class="btnBox">
+					<button type="button" class="btn btn-danger btn-lg delAllBtn">전체
+						삭제</button>
+				</div>
+				<div class="pageNavi"></div>
+			</div>
+		</div>
+	</div>
+	<script>
                     function getNaviString() {
                         let currentPage = ${ cpage }
                         let recordTotalCount = ${ record_total_count }
@@ -493,7 +518,7 @@
                                     title.text("청소년에게 유해한 내용입니다.");
                                 }
 
-                                let nickname = $('<div class="col-2 rNickname"></div>').text(dto.userId);
+                                let nickname = $('<div class="col-2 rNickname"></div>').text(dto.userNickname);
                                 let date = $('<div class="col-2 rDate"></div>').text(formattedDate);
 
                                 newReport.append(seq);
@@ -517,9 +542,22 @@
                             e.preventDefault();
                         }
                     });
+                    
+                    $(".delAllBtn").on("click", function(){
+                    	let isDel = confirm("신고 현황에 집계된 모든 게시글이 삭제됩니다. 계속하시겠습니까?");
+                    	
+                    	if(isDel){
+                    		location.href = "/delAllPost.admin";
+                    	}else{
+                    		return;
+                    	}
+                    	
+                    	
+                    	
+                    });
 
                 </script>
 
-            </body>
+</body>
 
-            </html>
+</html>

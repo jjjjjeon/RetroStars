@@ -413,37 +413,42 @@
             <div class="highContent">
                 <div class="highScore firstBox">
                     <div class="userimg">
-                        <img src="/image/user.jpeg" alt="user image">
+                        <img src="/profile/${ranks.get(2).url}" alt="user image">
                     </div>
-                    <div class="username">${ranks[1].id}</div>
-                    <div class="userscore">${ranks[1].score}</div>
+                    <div class="username">${ranks.get(2).id}</div>
+                    <div class="userscore">${ranks.get(2).score}</div>
 
                 </div>
                 <div class="highScore secondBox">
                     <div class="userimg">
-                        <img src="/image/user.jpeg" alt="user image">
+                        <img src="/profile/${ranks.get(0).url}" alt="user image">
                     </div>
-                    <div class="username">${ranks[0].id}</div>
-                    <div class="userscore">${ranks[0].score}</div>
+                    <div class="username">${ranks.get(0).id}</div>
+                    <div class="userscore">${ranks.get(0).score}</div>
                 </div>
                 <div class="highScore thirdBox">
                     <div class="userimg">
-                        <img src="/image/user.jpeg" alt="user image">
+                        <img src="/profile/${ranks.get(1).url}" alt="user image">
                     </div>
-                    <div class="username">${ranks[2].id}</div>
-                    <div class="userscore">${ranks[2].score}</div>
+                    <div class="username">${ranks.get(1).id}</div>
+                    <div class="userscore">${ranks.get(1).score}</div>
                 </div>
             </div>
         </div>
         <div class="lowUserBox">
+        
+        <c:forEach var="rank" items="${ranks}" varStatus="status">
+        <c:if test="${status.index >= 3 && status.index <= 10}">
             <div class="rankList">
-                <div class="ranknum">4</div>
+                <div class="ranknum">${rank.rank}</div>
                 <div class="rankimg">
-                    <img src="/image/user.jpeg" alt="ranking profile">
+                    <img src="/profile/${rank.url}" alt="ranking profile">
                 </div>
-                <div class="username">username4</div>
-                <div class="rankscore">ranking score4</div>
+                <div class="username">${rank.id}</div>
+                <div class="rankscore">${rank.score}</div>
             </div>
+        </c:if>
+    </c:forEach>
         </div>
     </div>
     <div class="footer">
