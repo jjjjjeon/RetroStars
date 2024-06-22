@@ -373,7 +373,7 @@
         <div class="mainbox">
 
             <div class="gamelist">
-                <div class="listtitle zen-dots-regular">LIST</div>
+                <div class="listtitle zen-dots-regular">GAME LIST</div>
                 <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1">> 오버워치 <</a> </div>
                 <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2">> 심즈 4 <</a> </div>
                 <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3">> Apex 레전드 <</a> </div>
