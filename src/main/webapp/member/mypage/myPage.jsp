@@ -22,11 +22,15 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://webfontworld.github.io/t money/TmoneyRoundWind.css">
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+
+
 
 
 <style>
 
-    body{background-image:url("/image/background.png"); background-size:100% 100%;color:white;}
+    body{background-image:url("/image/background.png"); background-size:100% 100%;color:white;font-family : 'DalseoHealing';}
 
     *{box-sizing: border-box;}
     
@@ -61,11 +65,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     /*div{border:1px solid red;}*/
 	.emptybox{height:35px; width:100% };
-    .header{flex:2; width: 100%;}
+    .header{flex:2; width: 100%; }
     .row{display: flex;}
-    .headertitle{width: 100%; display: flex; justify-content: start; align-items: center; font-size:30px; margin-bottom:15px; margin-top:15px;}
+    .headertitle{width: 100%; display: flex; justify-content: start; align-items: center; font-size:30px; margin-bottom:15px; margin-top:15px; }
     .header_user_id{width: inline; font-weight:600;}
-
+	
     .profilebox{flex:2.5; width: 90%; border:1px solid white; display: flex; border-radius:10px;}
     .profile{height: 100%;width: 95%;margin: auto; display: flex; justify-content: center; align-items: center} 
     .main_profile{height: 100%;width: 50%;display: flex; justify-content: center; align-items: center}
@@ -87,12 +91,19 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .gender_img{width: 40%; height: 90%;margin-bottom:10px;}
      #update_btn{width:90%; height:90%;}
     
-    .rpg{background-image:url("/image/rpg_background.png"); background-size:100% 100%;}
-    .rpg{height: 90%; width: 50%; display: flex; flex-direction: column; border:1px solid white; justify-content: center; align-items: center;}
-    .rpg_title{flex:2; width: 100%; display: flex; align-items: center; font-size: 20px; font-weight: 700; text-indent: 20px;}
-    .rpg_main_box{display:flex; width: 100%; flex:8;}
+    
+    #gameSeq0{background-image:url("/image/rpg_background.png"); background-size:100% 100%;}
+    #gameSeq1{background-image:url("/image/game1-1.png"); background-size:100% 100%;}
+    #gameSeq2{background-image:url("/image/game2-1.png"); background-size:100% 100%;}
+    #gameSeq3{background-image:url("/image/game3.jpg"); background-size:100% 100%;}
+    #gameSeq4{background-image:url("/image/game4-1.png"); background-size:100% 100%;}
+    #gameSeq5{background-image:url("/image/game5-1.png"); background-size:100% 100%;}
+    .game_title_image{height: 100%; width: 100%;}
+    .rpg {height:90%; width: 50%; display: flex; flex-direction: column; border:1px solid white; justify-content: center; align-items: center;}
+    .rpg_title{flex:2; width: 100%; display: flex; align-items: center; font-size: 20px; font-weight: 700; text-indent: 20px; color:white;}
+    .rpg_main_box{display:flex; width: 100%; flex:8; color:white;}
     .rpg_main_img{flex:5.5; display: flex; align-items: center; justify-content: center;}
-    .rpg_img{height:90%; width: 90%; border:1px solid white;}
+    .rpg_img{height:80%; width: 80%; }
     .rpg_main_content{flex:4.5;display: flex; flex-direction: column;}
     .rpg_content_title{flex:4; font-size: 25px; font-weight: 700; display: flex; justify-content: start; align-items: end;}
     .rpg_content_date{flex:2; font-size: 15px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
@@ -102,6 +113,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 	.favorite_game{flex:0.5; width: 80%; display: flex;}
 	.favorite_game_title{flex:2; font-size:25px; font-weight:700; display: flex; justify-content: start; align-items: center;}
 	.favorite_game_main{flex:8;text-indent:10px; display: flex; justify-content: start; align-items: center;}
+	.game_logo{width:80px;}
 	
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
     .board_title{flex:2; width: 90%; display: flex; justify-content: start; align-items: end; text-indent: 10px; font-size: 20px; font-weight: 700; margin-bottom: 5px;}
@@ -229,19 +241,19 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                             <div class="user_level_value">
                             	<c:choose>
                             		<c:when test="${mydata.userLevel=='1'}">
-                            			<img src="/image/level1.png">
+                            			<img src="/image/level1.png"> &nbsp; level 1
                             		</c:when>
                             		<c:when test="${mydata.userLevel=='2'}">
-                            			<img src="/image/level2.png">
+                            			<img src="/image/level2.png"> &nbsp; level 2
                             		</c:when>
                             		<c:when test="${mydata.userLevel=='3'}">
-                            			<img src="/image/level3.png">
+                            			<img src="/image/level3.png"> &nbsp; level 3
                             		</c:when>
                             		<c:when test="${mydata.userLevel=='4'}">
-                            			<img src="/image/level4.png">
+                            			<img src="/image/level4.png"> &nbsp; level 4
                             		</c:when>
                             		<c:otherwise>
-                            			<img src="/image/level5.png">
+                            			<img src="/image/level5.png"> &nbsp; level 5
                             		</c:otherwise>
                             	</c:choose>
                             </div>
@@ -285,67 +297,125 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                         </div>
                     </div>
                 </div>
-                <div class="rpg">
-                    <div class="rpg_title">Recently Played Game</div>
-                    <c:choose>
-                    <c:when test="${gprDto.gameSeq == 0}">
-                     <div class="rpg_main_box no_data">
-                     	최근 play 기록이 없습니다.
-                     </div>
+                
+                
+                <c:choose>
+                	<c:when test="${gprDto.gameSeq == 0}">
+                		<div class="rpg" id="gameSeq0">
+                    		<div class="rpg_title">Recently Played Game</div>
+                     		<div class="rpg_main_box no_data">
+                     			최근 play 기록이 없습니다.
+                     		</div>
+                     	</div>
+                    </c:when>
+                	<c:when test="${gprDto.gameSeq == 1}">
+                		<div class="rpg" id="gameSeq1">
+                    		<div class="rpg_title">Recently Played Game</div>
+                    		<div class="rpg_main_box">
+                        		<div class="rpg_main_img">
+                            		<div class="rpg_img">
+                            			<img class="game_title_image" src="/image/game1.png">
+                           			</div>	
+                           		</div>
+                            	<div class="rpg_main_content">
+                            		<div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            		<div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            		<div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
+                       			</div>
+                        	</div>                                        	
+                    	</div>
+                    </c:when>
+                    <c:when test="${gprDto.gameSeq == 2}">
+                		<div class="rpg" id="gameSeq2">
+                    		<div class="rpg_title">Recently Played Game</div>
+                    		<div class="rpg_main_box">
+                        		<div class="rpg_main_img">
+                            		<div class="rpg_img">
+                            			<img class="game_title_image" src="/image/game2-2.png">
+                           			</div>	
+                           		</div>
+                            	<div class="rpg_main_content">
+                            		<div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            		<div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            		<div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
+                       			</div>
+                        	</div>                                        	
+                    	</div>
+                    </c:when>
+                    <c:when test="${gprDto.gameSeq == 3}">
+                		<div class="rpg" id="gameSeq3">
+                    		<div class="rpg_title">Recently Played Game</div>
+                    		<div class="rpg_main_box">
+                        		<div class="rpg_main_img">
+                            		<div class="rpg_img">
+                            			<img class="game_title_image" src="/image/game3-2.png">
+                           			</div>	
+                           		</div>
+                            	<div class="rpg_main_content">
+                            		<div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            		<div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            		<div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
+                       			</div>
+                        	</div>                                        	
+                    	</div>
+                    </c:when>
+                    <c:when test="${gprDto.gameSeq == 4}">
+                		<div class="rpg" id="gameSeq4">
+                    		<div class="rpg_title">Recently Played Game</div>
+                    		<div class="rpg_main_box">
+                        		<div class="rpg_main_img">
+                            		<div class="rpg_img">
+                            			<img class="game_title_image" src="/image/game4.jpg">
+                           			</div>	
+                           		</div>
+                            	<div class="rpg_main_content">
+                            		<div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            		<div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            		<div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
+                       			</div>
+                        	</div>                                        	
+                    	</div>
                     </c:when>
                     <c:otherwise>
-                    <div class="rpg_main_box">
-                        <div class="rpg_main_img">
-                            <div class="rpg_img">
-                            	<c:choose>
-                            		<c:when test="${gprDto.gameSeq.equals('1')}">
-                            			이미지1
-                            		</c:when>
-                            		<c:when test="${gprDto.gameSeq.equals('2')}">
-                            			이미지2
-                            		</c:when>
-                            		<c:when test="${gprDto.gameSeq.equals('3')}">
-                            			이미지3
-                            		</c:when>
-                            		<c:when test="${gprDto.gameSeq.equals('4')}">
-                            			이미지4
-                            		</c:when>
-                            		<c:otherwise>
-                            			이미지5
-                            		</c:otherwise>
-                            	</c:choose>
-                            </div>
-                        </div>
-                        <div class="rpg_main_content">
-                            <div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
-                            <div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
-                            <div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
-                        </div>
-                    </div>
+                		<div class="rpg" id="gameSeq5">
+                    		<div class="rpg_title">Recently Played Game</div>
+                    		<div class="rpg_main_box">
+                        		<div class="rpg_main_img">
+                            		<div class="rpg_img">
+                            			<img class="game_title_image" src="/image/game5-2.png">
+                           			</div>	
+                           		</div>
+                            	<div class="rpg_main_content">
+                            		<div class="rpg_content_title rpg_content">${gprDto.gameTitle}</div>
+                            		<div class="rpg_content_date rpg_content"><fmt:formatDate value="${gprDto.playDate}" pattern="yy.MM.dd" /></div>
+                            		<div class="rpg_content_score rpg_content">${gprDto.playScore}</div>
+                       			</div>
+                        	</div>                                        	
+                    	</div>
                     </c:otherwise>
                   </c:choose>
                 </div>
-            </div>
-        </div>
+        	</div>
+
         <div class="favorite_game">
             <div class="favorite_game_title">Favorite Games</div>
             <div class="favorite_game_main">
             	<c:forEach var="seq" items="${seq}">
             		<c:choose>
             			<c:when test="${seq.equals('1')}">
-            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=1">오버워치</a></div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=1"><img id="logo1" class="game_logo" src="/image/game1_logo.png"></a></div>
             			</c:when>
             			<c:when test="${seq.equals('2')}">
-            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=2">심즈</a></div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=2"><img id="logo2" class="game_logo" src="/image/game2_logo.png"></a></div>
             			</c:when>
             			<c:when test="${seq.equals('3')}">
-            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=3">apex 레전드</a></div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=3"><img id="logo3" class="game_logo" src="/image/game3_logo.png"></a></div>
             			</c:when>
             			<c:when test="${seq.equals('4')}">
-            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=4">grimm's hollow</a></div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=4"><img id="logo4" class="game_logo" src="/image/game4_logo.png"></a></div>
             			</c:when>
             			<c:when test="${seq.equals('5')}">
-            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=5">배틀 그라운드</a></div>
+            				<div class="game_seq"><a href="/viewGame.gboard?gameSeq=5"><img id="logo5" class="game_logo" src="/image/game5_logo.png"></a></div>
             			</c:when>
             		</c:choose>
             </c:forEach>
@@ -423,6 +493,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
     
+    $()
+    
+    
     $("#update_btn").on("click",function(){
     	location.href="/updateList.member"
     })
@@ -433,23 +506,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     $("#memberOut").on("click",function(){
     	Swal.fire({
-			  title: "Are you sure?",
-			  text: "You won't be able to revert this!",
+			  title: "정말 삭제하시겠습니까?",
+			  text: "삭제 시 모든 데이터가 삭제되며, 복구가 어렵습니다!",
 			  icon: "warning",
 			  showCancelButton: true,
 			  confirmButtonColor: "#3085d6",
 			  cancelButtonColor: "#d33",
-			  confirmButtonText: "Yes, delete it!"
+			  confirmButtonText: "삭제",
+			  cancelButtonText: "취소"
 			}).then((result) => {
-			  if (result.isConfirmed) {
-			    Swal.fire({
-			      title: "Deleted!",
-			      text: "Your file has been deleted.",
-			      icon: "success"
-			    });
-			    location.href="/memberout.members";
+			    location.href="/deleteMember.member";
 			  }
-			});
+			)
     }) 	
     </script>
 </body>
