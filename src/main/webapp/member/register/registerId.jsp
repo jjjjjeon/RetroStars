@@ -29,6 +29,11 @@
     </style>
 </head>
 <body>
+
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
     <div class="container">
         <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>아이디 생성</h1>
@@ -71,15 +76,16 @@
                 if (response === "true") {
                     checkText.text("사용할 수 있는 아이디입니다.");
                     checkText.css('color', 'green');
+                    checkText.css('visibility', 'visible');
                     nextButton.removeClass('disabled-button');
                     nextButton.prop('disabled', false);
                 } else {
                     checkText.text("이미 사용 중인 아이디입니다.");
                     checkText.css('color', 'red');
+                    checkText.css('visibility', 'visible');
                     nextButton.addClass('disabled-button');
                     nextButton.prop('disabled', true);
                 }
-                checkText.css('visibility', 'visible');
             },
             error: function() {
                 checkText.text("아이디 확인 중 오류가 발생했습니다.");
@@ -93,16 +99,15 @@
 
     $(document).ready(function(){
         $('#userId').on('input', function() {
-            $('#checkText').css('visibility', 'hidden');
-            $('#nextButton').addClass('disabled-button');
-            $('#nextButton').prop('disabled', true);
-
             if (validateUserId($(this).val())) {
                 checkUserId();
             } else {
-                $('#checkText').text("사용 불가능한 아이디입니다.");
-                $('#checkText').css('color', 'red');
-                $('#checkText').css('visibility', 'visible');
+                let checkText = $('#checkText');
+                checkText.text("사용 불가능한 아이디입니다.");
+                checkText.css('color', 'red');
+                checkText.css('visibility', 'visible');
+                $('#nextButton').addClass('disabled-button');
+                $('#nextButton').prop('disabled', true);
             }
         });
     });

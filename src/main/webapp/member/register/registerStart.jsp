@@ -188,7 +188,7 @@
     <script>
         function toggleAllAgree() {
             let agreeAllCheckbox = document.getElementById('agreeAll');
-            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox, .agree-checkbox-ad');
 
             agreeAllCheckbox.checked = !agreeAllCheckbox.checked;
             agreeCheckboxes.forEach(checkbox => {
@@ -201,7 +201,7 @@
         function toggleAllAgreeCheckbox(event) {
             event.stopPropagation();
             let agreeAllCheckbox = document.getElementById('agreeAll');
-            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
+            let agreeCheckboxes = document.querySelectorAll('.agree-checkbox, .agree-checkbox-ad');
             let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             
             agreeAllCheckbox.checked = allChecked;
@@ -212,14 +212,13 @@
         function toggleNextButton() {
             let agreeCheckboxes = document.querySelectorAll('.agree-checkbox');
             let nextButton = document.getElementById('nextButton');
-            let allChecked = Array.from(agreeCheckboxes).every(checkbox => checkbox.checked);
             let requiredChecked = Array.from(agreeCheckboxes).filter(checkbox => !checkbox.classList.contains('agree-checkbox-ad')).every(checkbox => checkbox.checked);
             
             nextButton.disabled = !requiredChecked;
         }
 
         $(document).ready(function() {
-            $('.agree-checkbox, .agree-checkbox-ad').change(toggleAllAgreeCheckbox);
+            $('.agree-checkbox, .agree-checkbox-ad').change(toggleNextButton);
         });
     </script>
 </body>

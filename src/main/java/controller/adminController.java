@@ -18,7 +18,7 @@ import common.BoardConfig;
 import dao.adminDAO;
 import dto.CBoard2DTO;
 import dto.MemberDTO;
-import dto.ReportDTO;
+import dto.Report2DTO;
 
 @WebServlet("*.admin")
 public class adminController extends HttpServlet {
@@ -217,7 +217,7 @@ public class adminController extends HttpServlet {
 			} else if (cmd.equals("/viewReport.admin")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 
-				List<ReportDTO> list = aManager.viewReportList(seq);
+				List<Report2DTO> list = aManager.viewReportList(seq);
 
 				String result = g.toJson(list);
 
@@ -238,6 +238,12 @@ public class adminController extends HttpServlet {
 				request.setAttribute("gameAvgOfTime", gameAvgOfTime);
 				request.setAttribute("list", list);
 				request.getRequestDispatcher("/admin/dashBoard.jsp").forward(request, response);
+				
+				// 신고 현황에 집계된 모든 글 삭제
+			} else if (cmd.equals("/delAllPost.admin")) {
+				aManager.delAllReportedPost();
+				
+				response.sendRedirect("/reportList.admin");
 			}
 
 		} catch (Exception e) {

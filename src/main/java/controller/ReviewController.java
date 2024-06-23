@@ -70,17 +70,34 @@ public class ReviewController extends HttpServlet {
                 int startNum = cpage * 10 - 9;
                 int endNum = cpage * 10;
 
-                ArrayList<HashMap<String, ?>> list = reviewDao.getAllReviews(sortType, startNum, endNum);
-                int reviewCount = reviewDao.getReviewCount();
+                String gameSeqStr = request.getParameter("gameSeq");
+                ArrayList<HashMap<String, ?>> list;
+                int reviewCount;
 
-                System.out.println(list);
+                if (gameSeqStr != null) {
+                    try {
+                        int gameSeq = Integer.parseInt(gameSeqStr);
+                        list = reviewDao.getReviewsByGameSeq(gameSeq, sortType, startNum, endNum);
+                        reviewCount = reviewDao.getReviewCountByGameSeq(gameSeq);
+                        request.setAttribute("gameSeq", gameSeq);
+                    } catch (NumberFormatException e) {
+                        // gameSeq가 숫자가 아닌 경우 전체 리뷰를 보여주도록 설정
+                        list = reviewDao.getAllReviews(sortType, startNum, endNum);
+                        reviewCount = reviewDao.getReviewCount();
+                        request.setAttribute("gameSeq", null);
+                    }
+                } else {
+                    list = reviewDao.getAllReviews(sortType, startNum, endNum);
+                    reviewCount = reviewDao.getReviewCount();
+                }
+
                 request.setAttribute("list", list);
                 request.setAttribute("cpage", cpage);
                 request.setAttribute("reviewCount", reviewCount);
                 request.setAttribute("sortType", sortType);
 
                 request.getRequestDispatcher("/rboard/reviewBoard.jsp").forward(request, response);
-            }else if (cmd.equals("/addReview.review")) {
+            } else if (cmd.equals("/addReview.review")) {
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
                 String reviewContent = request.getParameter("reviewContent");
                 String userId = (String) request.getSession().getAttribute("loginId"); // 로그인된 유저 아이디 가져오기

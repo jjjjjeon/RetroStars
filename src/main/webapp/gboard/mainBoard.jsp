@@ -322,7 +322,7 @@ nav {
             </div>
             <div class="description-section">
                 <div class="media-container">
-                    <img src="/upload/${images.get(1)}" alt="Game Description Image">
+                    <img src="/upload/${images.get(0)}" alt="Game Description Image">
                 </div>
                 <p>${game.gameDesc}</p>
                 <p>
@@ -590,7 +590,7 @@ nav {
                     containerWidth = 500;  
                 }
                 if (!containerHeight || containerHeight <= 0) {
-                    containerHeight = 500; 
+                    containerHeight = 600; 
                 }
 
                 let config = {

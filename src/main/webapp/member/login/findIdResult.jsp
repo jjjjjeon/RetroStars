@@ -19,17 +19,16 @@
             color: white;
             position: relative;
         }
-        
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            opacity: 0.5;
-            z-index: -1;
-        }
+	   .video-background{
+	      position : fixed;
+	      top : 0;
+	      left : 0;
+	      min-width : 100%;
+	      min-height : 100%;
+	      width: auto;
+	      height : auto;
+	      z-index: -1;
+	   }        
         
         .container {
             background: rgba(0, 0, 0, 0.8);
@@ -83,6 +82,10 @@
     </style>
 </head>
 <body>
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
     <div class="background"></div>
     <div class="container">
         <h1>아이디 찾기 결과</h1>

@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 import dto.CBoard2DTO;
 import dto.MemberDTO;
-import dto.ReportDTO;
+import dto.Report2DTO;
 
 public class adminDAO {
 	private static adminDAO instance;
@@ -311,19 +311,19 @@ public class adminDAO {
 	}
 
 	// 신고된 게시글의 신고 현황 조회
-	public List<ReportDTO> viewReportList(int seq) throws Exception {
-		String sql = "select * from report where c_board_seq = ?";
+	public List<Report2DTO> viewReportList(int seq) throws Exception {
+		String sql = "select * from (select report.*, user_nickname from report join member on report.user_id  = member.user_id where c_board_seq = ?)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, seq);
 			try (ResultSet rs = pstat.executeQuery();) {
-				List<ReportDTO> list = new ArrayList<>();
+				List<Report2DTO> list = new ArrayList<>();
 				while (rs.next()) {
-					String writer = rs.getString(3);
 					int reportType = rs.getInt(4);
 					Timestamp reportDate = rs.getTimestamp(5);
+					String writer = rs.getString(6);
 
-					ReportDTO report = new ReportDTO(0, seq, writer, reportType, reportDate);
+					Report2DTO report = new Report2DTO(0, seq, writer, reportType, reportDate);
 					list.add(report);
 				}
 				return list;
@@ -429,6 +429,15 @@ public class adminDAO {
 				list.add(map);
 			}
 			return list;
+		}
+	}
+	
+	// 신고 현황에 집계된 모든 글 삭제
+	public void delAllReportedPost() throws Exception{
+		String sql = "delete from c_board where c_board_report >= 5";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.executeUpdate();
 		}
 	}
 

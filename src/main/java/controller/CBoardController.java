@@ -107,9 +107,9 @@ public class CBoardController extends HttpServlet {
 
 			//게시글 내용 열람.
 			}else if(cmd.equals("/detail.cboard")) {
-				
 				String id = (String) request.getSession().getAttribute("loginId");
 				String nickname = mManager.getNickname(id);
+				boolean isAdmin = mManager.isAdmin(id);
 				
 				String categoryStr = request.getParameter("category");
 				if(categoryStr == null) {
@@ -134,6 +134,7 @@ public class CBoardController extends HttpServlet {
 				
 				int replyTotalCount = rManager.countRepleList(seq);
 				
+				request.setAttribute("isAdmin", isAdmin);
 				request.setAttribute("isBookmark", isBookmark);
 				request.setAttribute("replyTotalCount", replyTotalCount);
 				request.setAttribute("category", category);

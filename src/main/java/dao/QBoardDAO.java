@@ -325,7 +325,7 @@ public class QBoardDAO {
 
 	//4. 디테일페이지에서 내용 출력하기
 	public HashMap<String,?> selectcontent(int searchseq) throws Exception{
-		String sql="select q.*, m.user_nickname as nickname from q_board q "+
+		String sql="select q.*, m.user_nickname as nickname, m.user_admin as admin from q_board q "+
 				 "left join member m on q.user_id = m.user_id "+   
 				 "where q_board_seq=? ";
 					
