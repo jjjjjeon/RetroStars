@@ -322,7 +322,7 @@ nav {
             </div>
             <div class="description-section">
                 <div class="media-container">
-                    <img src="/upload/${images.get(1)}" alt="Game Description Image">
+                    <img src="/upload/${images.get(0)}" alt="Game Description Image">
                 </div>
                 <p>${game.gameDesc}</p>
                 <p>
@@ -583,6 +583,8 @@ nav {
 
                 let containerWidth = mediaContainer.width();
                 let containerHeight = mediaContainer.height();
+                console.log(containerWidth);
+                console.log(containerHeight);
 
                 if (!containerWidth || containerWidth <= 0) {
                     containerWidth = 500;  

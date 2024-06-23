@@ -57,6 +57,10 @@
 </head>
 <body>
     <div class="container">
+             <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
         <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>비밀번호 입력</h1>
         <form id="password-form" action="/registerPw.member" method="post">

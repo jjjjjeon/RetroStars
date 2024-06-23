@@ -321,7 +321,7 @@
                         <ul class="dropdown-menu">
                         	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
                             <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
-							<li><a class="dropdown-item" href="/">게임리뷰</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
                             <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
                             
