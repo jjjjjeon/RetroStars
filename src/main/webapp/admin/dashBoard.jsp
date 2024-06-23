@@ -28,11 +28,12 @@
 	margin: 0;
 	padding: 0;
 }
-
+/*
 div {
 	border: 1px solid black;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+*/
 
 a {
 	text-decoration: none;
@@ -70,8 +71,11 @@ a {
 }
 
 .main .navi .profileBox {
+	display: flex;
+    justify-content: center;
+    align-items: center;
 	width: 85%;
-	height: 350px;
+	height: 50px;
 	margin-top: 30px;
 	background-color: white;
 	border: 1px solid black;
@@ -96,7 +100,7 @@ a {
 
 .main .navi .naviBox {
 	width: 85%;
-	height: 450px;
+	height: 210px;
 	margin-top: 30px;
 }
 
@@ -143,27 +147,46 @@ a {
 	color: rgb(59, 59, 59);
 }
 
+
+
 .detailA:hover {
 	background-color: darkgray;
 }
+
+.dropdown-item:active{
+	background-color:black;
+	
+}
+
 </style>
 </head>
 <body>
 	<div class="header">관리자페이지</div>
 	<div class="main">
 		<div class="navi">
-			<div class="profileBox">
-				<div class="profile">
-					<img src="/image/admin.png" style="width : 100%; height : 100%; padding : 40px;">
-				</div>
-				<div class="name">${loginId} 관리자님, 환영합니다!</div>
-			</div>
+			<div class="profileBox name">${loginId} 관리자님, 환영합니다!</div>
 			<div class="naviBox">
+			<a href="/index.jsp" target="_blank"
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
+					이동</a>
 				<a href="/dashBoard.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi active"
-					id="dashboard">대시보드</a> <a
+					id="dashboard">대시보드</a> 
+					 
+						<div class="dropdown">
+						  <a  style="width:100%; text-align:left; border-radius:0;" class="btn btn-secondary dropdown-toggle bigNavi" href="/memberList.admin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						    회원관리
+						  </a>
+						
+						  <ul  style="width:100%"class="dropdown-menu" style="border-radius:0;">
+						    <li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
+						    <li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
+						    <li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
+						  </ul>
+						</div>
+					<!-- <a
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
-				<a href="/memberList.admin"
+					<a href="/memberList.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">회원
 					목록</a> <a href="/reportList.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">신고
@@ -171,15 +194,15 @@ a {
 					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">블랙회원
 					관리</a> <a href="/index.jsp" target="_blank"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-					이동</a>
+					이동</a> -->
 			</div>
 
 		</div>
 		<div class="contentBox">
-			<div class="contentTitle">대시보드</div>
+			<div class="contentTitle" style="height:100px">DashBoard</div>
 			<div class="content"
-				style="display: flex; flex-direction: column; width: 1761px; height: 863px;">
-				<div class="col1" style="flex: 1; display: flex;">
+				style="display: flex; flex-direction: column; width: 1264px; height: 863px;">
+				<div class="col1" style="flex: 1; display: flex; border-bottom:1px solid gray;">
 					<div class="row1" style="flex: 1;">
 						<canvas id="gameNumberOfChart" style="width: 100%; height: 100%"></canvas>
 					</div>
@@ -191,10 +214,10 @@ a {
 					</div>
 				</div>
 				<div class="co12" style="flex: 1; display: flex;">
-					<div class="row4" style="flex: 1;">
+					<div class="row4" style="flex: 4;">
 						<canvas id="gameAvgOfChart" style="width: 100%; height: 100%"></canvas>
 					</div>
-					<div class="row5" style="flex: 1; display: flex;">
+					<div class="row5" style="flex: 6; display: flex;">
 						<div class="qa" style="flex: 7; padding: 20px">
 							<h5>질문과 답변</h5>
 							<hr>
@@ -207,7 +230,7 @@ a {
 										<div class="list_data_row row"
 											style="height: 40px; width: 100%; margin: 0px; line-height: 37px;">
 											<div class="list_data_seq center" style="flex: 0.5;">${dto.qBoardSeq}</div>
-											<div class="list_data_title center" style="flex: 6.0;">${dto.qBoardTitle}</div>
+											<div class="list_data_title center" style="flex: 5.5;">${dto.qBoardTitle}</div>
 											<div class="list_data_date center" style="flex: 1.5;">
 												<fmt:formatDate value="${dto.qBoardDate}"
 													pattern="yyyy.MM.dd"></fmt:formatDate>
@@ -215,15 +238,14 @@ a {
 											<c:choose>
 												<c:when test="${dto.qBoardAnswer eq 'N'}">
 													<div class="list_data_answer center"
-														style="flex: 2; color: orangered">답변예정</div>
+														style="flex: 2.5; color: orangered">답변예정</div>
 												</c:when>
 											</c:choose>
 										</div>
 									</a>
 								</c:forEach>
-
-
 							</div>
+							<hr>
 						</div>
 						<div class="fn" style="flex: 3; padding: 20px">
 							<h5>공지사항</h5>
@@ -232,10 +254,19 @@ a {
 							<button class="btn btn-secondary"
 								onclick="location.href='/nboard/nBoardWrite.jsp'">작성하기</button>
 							<hr>
-							<h5>즐겨찾는 질문</h5>
+							<h5>자주 찾는 질문</h5>
 							<button class="btn btn-secondary"
 								onclick="location.href='/list.fboard'">이동하기</button>
-
+							<button class="btn btn-secondary"
+								onclick="location.href='/goWriteFaq.fboard'">작성하기</button>
+							<hr>
+							<h5>커뮤니티 게시판</h5>
+							<button class="btn btn-secondary"
+								onclick="location.href='/list.cboard'">이동하기</button>
+							<hr>
+							<h5>게임리뷰 게시판</h5>
+							<button class="btn btn-secondary"
+								onclick="location.href='/list.review'">이동하기</button>
 						</div>
 					</div>
 				</div>
