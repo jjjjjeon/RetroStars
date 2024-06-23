@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
     <div class="container">
         <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>회원가입 완료</h1>

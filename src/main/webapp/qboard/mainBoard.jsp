@@ -353,9 +353,9 @@ nav {
 							class="btn btn-secondary dropdown-toggle" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false">분류</button>
 						<ul class="dropdown-menu">
-							<li><a id="dropdown-item" class="dropdown-item" href="#"
+							<li><a class="dropdown-item dropdown-search" href="#"
 								data-searchBy="q_board_title">제목</a></li>
-							<li><a id="dropdown-item" class="dropdown-item" href="#"
+							<li><a  class="dropdown-item dropdown-search" href="#"
 								data-searchBy="q_board_content">내용</a></li>
 						</ul>
 					</div>
@@ -532,8 +532,8 @@ nav {
 					}
 					
 					
-					 // #dropdown-item을 클릭했을 때
-		            $("#dropdown-item").on("click", function (e) {
+					 // dropdown-search을 클릭했을 때
+		            $(".dropdown-search").on("click", function (e) {
 		                e.preventDefault();
 		                $("#searchToggle").html($(this).html());
 		                searchBy = $(this).attr("data-searchBy");

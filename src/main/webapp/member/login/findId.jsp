@@ -167,7 +167,6 @@
         </form>
         <div class="links">
             <a href="/member/login/findPw.jsp">비밀번호 찾기</a>
-            <a href="#">고객센터 문의</a>
         </div>
     </div>
 </body>

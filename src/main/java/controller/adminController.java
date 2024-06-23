@@ -226,10 +226,10 @@ public class adminController extends HttpServlet {
 
 				// 대시보드 이동
 			} else if (cmd.equals("/dashBoard.admin")) {
-				int[] gameNumberOfArr = aManager.getGameNumberOfUse();
+				ArrayList<HashMap<String,?>> gameNumberOfArr = aManager.getGameNumberOfUse();
 				int[] ageNumberOfArr = aManager.getAgeNumberOfUse();
 				int[] genderRatioOfMem = aManager.getGenderRatioOfMem();
-				float[] gameAvgOfTime = aManager.getGameAvgOfTime();
+				ArrayList<HashMap<String,?>> gameAvgOfTime = aManager.getGameAvgOfTime();
 				ArrayList<HashMap<String, ?>> list = aManager.getUnresolvedQBoard();
 				System.out.println(list);
 				request.setAttribute("gameNumberOfArr", gameNumberOfArr);
