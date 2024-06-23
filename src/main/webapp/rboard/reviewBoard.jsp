@@ -379,6 +379,9 @@
                                 <div>
                                     <img id="likeImg" src="/upload/like.png" alt="좋아요">
                                     <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요">
+							          <c:if test="${isAdmin}">
+							            <button class="delete-review-btn" data-review-seq="${review.reviewSeq}">삭제</button>
+							        </c:if>                              	
                                 </div>
                             </div>
                         </div>
@@ -415,18 +418,38 @@
 
     <script>
         $(document).ready(function() {
-            $("#sortLikes").on("click", function() {
-                let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
-                let url = gameSeq ? `/list.review?sortType=review_like&gameSeq=${gameSeq}` : "/list.review?sortType=review_like";
-                window.location.href = url;
-            });
+            $(document).ready(function() {
+                $("#sortLikes").on("click", function() {
+                    let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+                    let url = gameSeq ? `/list.review?sortType=review_like&gameSeq=${gameSeq}` : "/list.review?sortType=review_like";
+                    window.location.href = url;
+                });
 
-            $("#sortDislikes").on("click", function() {
-                let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
-                let url = gameSeq ? `/list.review?sortType=review_dislike&gameSeq=${gameSeq}` : "/list.review?sortType=review_dislike";
-                window.location.href = url;
+                $("#sortDislikes").on("click", function() {
+                    let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+                    let url = gameSeq ? `/list.review?sortType=review_dislike&gameSeq=${gameSeq}` : "/list.review?sortType=review_dislike";
+                    window.location.href = url;
+                });
+
+                $(".delete-review-btn").on("click", function() {
+                    let reviewSeq = $(this).data("review-seq");
+                    if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
+                        $.ajax({
+                            url: "/deleteReview.review",
+                            method: "POST",
+                            data: { reviewSeq: reviewSeq },
+                            success: function(response) {
+                                if (response.result === "success") {
+                                    alert("리뷰가 삭제되었습니다.");
+                                    location.reload();
+                                } else {
+                                    alert("리뷰 삭제에 실패했습니다.");
+                                }
+                            }
+                        });
+                    }
+                });
             });
-        });
     </script>
 </body>
 </html>

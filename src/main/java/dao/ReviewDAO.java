@@ -239,5 +239,13 @@ public class ReviewDAO {
         }
         return 0;
     }
+    
+    public void deleteReview(int reviewSeq) throws Exception {
+        String sql = "delete from review where review_seq = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, reviewSeq);
+            pstat.executeUpdate();
+        }
+    }
 }
 

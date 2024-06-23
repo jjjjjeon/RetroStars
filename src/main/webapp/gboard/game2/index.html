@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brick Breaker</title>
+
+    <style>
+       #gamebox{
+            width: 800px;
+            height: 600px;
+            margin:auto;
+            border:1px solid black;
+        }
+        #timer{
+            width: 500px;
+            height: 50px;
+            margin:auto;
+            border:1px solid black;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script src="Game.js"></script>
+    <script src="GameOver.js"></script>
+
+</head>
+<body>
+
+    <div id="gamebox"></div>
+
+    <script>   
+     let config = {
+        type: Phaser.AUTO,
+        parent:"gamebox",
+        width: 800,
+        height: 600,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 0 }
+                //,debug: true
+            }
+        },
+        scene: [Game, GameOver]
+    };
+
+    let game = new Phaser.Game(config);
+
+</script>
+
+</body>
+</html>

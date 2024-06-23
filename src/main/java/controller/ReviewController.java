@@ -113,6 +113,11 @@ public class ReviewController extends HttpServlet {
                 } else {
                     pw.append("{\"result\":\"error\"}");
                 }
+            } else if (cmd.equals("/deleteReview.review")) {
+                int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
+               
+                reviewDao.deleteReview(reviewSeq);
+                pw.append("{\"result\":\"success\"}");
             }
         } catch (Exception e) {
             e.printStackTrace();
