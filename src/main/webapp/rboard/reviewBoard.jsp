@@ -11,9 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     * {
         box-sizing: border-box;
@@ -279,11 +276,12 @@
                             게임
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
+                            <li><a class="dropdown-item" href="/list.review">전체</a></li>
+                            <li><a class="dropdown-item" href="/list.review?gameSeq=1">Game 1</a></li>
+                            <li><a class="dropdown-item" href="/list.review?gameSeq=2">Game 2</a></li>
+                            <li><a class="dropdown-item" href="/list.review?gameSeq=3">Game 3</a></li>
+                            <li><a class="dropdown-item" href="/list.review?gameSeq=4">Game 4</a></li>
+                            <li><a class="dropdown-item" href="/list.review?gameSeq=5">Game 5</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -335,9 +333,18 @@
         리뷰게시판
     </div>
 
+	<div class="navi">
+	    <a href="/list.review" class="${empty param.gameSeq ? 'active' : ''}">전체</a>
+	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">Game 1</a>
+	    <a href="/list.review?gameSeq=2" class="${param.gameSeq == '2' ? 'active' : ''}">Game 2</a>
+	    <a href="/list.review?gameSeq=3" class="${param.gameSeq == '3' ? 'active' : ''}">Game 3</a>
+	    <a href="/list.review?gameSeq=4" class="${param.gameSeq == '4' ? 'active' : ''}">Game 4</a>
+	    <a href="/list.review?gameSeq=5" class="${param.gameSeq == '5' ? 'active' : ''}">Game 5</a>
+	</div>
+
     <div class="content">
         <div class="review-header">
-            <h3>전체 리뷰</h3>
+            <h3>${empty param.gameSeq ? '전체' : param.gameSeq} 리뷰</h3>
             <div class="sort-buttons">
                 <button id="sortLikes" class="${sortType == 'review_like' ? 'active' : ''}">좋아요 많은 순</button>
                 <button id="sortDislikes" class="${sortType == 'review_dislike' ? 'active' : ''}">싫어요 많은 순</button>
@@ -371,7 +378,7 @@
                                 </div>
                                 <div>
                                     <img id="likeImg" src="/upload/like.png" alt="좋아요">
-                                    <img id="dislikeImg" src="/upload/dislike.png" alt="좋아요">
+                                    <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요">
                                 </div>
                             </div>
                         </div>
@@ -381,7 +388,7 @@
         </div>
         <div class="pagination">
             <c:forEach var="i" begin="1" end="${reviewCount / 10 + (reviewCount % 10 == 0 ? 0 : 1)}">
-                <a href="/list.review?cpage=${i}&sortType=${sortType}" class="${cpage == i ? 'active' : ''}">${i}</a>
+                <a href="/list.review?cpage=${i}&sortType=${sortType}&gameSeq=${gameSeq}" class="${cpage == i ? 'active' : ''}">${i}</a>
             </c:forEach>
         </div>
     </div>
@@ -409,11 +416,15 @@
     <script>
         $(document).ready(function() {
             $("#sortLikes").on("click", function() {
-                window.location.href = "/list.review?sortType=review_like";
+                let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+                let url = gameSeq ? `/list.review?sortType=review_like&gameSeq=${gameSeq}` : "/list.review?sortType=review_like";
+                window.location.href = url;
             });
 
             $("#sortDislikes").on("click", function() {
-                window.location.href = "/list.review?sortType=review_dislike";
+                let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+                let url = gameSeq ? `/list.review?sortType=review_dislike&gameSeq=${gameSeq}` : "/list.review?sortType=review_dislike";
+                window.location.href = url;
             });
         });
     </script>

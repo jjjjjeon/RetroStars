@@ -283,6 +283,34 @@ public class MemberDAO {
     	
     }
     
+    public boolean checkIdAndEmail(String id, String email) throws Exception {
+        String sql = "select count(*) from member where user_id = ? and user_email = ?";
+        try(Connection con = this.getConnection(); 
+            PreparedStatement pstat = con.prepareStatement(sql);) {
+            pstat.setString(1, id);
+            pstat.setString(2, email);
+            try(ResultSet rs = pstat.executeQuery()) {
+                rs.next();
+                return rs.getInt(1) > 0;
+            }
+        }
+    }
+
+
+    
+    public boolean isBlackUser(String id) throws Exception {
+        String sql = "select user_black from member where user_id = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+            pstat.setString(1, id);
+            try (ResultSet rs = pstat.executeQuery();) {
+                if (rs.next()) {
+                    return rs.getString(1).equals("Y");
+                }
+                return false;
+            }
+        }
+    }
+    
 
 
     

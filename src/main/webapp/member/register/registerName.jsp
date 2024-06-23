@@ -42,6 +42,10 @@
     </style>
 </head>
 <body>
+         <video class="video-background" autoplay muted loop>
+           <source src="/image/video.mp4" type="video/mp4">
+           Your browser does not support the video tag.
+       </video>
     <div class="container">
         <img src="/image/logo.png" alt="Logo" class="logo">
         <h1>기타 정보 입력</h1>
@@ -91,9 +95,9 @@
         return regexFront.test(userNoFront) && regexBack.test(userNoBack);
     }
 
-    function validatePhone(콜) {
+    function validatePhone(phone) {
         let regex = /^01([0|1|6|7|8|9])([0-9]{8})$/;
-        return regex.test(콜);
+        return regex.test(phone);
     }
 
     function validateForm() {
@@ -106,21 +110,25 @@
         let phone = $('#userPhone').val();
 
         if (!validateName(name)) {
+            $('#nameCheckText').css('visibility', 'visible');
             valid = false;
         }
 
         if (!validateNickname(nickname)) {
+            $('#nicknameCheckText').css('visibility', 'visible');
             valid = false;
         }
 
         if (!validateUserNo(userNoFront, userNoBack)) {
+            $('#userNoCheckText').css('visibility', 'visible');
             valid = false;
             $('#userNo').val('');
         } else {
             $('#userNo').val(userNoFront + userNoBack + '******');
         }
 
-        if (phone && !validatePhone(콜)) {
+        if (phone && !validatePhone(phone)) {
+            $('#phoneCheckText').css('visibility', 'visible');
             valid = false;
         }
 
@@ -184,7 +192,11 @@
         }).on('focus', function() {
             $('#nameCheckText').css('visibility', 'visible');
         }).on('blur', function() {
-            $('#nameCheckText').css('visibility', 'hidden');
+            if (!validateName($(this).val())) {
+                $('#nameCheckText').css('visibility', 'visible');
+            } else {
+                $('#nameCheckText').css('visibility', 'hidden');
+            }
         });
 
         $('#userNickname').on('input', function() {
@@ -200,7 +212,11 @@
         }).on('focus', function() {
             $('#nicknameCheckText').css('visibility', 'visible');
         }).on('blur', function() {
-            $('#nicknameCheckText').css('visibility', 'hidden');
+            if (!validateNickname($(this).val())) {
+                $('#nicknameCheckText').css('visibility', 'visible');
+            } else {
+                $('#nicknameCheckText').css('visibility', 'hidden');
+            }
         });
 
         $('#userNoFront, #userNoBack').on('input', function() {
@@ -213,7 +229,11 @@
         }).on('focus', function() {
             $('#userNoCheckText').css('visibility', 'visible');
         }).on('blur', function() {
-            $('#userNoCheckText').css('visibility', 'hidden');
+            if (!validateUserNo($('#userNoFront').val(), $('#userNoBack').val())) {
+                $('#userNoCheckText').css('visibility', 'visible');
+            } else {
+                $('#userNoCheckText').css('visibility', 'hidden');
+            }
         });
 
         $('#userPhone').on('input', function() {
@@ -226,7 +246,11 @@
         }).on('focus', function() {
             $('#phoneCheckText').css('visibility', 'visible');
         }).on('blur', function() {
-            $('#phoneCheckText').css('visibility', 'hidden');
+            if (!validatePhone($(this).val())) {
+                $('#phoneCheckText').css('visibility', 'visible');
+            } else {
+                $('#phoneCheckText').css('visibility', 'hidden');
+            }
         });
     });
     </script>

@@ -17,23 +17,20 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        font-family: Arial, sans-serif;
+        font-family: 'Georgia', serif;
         color: white;
         position: relative;
     }
-    
-    .background {
-        position: absolute;
+    .video-background{
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/png;base64,PUT_YOUR_BASE64_IMAGE_HERE') no-repeat center center;
-        background-size: cover;
-        opacity: 0.5;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
         z-index: -1;
-    }
-    
+    }   
     .container {
         background: rgba(0, 0, 0, 0.8);
         padding: 40px;
@@ -85,10 +82,14 @@
     }
 </style>
 <body>
+    <video class="video-background" autoplay muted loop>
+        <source src="/image/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <div class="background"></div>
     <div class="container">
         <h1>인증 코드 확인</h1>
-        <form id="verify-code-form" action="/pwVerifyCode.member" method="post">
+        <form id="verify-code-form">
             <div class="input-group">
                 <label for="code">인증 코드:</label>
                 <input type="text" id="code" name="code" placeholder="인증 코드" required>
@@ -97,15 +98,29 @@
         </form>
     </div>
     <script>
-        $(document).ready(function(){
-        	
-            $('#pwVerifyConfirm').on("click", function(){
+        $(document).ready(function() {
+            $('#verify-code-form').on('submit', function(event) {
+                event.preventDefault();
+
                 let code = $('#code').val();
-                if(code === "") {
-                    alert("인증 코드를 입력해주세요.");
-                } else {                    
-                    alert("인증 코드가 확인되었습니다.");
-                }
+
+                $.ajax({
+                    url: '/pwVerifyCode.member',
+                    type: 'POST',
+                    data: { code: code },
+                    dataType: 'json'
+                })
+                .done(function(response) {
+                    if (response.status === 'success') {
+                        alert("인증 코드가 확인되었습니다.");
+                        window.location.href = '/member/login/resetPassword.jsp';
+                    } else {
+                        alert("인증코드가 올바르지 않습니다.");
+                    }
+                })
+                .fail(function() {
+                    alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                });
             });
         });
     </script>

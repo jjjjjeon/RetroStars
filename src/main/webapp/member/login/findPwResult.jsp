@@ -12,6 +12,27 @@
 </head>
 <style>
 
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Georgia', serif;
+            color: white;
+            position: relative;
+        }
+	   .video-background{
+	      position : fixed;
+	      top : 0;
+	      left : 0;
+	      min-width : 100%;
+	      min-height : 100%;
+	      width: auto;
+	      height : auto;
+	      z-index: -1;
+	   }   
 </style>
 <body>
     <div class="background"></div>
@@ -33,8 +54,8 @@
         $(document).ready(function(){
             $('#reset-password-form').submit(function(event){
                 event.preventDefault();
-                const password = $('#password').val();
-                const confirmPassword = $('#confirm-password').val();
+                let password = $('#password').val();
+                let confirmPassword = $('#confirm-password').val();
                 if(password === "") {
                     alert("새 비밀번호를 입력해주세요.");
                 } else if (password !== confirmPassword) {
