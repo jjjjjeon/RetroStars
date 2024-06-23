@@ -288,25 +288,25 @@ a {
     		  data: {
     		    labels: ['게임별 이용 횟수 현황'],
     		    datasets: [{
-    		      label: '게임1',
-    		      backgroundColor: "#000080",
-    		      data: [${gameNumberOfArr[1]}]
+    		      label: '${gameNumberOfArr.get(0).game_title}',
+    		      backgroundColor: "#dad7cd",
+    		      data: [${gameNumberOfArr.get(0).play_count}]
     		    }, {
-    		      label: '게임2',
-    		      backgroundColor: "#e17055",
-    		      data: [${gameNumberOfArr[2]}]
+    		      label: '${gameNumberOfArr.get(1).game_title}',
+    		      backgroundColor: "#a3b18a",
+    		      data: [${gameNumberOfArr.get(1).play_count}]
     		    }, {
-    		      label: '게임3',
-    		      backgroundColor: "#add8e6",
-    		      data: [${gameNumberOfArr[3]}]
+    		      label: '${gameNumberOfArr.get(2).game_title}',
+    		      backgroundColor: "#588157",
+    		      data: [${gameNumberOfArr.get(2).play_count}]
     		    }, {
-    		      label: '게임4',
-    		      backgroundColor: "#fdcb6e",
-    		      data: [${gameNumberOfArr[4]}]
+    		      label: '${gameNumberOfArr.get(3).game_title}',
+    		      backgroundColor: "#3a5a40",
+    		      data: [${gameNumberOfArr.get(3).play_count}]
     		    }, {
-    		      label: '게임5',
-    		      backgroundColor: "#a29bfe",
-    		      data: [${gameNumberOfArr[5]}]
+    		      label: '${gameNumberOfArr.get(4).game_title}',
+    		      backgroundColor: "#344e41",
+    		      data: [${gameNumberOfArr.get(4).play_count}]
     		    }]
     		  },
 
@@ -336,7 +336,7 @@ a {
            data: {
              labels: ['남자', '여자'],
              datasets: [{
-               backgroundColor: ["#add8e6","#e17055"],
+               backgroundColor: ["#1d3557","#e63946"],
                data: [${genderRatioOfMem[1]}, ${genderRatioOfMem[2]}]
              }]
            },
@@ -386,23 +386,23 @@ a {
     		    labels: ['연령별 이용 횟수 현황'],
     		    datasets: [{
     		      label: '10대',
-    		      backgroundColor: "#000080",
+    		      backgroundColor: "#e0b1cb",
     		      data: [${ageNumberOfArr[1]}]
     		    }, {
     		      label: '20대',
-    		      backgroundColor: "#e17055",
+    		      backgroundColor: "#be95c4",
     		      data: [${ageNumberOfArr[2]}]
     		    }, {
     		      label: '30대',
-    		      backgroundColor: "#add8e6",
+    		      backgroundColor: "#9f86c0",
     		      data: [${ageNumberOfArr[3]}]
     		    }, {
     		      label: '40대',
-    		      backgroundColor: "#fdcb6e",
+    		      backgroundColor: "#5e548e",
     		      data: [${ageNumberOfArr[4]}]
     		    }, {
     		      label: '50대',
-    		      backgroundColor: "#a29bfe",
+    		      backgroundColor: "#231942",
     		      data: [${ageNumberOfArr[5]}]
     		    }]
     		  },
@@ -429,22 +429,22 @@ a {
          let mybarChart4 = new Chart(ctx4, {
            type: 'bar',
            data: {
-             labels: ['게임1', '게임2', '게임3', '게임4', '게임5'],
+             labels: ['${gameAvgOfTime.get(0).game_title}', '${gameAvgOfTime.get(1).game_title}', '${gameAvgOfTime.get(2).game_title}', '${gameAvgOfTime.get(3).game_title}', '${gameAvgOfTime.get(4).game_title}'],
              datasets: [{
                label: '게임별 평균 플레이 시간',
                backgroundColor: [
-                 "#000080",
-                 "#e17055",
-                 "#add8e6",
-                 "#fdcb6e",
-                 "#a29bfe"
+                 "#eae2b7",
+                 "#fcbf49",
+                 "#f77f00",
+                 "#d62828",
+                 "#003049"
                ],
                data: [
-                 ${gameAvgOfTime[1]},
-                 ${gameAvgOfTime[2]},
-                 ${gameAvgOfTime[3]},
-                 ${gameAvgOfTime[4]},
-                 ${gameAvgOfTime[5]}
+            	   ${gameAvgOfTime.get(0).play_duration},
+            	   ${gameAvgOfTime.get(1).play_duration},
+            	   ${gameAvgOfTime.get(2).play_duration},
+            	   ${gameAvgOfTime.get(3).play_duration},
+            	   ${gameAvgOfTime.get(4).play_duration}
                ]
              }]
            },
