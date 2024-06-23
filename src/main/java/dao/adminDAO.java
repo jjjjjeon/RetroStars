@@ -332,18 +332,24 @@ public class adminDAO {
 	}
 
 	// 게임별 이용횟수
-	public int[] getGameNumberOfUse() throws Exception {
-		int[] arr = new int[6]; // 0-5인데 0은 사용하지 않을 것.
-		String sql = "select game_seq, count(*) from play_record group by game_seq order by 1";
+	public ArrayList<HashMap<String,?>> getGameNumberOfUse() throws Exception {
+		ArrayList<HashMap<String,?>> list=new ArrayList<>();
+		String sql = "SELECT p.game_seq, g.game_title, COUNT(*) AS play_count "
+				+ "FROM play_record p "
+				+ "LEFT JOIN game g ON p.game_seq = g.game_seq "
+				+ "GROUP BY p.game_seq, g.game_title "
+				+ "ORDER BY 1";
 		try (Connection con = this.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();) {
-			int i = 1;
 			while (rs.next()) {
-				arr[i] = rs.getInt(2);
-				i++;
+				HashMap map=new HashMap<>();
+				map.put("game_seq",rs.getInt(1));
+				map.put("game_title",rs.getString(2));
+				map.put("play_count",rs.getInt(3));
+				list.add(map);
 			}
-			return arr;
+			return list;
 		}
 	}
 
@@ -390,18 +396,24 @@ public class adminDAO {
 	}
 
 	// 게임별 평균 플레이 시간
-	public float[] getGameAvgOfTime() throws Exception {
-		float[] arr = new float[6]; // 0-5인데 0은 사용하지 않을 것.
-		String sql = "select game_seq, avg(play_duration) from play_record group by game_seq order by 1";
+	public ArrayList<HashMap<String,?>> getGameAvgOfTime() throws Exception {
+		ArrayList<HashMap<String,?>> list=new ArrayList<>();
+		String sql = "select p.game_seq, g.game_title, avg(play_duration) as play_duration "
+				+ "FROM play_record p "
+				+ "LEFT JOIN game g ON p.game_seq = g.game_seq "
+				+ "GROUP BY p.game_seq, g.game_title "
+				+ "order by 1";
 		try (Connection con = this.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();) {
-			int i = 1;
 			while (rs.next()) {
-				arr[i] = rs.getFloat(2);
-				i++;
+				HashMap map=new HashMap<>();
+				map.put("game_seq",rs.getInt(1));
+				map.put("game_title",rs.getString(2));
+				map.put("play_duration",rs.getFloat(3));
+				list.add(map);
 			}
-			return arr;
+			return list;
 		}
 	}
 

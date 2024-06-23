@@ -581,6 +581,7 @@ nav {
                         comment: $('#addCommentInput').html().trim()
                     }
                 }).done(function (replydto) {
+                	$('#addCommentInput').html("");
                     let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
                     let col1 = $("<div>").addClass("col1").css("flex","1").html('${loginnickname}');
                     let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
