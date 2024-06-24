@@ -63,8 +63,11 @@ a {
 }
 
 .main .navi .profileBox {
+	display: flex;
+    justify-content: center;
+    align-items: center;
 	width: 85%;
-	height: 350px;
+	height: 50px;
 	margin-top: 30px;
 	background-color: white;
 	border: 1px solid black;
@@ -75,7 +78,7 @@ a {
 	width: 80%;
 	margin: 20px auto 0 auto;
 	border: 1px solid black;
-	background-color: #ddd;
+	background-color : #ddd;
 }
 
 .main .navi .profileBox .name {
@@ -96,7 +99,6 @@ a {
 .main .navi .naviBox .bigNavi {
 	height: 70px;
 	border-top: 2px solid gray;
-	border-bottom: 2px solid gray;
 	display: flex;
 	align-items: center;
 	font-size: 24px;
@@ -156,15 +158,15 @@ a {
 }
 
 .memberBox .memberList {
-	min-height: 600px;
+	min-height: 400px;
 }
 
 .memberBox .member {
 	border-top: 0;
-	height: 60px;
+	height: 40px;
 	display: flex;
 	border-bottom: 1px solid gray;
-	padding: 30px 0 30px 0;
+	padding: 25px 0 25px 0;
 }
 
 .memberBox .member div {
@@ -210,7 +212,12 @@ a {
 	min-width: 38px;
 	height: 36px;
 	line-height: 35px;
-	font-size: 24px;
+	font-size: 20px;
+}
+
+.dropdown-item:active{
+	background-color:black;
+	
 }
 </style>
 </head>
@@ -219,32 +226,43 @@ a {
 	<div class="header">관리자페이지</div>
 	<div class="main">
 		<div class="navi">
-			<div class="profileBox">
-				<div class="profile">
-					<img src="/image/admin.png"
-						style="width: 100%; height: 100%; padding: 40px;">
-				</div>
-				<div class="name">${loginId}관리자님, 환영합니다!</div>
-			</div>
+			<div class="profileBox name">${loginId}관리자님, 환영합니다!</div>
 			<div class="naviBox">
-				<a href="/dashBoard.admin"
+				<a href="/index.jsp" target="_blank"
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
+					이동</a> <a href="/dashBoard.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
-					id="dashboard">대시보드</a> <a
+					id="dashboard">대시보드</a>
+
+				<div class="dropdown">
+					<a style="width: 100%; text-align: left; border-radius: 0;"
+						class="btn btn-secondary dropdown-toggle bigNavi active"
+						href="/memberList.admin" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> 회원관리 </a>
+
+					<ul style="width: 100%" class="dropdown-menu"
+						style="border-radius:0;">
+						<li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
+						<li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
+						<li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
+					</ul>
+				</div>
+				<!-- <a
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
-				<a href="/memberList.admin"
+					<a href="/memberList.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">회원
 					목록</a> <a href="/reportList.admin"
 					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">신고
 					현황</a> <a href="/blackList.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary smallNavi active">블랙회원
+					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">블랙회원
 					관리</a> <a href="/index.jsp" target="_blank"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-					이동</a>
+					이동</a> -->
 			</div>
 
 		</div>
 		<div class="contentBox">
-			<div class="contentTitle">블랙회원 관리</div>
+			<div class="contentTitle" style="height:113px">블랙회원 관리</div>
 			<div class="content">
 				<form action="/searchBlackList.admin" id="searchForm">
 					<div class="searchBox">
@@ -265,7 +283,9 @@ a {
 					<div class="memberList">
 						<c:choose>
 							<c:when test="${fn:length(list) == 0}">
-								<p style="text-align: center; margin-top: 20px; font-size: 18px;">블랙된 회원이 없습니다.</p>
+								<p
+									style="text-align: center; margin-top: 20px; font-size: 18px;">블랙된
+									회원이 없습니다.</p>
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="DTO" items="${list}">

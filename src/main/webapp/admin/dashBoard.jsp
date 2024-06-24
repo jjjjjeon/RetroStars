@@ -153,10 +153,7 @@ a {
 	background-color: darkgray;
 }
 
-.dropdown-item:active{
-	background-color:black;
-	
-}
+
 
 </style>
 </head>
