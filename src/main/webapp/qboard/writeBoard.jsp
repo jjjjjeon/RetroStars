@@ -59,12 +59,12 @@
       .btn:hover{
          color:white;
       }
-      .dropdown-menu{
+      .navbar .dropdown-menu{
          background-color: #323232;
          text-align: center; /* 중앙 정렬을 위한 설정 */
          width: 100%; /* 너비를 100%로 설정 */
       }
-      .dropdown-item{
+      .navbar .dropdown-item{
          background-color: #323232;
          color:white;
       }
@@ -78,9 +78,7 @@
       a:visited { color: white; text-decoration: none;}
      a:hover { color: white; text-decoration: underline;}
       /*    end navbar css */
-				
-			
-				
+					
 
 				* {
 					box-sizing: border-box;
