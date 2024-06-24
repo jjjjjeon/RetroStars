@@ -113,8 +113,8 @@ public class adminDAO {
 
 	// 전체 회원 목록 반환
 	public List<MemberDTO> viewMemberList(int n, int m) throws Exception {
-		String sql = "select user_id, user_name, user_nickname, user_join_date, user_active from (select member.*, row_number() over(order by user_id) rown from member where user_id != 'admin' and user_black != 'Y') where rown between ? and ?";
-
+		String sql = "select user_id, user_name, user_nickname, user_join_date, user_active from (select member.*, row_number() over(order by user_join_date desc) rown from member where user_id != 'admin' and user_black != 'Y') where rown between ? and ?";
+		
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, n);
 			pstat.setInt(2, m);
@@ -138,7 +138,7 @@ public class adminDAO {
 
 	// 전체 블랙회원 목록 반환
 	public List<MemberDTO> viewBlackList(int n, int m) throws Exception {
-		String sql = "select user_id, user_name, user_nickname, user_join_date from (select member.*, row_number() over(order by user_id) rown from member where user_black = 'Y') where rown between ? and ?";
+		String sql = "select user_id, user_name, user_nickname, user_join_date from (select member.*, row_number() over(order by user_join_date desc) rown from member where user_black = 'Y') where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, n);
@@ -187,7 +187,7 @@ public class adminDAO {
 
 	// 검색된 회원 목록 반환
 	public List<MemberDTO> viewSearchedMemberList(String id, int n, int m) throws Exception {
-		String sql = "select user_id, user_name, user_nickname, user_join_date, user_active from (select member.*, row_number() over(order by user_id) rown from member where user_id != 'admin' and user_black != 'Y' and user_id like ?) where rown between ? and ?";
+		String sql = "select user_id, user_name, user_nickname, user_join_date, user_active from (select member.*, row_number() over(order by user_join_date desc) rown from member where user_id != 'admin' and user_black != 'Y' and user_id like ?) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + id + "%");
@@ -213,7 +213,7 @@ public class adminDAO {
 
 	// 검색된 블랙회원 목록 반환
 	public List<MemberDTO> viewSearchedBlackList(String id, int n, int m) throws Exception {
-		String sql = "select user_id, user_name, user_nickname, user_join_date from (select member.*, row_number() over(order by user_id) rown from member where user_black = 'Y' and user_id like ?) where rown between ? and ?";
+		String sql = "select user_id, user_name, user_nickname, user_join_date from (select member.*, row_number() over(order by user_join_date desc) rown from member where user_black = 'Y' and user_id like ?) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + id + "%");
