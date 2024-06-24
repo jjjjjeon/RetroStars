@@ -45,25 +45,52 @@ public class ReviewDAO {
      * @param gameSeq
      * @return ReviewDTO
      */
-    public ReviewDTO getMostLikedReview(int gameSeq) throws Exception {
-        String sql = "select * from (select * from review where game_seq = ? order by (review_like + review_dislike) desc) where rownum = 1";
+//    public ReviewDTO getMostLikedReview(int gameSeq) throws Exception {
+//        String sql = "select * from (select * from review where game_seq = ? order by (review_like + review_dislike) desc) where rownum = 1";
+//        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+//            pstat.setInt(1, gameSeq);
+//            try (ResultSet rs = pstat.executeQuery()) {
+//                if (rs.next()) {
+//                    return new ReviewDTO(
+//                        rs.getInt("review_seq"),
+//                        rs.getInt("game_seq"),
+//                        rs.getString("user_id"),
+//                        rs.getString("review_content"),
+//                        rs.getInt("review_like"),
+//                        rs.getInt("review_dislike"),
+//                        rs.getTimestamp("review_date")
+//                    );
+//                }
+//            }
+//        }
+//        return null;
+//    }
+    
+    public HashMap<String, ?> getMostLikedReview(int gameSeq) throws Exception {
+        String sql = "select * from (select rownum as rnum, r.*, m.user_nickname, nvl(pi.profile_img_sysname, 'default.png') as profile_url from review r join member m on r.user_id = m.user_id left join user_profile_img pi on r.user_id = pi.user_id where game_seq = ? order by (review_dislike + review_like) desc)";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setInt(1, gameSeq);
             try (ResultSet rs = pstat.executeQuery()) {
+ 
                 if (rs.next()) {
-                    return new ReviewDTO(
-                        rs.getInt("review_seq"),
-                        rs.getInt("game_seq"),
-                        rs.getString("user_id"),
-                        rs.getString("review_content"),
-                        rs.getInt("review_like"),
-                        rs.getInt("review_dislike"),
-                        rs.getTimestamp("review_date")
-                    );
+                	 HashMap map = new HashMap<>();
+                     map.put("reviewSeq", rs.getInt("review_seq"));
+                     map.put("gameSeq", rs.getInt("game_seq"));
+                     map.put("userId", rs.getString("user_id"));
+                     map.put("userNickname", rs.getString("user_nickname"));
+                     map.put("profileUrl", rs.getString("profile_url"));
+                     map.put("reviewContent", rs.getString("review_content"));
+                     map.put("reviewLike", rs.getInt("review_like"));
+                     map.put("reviewDislike", rs.getInt("review_dislike"));
+                     map.put("reviewDate", rs.getTimestamp("review_date"));
+                     return map;
+                 }
+                 return null;
+
                 }
-            }
+
         }
-        return null;
+        
     }
     /** 
      * @Method Name  : getLatestReview

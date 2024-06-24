@@ -25,7 +25,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
-    font-family: 'Georgia', serif;
+    font-family : 'DalseoHealing';
     background-image: url('/image/background.png');
     background-position: center;
     background-size: 100% 100%;
@@ -33,6 +33,110 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+.navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
+       .nav-link {
+            color: white !important;         
+       }
+
+       .nav-link:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+       }
+       .nav-item{
+           align-items: center;
+          display: flex;
+       }
+
+      .btn{
+         color:white;
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
+
+
+      a {
+        text-decoration: none !important;
+     }
+     
+     a:link { color: white; text-decoration: none;}
+      a:visited { color: white; text-decoration: none;}
+     a:hover { color: white; text-decoration: underline;}
+      /*    end navbar css */
+
+        .footer {
+            width: 100%;
+            background-color: #323232;
+            position: relative;
+            margin-top: auto;
+            height: 150px;
+        }
+        .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
+        }
+        .rightfooter {
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
+
+        .iconbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .iconbox a {
+            margin: 0 10px;
+            font-size: 50px;
+            color: white;
+        }
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
+        .coinbox img {
+            width: 120px;
+            height: 100px;
+            margin-left : 20px;
+        }
+        
+        .thumbnail{
+           border-radius: 20px;
+           width: 356px;
+           height: 230px;
+           object-fit: cover;
+        }
 
 nav {
     background-color: #323232;
@@ -119,6 +223,8 @@ nav {
     margin-bottom: -30px;
     position: relative;
     top: -40px;
+    z-index: 1001;
+    
 }
 
 .bookmark-item {
@@ -246,9 +352,6 @@ nav {
 a {
     text-decoration: none !important;
 }
-a:link { color: white; text-decoration: none;}
-a:visited { color: white; text-decoration: none;}
-a:hover { color: white; text-decoration: underline;}
 
 .modal-dialog {
     max-width: 60%;
@@ -276,57 +379,96 @@ a:hover { color: white; text-decoration: underline;}
     background-color: yellow;
     color: black;
 }
+
+#gameBtnBehind {
+	margin-bottom : 30px;
+}
+
+.review{
+	margin-top : 20px;
+	margin-left : 20px;
+}
 </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">ICON</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+           
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 게임 </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/gboard/addGame.jsp">게임 업로드</a></li>
-                            <li><a class="dropdown-item" href="/list.review">리뷰</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 게시판 </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu">
+                           <li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+                     <li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link">랭킹</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
+                    </li>
+                   
+
                 </ul>
                 <c:choose>
-                    <c:when test="${not empty loginId}">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/mypage.member"> <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile"></a></li>
-                            <li class="nav-item"><a class="nav-link" href="/mypage.member">마이페이지</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/logout.member">로그아웃</a></li>
-                        </ul>
-                    </c:when>
-                    <c:otherwise>
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a></li>
-                        </ul>
-                    </c:otherwise>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                       <li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                       </li>
+                   </c:if>   
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
+
+
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
                 </c:choose>
+
             </div>
         </div>
     </nav>
+
     <div class="container">
         <div class="nav-menu">
             <div class="bookmark-menu">
@@ -358,7 +500,7 @@ a:hover { color: white; text-decoration: underline;}
                     <button id="writeReviewBtn" class="btn steamBtn">리뷰 작성</button> 
                 </div>
             </div>
-            <div class="description-section">
+            <div id="description" class="description-section">
                 <div class="media-container">
                     <img src="/upload/${images.get(0)}" alt="Game Description Image">
                 </div>
@@ -367,28 +509,29 @@ a:hover { color: white; text-decoration: underline;}
                     RELEASE DATE: <fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy" />
                 </p>
                 <p>DEVELOPER: ${game.developer}</p>
-                <div class="buttons">
+                <div id="gameBtnBehind" class="buttons">
                     <button class="btn community-button" id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
                     <a href="/list.cboard?category=2" ><button class="btn community-button">공략보기</button></a>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
+                <p> 가장 평가가 많은 리뷰 <p>
             </div>
         </div>
-        <div class="review-content">
-            <div class="media-section" id="mostLikedReviewSection">가장 평가가 많은 리뷰</div>
-            <div class="description-section">
-                <p>가장 최근에 게시된 리뷰</p>
-                <p>RELEASE DATE: 14 June, 2024</p>
-                <p>DEVELOPER: 팀 별빛</p>
-                <p>PUBLISHER: 팀 별빛</p>
-                <p>게임 장르: 무료 플레이, 픽셀 그래픽, RPG, 인디, 어드벤처</p>
-                <div class="buttons">
-                    <button class="btn community-button">찜하기</button>
-                    <button class="btn community-button">팔로우</button>
-                    <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="review-content"> -->
+<!--             <div class="media-section" id="mostLikedReviewSection">가장 평가가 많은 리뷰</div> -->
+<!--             <div class="description-section"> -->
+<!--                 <p>가장 최근에 게시된 리뷰</p> -->
+<!--                 <p>RELEASE DATE: 14 June, 2024</p> -->
+<!--                 <p>DEVELOPER: 팀 별빛</p> -->
+<!--                 <p>PUBLISHER: 팀 별빛</p> -->
+<!--                 <p>게임 장르: 무료 플레이, 픽셀 그래픽, RPG, 인디, 어드벤처</p> -->
+<!--                 <div class="buttons"> -->
+<!--                     <button class="btn community-button">찜하기</button> -->
+<!--                     <button class="btn community-button">팔로우</button> -->
+<!--                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
     </div>
     <div class="footer">
         <div class="footerbox">
@@ -429,10 +572,10 @@ a:hover { color: white; text-decoration: underline;}
     </div>
     <script>
         $(document).ready(function() {
+        
+        	let loginId = '${loginId}';
+        	console.log(loginId);
         	
-            let loginId = '${loginId}';
-            console.log(loginId);
-            let gameSeq = ${game.gameSeq};
         	
             function loadReviews() {
                 $.ajax({
@@ -444,6 +587,8 @@ a:hover { color: white; text-decoration: underline;}
                     }
                 }).done(function(data) {
                     console.log(data);
+                    let description = $('#description');
+                    let gameBtnBehind = $('#gameBtnBehind');
                     let mostLikedReviewSection = $('#mostLikedReviewSection');
                     let icon = '';
 
@@ -451,25 +596,22 @@ a:hover { color: white; text-decoration: underline;}
                         icon = '<i class="fas fa-thumbs-up"></i>';
                     } else if (data.reviewDislike > data.reviewLike && data.reviewDislike >= data.reviewFunny) {
                         icon = '<i class="fas fa-thumbs-down"></i>';
-                    } else {
-                        icon = '<i class="fas fa-laugh"></i>';
-                    }
-
+                    } 
+					
                     let reviewDiv = $('<div>').addClass('review');
 
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                        src: `/upload/${data.profileImage}`,
+                        src: `/profile/default.png`,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
                         alt: 'Profile'
                     });
                     let userNicknameDiv = $('<div>').text(data.userNickname);
-                    let userLevelDiv = $('<div>').text(`Level ${data.userLevel}`);
 
-                    reviewUserInfoDiv.append(userProfileImg, userNicknameDiv, userLevelDiv);
+                    reviewUserInfoDiv.append(userProfileImg, userNicknameDiv);
                     let reviewIconDiv = $('<div>').addClass('review-icon').html(icon);
 
                     reviewHeaderDiv.append(reviewUserInfoDiv, reviewIconDiv);
@@ -477,15 +619,15 @@ a:hover { color: white; text-decoration: underline;}
                     let reviewDateDiv = $('<div>').addClass('review-date').text(data.reviewDate);
                     let reviewContentDiv = $('<div>').addClass('review-content').text(data.reviewContent);
 
-                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?');
+                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?          ');
                     let likeButton = $('<button>').addClass('btn btn-success').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'like')`).html('<i class="fas fa-thumbs-up"></i>');
                     let dislikeButton = $('<button>').addClass('btn btn-danger').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'dislike')`).html('<i class="fas fa-thumbs-down"></i>');
-                    let funnyButton = $('<button>').addClass('btn btn-warning').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'funny')`).html('<i class="fas fa-laugh"></i>');
 
-                    reviewHelpfulDiv.append(likeButton, dislikeButton, funnyButton);
+                    reviewHelpfulDiv.append(likeButton, dislikeButton);
 
                     reviewDiv.append(reviewHeaderDiv, reviewDateDiv, reviewContentDiv, reviewHelpfulDiv);
-                    mostLikedReviewSection.append(reviewDiv);
+
+                    description.append(reviewDiv);
                 });
 
                 $.ajax({
@@ -639,8 +781,15 @@ a:hover { color: white; text-decoration: underline;}
             });
 
             let game;
+            
+            
 
             $("#gameBtn").on("click", function() {
+                if (loginId === '') {
+                    alert("로그인 해주세요.");
+                } else {
+                	
+                
                 let mediaContainer = $('#media-container');
                 mediaContainer.empty();
                 mediaContainer.append('<div id="game" style="padding-bottom: 20px;"></div>');
@@ -676,6 +825,7 @@ a:hover { color: white; text-decoration: underline;}
                             backgroundColor: "#faf8f0",
                             scene: [Main]
                         };
+                        
                         break;
                     case 2:
                         config = {
@@ -758,6 +908,7 @@ a:hover { color: white; text-decoration: underline;}
                 }
 
                 game = new Phaser.Game(config);
+                }
             });
             
             
