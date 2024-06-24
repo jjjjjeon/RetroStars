@@ -1,7 +1,7 @@
-class GameOver extends Phaser.Scene{
+class GameOver3 extends Phaser.Scene{
 
     constructor(){
-        super({key:"GameOver"});
+        super({key:"GameOver3"});
 
     }
     preload(){
