@@ -6,6 +6,7 @@ class Game extends Phaser.Scene {
         this.livesText;
         this.timerEvent;
         this.time = 0;
+        this.gameOver = false;
     }
 
     init(){
@@ -61,24 +62,6 @@ class Game extends Phaser.Scene {
         //     this.timerText.setText(this.timer);
         // }
         
-        if (this.gameOver) {
-	             $.ajax({
-                 url : "/write.playrecord",
-                 data : {
-                 id :  loginId,
-                 gameSeq : gameSeq,
-                 score : this.score,
-                 playtime : this.timer
-                 }
-             }).done(function(resp){
-                 if(resp == "success"){
-                     console.log("게임 플레이 기록 전송 성공!");
-                 }else{
-                     console.log("게임 플레이 기록 전송 실패!");
-                 }
-             });
-            return;
-        }
 
         if (this.cursors.left.isDown) {
             this.paddle.setVelocityX(-500);
@@ -188,9 +171,31 @@ class Game extends Phaser.Scene {
 
         if (this.lives === 0) {
             this.gameOver = true;
+            
+            if (this.gameOver) {
+	             $.ajax({
+                 url : "/write.playrecord",
+                 data : {
+                 id :  loginId,
+                 gameSeq : gameSeq,
+                 score : this.score,
+                 playtime : this.timer
+                 }
+             }).done(function(resp){
+                 if(resp == "success"){
+                     console.log("게임 플레이 기록 전송 성공!");
+                 }else{
+                     console.log("게임 플레이 기록 전송 실패!");
+                 }
+             });
+            return;
+        }
+        
             this.scoreText.setText('Game Over! Final Score: ' + this.score);
             this.scene.start("GameOver");
-            this.physics.pause();
+            
+            
+            //this.physics.pause();
         } else {
             this.resetBall();
         }

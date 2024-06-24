@@ -562,6 +562,7 @@ class Main extends Phaser.Scene {
 //                     console.log("게임 플레이 기록 전송 실패!");
 //                 }
 //             });
+
 }
 
 

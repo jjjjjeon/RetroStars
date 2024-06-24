@@ -553,11 +553,11 @@ public class MemberDAO {
     }
     
     /** 
-     * @Method Name  : 닉네임 중복확인 (본인제외)
-     * @date : 2024. 6. 19. 
+     * @Method Name  : gameBookmark
+     * @date : 2024. 6. 24. 
      * @author : KJY 
      * @version : 
-     * @Method info : 개인 정보 수정 시 닉네임이 존재하는 지 확인.
+     * @Method info : 북마크 된 게임 출력
      * @param String userNickname
      * @param String userId
      * @return boolean
@@ -566,7 +566,7 @@ public class MemberDAO {
     
     public List<String> gameBookmark(String id) throws Exception{
     	
-    	String sql = "select game_seq from g_bookmark where user_id=?";
+    	String sql = "select game_seq from g_bookmark where user_id=? and isgbookmark='Y'";
    	
     	try(Connection con = this.getConnection(); 
     			PreparedStatement pstat = con.prepareStatement(sql);){
