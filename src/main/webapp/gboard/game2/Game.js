@@ -172,12 +172,11 @@ class Game extends Phaser.Scene {
         if (this.lives === 0) {
             this.gameOver = true;
             
-            if (this.gameOver) {
+            
 	             $.ajax({
                  url : "/write.playrecord",
                  data : {
-                 id :  loginId,
-                 gameSeq : gameSeq,
+                 gameSeq : 2,
                  score : this.score,
                  playtime : this.timer
                  }
@@ -188,11 +187,10 @@ class Game extends Phaser.Scene {
                      console.log("게임 플레이 기록 전송 실패!");
                  }
              });
-            return;
-        }
-        
+           
+      
             this.scoreText.setText('Game Over! Final Score: ' + this.score);
-            this.scene.start("GameOver");
+            this.scene.start("GameOver2");
             
             
             //this.physics.pause();
