@@ -76,6 +76,7 @@ public class ReviewController extends HttpServlet {
 
                 if (gameSeqStr != null) {
                     try {
+                    	System.out.println("게임 하나");
                         int gameSeq = Integer.parseInt(gameSeqStr);
                         list = reviewDao.getReviewsByGameSeq(gameSeq, sortType, startNum, endNum);
                         reviewCount = reviewDao.getReviewCountByGameSeq(gameSeq);
@@ -83,9 +84,11 @@ public class ReviewController extends HttpServlet {
                     } catch (NumberFormatException e) {
                     	System.out.println(e);
                         // gameSeq가 숫자가 아닌 경우 전체 리뷰를 보여주도록 설정
+                    	System.out.println("전체구간");
                         list = reviewDao.getAllReviews(sortType, startNum, endNum);
+                        System.out.println(sortType + startNum + endNum + list);
                         reviewCount = reviewDao.getReviewCount();
-                        System.out.println("1번구간");
+                        
                         request.setAttribute("gameSeq", null);
                         
                     }
