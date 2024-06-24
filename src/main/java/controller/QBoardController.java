@@ -1,9 +1,10 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import common.Static;
 import dao.MemberDAO;
 import dao.QBoardDAO;
+import dao.QFileDAO;
 import dto.QBoardDTO;
+import dto.QFileDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -40,21 +45,36 @@ public class QBoardController extends HttpServlet {
 		System.out.println(cmd);
 		QBoardDAO boarddao=QBoardDAO.getInstance();
 		MemberDAO memberdao=MemberDAO.getInstance();
+		QFileDAO filedao=QFileDAO.getInstance();
 		
 		try {
 			if(cmd.equals("/insert.qboard")){
-				String loginId=(String)request.getSession().getAttribute("loginId");
-				String boardWriterNicname=request.getParameter("boardWriterNicname");
-				String strqBoardCategory=request.getParameter("qBoardCategory");
-				int intqBoardCategory= boarddao.getCategory(strqBoardCategory) ;
-				System.out.println(strqBoardCategory);
-				System.out.println(intqBoardCategory);
-				String qBoardTitle= request.getParameter("qBoardTitle");
-				String qBoardContent= request.getParameter("qBoardContent");
-				String qBoardSecret=boarddao.getSecretYN(request.getParameter("qBoardSecret")) ;
+				//파일전송
+				int maxSize=1024*1024*10; //10메가 사이즈 용량제한
+				String realPath=request.getServletContext().getRealPath("qfiles");	//파일 저장 위치
+				System.out.println(realPath);
+				File uploadPath=new File(realPath); //파일인스턴스로 생성해 단순 문자열이 아닌 컨트롤할 수 있도록 변경
+				if(!uploadPath.exists()) {
+					uploadPath.mkdir(); //파일 업로드 폴더가 존재하지 않을 경우 직접 생성하는 코드
+				}
 				
-				System.out.println(loginId+intqBoardCategory+qBoardTitle+qBoardContent+qBoardSecret);	
-				boarddao.insert(new QBoardDTO(0,loginId,intqBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
+				MultipartRequest multi=new MultipartRequest(request, realPath, maxSize, "UTF8", new DefaultFileRenamePolicy());
+				String loginId=(String)request.getSession().getAttribute("loginId");
+				String boardWriterNicname=multi.getParameter("boardWriterNicname");
+				String strqBoardCategory=multi.getParameter("qBoardCategory");
+				int intqBoardCategory= boarddao.getCategory(strqBoardCategory);
+				String qBoardTitle= multi.getParameter("qBoardTitle");
+				String qBoardContent= multi.getParameter("qBoardContent");
+				String qBoardSecret=boarddao.getSecretYN(multi.getParameter("qBoardSecret")) ;
+				
+				//System.out.println("전체"+loginId+intqBoardCategory+qBoardTitle+qBoardContent+qBoardSecret);	
+				int parent_seq=boarddao.insert(new QBoardDTO(0,loginId,intqBoardCategory,qBoardTitle,qBoardContent,null,"N",qBoardSecret));
+				String oriName=multi.getOriginalFileName("file"); //업로드 당시 파일 이름
+				String sysName=multi.getFilesystemName("file"); //저장된 파일 이름
+				if(oriName!=null) {
+					filedao.insert(new QFileDTO(0,oriName,sysName,parent_seq));
+				}
+				
 				response.sendRedirect("/list.qboard");
 				
 			}else if(cmd.equals("/list.qboard")) {
@@ -103,6 +123,9 @@ public class QBoardController extends HttpServlet {
 				boolean isAdmin=memberdao.isAdmin(loginId);
 				String loginnickname=memberdao.getNickname(loginId);
 				HashMap<String,?> dto=boarddao.selectcontent(seq);
+				QFileDTO file=filedao.selectByParentSeq(seq);
+				
+				request.setAttribute("file", file);
 				request.setAttribute("dto", dto);
 				request.setAttribute("loginId", loginId);
 				request.setAttribute("isAdmin", isAdmin);

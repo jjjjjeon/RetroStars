@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -484,8 +485,16 @@ nav {
 				<div class="post-body">
 					<div id="post-content" contenteditable="false">${dto.qBoardContent}</div>
 				</div>
+				<c:choose>
+					    <c:when test="${file != null}">
+					    <div style="float: left; color: white; padding-left: 10px; padding-top: 10px">
+					        <span>파일다운로드▷ </span><a href="/download.qfile?oriname=${file.qFileOriname}&sysname=${file.qFileSysname}">${file.qFileSysname}</a>
+					    </div>
+					    </c:when>
+				</c:choose>
 			</div>
 		</div>
+		
 		<div class="btnsdiv">
 			<button class="backlist btn btn-secondary" type="button"
 				onclick="location.href='/list.qboard'">목록으로</button>

@@ -373,7 +373,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container col">
         <div class="boardwritername_container row" style="flex: 1;color:white;">
             <div class="col" style="flex: 1; display: inline;">
@@ -401,15 +400,22 @@
                 <label for="secret" style="color:white;"><input name="qBoardSecret" type="checkbox" id="secret" style="margin-right:10px;" class="custom-checkbox">비밀글</label>
             </div>
         </div>
-        <div class="contents_container center" style="flex: 6; width: 100%;">
+        <div class="contents_container center" style="flex: 5; width: 100%;">
             <div id="contents_detail" contenteditable="true"></div>
+        </div>  
+       <form id="myForm" action="/insert.qboard" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="boardwriterNicname" name="boardWriterNicname">
+            <input type="hidden" id="qBoardCategory" name="qBoardCategory">
+            <input type="hidden" id="qBoardTitle" name="qBoardTitle">
             <input type="hidden" id="qBoardContent" name="qBoardContent">
-        </div>
-        <div class="btns_container" style="flex: 1; width: 100%;">
-            <button id="back_btn" class="btn btn-secondary" type="button" onclick="location.href='/list.qboard'">취소</button>
-            <button id="insert_btn" class="btn btn-primary" >등록</button>
-        </div>
-    </div>
+            <input type="hidden" id="qBoardSecret" name="qBoardSecret">
+            <input id="fileinput" type="file" name="file" multiple style="padding-left:100px; padding-top:5px;">
+            <div class="btns_container" style="flex: 1; width: 100%;">
+                <button id="back_btn" class="btn btn-secondary" type="button" onclick="location.href='/list.qboard'">취소</button>
+                <button id="insert_btn" class="btn btn-primary" type="submit">등록</button>
+            </div>
+        </form>
+    </div>    
 	<!-- FOOTER CSS -->
 <div class="footer">
         <div class="footerbox">
@@ -434,8 +440,24 @@
 			
 			<script>
 			
+			 /*let input = document.getElementById('fileinput');
+			    let output = document.getElementById('output');
+
+			    document.getElementById('fileinput').addEventListener('input', (event) => {
+			        let files = event.target.files;
+			        if (files.length > 5) {
+			            alert("최대 5개 파일까지만 첨부할 수 있습니다.");
+			            input.value = ""; // 파일 선택 초기화
+			            output.textContent = "";
+			        } else {
+			            output.textContent = Array.from(files).map(file => file.name).join('\n');
+			        }
+			    });*/
+
+			
 			 $("#insert_btn").on("click", function () {
-					console.log($("#categoryToggle").html());
+				 event.preventDefault(); // 기본 제출 동작 막기
+				 //console.log($("#categoryToggle").html());
 				 
 				 if( $("#categoryToggle").html()=="카테고리"){
 					 alert("카테고리를 선택해주세요.");
@@ -452,37 +474,18 @@
 					 return false;
 				 }
 				 
+				console.log($("#contents_detail").html().trim());
 				 
-                   let form = $('<form>', {
-                        action: '/insert.qboard',
-                        method: 'post'
-                   }); // 동적 form 생성
-                   
-                // 추가할 폼 데이터를 배열에 담습니다.
-   				let formData = [ $('<input>', {
-   					type : 'hidden',
-   					name : 'boardWriterNicname',
-   					value : $("#boardwriter_div").text()
-   				}),$('<input>', {
-   					type : 'hidden',
-   					name : 'qBoardCategory',
-   					value :$("#categoryToggle").text()
-   				}), $('<input>', {
-   					type : 'hidden',
-   					name : 'qBoardTitle',
-   					value :  $("#title_input").val().trim()
-   				}),$('<input>', {
-   					type : 'hidden',
-   					name : 'qBoardContent',
-   					value : $("#contents_detail").html().trim()
-   				}), $('<input>', {
-   					type : 'hidden',
-   					name : 'qBoardSecret',
-   					value : $('#secret').prop('checked')
-   				}) ];
-               
-             		form.append(formData);
-             		form.appendTo('body').submit();
+				 // 폼 데이터 설정
+			        document.getElementById("boardwriterNicname").value = $("#boardwriter_div").text();
+			        document.getElementById("qBoardCategory").value = $("#categoryToggle").text();
+			        document.getElementById("qBoardTitle").value = $("#title_input").val().trim();
+			        document.getElementById("qBoardContent").value = $("#contents_detail").html().trim();
+			        document.getElementById("qBoardSecret").value = $('#secret').prop('checked');
+
+			        // 폼 제출
+			        document.getElementById("myForm").submit();
+             	
                  
          	});
 			 
