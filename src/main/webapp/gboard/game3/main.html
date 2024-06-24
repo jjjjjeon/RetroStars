@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+
+    <script src="GameOver.js"></script>
+    <script src="Exam03.js"></script>
+    <style>
+        #gamebox{
+            width: 800px;
+            height: 600px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="gamebox"></div>
+    <div class="" id="timer"></div>
+    <script>
+        let config={
+            type:Phaser.AUTO,
+            parent:"gamebox",
+            width:800,
+            height:600,
+            physics:{
+                default:"arcade",
+                arcade:{
+                    //gravity: {y:1000}, //중력 속성 차이점 갈수록 빨라질 수 있다.
+                    //debug:true
+                }
+            },
+            scene: [Exam03, GameOver]
+        };
+            
+        let game=new Phaser.Game(config);
+    </script>
+    
+</body>
+</html>

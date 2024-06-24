@@ -219,25 +219,61 @@ public class GameDAO {
 		return null;
 	}
 	
-	  /** 
-     * @Method Name  : 게임 게시판 북마크 
-     * @date : 2024. 6. 18. 
-     * @author : Jin 
-     * @version : 
-     * @Method info : mainGboard.jsp 찜하기 누르면 북마크된다..
-     * @param id
-     * @param gameSeq
-     * @return 
-     * @throws Exception 
-     */ 
-	public void addGameBookmark(String id, int gameSeq) throws Exception{
-		String sql = "insert into g_bookmark values(g_bookmark_sequence.nextval, ?, ?)";
-		
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
-			pstat.setInt(1, gameSeq);
-			pstat.setString(2, id);
-			pstat.executeUpdate();
-		}
+	/**
+	 * @Method Name  : addGameBookmark
+	 * @date : 2024. 6. 23.
+	 * @author : JJH
+	 * @param id
+	 * @param gameSeq
+	 * @throws Exception
+	 * @description : 게임을 북마크에 추가합니다.
+	 */
+	public void addGameBookmark(String id, int gameSeq) throws Exception {
+	    String sql = "insert into g_bookmark (g_bookmark_seq, game_seq, user_id, isgbookmark) values (g_bookmark_sequence.nextval, ?, ?, 'Y')";
+	    
+	    try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, gameSeq);
+	        pstat.setString(2, id);
+	        pstat.executeUpdate();
+	    }
+	}
+
+	/**
+	 * @Method Name  : removeGameBookmark
+	 * @date : 2024. 6. 23.
+	 * @param id
+	 * @param gameSeq
+	 * @throws Exception
+	 * @description : 게임을 북마크에서 제거합니다.
+	 */
+	public void removeGameBookmark(String id, int gameSeq) throws Exception {
+	    String sql = "update g_bookmark set isgbookmark = 'N' where game_seq = ? and user_id = ?";
+	    
+	    try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, gameSeq);
+	        pstat.setString(2, id);
+	        pstat.executeUpdate();
+	    }
+	}
+
+	/**
+	 * @Method Name  : isGameBookmarked
+	 * @date : 2024. 6. 23.
+	 * @param id
+	 * @param gameSeq
+	 * @return boolean
+	 * @throws Exception
+	 * @description : 게임이 북마크에 있는지 확인합니다.
+	 */
+	public boolean isGameBookmarked(String id, int gameSeq) throws Exception {
+	    String sql = "select isgbookmark from g_bookmark where game_seq = ? and user_id = ? and isgbookmark = 'Y'";
+	    
+	    try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, gameSeq);
+	        pstat.setString(2, id);
+	        ResultSet rs = pstat.executeQuery();
+	        return rs.next();
+	    }
 	}
 	
 	

@@ -11,7 +11,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
-<script src="/gboard/main.js"></script>
+<script src="/gboard/game1/main.js"></script>
+<script src="/gboard/game3/GameOver.js"></script>
+<script src="/gboard/game3/Exam03.js"></script>
+<script src="/gboard/game2/Game.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
@@ -164,6 +167,7 @@ nav {
 .main-content {
     display: flex;
     gap: 20px;
+    height : 750px
 }
 
 .review-content {
@@ -232,12 +236,39 @@ nav {
 .buttons button {
     width: 100px;
 }
-        a {
-          text-decoration: none !important;
-      }
-       a:link { color: white; text-decoration: none;}
-       a:visited { color: white; text-decoration: none;}
-       a:hover { color: white; text-decoration: underline;}
+a {
+    text-decoration: none !important;
+}
+a:link { color: white; text-decoration: none;}
+a:visited { color: white; text-decoration: none;}
+a:hover { color: white; text-decoration: underline;}
+
+.modal-dialog {
+    max-width: 60%;
+    margin: 15rem auto; 
+}
+.modal-content {
+    color: black;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 1rem;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+}
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+.bookmark-active {
+    background-color: yellow;
+    color: black;
+}
 </style>
 </head>
 <body>
@@ -330,7 +361,7 @@ nav {
                 </p>
                 <p>DEVELOPER: ${game.developer}</p>
                 <div class="buttons">
-                    <button class="btn community-button" id="addGameBookmarkBtn">찜하기</button>
+                    <button class="btn community-button" id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
                     <a href="/list.cboard?category=2" ><button class="btn community-button">공략보기</button></a>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
@@ -381,7 +412,7 @@ nav {
                     <form id="reviewForm">
                         <div class="mb-3">
                             <label for="reviewContent" class="form-label">리뷰 내용</label>
-                            <textarea class="form-control" id="reviewContent" rows="3"></textarea>
+                            <textarea class="form-control" id="reviewContent" rows="5"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">제출</button>
                     </form>
@@ -391,6 +422,10 @@ nav {
     </div>
     <script>
         $(document).ready(function() {
+        	
+            let loginId = '${loginId}';
+            let gameSeq = ${game.gameSeq};
+        	
             function loadReviews() {
                 $.ajax({
                     url: "/mostLiked.review",
@@ -526,31 +561,50 @@ nav {
             });
 
             $("#addGameBookmarkBtn").on("click", function() {
-                $.ajax({
-                    url: "/addGameBookmark.gboard",
-                    method: "POST",
-                    dataType: "json",
-                    data: {
-                        gameSeq: ${game.gameSeq}
-                    }
-                }).done(function(response) {
-                    console.log(response);
-                    alert("해당 게임 북마크.");
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error("에러: " + textStatus, errorThrown);
-                    alert("북마크 추가 중 오류가 발생했습니다.");
-                });
+                if (loginId === '') {
+                    alert("로그인 해주세요.");
+                } else {
+                    $.ajax({
+                        url: "/toggleGameBookmark.gboard",
+                        method: "POST",
+                        data: {
+                            gameSeq: ${game.gameSeq}
+                        }
+                    }).done(function(response) {
+                        if (response === "added") {
+                            $("#addGameBookmarkBtn").addClass("bookmark-active").text('★');
+                        } else if (response === "removed") {
+                            if (confirm("북마크를 취소하시겠습니까?")) {
+                                $("#addGameBookmarkBtn").removeClass("bookmark-active").text('찜하기');
+                                alert("북마크 취소 완료.");
+                            } else {
+                               
+                                $.ajax({
+                                    url: "/toggleGameBookmark.gboard",
+                                    method: "POST",
+                                    data: {
+                                        gameSeq: ${game.gameSeq}
+                                    }
+                                }).done(function() {
+                                    $("#addGameBookmarkBtn").addClass("bookmark-active").text('★');
+                                    alert("북마크가 유지되었습니다.");
+                                });
+                            }
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        console.error("에러: " + textStatus, errorThrown);
+                        alert("북마크 추가 중 오류가 발생했습니다.");
+                    });
+                }
             });
-
-            $("#testSome").on("click", function(){
-                alert("확인");
-            });
-
 
             $("#writeReviewBtn").on("click", function(){
-                $("#reviewModal").modal("show");
+                if (loginId === '') {
+                    alert("로그인 해주세요.");
+                } else {
+                    $("#reviewModal").modal("show");
+                }
             });
-
 
             $("#reviewForm").on("submit", function(e) {
                 e.preventDefault();
@@ -576,10 +630,12 @@ nav {
                 });
             });
 
+            let game;
+
             $("#gameBtn").on("click", function() {
                 let mediaContainer = $('#media-container');
                 mediaContainer.empty();
-                mediaContainer.append('<div id="game" style="padding-bottom: 20px;"></div>'); 
+                mediaContainer.append('<div id="game" style="padding-bottom: 20px;"></div>');
 
                 let containerWidth = mediaContainer.width();
                 let containerHeight = mediaContainer.height();
@@ -596,16 +652,77 @@ nav {
                 let config = {
                     type: Phaser.AUTO,
                     width: containerWidth,
-                    height: containerHeight, 
+                    height: containerHeight,
                     parent: "game",
                     backgroundColor: "#faf8f0",
-                    scene: [Main]
+                    scene: []
                 };
-                let game = new Phaser.Game(config);
+
+                switch (${game.gameSeq}) {
+                    case 1:
+                        config = {
+                            type: Phaser.AUTO,
+                            width: containerWidth,
+                            height: containerHeight,
+                            parent: "game",
+                            backgroundColor: "#faf8f0",
+                            scene: [Main]
+                        };
+                        break;
+                    case 2:
+                        config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                            physics: {
+                                default: 'arcade',
+                                arcade: {
+                                    gravity: { y: 0 }
+                                    //,debug: true
+                                }
+                            },
+                            scene: [Game, GameOver]
+                        };
+                        break;
+                    case 3:
+                        config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                            physics: {
+                                default: "arcade",
+                                arcade: {
+                                    //gravity: { y: 1000 }, // 중력 속성 차이점 갈수록 빨라질 수 있다.
+                                    //debug: true
+                                }
+                            },
+                            scene: [Exam03, GameOver]
+                        };
+                        break;
+                    default:
+                        config = {
+                            type: Phaser.AUTO,
+                            width: containerWidth,
+                            height: containerHeight,
+                            parent: "game",
+                            backgroundColor: "#faf8f0",
+                            scene: [Main]
+                        };
+                        break;
+                }
+
+                if (game) {
+                    game.destroy(true);
+                }
+
+                game = new Phaser.Game(config);
             });
+            
+            
 
         });
     </script>
-
 </body>
 </html>

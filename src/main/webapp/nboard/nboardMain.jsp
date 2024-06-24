@@ -50,35 +50,45 @@ body{background-image:url("/image/background.png");
        .navbar-brand{
           color:white;
        }
-        /* 랭킹, 마이페이지 폰트 색상과 호버 효과 */
-        .nav-link {
-            color: white !important;
-        }
+       .nav-link {
+            color: white !important;			
+       }
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+       .nav-link:hover {
+ 			background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-        }
-      	.nav-item .btn{
+       }
+       .nav-item{
+           align-items: center;
+    	   display: flex;
+       }
+
+      .btn{
          color:white;
-      	}
-      	.nav-item .btn:hover{
-         	color:white;
-      	}
-      	.dropdown-menu{
-         	background-color: #323232;
-      	}
-      	.dropdown-item{
-         	background-color: #323232;
-         	color:white;
-      	}
-        a {
-		    text-decoration: none !important;
-		}
-		 a:link { color: white; text-decoration: none;}
-		 a:visited { color: white; text-decoration: none;}
-		 a:hover { color: white; text-decoration: underline;}
-		/*end navbar css*/	 
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
+
+
+      a {
+		  text-decoration: none !important;
+	  }
+	  
+	  a:link { color: white; text-decoration: none;}
+ 	  a:visited { color: white; text-decoration: none;}
+	  a:hover { color: white; text-decoration: underline;}
+      /*    end navbar css */	 
 	
       
     .container {
@@ -280,7 +290,8 @@ body{background-image:url("/image/background.png");
 <body>
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -292,6 +303,7 @@ body{background-image:url("/image/background.png");
                         <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게임
                         </button>
+
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">game1</a></li>
                             <li><a class="dropdown-item" href="#">game2</a></li>
@@ -305,16 +317,16 @@ body{background-image:url("/image/background.png");
                             게시판
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
+                        <a class="nav-link" href="/list.rboard">랭킹</a>
                     </li>
                    
 
@@ -322,17 +334,23 @@ body{background-image:url("/image/background.png");
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
                     <li class="nav-item">
                        <a class="nav-link" href="/mypage.member">
-                           <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
                        </a>
-                   </li>                  
-                      <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">마이페이지</a>
-                       </li>
-                       <li class="nav-item">
-                           <a class="nav-link" href="/logout.member">로그아웃</a>
-                       </li>
+                    </li>                  
+
+
                    </ul>                          
                    </c:when>
                    <c:otherwise>

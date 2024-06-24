@@ -50,7 +50,9 @@ public class GBoardController extends HttpServlet {
             if (cmd.equals("/list.gboard")) {
                 System.out.println("확인");
                 List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
+                String loginId = (String) request.getSession().getAttribute("loginId");
                 request.setAttribute("listGame", listGame);
+                request.setAttribute("loginId", loginId); 
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
             } else if (cmd.equals("/viewGame.gboard")) {
@@ -62,23 +64,31 @@ public class GBoardController extends HttpServlet {
                 String gameVideoStr = gameDao.getGameVideo(gameSeq);
                 System.out.println(gameVideoStr);
                 List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
+                String loginId = (String) request.getSession().getAttribute("loginId");
                 request.setAttribute("listGame", listGame);
+                request.setAttribute("loginId", loginId); 
                 request.setAttribute("game", game);
                 request.setAttribute("images", listGameImage);
                 request.setAttribute("videoUrl", gameVideoStr);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
-            } else if (cmd.equals("/addGameBookmark.gboard")) {
-            	String id = (String) request.getSession().getAttribute("loginId");
-            	int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
-            	
-            	gameDao.addGameBookmark(id, gameSeq);
-            	System.out.println("북마크 완료");
+            } else if (cmd.equals("/toggleGameBookmark.gboard")) {
+                String id = (String) request.getSession().getAttribute("loginId");
+                System.out.println(id);
+                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+
+                if (gameDao.isGameBookmarked(id, gameSeq)) {
+                    gameDao.removeGameBookmark(id, gameSeq);
+                    response.getWriter().write("removed");
+                } else {
+                    gameDao.addGameBookmark(id, gameSeq);
+                    response.getWriter().write("added");
+                }
+                return;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
         }
 		
 	}

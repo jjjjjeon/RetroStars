@@ -53,7 +53,7 @@
         }
 
         .container {
-            width: 1200px;
+            width: 1100px;
             margin: 0 auto;
             margin-top:24px;
             margin-bottom:25px;
@@ -66,8 +66,8 @@
         
         .search{height:40px; width:100%;}	
         #search_box{display:flex; justify-content:space-evenly; margin-top:20px;}	
-        #search_kind_box{width:20%; height:90%;} 
-        #category_box{width:20%; height:90%;}       
+        #search_kind_box{width:15%; height:90%; } 
+        #category_box{width:15%; height:90%;}       
         .search-place{width:45%;display:flex; height:90%;}
         #search_btn{width:10%;height:90%;}
         #write_btn{ width:10%; height:90%}

@@ -210,7 +210,7 @@ input[type="text" i] {
 }
 
 .navbar {
-	position:fixed;
+	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 1000;
@@ -319,7 +319,10 @@ input[type="text" i] {
 	<div class="header">
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="/index.jsp">홈으로</a>
+
+				<a class="navbar-brand" href="/index.jsp"><img
+					src="/image/headerlogo.png" alt=""
+					style="width: 80px; height: 60px;"></a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
 					aria-controls="navbarNavDarkDropdown" aria-expanded="false"
@@ -344,15 +347,16 @@ input[type="text" i] {
 							<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
 								aria-expanded="false">게시판</button>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-								<li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-								<li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-								<li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+								<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+								<li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+								<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+								<li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
 								<li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-								<li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+
 							</ul>
 						</li>
-						<li class="nav-item"><a class="nav-link">랭킹</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/list.playrecord">랭킹</a></li>
 
 
 					</ul>
@@ -362,18 +366,18 @@ input[type="text" i] {
 
 								<c:if test="${isAdmin eq true}">
 									<li class="nav-item"><a class="nav-link"
-										href="/dashBoard.admin" target="_blank">관리자페이지</a></li>
+										href="/dashBoard.admin">관리자페이지</a></li>
 								</c:if>
+								<li class="nav-item"><a class="nav-link"
+									href="/logout.member">로그아웃</a></li>
 
 								<li class="nav-item"><a class="nav-link"
 									href="/mypage.member"> <img
 										src="/profile/${userProfileUrl}" class="rounded-circle"
 										width="40" height="40" alt="Profile">
 								</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="/mypage.member">마이페이지</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="/logout.member">로그아웃</a></li>
+
+
 							</ul>
 						</c:when>
 						<c:otherwise>
