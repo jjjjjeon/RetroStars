@@ -19,7 +19,8 @@
 
    body{
       background-color : #222; 
-      color: #d3d3d3;
+/*       color: #d3d3d3; */
+		color:white;
         font-family: 'Noto Sans KR', sans-serif;
         display: flex;
         flex-direction: column;
@@ -34,47 +35,61 @@
         color: #d3d3d3;
     }
     
-	    .navbar {
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 1000;
-		height: 70px;
-		background-color: #323232;
-	}
-	
-	.navbar-brand {
-		color: white;
-	}
-	
-.nav-link {
-	color: white !important;
-}
+	/*  HEADER CSS  */
+	   .navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
+       .nav-link {
+            color: white !important;         
+       }
 
-.nav-link:hover {
-	background-color: rgba(255, 255, 255, 0.2);
-	border-radius: 10px;
-}
+       .nav-link:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+       }
+       .nav-item{
+           align-items: center;
+          display: flex;
+       }
 
-.btn {
-	color: white;
-}
+      .btn{
+         color:white;
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
 
-.btn:hover {
-	color: white;
-}
 
-.dropdown-menu {
-	background-color: #323232;
-}
+      a {
+        text-decoration: none !important;
+      }
+     
+      a:link { color: white; text-decoration: none;}
+      a:visited { color: white; text-decoration: none;}
+      a:hover { color: white; text-decoration: underline;}
+      /*    end navbar css */
 
-.dropdown-item {
-	background-color: #323232;
-	color: white;
-}
 
+	/*header css*/
     .header {
-        height: 220px;
+        height: 250px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -94,6 +109,7 @@
 
     .header #headerTitle {
         margin-top: 70px;
+        font-size:30px;
     }
 
     .navi {
@@ -101,18 +117,18 @@
         width: 100%;
         height: 80px;
         background: #111;
-        border: 1px solid #5a5a64;
         border-left: 0;
         border-right: 0;
         text-align: center;
         font-size: 0;
+        margin-bottom : 50px;
     }
 
     .navi a {
         display: inline-block;
         margin: 0 25px;
-        color: #898c92;
-        font-size: 24px;
+        color: white;
+        font-size: 20px;
         line-height: 77px;
     }
 
@@ -123,34 +139,33 @@
 
     .content {
         flex: 1;
-        width: 80%;
+        width: 1280px;
         margin: 30px auto;
-        background-color: #222;
         color: #d3d3d3;
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .review-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         border-bottom: 1px solid #5a5a64;
     }
 
     .review-header h3 {
         color: white;
+        font-size:15px;
     }
 
     .review-list {
-        margin-top: 20px;
+/*         margin-top: 20px; */
     }
 
     .review-item {
         padding: 20px;
-        border-bottom: 1px solid #5a5a64;
+        border-bottom: 1px solid #313131;
     }
 
     .review-item:last-child {
@@ -177,8 +192,14 @@
     }
 
     .review-item .review-text {
-        margin: 10px 0;
-        font-size: 16px;
+    	margin: 10px 0;
+    	font-size: 18px;
+    	font-weight: bold;
+    	background-color: #b4bdd433;
+    	height: 80px;
+    	border-radius: 20px;
+    	padding: 10px;
+    	color:white;
     }
 
     .review-item .review-rating {
@@ -191,7 +212,20 @@
         align-items: center;
         margin-top: 20px;
     }
-
+	.delete-review-btn{
+	    width: 60px;
+    	height: 40px;
+    	border: none;
+    	border-radius: 20px;
+    	font-weight: bold;
+    	background-color:black;
+    	color:white;
+	}
+	.delete-review-btn:hover{
+		background-color:white;
+		color:black;
+		transition:0.2s;
+	}
     .sort-buttons {
         display: flex;
         gap: 10px;
@@ -206,8 +240,9 @@
         cursor: pointer;
     }
 
+
     .sort-buttons button.active {
-        background-color: #0056b3;
+        background-color: #ff463e;
     }
 
     .pagination {
@@ -219,14 +254,16 @@
     .pagination a {
         margin: 0 5px;
         padding: 5px 10px;
-        background-color: #007bff;
-        color: white;
+        background-color: #595959;
+        color:white;
+		font-weight:bold;
         text-decoration: none;
         border-radius: 5px;
     }
 
     .pagination a.active {
-        background-color: #0056b3;
+        background-color: white;
+        color:black;
     }
 
     .footer {
@@ -301,81 +338,85 @@
 </head>
 
 <body>
- 		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid">
 
-				<a class="navbar-brand" href="/index.jsp"><img
-					src="/image/headerlogo.png" alt=""
-					style="width: 80px; height: 60px;"></a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
-					aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-					<ul class="navbar-nav">
-						<li class="nav-item dropdown">
-							<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
-								aria-expanded="false">게임</button>
+ <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+           
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
 
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">game1</a></li>
-								<li><a class="dropdown-item" href="#">game2</a></li>
-								<li><a class="dropdown-item" href="#">game3</a></li>
-								<li><a class="dropdown-item" href="#">game4</a></li>
-								<li><a class="dropdown-item" href="#">game5</a></li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown">
-							<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
-								aria-expanded="false">게시판</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
-								<li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
-								<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
-								<li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
-								<li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu">
+                           <li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+                     <li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
+                    </li>
+                   
 
-							</ul>
-						</li>
-						<li class="nav-item"><a class="nav-link"
-							href="/list.playrecord">랭킹</a></li>
+                </ul>
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                       <li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                       </li>
+                   </c:if>   
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
 
 
-					</ul>
-					<c:choose>
-						<c:when test="${not empty loginId}">
-							<ul class="navbar-nav ms-auto">
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
 
-								<c:if test="${isAdmin eq true}">
-									<li class="nav-item"><a class="nav-link"
-										href="/dashBoard.admin">관리자페이지</a></li>
-								</c:if>
-								<li class="nav-item"><a class="nav-link"
-									href="/logout.member">로그아웃</a></li>
+            </div>
+        </div>
+    </nav>
 
-								<li class="nav-item"><a class="nav-link"
-									href="/mypage.member"> <img
-										src="/profile/${userProfileUrl}" class="rounded-circle"
-										width="40" height="40" alt="Profile">
-								</a></li>
-
-
-							</ul>
-						</c:when>
-						<c:otherwise>
-							<ul class="navbar-nav ms-auto">
-								<li class="nav-item"><a class="nav-link"
-									href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-								</li>
-							</ul>
-						</c:otherwise>
-					</c:choose>
-
-				</div>
-			</div>
-		</nav>
 
     <div class="header">
 		<p id="headerTitle">리뷰게시판</p>
@@ -383,11 +424,11 @@
 
 	<div class="navi">
 	    <a href="/list.review" class="${empty param.gameSeq ? 'active' : ''}">전체</a>
-	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">Game 1</a>
-	    <a href="/list.review?gameSeq=2" class="${param.gameSeq == '2' ? 'active' : ''}">Game 2</a>
-	    <a href="/list.review?gameSeq=3" class="${param.gameSeq == '3' ? 'active' : ''}">Game 3</a>
-	    <a href="/list.review?gameSeq=4" class="${param.gameSeq == '4' ? 'active' : ''}">Game 4</a>
-	    <a href="/list.review?gameSeq=5" class="${param.gameSeq == '5' ? 'active' : ''}">Game 5</a>
+	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">2048</a>
+	    <a href="/list.review?gameSeq=2" class="${param.gameSeq == '2' ? 'active' : ''}">GOLD BREAK!</a>
+	    <a href="/list.review?gameSeq=3" class="${param.gameSeq == '3' ? 'active' : ''}">ICE CUBY</a>
+	    <a href="/list.review?gameSeq=4" class="${param.gameSeq == '4' ? 'active' : ''}">똥 피하기</a>
+	    <a href="/list.review?gameSeq=5" class="${param.gameSeq == '5' ? 'active' : ''}">탈출하기</a>
 	</div>
 
     <div class="content">

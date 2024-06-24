@@ -20,6 +20,12 @@ class GameOver extends Phaser.Scene {
         }).setOrigin(0.5);
 
 
+        // 점수 표시
+        this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2 - 20, `Score: ${this.score}`, {
+            fontSize: "40px",
+            fill: "#000000"
+        }).setOrigin(0.5);
+        
         let restartButton = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2 + 60, "Restart", {
             fontSize: "35px",
             fill: "#FF0000"
