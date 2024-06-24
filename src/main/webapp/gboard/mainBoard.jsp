@@ -13,11 +13,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
 <script src="/gboard/game1/main.js"></script>
 <script src="/gboard/game2/Game.js"></script>
-<script src="/gboard/game3/GameOver.js"></script>
+<script src="/gboard/game2/GameOver2.js"></script>
 <script src="/gboard/game3/Exam03.js"></script>
-<script src="/gboard/game4/Exam02.js"></script>
-<script src="/gboard/game4/GameOver.js"></script>
+<script src="/gboard/game3/GameOver3.js"></script>
 <script src="/gboard/game4/Intro.js"></script>
+<script src="/gboard/game4/Exam02.js"></script>
+<script src="/gboard/game4/GameOver4.js"></script>
 <script src="/gboard/game5/js/MainScene.js"></script>
 <script src="/gboard/game5/js/survival-game.js"></script>
 
@@ -689,7 +690,7 @@ a:hover { color: white; text-decoration: underline;}
                                     //,debug: true
                                 }
                             },
-                            scene: [Game, GameOver]
+                            scene: [Game, GameOver2]
                         };
                         break;
                     case 3:
@@ -705,7 +706,7 @@ a:hover { color: white; text-decoration: underline;}
                                     //debug: true
                                 }
                             },
-                            scene: [Exam03, GameOver]
+                            scene: [Exam03, GameOver3]
                         };
                         break;
                     case 4:
@@ -721,7 +722,7 @@ a:hover { color: white; text-decoration: underline;}
                                     //debug: true
                                 }
                             },
-                            scene: [Intro, Exam02, GameOver]
+                            scene: [Intro, Exam02, GameOver4]
                         };
                         break;
 //                     case 5:

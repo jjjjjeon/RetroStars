@@ -13,7 +13,7 @@ class Main extends Phaser.Scene {
         this.frame = 0;
         this.timer = 0;
         this.isGameOver = false;
-
+		this.gameSeq = 1;
         this.boardContainer = null;
         this.scoreText = null;
         this.bestScoreText = null;
@@ -200,9 +200,8 @@ class Main extends Phaser.Scene {
 
              $.ajax({
                  url : "/write.playrecord",
-                 data : {
-                 id :  loginId,
-                 gameSeq : gameSeq,
+                 data : {               
+                 gameSeq : this.gameSeq,
                  score : this.score,
                  playtime : this.timer
                  }

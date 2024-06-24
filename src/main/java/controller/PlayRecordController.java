@@ -92,7 +92,7 @@ public class PlayRecordController extends HttpServlet {
 
 	        	if(cmd.equals("/write.playrecord")) {
 	        		int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
-	        		String playId = request.getParameter("id");
+	        		String playId = (String) session.getAttribute("loginId");
 	        		int gameTime = Integer.parseInt(request.getParameter("playtime"));
 	        		int gameScore = Integer.parseInt(request.getParameter("score"));
 	        		int result = playRecordDao.addPlayRecord(new PlayRecordDTO(0, gameSeq, playId, null, gameTime, gameScore));
