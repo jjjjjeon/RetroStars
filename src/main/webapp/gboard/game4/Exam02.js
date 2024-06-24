@@ -72,7 +72,6 @@ class Exam02 extends Phaser.Scene {
             	$.ajax({
 					url:"/write.playrecord",
 					data:{
-//					id:loginId,
 					gameSeq:4,
 					playtime: this.timer
 					}

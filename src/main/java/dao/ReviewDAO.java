@@ -185,7 +185,7 @@ public class ReviewDAO {
      * @return ArrayList<HashMap<String, ?>>
      */
     public ArrayList<HashMap<String, ?>> getAllReviews(String sortType, int startNum, int endNum) throws Exception {
-        String sql = "select * from (select rownum as rnum, a.* from (select * from review order by " + sortType + " desc) a where rownum <= ?) where rnum >= ?";
+        String sql = "select * from (select r.*, m.user_nickname, nvl(pi.profile_img_sysname, 'default.png') AS profile_url, rownum AS rnum from review r  join member m ON r.user_id = m.user_id   left join user_profile_img pi ON r.user_id = pi.user_id order by " + sortType + " desc) WHERE rnum BETWEEN ? AND ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setInt(1, endNum);
             pstat.setInt(2, startNum);
@@ -196,11 +196,14 @@ public class ReviewDAO {
                     map.put("reviewSeq", rs.getInt("review_seq"));
                     map.put("gameSeq", rs.getInt("game_seq"));
                     map.put("userId", rs.getString("user_id"));
+                    map.put("userNickname", rs.getString("user_nickname"));
+                    map.put("profileUrl", rs.getString("profile_url"));
                     map.put("reviewContent", rs.getString("review_content"));
                     map.put("reviewLike", rs.getInt("review_like"));
                     map.put("reviewDislike", rs.getInt("review_dislike"));
                     map.put("reviewDate", rs.getTimestamp("review_date"));
                     list.add(map);
+                    System.out.println(map);
                 }
                 return list;
             }
