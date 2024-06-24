@@ -10,6 +10,7 @@
     <style>
         *{box-sizing: border-box;}
         /* div{border: 1px solid black;} */
+        body{background-color:#323232;}
         .container{height: 300px; width: 200px; margin:auto; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center;}
         .img{height: 170px;width: 85%; border: 1px solid black;display: flex;justify-content: center;align-items: center;}
         .img img{width: 100%;height: 100%;}
@@ -22,7 +23,7 @@
     </style>
 </head>
 <body>
-<form action="/upload.userprofileimg"  method="post" enctype="multipart/form-data">
+<form id="uploadForm" action="/upload.userprofileimg"  method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="img">
             <img id="previewImg" src="/profile/default.png" alt="이미지 미리보기">
@@ -32,24 +33,18 @@
         </div>
         <div class="btns">
             <button id="cancle" type="button"> 취소 </button>
-            <button id="complete" type="btoon"> 완료 </button>
+            <button id="complete" type="submit"> 완료 </button>
         </div>
     </div>
 </form>
     
     <script>
     $("#cancle").on("click",function(){
-		alert("취소 버튼 확인");
-		
+		window.close();		
 	})
 	
-	$("#complete").on("click",function(){
-		
-		$("#uploadForm").submit();
-
-		 if (window.opener && window.opener.parent) {
-		        window.opener.parent.location.reload();
-		        }
+	$("#complete").on("click",function(){	 
+		$("#uploadForm").submit();   
 	})
 	
 	 $("#uploadFile").change(function() {
