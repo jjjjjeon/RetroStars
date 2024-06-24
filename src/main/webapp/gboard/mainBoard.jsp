@@ -424,6 +424,7 @@ a:hover { color: white; text-decoration: underline;}
         $(document).ready(function() {
         	
             let loginId = '${loginId}';
+            console.log(loginId);
             let gameSeq = ${game.gameSeq};
         	
             function loadReviews() {
