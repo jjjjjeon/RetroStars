@@ -284,6 +284,10 @@ body{background-image:url("/image/background.png");
        background-color: #eeeeee;
           margin-right: 5px;
     }
+    .pagenavi{
+    	font-size:20px;
+    	word-spacing: 10px;
+    }
   </style>
 </head>
 
