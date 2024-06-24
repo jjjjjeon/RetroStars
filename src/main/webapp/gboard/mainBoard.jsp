@@ -25,7 +25,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
-    font-family: 'Georgia', serif;
+    font-family : 'DalseoHealing';
     background-image: url('/image/background.png');
     background-position: center;
     background-size: 100% 100%;
@@ -379,6 +379,15 @@ a {
     background-color: yellow;
     color: black;
 }
+
+#gameBtnBehind {
+	margin-bottom : 30px;
+}
+
+.review{
+	margin-top : 20px;
+	margin-left : 20px;
+}
 </style>
 </head>
 <body>
@@ -491,7 +500,7 @@ a {
                     <button id="writeReviewBtn" class="btn steamBtn">리뷰 작성</button> 
                 </div>
             </div>
-            <div class="description-section">
+            <div id="description" class="description-section">
                 <div class="media-container">
                     <img src="/upload/${images.get(0)}" alt="Game Description Image">
                 </div>
@@ -500,28 +509,29 @@ a {
                     RELEASE DATE: <fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy" />
                 </p>
                 <p>DEVELOPER: ${game.developer}</p>
-                <div class="buttons">
+                <div id="gameBtnBehind" class="buttons">
                     <button class="btn community-button" id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
                     <a href="/list.cboard?category=2" ><button class="btn community-button">공략보기</button></a>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
+                <p> 가장 평가가 많은 리뷰 <p>
             </div>
         </div>
-        <div class="review-content">
-            <div class="media-section" id="mostLikedReviewSection">가장 평가가 많은 리뷰</div>
-            <div class="description-section">
-                <p>가장 최근에 게시된 리뷰</p>
-                <p>RELEASE DATE: 14 June, 2024</p>
-                <p>DEVELOPER: 팀 별빛</p>
-                <p>PUBLISHER: 팀 별빛</p>
-                <p>게임 장르: 무료 플레이, 픽셀 그래픽, RPG, 인디, 어드벤처</p>
-                <div class="buttons">
-                    <button class="btn community-button">찜하기</button>
-                    <button class="btn community-button">팔로우</button>
-                    <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="review-content"> -->
+<!--             <div class="media-section" id="mostLikedReviewSection">가장 평가가 많은 리뷰</div> -->
+<!--             <div class="description-section"> -->
+<!--                 <p>가장 최근에 게시된 리뷰</p> -->
+<!--                 <p>RELEASE DATE: 14 June, 2024</p> -->
+<!--                 <p>DEVELOPER: 팀 별빛</p> -->
+<!--                 <p>PUBLISHER: 팀 별빛</p> -->
+<!--                 <p>게임 장르: 무료 플레이, 픽셀 그래픽, RPG, 인디, 어드벤처</p> -->
+<!--                 <div class="buttons"> -->
+<!--                     <button class="btn community-button">찜하기</button> -->
+<!--                     <button class="btn community-button">팔로우</button> -->
+<!--                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
     </div>
     <div class="footer">
         <div class="footerbox">
@@ -566,6 +576,7 @@ a {
         	let loginId = '${loginId}';
         	console.log(loginId);
         	
+        	
             function loadReviews() {
                 $.ajax({
                     url: "/mostLiked.review",
@@ -576,6 +587,8 @@ a {
                     }
                 }).done(function(data) {
                     console.log(data);
+                    let description = $('#description');
+                    let gameBtnBehind = $('#gameBtnBehind');
                     let mostLikedReviewSection = $('#mostLikedReviewSection');
                     let icon = '';
 
@@ -583,25 +596,22 @@ a {
                         icon = '<i class="fas fa-thumbs-up"></i>';
                     } else if (data.reviewDislike > data.reviewLike && data.reviewDislike >= data.reviewFunny) {
                         icon = '<i class="fas fa-thumbs-down"></i>';
-                    } else {
-                        icon = '<i class="fas fa-laugh"></i>';
-                    }
-
+                    } 
+					
                     let reviewDiv = $('<div>').addClass('review');
 
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                        src: `/upload/${data.profileImage}`,
+                        src: `/profile/default.png`,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
                         alt: 'Profile'
                     });
                     let userNicknameDiv = $('<div>').text(data.userNickname);
-                    let userLevelDiv = $('<div>').text(`Level ${data.userLevel}`);
 
-                    reviewUserInfoDiv.append(userProfileImg, userNicknameDiv, userLevelDiv);
+                    reviewUserInfoDiv.append(userProfileImg, userNicknameDiv);
                     let reviewIconDiv = $('<div>').addClass('review-icon').html(icon);
 
                     reviewHeaderDiv.append(reviewUserInfoDiv, reviewIconDiv);
@@ -609,15 +619,15 @@ a {
                     let reviewDateDiv = $('<div>').addClass('review-date').text(data.reviewDate);
                     let reviewContentDiv = $('<div>').addClass('review-content').text(data.reviewContent);
 
-                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?');
+                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?          ');
                     let likeButton = $('<button>').addClass('btn btn-success').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'like')`).html('<i class="fas fa-thumbs-up"></i>');
                     let dislikeButton = $('<button>').addClass('btn btn-danger').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'dislike')`).html('<i class="fas fa-thumbs-down"></i>');
-                    let funnyButton = $('<button>').addClass('btn btn-warning').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'funny')`).html('<i class="fas fa-laugh"></i>');
 
-                    reviewHelpfulDiv.append(likeButton, dislikeButton, funnyButton);
+                    reviewHelpfulDiv.append(likeButton, dislikeButton);
 
                     reviewDiv.append(reviewHeaderDiv, reviewDateDiv, reviewContentDiv, reviewHelpfulDiv);
-                    mostLikedReviewSection.append(reviewDiv);
+
+                    description.append(reviewDiv);
                 });
 
                 $.ajax({

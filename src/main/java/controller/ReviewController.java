@@ -49,11 +49,19 @@ public class ReviewController extends HttpServlet {
 
         try {
             if (cmd.equals("/mostLiked.review")) {
+//                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
+//                ReviewDTO mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
+//                System.out.println(mostLikedReview);
+//                String result = gson.toJson(mostLikedReview);
+//                pw.append(result);
+//                System.out.println(result);
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
-                ReviewDTO mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
+                HashMap<String, ?> mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
+                System.out.println(mostLikedReview);
                 String result = gson.toJson(mostLikedReview);
                 pw.append(result);
                 System.out.println(result);
+                
             } else if (cmd.equals("/latest.review")) {
                 ReviewDTO latestReview = reviewDao.getLatestReview();
                 String result = gson.toJson(latestReview);

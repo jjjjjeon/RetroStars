@@ -87,7 +87,7 @@ class Exam02 extends Phaser.Scene {
 					console.log("게임 플레이 기록 전송 실패!");
 				}
 				});
-            	this.scene.start("GameOver",{score:this.score});
+            	this.scene.start("GameOver4",{score:this.score});
         });
 
         this.timerText = this.add.text(this.cameras.main.width - 50, 5, '0', {
@@ -155,11 +155,7 @@ class Exam02 extends Phaser.Scene {
         } else {
             this.player.setVelocityY(0);
         }
-        // 주기적으로 기록 전송
-        if(this.timer%60 ===0){
-			this.sendPlayRecord();
-			
-		}
+
     }
 
 }

@@ -239,10 +239,20 @@
         border-radius: 5px;
         cursor: pointer;
     }
+    
+    #sortLikes{
+    	background-color : #007bff;
+    	opacity : 0.8;
+    }
+    
+    #sortDislikes{
+    	background-color: #ff463e;
+    	opacity : 0.8;
+    }
 
 
     .sort-buttons button.active {
-        background-color: #ff463e;
+        opacity : 1;
     }
 
     .pagination {
