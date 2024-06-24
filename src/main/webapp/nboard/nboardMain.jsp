@@ -326,7 +326,7 @@ body{background-image:url("/image/background.png");
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/list.rboard">랭킹</a>
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
                     </li>
                    
 
