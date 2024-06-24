@@ -132,15 +132,19 @@ class Main extends Phaser.Scene {
             const { keyCode } = event;
             switch (keyCode) {
                 case 37:
+                	event.preventDefault(); 
                     this.moveLeft();
                     break;
                 case 38:
+                	event.preventDefault(); 
                     this.moveUp();
                     break;
                 case 39:
+                	event.preventDefault(); 
                     this.moveRight();
                     break;
                 case 40:
+               		event.preventDefault(); 
                     this.moveDown();
                     break;
             }
