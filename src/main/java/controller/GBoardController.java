@@ -71,6 +71,7 @@ public class GBoardController extends HttpServlet {
                 request.setAttribute("images", listGameImage);
                 request.setAttribute("videoUrl", gameVideoStr);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
+                System.out.println(loginId);
                 return;
             } else if (cmd.equals("/toggleGameBookmark.gboard")) {
                 String id = (String) request.getSession().getAttribute("loginId");

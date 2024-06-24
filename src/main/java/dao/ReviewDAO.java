@@ -4,7 +4,6 @@
  * Copyright (c) 팀 별빛, All rights reserved.
  */
 package dao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,13 +11,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
 import dto.ReviewDTO;
-
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
  * Date : 2024. 6. 12.
@@ -30,22 +26,18 @@ import dto.ReviewDTO;
  */
 public class ReviewDAO {
     private static ReviewDAO instance;
-
     public synchronized static ReviewDAO getInstance() {
         if (instance == null) {
             instance = new ReviewDAO();
         }
         return instance;
     }
-
     private ReviewDAO() {}
-
     private Connection getConnection() throws Exception {
         Context ctx = new InitialContext();
         DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/oracle");
         return ds.getConnection();
     }
-
     /** 
      * @Method Name  : getMostLikedReview
      * @date : 2024. 6. 21. 
@@ -73,7 +65,6 @@ public class ReviewDAO {
         }
         return null;
     }
-
     /** 
      * @Method Name  : getLatestReview
      * @date : 2024. 6. 21. 
@@ -97,7 +88,6 @@ public class ReviewDAO {
         }
         return null;
     }
-
     /** 
      * @Method Name  : updateReviewLike
      * @date : 2024. 6. 21. 
@@ -117,7 +107,6 @@ public class ReviewDAO {
             pstat.executeUpdate();
         }
     }
-
     /** 
      * @Method Name  : getReviewsByGameSeq
      * @date : 2024. 6. 21. 
@@ -134,7 +123,6 @@ public class ReviewDAO {
             pstat.setInt(1, gameSeq);
             pstat.setInt(2, endNum);
             pstat.setInt(3, startNum);
-
             try (ResultSet rs = pstat.executeQuery()) {
                 ArrayList<HashMap<String, ?>> list = new ArrayList<>();
                 while (rs.next()) {
@@ -152,7 +140,6 @@ public class ReviewDAO {
             }
         }
     }
-
     /** 
      * @Method Name  : getReviewCountByGameSeq
      * @date : 2024. 6. 21. 
@@ -164,7 +151,6 @@ public class ReviewDAO {
         String sql = "select count(*) from review where game_seq = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setInt(1, gameSeq);
-
             try (ResultSet rs = pstat.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1);
@@ -173,7 +159,6 @@ public class ReviewDAO {
             }
         }
     }
-
     /** 
      * @Method Name  : addReview
      * @date : 2024. 6. 21. 
@@ -190,7 +175,6 @@ public class ReviewDAO {
             return pstat.executeUpdate();
         }
     }
-
     /** 
      * @Method Name  : getAllReviews
      * @date : 2024. 6. 21. 
@@ -205,7 +189,6 @@ public class ReviewDAO {
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
             pstat.setInt(1, endNum);
             pstat.setInt(2, startNum);
-
             try (ResultSet rs = pstat.executeQuery()) {
                 ArrayList<HashMap<String, ?>> list = new ArrayList<>();
                 while (rs.next()) {
@@ -223,7 +206,6 @@ public class ReviewDAO {
             }
         }
     }
-
     /** 
      * @Method Name  : getReviewCount
      * @date : 2024. 6. 21. 
@@ -239,7 +221,7 @@ public class ReviewDAO {
         }
         return 0;
     }
-    
+
     public void deleteReview(int reviewSeq) throws Exception {
         String sql = "delete from review where review_seq = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -248,4 +230,3 @@ public class ReviewDAO {
         }
     }
 }
-
