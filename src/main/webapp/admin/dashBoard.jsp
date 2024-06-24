@@ -111,7 +111,6 @@ a {
 .main .navi .naviBox .bigNavi {
 	height: 70px;
 	border-top: 2px solid gray;
-	border-bottom: 2px solid gray;
 	display: flex;
 	align-items: center;
 	font-size: 24px;
@@ -178,28 +177,29 @@ btn-secondary{
 	<div class="header col-12">관리자페이지</div>
 	<div class="main">
 		<div class="navi">
-			<div class="profileBox name">${loginId} 관리자님, 환영합니다!</div>
+			<div class="profileBox name">${loginId}관리자님, 환영합니다!</div>
 			<div class="naviBox">
-			<a href="/index.jsp" target="_blank"
+				<a href="/index.jsp" target="_blank"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-					이동</a>
-				<a href="/dashBoard.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary bigNavi active"
-					id="dashboard">대시보드</a> 
-					 
-						<div class="dropdown">
-						  <a  style="width:100%; text-align:left; border-radius:0;" class="btn btn-secondary dropdown-toggle bigNavi" href="/memberList.admin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						    회원관리
-						  </a>
-						
-						  <ul  style="width:100%"class="dropdown-menu" style="border-radius:0;">
-						    <li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
-						    <li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
-						    <li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
-						  </ul>
-						</div>
-			</div>
+					이동</a> <a href="/dashBoard.admin"
+					class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
+					id="dashboard">대시보드</a>
 
+				<div class="dropdown">
+					<a style="width: 100%; text-align: left; border-radius: 0;"
+						class="btn btn-secondary dropdown-toggle bigNavi active"
+						href="/memberList.admin" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> 회원관리 </a>
+
+					<ul style="width: 100%" class="dropdown-menu"
+						style="border-radius:0;">
+						<li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
+						<li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
+						<li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
+					</ul>
+				</div>
+		
+			</div>
 		</div>
 		<div class="contentBox">
 			<div class="contentTitle" style="height:113px">DashBoard</div>
@@ -226,7 +226,7 @@ btn-secondary{
 							<div class="list"
 								style="display: flex; flex-direction: column; overflow: auto; height: 245px; text-align: center">
 								<c:forEach var="dto" items="${list}">
-									<a class="detailA" data-postOwnerId="${dto.userId}"
+									<a class="detailA" href="/detail.qboard?seq=${dto.qBoardSeq}" target="_blank" rel="noopener noreferrer" data-postOwnerId="${dto.userId}"
 										data-qBoardSeq="${dto.qBoardSeq}"
 										data-qBoardSecret="${dto.qBoardSecret}">
 										<div class="list_data_row row"
@@ -282,11 +282,6 @@ btn-secondary{
 	</div>
 
 	<script>
-  		//디테일페이지 앵커 권한 설정
-		$($(".detailA")).on("click",function(){	
-			window.location.href="/detail.qboard?seq="+$(this).attr("data-qBoardSeq");
-		});
-    
     	
     	let ctx1= document.getElementById("gameNumberOfChart").getContext("2d");
     	
