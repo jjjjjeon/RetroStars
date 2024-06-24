@@ -676,6 +676,7 @@ a:hover { color: white; text-decoration: underline;}
                             backgroundColor: "#faf8f0",
                             scene: [Main]
                         };
+                        
                         break;
                     case 2:
                         config = {
