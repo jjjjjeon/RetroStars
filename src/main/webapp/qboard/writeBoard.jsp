@@ -64,6 +64,7 @@
          text-align: center; /* 중앙 정렬을 위한 설정 */
          width: 100%; /* 너비를 100%로 설정 */
       }
+      
       .navbar .dropdown-item{
          background-color: #323232;
          color:white;
