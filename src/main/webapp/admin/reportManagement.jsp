@@ -399,7 +399,7 @@ a {
 										<div class="col-5 postTitle"
 											style="justify-content: start; padding-left: 100px;">
 											<a href="/detail.cboard?seq=${DTO.cBoardSeq}" target="_blank"
-												style="text-decoration-line: underline; font-weight: bold;">${DTO.cBoardTitle}</a>
+												style="font-weight: bold;">${DTO.cBoardTitle}</a>
 										</div>
 										<div class="col-2 postWriter">${DTO.userNickname}</div>
 										<div class="col-2 postWriteDate">
@@ -407,7 +407,7 @@ a {
 										</div>
 										<div class="col-2 postReportCount">
 											<button type="button" class="btn btn-link viewReportBtn"
-												style="font-weight: bold;">${DTO.cBoardReport}</button>
+												style="font-weight: bold; text-decoration : none;">${DTO.cBoardReport}</button>
 										</div>
 									</div>
 								</c:forEach>
