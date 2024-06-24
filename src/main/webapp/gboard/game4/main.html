@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"
+        integrity="sha512-zQK11u7QyhUWLmhK+Kyn4Oac0n2d5+AcuEiCagfm2YrGa2wMrdbj5EJammEmGU7bGnckmRoNTUT29Dl+DaRSlg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="Exam01.js"></script>
+    <script src="Intro.js"></script>
+    <script src="Exam02.js"></script>
+    <script src="GameOver.js"></script>
+    <script src="Exam03.js"></script>
+    <script src="Exam04.js"></script>
+
+
+    <style>
+        #gamebox {
+            width: 800px;
+            /* height: 250px;
+             */
+            height: 600px;
+            border: 1px solid black;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gamebox">
+
+    </div>
+    <div id="timer">
+
+    </div>
+
+    <script>
+        let config = {
+            type: Phaser.AUTO,
+            parent: "gamebox",
+            width: 800,
+            height: 600,
+            physics: {
+                default: "arcade",
+                arcade: {
+
+                    // debug: true
+                }
+            },
+            // scene: [Exam04, Exam03, Exam02, GameOver]
+            // scene: Exam 03
+            scene: [Intro, Exam02, GameOver]
+
+        };
+        let game = new Phaser.Game(config);
+    </script>
+</body>
+
+</html>

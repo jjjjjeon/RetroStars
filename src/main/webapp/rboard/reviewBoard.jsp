@@ -261,9 +261,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -272,49 +273,57 @@
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게임
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.review">전체</a></li>
-                            <li><a class="dropdown-item" href="/list.review?gameSeq=1">Game 1</a></li>
-                            <li><a class="dropdown-item" href="/list.review?gameSeq=2">Game 2</a></li>
-                            <li><a class="dropdown-item" href="/list.review?gameSeq=3">Game 3</a></li>
-                            <li><a class="dropdown-item" href="/list.review?gameSeq=4">Game 4</a></li>
-                            <li><a class="dropdown-item" href="/list.review?gameSeq=5">Game 5</a></li>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게시판
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        <ul class="dropdown-menu">
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
                     </li>
+                   
+
                 </ul>
                 <c:choose>
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">
-                               <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-                           </a>
-                       </li>                  
-                      <li class="nav-item">
-                           <a class="nav-link" href="/mypage.member">마이페이지</a>
-                       </li>
-                       <li class="nav-item">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                     <li class="nav-item">
                            <a class="nav-link" href="/logout.member">로그아웃</a>
-                       </li>
+                     </li>
+                     
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
+
+
                    </ul>                          
                    </c:when>
                    <c:otherwise>
@@ -325,6 +334,7 @@
                       </ul>
                    </c:otherwise>
                 </c:choose>
+
             </div>
         </div>
     </nav>

@@ -12,9 +12,15 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
 <script src="/gboard/game1/main.js"></script>
+<script src="/gboard/game2/Game.js"></script>
 <script src="/gboard/game3/GameOver.js"></script>
 <script src="/gboard/game3/Exam03.js"></script>
-<script src="/gboard/game2/Game.js"></script>
+<script src="/gboard/game4/Exam02.js"></script>
+<script src="/gboard/game4/GameOver.js"></script>
+<script src="/gboard/game4/Intro.js"></script>
+<script src="/gboard/game5/js/MainScene.js"></script>
+<script src="/gboard/game5/js/survival-game.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
@@ -167,7 +173,7 @@ nav {
 .main-content {
     display: flex;
     gap: 20px;
-    height : 750px
+    height : 700px
 }
 
 .review-content {
@@ -272,51 +278,80 @@ a:hover { color: white; text-decoration: underline;}
 </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">ICON</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 게임 </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/gboard/addGame.jsp">게임 업로드</a></li>
-                            <li><a class="dropdown-item" href="/list.review">리뷰</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게임
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 게시판 </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            게시판
+                        </button>
+                        <ul class="dropdown-menu">
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link">랭킹</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
+                    </li>
+                   
+
                 </ul>
                 <c:choose>
-                    <c:when test="${not empty loginId}">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/mypage.member"> <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40" alt="Profile"></a></li>
-                            <li class="nav-item"><a class="nav-link" href="/mypage.member">마이페이지</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/logout.member">로그아웃</a></li>
-                        </ul>
-                    </c:when>
-                    <c:otherwise>
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a></li>
-                        </ul>
-                    </c:otherwise>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
+
+
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
                 </c:choose>
+
             </div>
         </div>
     </nav>
@@ -400,7 +435,7 @@ a:hover { color: white; text-decoration: underline;}
             </div>
         </div>
     </div>
-    <!-- 리뷰 작성 모달 -->
+
     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -700,6 +735,38 @@ a:hover { color: white; text-decoration: underline;}
                                 }
                             },
                             scene: [Exam03, GameOver]
+                        };
+                        break;
+                    case 4:
+                        config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                            physics: {
+                                default: "arcade",
+                                arcade: {
+                                    //gravity: { y: 1000 }, // 중력 속성 차이점 갈수록 빨라질 수 있다.
+                                    //debug: true
+                                }
+                            },
+                            scene: [Intro, Exam02, GameOver]
+                        };
+                        break;
+                    case 5:
+                        config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                            physics: {
+                                default: "matter",
+                                matter: {
+                                    debug: false, // 디버그 표시 제거
+                                    gravity: { y: 0 },
+                                }
+                            },
+                            scene: [MainScene]
                         };
                         break;
                     default:
