@@ -307,11 +307,11 @@
                         </button>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -374,11 +374,11 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">GAME LIST</div>
-                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1">> 오버워치 <</a> </div>
-                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2">> 심즈 4 <</a> </div>
-                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3">> Apex 레전드 <</a> </div>
-                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameSeq=4">> Grimm's Hollow <</a> </div>
-                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameSeq=5">> 배틀그라운드 <</a> </div>
+                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1"> 2048 </a> </div>
+                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2"> GOLD BREAK! </a> </div>
+                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3"> ICE CUBY </a> </div>
+                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameSeq=4"> 똥 피하기 </a> </div>
+                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameSeq=5"> 탈출하기 </a> </div>
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
@@ -426,6 +426,7 @@
 
         function playRandomVideo() {
             let randomIndex = Math.floor(Math.random() * videoList.length); // 비디오 랜덤 재상
+            console.log(randomIndex);
             let videoElement = $('#gameVideo');
             let selectedVideo = videoList[randomIndex];
 
@@ -435,12 +436,15 @@
             videoElement[0].play();
         }
 
-//         $('#gameVideo').on('ended', function() {
-//             setTimeout(playRandomVideo, 30000); // 나중에 클릭 후 애니메이션 줄 때 사용 예정
-//         });
+        $('#gameVideo').on('ended', function() {
+            setTimeout(playRandomVideo, 3); // 나중에 클릭 후 애니메이션 줄 때 사용 예정
+            
+        });
 
         playRandomVideo(); 
     });
+    
+    
 </script>
 
 </html>

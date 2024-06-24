@@ -47,7 +47,56 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         
     }
+      /*    navbar css */
+       .navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
+       .nav-link {
+            color: white !important;			
+       }
 
+       .nav-link:hover {
+ 			background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+       }
+       .nav-item{
+           align-items: center;
+    	   display: flex;
+       }
+
+      .btn{
+         color:white;
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
+
+
+      a {
+		  text-decoration: none !important;
+	  }
+	  
+	  a:link { color: white; text-decoration: none;}
+ 	  a:visited { color: white; text-decoration: none;}
+	  a:hover { color: white; text-decoration: underline;}
+      /*    end navbar css */
     .detailtitle {
         display: grid;
         grid-template-columns: auto 1fr auto auto auto;
@@ -166,9 +215,10 @@
 </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">ICON</a>
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -177,10 +227,11 @@
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게임
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
+
+                        <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">game1</a></li>
                             <li><a class="dropdown-item" href="#">game2</a></li>
                             <li><a class="dropdown-item" href="#">game3</a></li>
@@ -189,36 +240,55 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게시판
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="#">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="#">QA게시판</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="#">공지게시판</a></li>
+                        <ul class="dropdown-menu">
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
+                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">마이페이지</a>
-                    </li>
-                    <li calss="nav-item">
-                        <a class="nav-link" href="/member/login/login.jsp">로그인</a>
-                    </li>
-
-                    <i class="fa-solid fa-user"></i>
+                   
 
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <c:choose>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-                    </li>
-                </ul>
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
+
+
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
+                </c:choose>
+
             </div>
         </div>
     </nav>

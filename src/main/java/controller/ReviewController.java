@@ -81,17 +81,22 @@ public class ReviewController extends HttpServlet {
                         reviewCount = reviewDao.getReviewCountByGameSeq(gameSeq);
                         request.setAttribute("gameSeq", gameSeq);
                     } catch (NumberFormatException e) {
+                    	System.out.println(e);
                         // gameSeq가 숫자가 아닌 경우 전체 리뷰를 보여주도록 설정
                         list = reviewDao.getAllReviews(sortType, startNum, endNum);
                         reviewCount = reviewDao.getReviewCount();
+                        System.out.println("1번구간");
                         request.setAttribute("gameSeq", null);
+                        
                     }
                 } else {
+                	System.out.println("2번 구간");
                     list = reviewDao.getAllReviews(sortType, startNum, endNum);
                     reviewCount = reviewDao.getReviewCount();
                 }
 
                 request.setAttribute("list", list);
+                System.out.println(list);
                 request.setAttribute("cpage", cpage);
                 request.setAttribute("reviewCount", reviewCount);
                 request.setAttribute("sortType", sortType);

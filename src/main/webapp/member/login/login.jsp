@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css">
     <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+	<meta
+	  http-equiv="Cross-Origin-Opener-Policy"
+	  content="same-origin-allow-popups"
+	/>
     <style>  
       body{
             font-family: 'Georgia', serif;

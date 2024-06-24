@@ -62,6 +62,21 @@ class Game extends Phaser.Scene {
         // }
         
         if (this.gameOver) {
+	             $.ajax({
+                 url : "/write.playrecord",
+                 data : {
+                 id :  loginId,
+                 gameSeq : gameSeq,
+                 score : this.score,
+                 playtime : this.timer
+                 }
+             }).done(function(resp){
+                 if(resp == "success"){
+                     console.log("게임 플레이 기록 전송 성공!");
+                 }else{
+                     console.log("게임 플레이 기록 전송 실패!");
+                 }
+             });
             return;
         }
 

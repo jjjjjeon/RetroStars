@@ -12,9 +12,15 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
 <script src="/gboard/game1/main.js"></script>
+<script src="/gboard/game2/Game.js"></script>
 <script src="/gboard/game3/GameOver.js"></script>
 <script src="/gboard/game3/Exam03.js"></script>
-<script src="/gboard/game2/Game.js"></script>
+<script src="/gboard/game4/Exam02.js"></script>
+<script src="/gboard/game4/GameOver.js"></script>
+<script src="/gboard/game4/Intro.js"></script>
+<script src="/gboard/game5/js/MainScene.js"></script>
+<script src="/gboard/game5/js/survival-game.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
@@ -400,7 +406,7 @@ a:hover { color: white; text-decoration: underline;}
             </div>
         </div>
     </div>
-    <!-- 리뷰 작성 모달 -->
+
     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -424,6 +430,7 @@ a:hover { color: white; text-decoration: underline;}
         $(document).ready(function() {
         	
             let loginId = '${loginId}';
+            console.log(loginId);
             let gameSeq = ${game.gameSeq};
         	
             function loadReviews() {
@@ -701,6 +708,38 @@ a:hover { color: white; text-decoration: underline;}
                             scene: [Exam03, GameOver]
                         };
                         break;
+                    case 4:
+                        config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                            physics: {
+                                default: "arcade",
+                                arcade: {
+                                    //gravity: { y: 1000 }, // 중력 속성 차이점 갈수록 빨라질 수 있다.
+                                    //debug: true
+                                }
+                            },
+                            scene: [Intro, Exam02, GameOver]
+                        };
+                        break;
+//                     case 5:
+//                         config = {
+//                             type: Phaser.AUTO,
+//                             parent: "game",
+//                             width: containerWidth,
+//                             height: containerHeight,
+//                             physics: {
+//                                 default: "matter",
+//                                 matter: {
+//                                     debug: false, // 디버그 표시 제거
+//                                     gravity: { y: 0 },
+//                                 }
+//                             },
+//                             scene: [MainScene]
+//                         };
+//                         break;
                     default:
                         config = {
                             type: Phaser.AUTO,

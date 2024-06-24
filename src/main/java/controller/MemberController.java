@@ -276,13 +276,14 @@ public class MemberController extends HttpServlet {
 			
 			else if (cmd.equals("/googleLogin.member")) {
 			    String idTokenString = request.getParameter("id_token");
+			    System.out.println(idTokenString);
 
 			    // Google API 클라이언트 초기화
 			    HttpTransport transport = new NetHttpTransport();
 			    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
 			    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-			        .setAudience(Collections.singletonList("YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"))
+			        .setAudience(Collections.singletonList("692534731916-p7l19g92i10v9gq4crmcad2olvu8r0ff.apps.googleusercontent.com"))
 			        .build();
 
 			    GoogleIdToken idToken = verifier.verify(idTokenString);

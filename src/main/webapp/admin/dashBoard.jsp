@@ -158,10 +158,24 @@ a {
 	
 }
 
+#gameAvgOfChart, .qa, .fn{
+	height:365px;
+}
+
+h5{
+	font-size:1.1rem;
+}
+
+btn-secondary{
+	height:30px;
+}
+
+
+
 </style>
 </head>
 <body>
-	<div class="header">관리자페이지</div>
+	<div class="header col-12">관리자페이지</div>
 	<div class="main">
 		<div class="navi">
 			<div class="profileBox name">${loginId} 관리자님, 환영합니다!</div>
@@ -184,45 +198,33 @@ a {
 						    <li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
 						  </ul>
 						</div>
-					<!-- <a
-					class="list-group-item list-group-item-action list-group-item-secondary bigNavi disabled">회원관리</a>
-					<a href="/memberList.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">회원
-					목록</a> <a href="/reportList.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">신고
-					현황</a> <a href="/blackList.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary smallNavi">블랙회원
-					관리</a> <a href="/index.jsp" target="_blank"
-					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-					이동</a> -->
 			</div>
 
 		</div>
 		<div class="contentBox">
-			<div class="contentTitle" style="height:100px">DashBoard</div>
-			<div class="content"
-				style="display: flex; flex-direction: column; width: 1264px; height: 863px;">
+			<div class="contentTitle" style="height:113px">DashBoard</div>
+			<div class="content">
 				<div class="col1" style="flex: 1; display: flex; border-bottom:1px solid gray;">
-					<div class="row1" style="flex: 1;">
-						<canvas id="gameNumberOfChart" style="width: 100%; height: 100%"></canvas>
+					<div class="row1 row-4" style="flex: 1;">
+						<canvas id="gameNumberOfChart" style="width: 100%; height: 330px"></canvas>
 					</div>
-					<div class="row2" style="flex: 1;">
-						<canvas id="genderRatioOfChart" style="width: 100%; height: 100%"></canvas>
+					<div class="row2 row-4" style="flex: 1;">
+						<canvas id="genderRatioOfChart" style="width: 100%; height: 330px"></canvas>
 					</div>
-					<div class="row3" style="flex: 1;">
-						<canvas id="ageNumberOfChart" style="width: 100%; height: 100%"></canvas>
+					<div class="row3 row-4" style="flex: 1;">
+						<canvas id="ageNumberOfChart" style="width: 100%; height: 330px"></canvas>
 					</div>
 				</div>
 				<div class="co12" style="flex: 1; display: flex;">
 					<div class="row4" style="flex: 4;">
-						<canvas id="gameAvgOfChart" style="width: 100%; height: 100%"></canvas>
+						<canvas id="gameAvgOfChart" style="width: 100%;"></canvas>
 					</div>
 					<div class="row5" style="flex: 6; display: flex;">
-						<div class="qa" style="flex: 7; padding: 20px">
+						<div class="qa" style="flex: 6; padding: 20px">
 							<h5>질문과 답변</h5>
 							<hr>
 							<div class="list"
-								style="display: flex; flex-direction: column; overflow: auto; height: 320px; text-align: center">
+								style="display: flex; flex-direction: column; overflow: auto; height: 245px; text-align: center">
 								<c:forEach var="dto" items="${list}">
 									<a class="detailA" data-postOwnerId="${dto.userId}"
 										data-qBoardSeq="${dto.qBoardSeq}"
@@ -247,7 +249,7 @@ a {
 							</div>
 							<hr>
 						</div>
-						<div class="fn" style="flex: 3; padding: 20px">
+						<div class="fn" style="flex: 4; padding: 20px">
 							<h5>공지사항</h5>
 							<button class="btn btn-secondary"
 								onclick="location.href='/list.nboard'">이동하기</button>
@@ -260,13 +262,18 @@ a {
 							<button class="btn btn-secondary"
 								onclick="location.href='/goWriteFaq.fboard'">작성하기</button>
 							<hr>
+							<div style="display:flex;">
+								<div style="flex:1">
 							<h5>커뮤니티 게시판</h5>
 							<button class="btn btn-secondary"
 								onclick="location.href='/list.cboard'">이동하기</button>
-							<hr>
+								</div>
+								<div style="flex:1">
 							<h5>게임리뷰 게시판</h5>
 							<button class="btn btn-secondary"
 								onclick="location.href='/list.review'">이동하기</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
