@@ -383,11 +383,11 @@
 
 	<div class="navi">
 	    <a href="/list.review" class="${empty param.gameSeq ? 'active' : ''}">전체</a>
-	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">Game 1</a>
-	    <a href="/list.review?gameSeq=2" class="${param.gameSeq == '2' ? 'active' : ''}">Game 2</a>
-	    <a href="/list.review?gameSeq=3" class="${param.gameSeq == '3' ? 'active' : ''}">Game 3</a>
-	    <a href="/list.review?gameSeq=4" class="${param.gameSeq == '4' ? 'active' : ''}">Game 4</a>
-	    <a href="/list.review?gameSeq=5" class="${param.gameSeq == '5' ? 'active' : ''}">Game 5</a>
+	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">2048</a>
+	    <a href="/list.review?gameSeq=2" class="${param.gameSeq == '2' ? 'active' : ''}">GOLD BREAK!</a>
+	    <a href="/list.review?gameSeq=3" class="${param.gameSeq == '3' ? 'active' : ''}">ICE CUBY</a>
+	    <a href="/list.review?gameSeq=4" class="${param.gameSeq == '4' ? 'active' : ''}">똥 피하기</a>
+	    <a href="/list.review?gameSeq=5" class="${param.gameSeq == '5' ? 'active' : ''}">탈출하기</a>
 	</div>
 
     <div class="content">
