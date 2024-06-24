@@ -427,9 +427,18 @@ div {
 	color: white !important;
 }
 
+.navbar-nav button{
+	color : white;
+}
+
 .nav-link:hover {
 	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 10px;
+}
+
+.nav-item {
+	align-items: center;
+	display: flex;
 }
 
 .naviBtn {
@@ -442,6 +451,8 @@ div {
 
 .dropdown-menu {
 	background-color: #323232;
+	text-align: center; /* 중앙 정렬을 위한 설정 */
+	width: 100%; /* 너비를 100%로 설정 */
 }
 
 .dropdown-item {
@@ -450,15 +461,11 @@ div {
 }
 
 .footer {
-	height: 150px;
+	width: 100%;
 	margin-top: 160px;
-	border-top: 1px solid #5a5a64;
 	background-color: #323232;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	position: relative;
-	bottom: 0;
+	height: 150px;
 }
 
 .leftfooter {
@@ -502,6 +509,13 @@ div {
 	width: 120px;
 	height: 100px;
 	margin-left: 20px;
+}
+
+.thumbnail {
+	border-radius: 20px;
+	width: 356px;
+	height: 230px;
+	object-fit: cover;
 }
 
 #summernote {
@@ -697,11 +711,16 @@ div {
 									aria-expanded="false">게임</button>
 
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">game1</a></li>
-									<li><a class="dropdown-item" href="#">game2</a></li>
-									<li><a class="dropdown-item" href="#">game3</a></li>
-									<li><a class="dropdown-item" href="#">game4</a></li>
-									<li><a class="dropdown-item" href="#">game5</a></li>
+									<li><a class="dropdown-item"
+										href="/viewGame.gboard?gameSeq=1">2048</a></li>
+									<li><a class="dropdown-item"
+										href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+									<li><a class="dropdown-item"
+										href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+									<li><a class="dropdown-item"
+										href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+									<li><a class="dropdown-item"
+										href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
 								</ul>
 							</li>
 							<li class="nav-item dropdown">
@@ -753,6 +772,7 @@ div {
 					</div>
 				</div>
 			</nav>
+
 			<div class="headerTitle">
 				<p id="headerTitle">커뮤니티</p>
 			</div>
@@ -860,6 +880,7 @@ div {
 			</div>
 		</div>
 	</div>
+
 
 	<script>
 		$("#reportYesBtn").on("click", function(e){

@@ -69,7 +69,21 @@ class Exam02 extends Phaser.Scene {
         this.player.setSize(15 / playerScaleFactor, 15 / playerScaleFactor);
 
         this.physics.add.collider(this.boxes, this.player, (box, player) => {
-            this.scene.start("GameOver");
+            	$.ajax({
+					url:"/write.playrecord",
+					data:{
+//					id:loginId,
+					gameSeq:4,
+					playtime: this.timer
+					}
+				}).done(function(resp){
+				if(resp=="success"){
+					console.log("게임 플레이 기록 전송 성공!");
+				} else{
+					console.log("게임 플레이 기록 전송 실패!");
+				}
+				});
+            	this.scene.start("GameOver");
         });
 
         this.timerText = this.add.text(this.cameras.main.width - 50, 5, '0', {
@@ -137,5 +151,11 @@ class Exam02 extends Phaser.Scene {
         } else {
             this.player.setVelocityY(0);
         }
+        // 주기적으로 기록 전송
+        if(this.timer%60 ===0){
+			this.sendPlayRecord();
+			
+		}
     }
+
 }

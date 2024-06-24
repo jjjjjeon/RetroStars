@@ -79,8 +79,23 @@ class Exam03 extends Phaser.Scene { // 신 타입
 
         // 돌과 충돌할 시 씬 변경하기
         this.physics.add.collider(this.player, this.boxes, (player, boxes) => {
-            this.scene.start("GameOver");
-        });
+				  $.ajax({
+	                 url : "/write.playRecord",
+	                 data : {
+	                 id : '${loginId}',
+	                 game_seq : 3,
+	                 score : this.score,
+	                 playtime : this.timer
+	                 }
+	             }).done(function(resp){
+	                 if(resp == "success"){
+	                     console.log("게임 플레이 기록 전송 성공!");
+	                 }else{
+	                     console.log("게임 플레이 기록 전송 실패!");
+	                 }
+	             });
+	            this.scene.start("GameOver");
+	     });
 
         // 바닥과 star 가 충돌하도록 설정
         this.physics.add.collider(floor, this.boxes, (floor, box) => {
@@ -148,4 +163,5 @@ class Exam03 extends Phaser.Scene { // 신 타입
             this.timerText.setText('Time: ' + this.timer);
         }
     }
+ 
 }
