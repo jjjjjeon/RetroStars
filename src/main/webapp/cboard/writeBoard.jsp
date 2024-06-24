@@ -204,7 +204,7 @@ input[type="text" i] {
 	height: 45px;
 	background: #3392ff;
 	color: white;
-	border: 1px solid #white;
+	border: 1px solid #1A6ED8;
 	font-size: 13px;
 	font-weight: bold;
 }
@@ -231,6 +231,11 @@ input[type="text" i] {
 	border-radius: 10px;
 }
 
+.nav-item {
+	align-items: center;
+	display: flex;
+}
+
 .btn {
 	color: white;
 }
@@ -249,15 +254,11 @@ input[type="text" i] {
 }
 
 .footer {
-	height: 150px;
+	width: 100%;
 	margin-top: 160px;
-	border-top: 1px solid #e0e2ec;
 	background-color: #323232;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	position: relative;
-	bottom: 0;
+	height: 150px;
 }
 
 .leftfooter {
@@ -303,6 +304,13 @@ input[type="text" i] {
 	margin-left: 20px;
 }
 
+.thumbnail {
+	border-radius: 20px;
+	width: 356px;
+	height: 230px;
+	object-fit: cover;
+}
+
 .note-placeholder {
 	font-size: 16px;
 	position: absolute;
@@ -336,11 +344,16 @@ input[type="text" i] {
 								aria-expanded="false">게임</button>
 
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">game1</a></li>
-								<li><a class="dropdown-item" href="#">game2</a></li>
-								<li><a class="dropdown-item" href="#">game3</a></li>
-								<li><a class="dropdown-item" href="#">game4</a></li>
-								<li><a class="dropdown-item" href="#">game5</a></li>
+								<li><a class="dropdown-item"
+									href="/viewGame.gboard?gameSeq=1">2048</a></li>
+								<li><a class="dropdown-item"
+									href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+								<li><a class="dropdown-item"
+									href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+								<li><a class="dropdown-item"
+									href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+								<li><a class="dropdown-item"
+									href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
@@ -392,6 +405,7 @@ input[type="text" i] {
 				</div>
 			</div>
 		</nav>
+
 		<div class="headerTitle">
 			<p id="headerTitle">커뮤니티</p>
 		</div>
@@ -427,7 +441,7 @@ input[type="text" i] {
 					<input class="form-control" type="file" id="formFileMultiple"
 						name="file">
 					<button class="btn btn-secondary" id="removeFileBtn" type="button">C</button>
-					<button class="btn btn-light" id="addFileTab" type="button">+</button>
+					<button class="btn btn-light" id="addFileTab" type="button" style="color : black">+</button>
 				</div>
 			</div>
 			<div class="editorBox">
@@ -460,6 +474,7 @@ input[type="text" i] {
 			</div>
 		</div>
 	</div>
+
 
 
 	<script>

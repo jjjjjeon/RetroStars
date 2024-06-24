@@ -30,12 +30,11 @@ public class UserPorfileImgController extends HttpServlet {
 		
 		try {
 			if(cmd.equals("/upload.userprofileimg")) {
-				// 파일 최대 사이즈 10MB로 제한
 				
 				session = request.getSession();
 				String id = (String)session.getAttribute("loginId");
 				
-				int maxSize = 1024 * 1024 * 1;
+				int maxSize = 1024 * 1024 * 100;
 				
 				// 실제 경로
 				 String filePath = "C:\\workspace\\profileImg";
