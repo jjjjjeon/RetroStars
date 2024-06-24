@@ -22,68 +22,58 @@
             background-image: url(/image/background.png);
             color: #333;
             background-size: cover;
+            
+            color:white; 
         }
 
-        /*    navbar css */
-        .navbar {
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            height: 70px;
-            background-color: #323232;
-        }
+.navbar {
+           top: 0;
+           width: 100%;
+           z-index: 1000;
+           height:70px;
+           background-color : #323232;
+       }
+       .navbar-brand{
+          color:white;
+       }
+       .nav-link {
+            color: white !important;			
+       }
 
-        .navbar-brand {
-            color: white;
-        }
-
-        .nav-link {
-            color: white !important;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+       .nav-link:hover {
+ 			background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-        }
+       }
+       .nav-item{
+           align-items: center;
+    	   display: flex;
+       }
+
+      .btn{
+         color:white;
+      }
+ 
+      .btn:hover{
+         color:white;
+      }
+      .dropdown-menu{
+         background-color: #323232;
+         text-align: center; /* 중앙 정렬을 위한 설정 */
+         width: 100%; /* 너비를 100%로 설정 */
+      }
+      .dropdown-item{
+         background-color: #323232;
+         color:white;
+      }
 
 
-        .btn {
-            color: white;
-        }
-
-        .btn:hover {
-            color: white;
-        }
-
-        .dropdown-menu {
-            background-color: #323232;
-        }
-
-        .dropdown-item {
-            background-color: #323232;
-            color: white;
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-
-        a:link {
-            color: white;
-            text-decoration: none;
-        }
-
-        a:visited {
-            color: white;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        /*    end navbar css */
+      a {
+		  text-decoration: none !important;
+	  }
+	  
+	  a:link { color: white; text-decoration: none;}
+ 	  a:visited { color: white; text-decoration: none;}
+	  a:hover { color: white; text-decoration: underline;}
 
         .wrapper {
             width: 800px;
@@ -254,34 +244,31 @@
             flex: 2;
         }
 
-        .footer {
+         .footer {
             width: 100%;
             background-color: #323232;
             position: relative;
             margin-top: auto;
             height: 150px;
         }
-
-        .leftfooter {
-            color: white;
-            font-weight: bold;
-            margin-top: 20px;
+        .leftfooter{
+           color : white;
+           font-weight : bold;
+           margin-top: 20px;
         }
-
         .rightfooter {
-            display: flex;
-            align-items: center;
-
-        }
-
-        .footerbox {
-            width: 1000px;
-            height: 100%;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+           display: flex;
+           align-items: center;
+       
+       }
+         .footerbox {
+           width: 1000px;
+           height: 100%;
+           margin: auto;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;    
+       }
 
         .iconbox {
             display: flex;
@@ -293,25 +280,31 @@
             font-size: 50px;
             color: white;
         }
-
-        .coinbox {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
-
+       .coinbox {
+           display: flex;
+           align-items: center;
+           margin-left: 20px;
+       }
         .coinbox img {
             width: 120px;
             height: 100px;
-            margin-left: 20px;
+            margin-left : 20px;
         }
+        
+        .thumbnail{
+           border-radius: 20px;
+           width: 356px;
+           height: 230px;
+           object-fit: cover;
+        }
+        
 
-        .thumbnail {
-            border-radius: 20px;
-            width: 356px;
-            height: 230px;
-            object-fit: cover;
-        }
+        a {
+          text-decoration: none !important;
+      }
+       a:link { color: white; text-decoration: none;}
+       a:visited { color: white; text-decoration: none;}
+       a:hover { color: white; text-decoration: underline;}
 
 
         #gamenav {
@@ -322,9 +315,10 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+   <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp">홈으로</a>
+        	
+            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -336,12 +330,13 @@
                         <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             게임
                         </button>
+
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">game1</a></li>
-                            <li><a class="dropdown-item" href="#">game2</a></li>
-                            <li><a class="dropdown-item" href="#">game3</a></li>
-                            <li><a class="dropdown-item" href="#">game4</a></li>
-                            <li><a class="dropdown-item" href="#">game5</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -349,60 +344,62 @@
                             게시판
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">자유게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">공략게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">QA게시판</a></li>
+                        	<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
                             <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.nboard">공지게시판</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">랭킹</a>
+                        <a class="nav-link" href="/list.playrecord">랭킹</a>
                     </li>
-
+                   
 
                 </ul>
                 <c:choose>
-                    <c:when test="${not empty loginId}">
-                        <ul class="navbar-nav ms-auto">
-                            <c:if test="${sessionScope.isAdmin eq 'Y'}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">관리자페이지</a>
-                                </li>
-                            </c:if>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/mypage.member">
-                                    <img src="${sessionScope.profileUrl}" class="rounded-circle" width="40" height="40"
-                                        alt="Profile">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/mypage.member">마이페이지</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout.member">로그아웃</a>
-                            </li>
-                        </ul>
-                    </c:when>
-                    <c:otherwise>
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                            </li>
-                        </ul>
-                    </c:otherwise>
+                   <c:when test="${not empty loginId}">
+                   <ul class="navbar-nav ms-auto">
+                   
+                   <c:if test="${isAdmin eq true}">
+                    	<li class="nav-item">
+                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
+                    	</li>
+                   </c:if>	
+                     <li class="nav-item">
+                           <a class="nav-link" href="/logout.member">로그아웃</a>
+                     </li>
+                     
+                    <li class="nav-item">
+                       <a class="nav-link" href="/mypage.member">
+                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
+                       </a>
+                    </li>                  
+
+
+                   </ul>                          
+                   </c:when>
+                   <c:otherwise>
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
+                          </li>
+                      </ul>
+                   </c:otherwise>
                 </c:choose>
 
             </div>
         </div>
     </nav>
+    
+    
     <nav class="nav nav-pills nav-fill" id="gamenav">
-        <a class="nav-link" href="/list.playrecord?gameSeq=1">Game1</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=2">Game2</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=3">Game3</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=4">Game4</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=5">Game5</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=1">2048</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=2">GOLD BREAK!</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=3">ICE CUBY</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=4">똥 피하기</a>
+        <a class="nav-link" href="/list.playrecord?gameSeq=5">탈출하기</a>
     </nav>
 
     <div class="wrapper">

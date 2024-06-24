@@ -100,7 +100,7 @@
                 success: function(response) {
                     alert('비밀번호가 성공적으로 변경되었습니다.');
                     if (window.opener && window.opener.parent) {
-                        window.opener.parent.location.href("/logout.member");
+                        window.opener.parent.location.href = "/logout.member";
                     }
                     window.close();
                 },
