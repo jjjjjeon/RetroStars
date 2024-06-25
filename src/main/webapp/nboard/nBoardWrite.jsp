@@ -317,7 +317,8 @@
         </div>
         <div class="form-group">
             <label for="contents">내용</label>
-            <textarea id="nBoardContent" name="contents" placeholder="글 내용을 입력하세요"></textarea>
+            <input type="hidden" name="contents" id="hidden_content">
+            <div id="nBoardContent" contenteditable="true"></div>
         </div>
         <div class="form-actions">
             <a href="/list.nboard"><button type="button">목록으로</button></a>
@@ -350,7 +351,8 @@
 		$("#submit").on("click",function(){
 			// 제목, 내용 공백 검사
 			let title = $("#nBoardTitle").val().trim();
-			let content = $("#nBoardContent").val().trim();
+			let content = $("#nBoardContent").html();
+			console.log(content);
 			
 			if(title==='' || content === ''){
 				event.preventDefault();
@@ -364,6 +366,7 @@
 
 			
 			}
+			$("#hidden_content").val($("#nBoardContent").html());
 		})
 	</script>
 </body>
