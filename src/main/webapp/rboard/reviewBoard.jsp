@@ -344,6 +344,10 @@
     	width:40px;
     	height:40px;
     }      
+    
+     .like-button, .dislike-button {
+        cursor: pointer;
+    }
 </style>
 </head>
 
@@ -470,19 +474,27 @@
                                     <i class="fas fa-star"></i>
                                 </c:forEach>
                             </div>
-                            <div class="review-footer">
-                                <div>
-                                    <span>좋아요: ${review.reviewLike}</span> |
-                                    <span>싫어요: ${review.reviewDislike}</span>
-                                </div>
-                                <div>
-                                    <img id="likeImg" src="/upload/like.png" alt="좋아요">
-                                    <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요">
-							          <c:if test="${isAdmin}">
+							<div class="review-footer">
+							    <div>
+							        <span>좋아요: <span id="like-count-${review.reviewSeq}">${review.reviewLike}</span></span> |
+							        <span>싫어요: <span id="dislike-count-${review.reviewSeq}">${review.reviewDislike}</span></span>
+							    </div>
+							    <div>
+							        <c:choose>
+							            <c:when test="${not empty loginId}">
+							                <img id="likeImg" src="/upload/like.png" alt="좋아요" class="like-button" data-review-seq="${review.reviewSeq}">
+							                <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요" class="dislike-button" data-review-seq="${review.reviewSeq}">
+							            </c:when>
+							            <c:otherwise>
+							                <img id="likeImg" src="/upload/like.png" alt="좋아요" class="like-button" data-logged-in="false">
+							                <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요" class="dislike-button" data-logged-in="false">
+							            </c:otherwise>
+							        </c:choose>
+							        <c:if test="${isAdmin}">
 							            <button class="delete-review-btn" data-review-seq="${review.reviewSeq}">삭제</button>
-							        </c:if>                              	
-                                </div>
-                            </div>
+							        </c:if>
+							    </div>
+							</div>
                         </div>
                     </c:forEach>
                 </c:otherwise>
@@ -516,40 +528,94 @@
     </div>
 
     <script>
-    
+    $(document).ready(function() {
+        $("#sortLikes").on("click", function() {
+            let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+            let url = gameSeq ? `/list.review?sortType=review_like&gameSeq=${gameSeq}` : "/list.review?sortType=review_like";
+            window.location.href = url;
+        });
 
-            $(document).ready(function() {
-                $("#sortLikes").on("click", function() {
-                    let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
-                    let url = gameSeq ? `/list.review?sortType=review_like&gameSeq=${gameSeq}` : "/list.review?sortType=review_like";
-                    window.location.href = url;
-                });
+        $("#sortDislikes").on("click", function() {
+            let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+            let url = gameSeq ? `/list.review?sortType=review_dislike&gameSeq=${gameSeq}` : "/list.review?sortType=review_dislike";
+            window.location.href = url;
+        });
 
-                $("#sortDislikes").on("click", function() {
-                    let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
-                    let url = gameSeq ? `/list.review?sortType=review_dislike&gameSeq=${gameSeq}` : "/list.review?sortType=review_dislike";
-                    window.location.href = url;
-                });
-
-                $(".delete-review-btn").on("click", function() {
-                    let reviewSeq = $(this).data("review-seq");
-                    if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
-                        $.ajax({
-                            url: "/deleteReview.review",
-                            method: "POST",
-                            data: { reviewSeq: reviewSeq },
-                            success: function(response) {
-                                if (response.result === "success") {
-                                    alert("리뷰가 삭제되었습니다.");
-                                    location.reload();
-                                } else {
-                                    alert("리뷰 삭제에 실패했습니다.");
-                                }
-                            }
-                        });
+        $(".delete-review-btn").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
+                $.ajax({
+                    url: "/deleteReview.review",
+                    method: "POST",
+                    data: { reviewSeq: reviewSeq },
+                    success: function(response) {
+                        if (response.result === "success") {
+                            alert("리뷰가 삭제되었습니다.");
+                            location.reload();
+                        } else {
+                            alert("리뷰 삭제에 실패했습니다.");
+                        }
                     }
                 });
+            }
+        });
+
+        $(".like-button").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            let loggedIn = $(this).data("logged-in") !== false;
+
+            if (!loggedIn) {
+                alert("로그인된 사용자만 좋아요를 누를 수 있습니다.");
+                return;
+            }
+
+            $.ajax({
+                url: "/updateReviewLike.review",
+                method: "POST",
+                data: { reviewSeq: reviewSeq, type: "like" },
+                dataType: "json"
+            }).done(function(response) {
+                if (response.result === "success") {
+                    let likeCount = $("#like-count-" + reviewSeq);
+                    likeCount.text(parseInt(likeCount.text()) + 1);
+                } else if (response.result === "duplicate") {
+                    alert("이미 좋아요를 누르셨습니다.");
+                } else if (response.result === "not_logged_in") {
+                    alert("로그인된 사용자만 좋아요를 누를 수 있습니다.");
+                } else {
+                    alert("좋아요 업데이트에 실패했습니다.");
+                }
             });
+        });
+
+        $(".dislike-button").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            let loggedIn = $(this).data("logged-in") !== false;
+
+            if (!loggedIn) {
+                alert("로그인된 사용자만 싫어요를 누를 수 있습니다.");
+                return;
+            }
+
+            $.ajax({
+                url: "/updateReviewLike.review",
+                method: "POST",
+                data: { reviewSeq: reviewSeq, type: "dislike" },
+                dataType: "json"
+            }).done(function(response) {
+                if (response.result === "success") {
+                    let dislikeCount = $("#dislike-count-" + reviewSeq);
+                    dislikeCount.text(parseInt(dislikeCount.text()) + 1);
+                } else if (response.result === "duplicate") {
+                    alert("이미 싫어요를 누르셨습니다.");
+                } else if (response.result === "not_logged_in") {
+                    alert("로그인된 사용자만 싫어요를 누를 수 있습니다.");
+                } else {
+                    alert("싫어요 업데이트에 실패했습니다.");
+                }
+            });
+        });
+    });
  
     </script>
 </body>

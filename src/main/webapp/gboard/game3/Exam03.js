@@ -93,7 +93,7 @@ class Exam03 extends Phaser.Scene { // 신 타입
 	                     console.log("게임 플레이 기록 전송 실패!");
 	                 }
 	             });
-	            this.scene.start("GameOver");
+	            this.scene.start("GameOver3");
 	     });
 
         // 바닥과 star 가 충돌하도록 설정

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -91,6 +92,52 @@ public class ReviewDAO {
 
         }
         
+    }
+    
+    public void updateReviewLike(int reviewSeq, String userId, String type) throws Exception {
+        // 중복 확인 SQL
+        String checkSql = "SELECT COUNT(*) FROM review_likes_dislikes WHERE review_seq = ? AND user_id = ? AND type = ?";
+        String insertSql = "INSERT INTO review_likes_dislikes (id, review_seq, user_id, type) VALUES (review_likes_dislikes_sequence.nextval, ?, ?, ?)";
+        String updateSql = "";
+
+        if ("like".equals(type)) {
+            updateSql = "UPDATE review SET review_like = review_like + 1 WHERE review_seq = ?";
+        } else if ("dislike".equals(type)) {
+            updateSql = "UPDATE review SET review_dislike = review_dislike + 1 WHERE review_seq = ?";
+        }
+
+        try (Connection con = this.getConnection()) {
+            try (PreparedStatement checkPstat = con.prepareStatement(checkSql)) {
+                checkPstat.setInt(1, reviewSeq);
+                checkPstat.setString(2, userId);
+                checkPstat.setString(3, type);
+                try (ResultSet rs = checkPstat.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        throw new SQLException("이미 좋아요/싫어요를 누르셨습니다.", "45000", -20001);
+                    }
+                }
+            }
+
+            try (PreparedStatement updatePstat = con.prepareStatement(updateSql);
+                 PreparedStatement insertPstat = con.prepareStatement(insertSql)) {
+                con.setAutoCommit(false);
+
+                // 리뷰 업데이트
+                updatePstat.setInt(1, reviewSeq);
+                updatePstat.executeUpdate();
+
+                // 좋아요/싫어요 기록 추가
+                insertPstat.setInt(1, reviewSeq);
+                insertPstat.setString(2, userId);
+                insertPstat.setString(3, type);
+                insertPstat.executeUpdate();
+
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
+            }
+        }
     }
     /** 
      * @Method Name  : getLatestReview

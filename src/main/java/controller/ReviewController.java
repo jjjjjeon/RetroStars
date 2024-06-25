@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,19 +49,16 @@ public class ReviewController extends HttpServlet {
         PrintWriter pw = response.getWriter();
 
         try {
+        	String userId1 = (String) request.getSession().getAttribute("loginId");
+        	
             if (cmd.equals("/mostLiked.review")) {
-//                int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
-//                ReviewDTO mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
-//                System.out.println(mostLikedReview);
-//                String result = gson.toJson(mostLikedReview);
-//                pw.append(result);
-//                System.out.println(result);
+
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
                 HashMap<String, ?> mostLikedReview = reviewDao.getMostLikedReview(gameSeq);
                 System.out.println(mostLikedReview);
                 String result = gson.toJson(mostLikedReview);
                 pw.append(result);
-                System.out.println(result);
+                System.out.println("가장평가가 좋은 " + result);
                 
             } else if (cmd.equals("/latest.review")) {
                 ReviewDTO latestReview = reviewDao.getLatestReview();
@@ -68,11 +66,25 @@ public class ReviewController extends HttpServlet {
                 pw.append(result);
                 System.out.println(result);
             } else if (cmd.equals("/updateReviewLike.review")) {
+                if (userId1 == null) {
+                    pw.append("{\"result\":\"not_logged_in\"}");
+                    return;
+                }
+
                 int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
                 String type = request.getParameter("type");
-                reviewDao.updateReviewLike(reviewSeq, type);
-                pw.append("{\"result\":\"success\"}");
-            } else if (cmd.equals("/list.review")) {
+
+                try {
+                    reviewDao.updateReviewLike(reviewSeq, userId1, type);
+                    pw.append("{\"result\":\"success\"}");
+                } catch (SQLException e) {
+                    if (e.getErrorCode() == -20001 || e.getErrorCode() == -20002) {
+                        pw.append("{\"result\":\"duplicate\"}");
+                    } else {
+                        throw e;
+                    }
+                }
+            }  else if (cmd.equals("/list.review")) {
                 String sortType = request.getParameter("sortType") != null ? request.getParameter("sortType") : "review_like";
                 int cpage = request.getParameter("cpage") != null ? Integer.parseInt(request.getParameter("cpage")) : 1;
                 int startNum = cpage * 10 - 9;
