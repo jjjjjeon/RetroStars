@@ -181,9 +181,9 @@
         <a href="/member/login/findPw.jsp">비밀번호를 잊어버리셨나요?</a>
 
         <div class="social-login">
-                     <a href="javascript:signInWithGoogle()"><img src="/image/google_login.png" alt="Google"></a>
+                     <a href="javascript:signInWithGoogle()"><img id="update1" src="/image/google_login.png" alt="Google"></a>
             <a href="javaScript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
-            <img src="/image/naver_login.png" alt="Line">
+            <img id="update2" src="/image/naver_login.png" alt="Line">
         </div>
         <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
     </div>
@@ -216,6 +216,15 @@
     }
 
     function signInWithGoogle() {
+    	
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signIn().then(function(googleUser) {
+            onSignIn(googleUser);
+        });
+    }
+    
+    function signInWithGoogle() {
+    	
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signIn().then(function(googleUser) {
             onSignIn(googleUser);
@@ -302,6 +311,13 @@
            });
 
            Kakao.init('4b9bccad837f62946166c2a78ed8b481');
+           
+           $("#update1").on("click", function() {               
+                   alert("업데이트 예정입니다.");                
+           });
+           $("#update2").on("click", function() {               
+               alert("업데이트 예정입니다.");                
+       });
        });
                    
  

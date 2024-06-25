@@ -221,10 +221,11 @@ nav {
     justify-content: center;
     gap: 10px;
     padding: 10px 0;
-    margin-bottom: -30px;
+    border-radiuse : 10px;
+    margin-bottom: -20px;
     position: relative;
-    top: -40px;
-    z-index: 1001;
+    top: -10px;
+    z-index: 999;
     
 }
 
@@ -636,7 +637,7 @@ a {
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                    	src: `/upload/${data.profileUrl}`,
+                    	src: `/upload/default.png`,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
@@ -688,7 +689,7 @@ a {
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                        src: `/upload/${data.profileImage}`,
+                        src: `/upload/${data.profileUrl}`,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
