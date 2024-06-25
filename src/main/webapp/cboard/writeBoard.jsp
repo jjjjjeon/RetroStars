@@ -19,11 +19,14 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 <title>글 작성 페이지</title>
 <style>
 * {
 	box-sizing: border-box;
-	margin: 0
+	margin: 0;
+	font-family : 'DalseoHealing';
 }
 
 .note-editor.note-frame {
@@ -180,6 +183,7 @@ input[type="text" i] {
 .note-editable {
 	height: 500px;
 	color: white;
+	font-family : 'DalseoHealing';
 }
 
 .btnBox {
@@ -441,7 +445,8 @@ input[type="text" i] {
 					<input class="form-control" type="file" id="formFileMultiple"
 						name="file">
 					<button class="btn btn-secondary" id="removeFileBtn" type="button">C</button>
-					<button class="btn btn-light" id="addFileTab" type="button" style="color : black">+</button>
+					<button class="btn btn-light" id="addFileTab" type="button"
+						style="color: black">+</button>
 				</div>
 			</div>
 			<div class="editorBox">

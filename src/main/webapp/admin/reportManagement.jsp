@@ -14,12 +14,15 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 <title>관리자페이지 커뮤니티 신고현황</title>
 <style>
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family : 'DalseoHealing';
 }
 
 div {
@@ -64,8 +67,8 @@ a {
 
 .main .navi .profileBox {
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	width: 85%;
 	height: 50px;
 	margin-top: 30px;
@@ -78,7 +81,7 @@ a {
 	width: 80%;
 	margin: 20px auto 0 auto;
 	border: 1px solid black;
-	background-color : #ddd;
+	background-color: #ddd;
 }
 
 .main .navi .profileBox .name {
@@ -294,9 +297,8 @@ a {
 	margin-left: 40px;
 }
 
-.dropdown-item:active{
-	background-color:black;
-	
+.dropdown-item:active {
+	background-color: black;
 }
 </style>
 </head>
@@ -330,7 +332,7 @@ a {
 	<div class="header">관리자페이지</div>
 	<div class="main">
 		<div class="navi">
-			<div class="profileBox name">${loginId}관리자님, 환영합니다!</div>
+			<div class="profileBox name">${loginId}관리자님,환영합니다!</div>
 			<div class="naviBox">
 				<a href="/index.jsp" target="_blank"
 					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
@@ -366,7 +368,7 @@ a {
 
 		</div>
 		<div class="contentBox">
-			<div class="contentTitle" style="height:113px">신고 현황</div>
+			<div class="contentTitle" style="height: 113px">신고 현황</div>
 			<div class="content">
 				<form action="/searchPostList.admin" id="searchForm">
 					<div class="searchBox">
@@ -407,7 +409,7 @@ a {
 										</div>
 										<div class="col-2 postReportCount">
 											<button type="button" class="btn btn-link viewReportBtn"
-												style="font-weight: bold; text-decoration : none;">${DTO.cBoardReport}</button>
+												style="font-weight: bold; text-decoration: none;">${DTO.cBoardReport}</button>
 										</div>
 									</div>
 								</c:forEach>

@@ -17,6 +17,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 	integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 <title>유저게시판</title>
 <style>
 * {
@@ -30,7 +32,7 @@ body {
 
 div {
 	/* border: 1px solid black; */
-	font-family: 'Noto Sans KR', sans-serif;
+	font-family : 'DalseoHealing';
 }
 
 a {
@@ -164,7 +166,7 @@ select:focus {
 
 .boardList {
 	position: relative;
-	min-height : 600px;
+	min-height: 600px;
 	width: 1300px;
 	border-top: 1px solid #5a5a64;
 	clear: both;
