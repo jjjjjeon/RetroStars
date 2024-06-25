@@ -1,12 +1,9 @@
 const GRID_SIZE = 4;
 const TILE_SIZE = 75;
 const GAP = 10;
-
-
 class Main extends Phaser.Scene {
     constructor() {
         super({ key: "Main" });
-
         this.board = []
         this.score = 0;
         this.bestScore = 0;
@@ -18,17 +15,14 @@ class Main extends Phaser.Scene {
         this.scoreText = null;
         this.bestScoreText = null;
     }
-
     preload() {
     }
-
     create() {
         const headingText = this.add.text(15, 50, "2048", {
             font: "bold 64px san-serif",
             color: "#645f59"
         });
         headingText.setOrigin(0, 0.5)
-
         const scoreContainer = this.add.container(250, 50);
         const scoreBg = this.add.rectangle(0, 0, 150, 75, 0xbaac9f);
         const scoreHeading = this.add.text(0, -15, "SCORE", {
@@ -42,7 +36,6 @@ class Main extends Phaser.Scene {
         });
         this.scoreText.setOrigin(0.5, 0.5);
         scoreContainer.add([scoreBg, scoreHeading, this.scoreText]);
-
         const bestScoreContainer = this.add.container(410, 50);
         const bestScoreBg = this.add.rectangle(0, 0, 150, 75, 0xbaac9f);
         const bestScoreHeading = this.add.text(0, -15, "Best Score", {
@@ -56,13 +49,11 @@ class Main extends Phaser.Scene {
         });
         this.bestScoreText.setOrigin(0.5, 0.5);
         bestScoreContainer.add([bestScoreBg, bestScoreHeading, this.bestScoreText]);
-
         const newGameText = this.add.text(20, 120, "숫자 블럭을 합쳐 2048 타일을 만드세요!", {
             font: "bold 18px sans-serif",
             color: "#837c71"
         })
         newGameText.setOrigin(0, 0.5);
-
         const newGameButtonContainer = this.add.container(425, 120);
         const newGameButtonBg = this.add.rectangle(0, 0, 125, 50, 0x8e7968).setInteractive();
         const newGameButtonText = this.add.text(0, 0, "New Game", {
@@ -71,7 +62,6 @@ class Main extends Phaser.Scene {
         });
         newGameButtonText.setOrigin(0.5, 0.5);
         newGameButtonContainer.add([newGameButtonBg, newGameButtonText]);
-
         newGameButtonBg.on("pointerdown", () => {
             this.score = 0;
             this.frame = 0;
@@ -82,22 +72,17 @@ class Main extends Phaser.Scene {
         });
         newGameButtonBg.on("pointerover", () => {
             newGameButtonContainer.setScale(1.1);
-
             this.game.canvas.style.cursor = "pointer";
         });
         newGameButtonBg.on("pointerout", () => {
             newGameButtonContainer.setScale(1);
-
             this.game.canvas.style.cursor = "default";
         });
-
         this.initBoard();
-
         this.boardContainer = this.add.container(this.game.config.width / 2, 340);
         const boardSize = (TILE_SIZE * GRID_SIZE) + GAP * (GRID_SIZE + 1);
         const boardBg = this.add.rectangle(0, 0, boardSize, boardSize, 0xbbada0);
         this.boardContainer.add(boardBg);
-
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
                 const tileBg = this.add.rectangle(
@@ -110,10 +95,8 @@ class Main extends Phaser.Scene {
                 this.boardContainer.add(tileBg);
             }
         }
-
         this.createRandom2or4();
         this.updateBoard();
-
         const guideText = this.add.text(this.game.config.width / 2, 560, "게임방법 : 방향키로 타일을 움직이세요.\n같은 숫자를 가진 두 개의 타일이 만나면,\n하나의 타일로 합쳐지며 숫자가 더해집니다.", {
             font: "bold 18px sans-serif",
             color: "#837c71",
@@ -121,34 +104,27 @@ class Main extends Phaser.Scene {
         });
         guideText.setOrigin(0.5);
         guideText.setWordWrapWidth(460, true);
-
         // 방향키 조작
         let canPressKey = true;
         this.input.keyboard.on("keydown", (event) => {
             if (this.isGameOver || !canPressKey) {
                 return;
             }
-
             const { keyCode } = event;
             switch (keyCode) {
                 case 37:
-                	event.preventDefault(); 
                     this.moveLeft();
                     break;
                 case 38:
-                	event.preventDefault(); 
                     this.moveUp();
                     break;
                 case 39:
-                	event.preventDefault(); 
                     this.moveRight();
                     break;
                 case 40:
-               		event.preventDefault(); 
                     this.moveDown();
                     break;
             }
-
             if (keyCode >= 37 && keyCode <= 40) {
                 canPressKey = false;
                 this.time.addEvent({
@@ -163,7 +139,6 @@ class Main extends Phaser.Scene {
             }
         });
     }
-
     initBoard() {
         for (let i = 0; i < GRID_SIZE; i++) {
             this.board[i] = [];
@@ -172,7 +147,6 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
     createRandom2or4() {
         const emptyTiles = [];
         for (let i = 0; i < GRID_SIZE; i++) {
@@ -185,14 +159,12 @@ class Main extends Phaser.Scene {
                 }
             }
         }
-
         if (emptyTiles.length === 0) {
             this.add.text(this.game.config.width / 2, 250, "Game Over!", {
                 font: "bold 32px sans-serif",
                 color: "black"
             }).setOrigin(0.5);
             this.isGameOver = true;
-
             if (this.score == this.bestScore){
                 this.add.text(this.game.config.width / 2, 350, "Congratulations! \nYou got the Best Score!", {
                     font: "bold 28px sans-serif",
@@ -200,7 +172,6 @@ class Main extends Phaser.Scene {
                     align : "center"
                 }).setOrigin(0.5);
             }
-
 
              $.ajax({
                  url : "/write.playrecord",
@@ -216,14 +187,11 @@ class Main extends Phaser.Scene {
                      console.log("게임 플레이 기록 전송 실패!");
                  }
              });
-
             return;
         }
         const chosenTile = Phaser.Utils.Array.GetRandom(emptyTiles);
         this.board[chosenTile.x][chosenTile.y] = Phaser.Math.Between(1, 2) * 2;
-
     }
-
     getBackgroundColor(value) {
         switch (value) {
             case 2:
@@ -252,14 +220,12 @@ class Main extends Phaser.Scene {
                 return 0xff0000;
         }
     }
-
     getTextColor(value) {
         if (value <= 4) {
             return "#776e65";
         }
         return "#f9f6f2";
     }
-
     createTile(i, j) {
         const tileContainer = this.add.container(
             j * (TILE_SIZE + GAP) + TILE_SIZE / 2 - (TILE_SIZE * GRID_SIZE / 2 + GAP * 1.5),
@@ -274,10 +240,8 @@ class Main extends Phaser.Scene {
         tileContainer.add([tileBg, tileText]);
         tileContainer.setName(`tile-${i}-${j}`);
         this.boardContainer.add(tileContainer);
-
         return tileContainer;
     }
-
     waitPromise(time) {
         return new Promise((resolve) => {
             this.time.addEvent({
@@ -289,7 +253,6 @@ class Main extends Phaser.Scene {
             });
         });
     }
-
     moveLeft() {
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 1; j < GRID_SIZE; j++) {
@@ -299,7 +262,6 @@ class Main extends Phaser.Scene {
                         if (this.board[i][k] === 0) {
                             this.board[i][k] = this.board[i][currentPlace];
                             this.board[i][currentPlace] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${i}-${currentPlace}`);
                             tile.setName(`tile-${i}-${k}`);
                             this.tweens.add({
@@ -308,18 +270,15 @@ class Main extends Phaser.Scene {
                                 duration: 50,
                                 ease: "Cubic.easeOut"
                             });
-
                             currentPlace = k;
                         } else if (this.board[i][k] === this.board[i][currentPlace]) {
                             this.board[i][k] *= 2;
                             this.board[i][currentPlace] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${i}-${currentPlace}`);
                             const tile2 = this.boardContainer.getByName(`tile-${i}-${k}`);
                             tile2.destroy();
                             this.boardContainer.remove(tile2);
                             tile.setName(`tile-${i}-${k}`);
-
                             this.tweens.add({
                                 targets: tile,
                                 x: k * (TILE_SIZE + GAP) + TILE_SIZE / 2 - (TILE_SIZE * GRID_SIZE / 2 + GAP * 1.5),
@@ -339,7 +298,6 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
     moveRight() {
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = GRID_SIZE - 2; j >= 0; j--) {
@@ -349,7 +307,6 @@ class Main extends Phaser.Scene {
                         if (this.board[i][k] === 0) {
                             this.board[i][k] = this.board[i][currentPlace];
                             this.board[i][currentPlace] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${i}-${currentPlace}`);
                             tile.setName(`tile-${i}-${k}`);
                             this.tweens.add({
@@ -358,18 +315,15 @@ class Main extends Phaser.Scene {
                                 duration: 50,
                                 ease: "Cubic.easeOut"
                             });
-
                             currentPlace = k;
                         } else if (this.board[i][k] === this.board[i][currentPlace]) {
                             this.board[i][k] *= 2;
                             this.board[i][currentPlace] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${i}-${currentPlace}`);
                             const tile2 = this.boardContainer.getByName(`tile-${i}-${k}`);
                             tile2.destroy();
                             this.boardContainer.remove(tile2);
                             tile.setName(`tile-${i}-${k}`);
-
                             this.tweens.add({
                                 targets: tile,
                                 x: k * (TILE_SIZE + GAP) + TILE_SIZE / 2 - (TILE_SIZE * GRID_SIZE / 2 + GAP * 1.5),
@@ -389,7 +343,6 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
     moveUp() {
         for (let j = 0; j < GRID_SIZE; j++) {
             for (let i = 1; i < GRID_SIZE; i++) {
@@ -399,11 +352,9 @@ class Main extends Phaser.Scene {
                         if (currentPlace - 1 !== k) {
                             break;
                         }
-
                         if (this.board[k][j] === 0) {
                             this.board[k][j] = this.board[currentPlace][j];
                             this.board[currentPlace][j] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${currentPlace}-${j}`);
                             tile.setName(`tile-${k}-${j}`);
                             this.tweens.add({
@@ -412,19 +363,15 @@ class Main extends Phaser.Scene {
                                 duration: 50,
                                 ease: "Cubic.easeOut"
                             });
-
                             currentPlace = k;
-
                         } else if (this.board[k][j] === this.board[currentPlace][j]) {
                             this.board[k][j] *= 2;
                             this.board[currentPlace][j] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${currentPlace}-${j}`);
                             const tile2 = this.boardContainer.getByName(`tile-${k}-${j}`);
                             tile2.destroy();
                             this.boardContainer.remove(tile2);
                             tile.setName(`tile-${k}-${j}`);
-
                             this.tweens.add({
                                 targets: tile,
                                 y: k * (TILE_SIZE + GAP) + TILE_SIZE / 2 - (TILE_SIZE * GRID_SIZE / 2 + GAP * 1.5),
@@ -444,7 +391,6 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
     moveDown() {
         for (let j = 0; j < GRID_SIZE; j++) {
             for (let i = GRID_SIZE - 2; i >= 0; i--) {
@@ -454,7 +400,6 @@ class Main extends Phaser.Scene {
                         if (this.board[k][j] === 0) {
                             this.board[k][j] = this.board[currentPlace][j];
                             this.board[currentPlace][j] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${currentPlace}-${j}`);
                             tile.setName(`tile-${k}-${j}`);
                             this.tweens.add({
@@ -463,18 +408,15 @@ class Main extends Phaser.Scene {
                                 duration: 50,
                                 ease: "Cubic.easeOut"
                             });
-
                             currentPlace = k;
                         } else if (this.board[k][j] === this.board[currentPlace][j]) {
                             this.board[k][j] *= 2;
                             this.board[currentPlace][j] = 0;
-
                             const tile = this.boardContainer.getByName(`tile-${currentPlace}-${j}`);
                             const tile2 = this.boardContainer.getByName(`tile-${k}-${j}`);
                             tile2.destroy();
                             this.boardContainer.remove(tile2);
                             tile.setName(`tile-${k}-${j}`);
-
                             this.tweens.add({
                                 targets: tile,
                                 y: k * (TILE_SIZE + GAP) + TILE_SIZE / 2 - (TILE_SIZE * GRID_SIZE / 2 + GAP * 1.5),
@@ -494,7 +436,6 @@ class Main extends Phaser.Scene {
             }
         }
     }
-
     updateBoard() {
         for (let i = 0; i < GRID_SIZE; i++) {
             for (let j = 0; j < GRID_SIZE; j++) {
@@ -503,7 +444,6 @@ class Main extends Phaser.Scene {
                     if (!tile) {
                         const tileContainer = this.createTile(i, j);
                         tileContainer.setScale(0.5);
-
                         this.tweens.add({
                             targets: tileContainer,
                             scale: 1,
@@ -514,11 +454,8 @@ class Main extends Phaser.Scene {
                 }
             }
         }
-
-
         this.updateScore();
     }
-
     updateScore() {
         let score = 0;
         for (let i = 0; i < GRID_SIZE; i++) {
@@ -527,18 +464,14 @@ class Main extends Phaser.Scene {
             }
         }
         this.score = score;
-
         if (this.score > this.bestScore) {
             this.bestScore = this.score;
         }
-
         this.scoreText.setText(this.score);
         this.bestScoreText.setText(this.bestScore);
     }
-
     update() {
         this.frame++;
-
         if (this.frame % 60 == 0) {
             this.timer++;
         }
@@ -548,7 +481,6 @@ class Main extends Phaser.Scene {
 			
 		
 	
-
     
 //                 $.ajax({
 //                 url : "/write.playRecord",
@@ -565,8 +497,4 @@ class Main extends Phaser.Scene {
 //                     console.log("게임 플레이 기록 전송 실패!");
 //                 }
 //             });
-
 }
-
-
-

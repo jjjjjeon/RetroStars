@@ -427,7 +427,7 @@
             {src: "/upload/G4.mp4", seq: 4},
             {src: "/upload/G5.mp4", seq: 5}
         ];
-
+		console.log()
         function playRandomVideo() {
             let randomIndex = Math.floor(Math.random() * videoList.length); // 비디오 랜덤 재상
             console.log(randomIndex);

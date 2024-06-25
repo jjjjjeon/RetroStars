@@ -88,7 +88,7 @@
       a:hover { color: white; text-decoration: underline;}
 
     .header {
-        height: 250px;
+        height: 170px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -98,7 +98,7 @@
     }
 
     .header .headerTitle {
-        height: 150px;
+        height: 120px;
         color: #ffffff;
         font-size: 32px;
         font-weight: bold;
@@ -107,7 +107,7 @@
     }
 
     .header #headerTitle {
-        margin-top: 70px;
+        margin-top: 30px;
         font-size:30px;
     }
 
@@ -145,18 +145,29 @@
         border-radius: 10px;
     }
 
-    .review-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #5a5a64;
-    }
-
-    .review-header h3 {
-        color: white;
-        font-size:15px;
-    }
+	.review-header {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    padding-bottom: 10px;
+	    border-bottom: 1px solid #5a5a64;
+	}
+	
+	.review-header .title-section {
+	    display: flex;
+	    align-items: center;
+	    gap: 20px; 
+	}
+	
+	.review-header h3 {
+	    color: white;
+	    font-size: 15px;
+	}
+	
+	.btn.steamBtn {
+	    background-color: #6fa720;
+	    color: white;
+	}
 
     .review-list {
 /*         margin-top: 20px; */
@@ -347,6 +358,10 @@
      .like-button, .dislike-button {
         cursor: pointer;
     }
+    
+    .steamBtn {
+	background-color: #6fa720;
+}
 </style>
 </head>
 
@@ -445,13 +460,37 @@
 	</div>
 
     <div class="content">
-        <div class="review-header">
-            <h3>${empty param.gameSeq ? '전체' : param.gameSeq} 리뷰</h3>
-            <div class="sort-buttons">
-                <button id="sortLikes" class="${sortType == 'review_like' ? 'active' : ''}">좋아요 많은 순</button>
-                <button id="sortDislikes" class="${sortType == 'review_dislike' ? 'active' : ''}">싫어요 많은 순</button>
-            </div>
-        </div>
+	    <div class="review-header">
+	        <div class="title-section">
+	            <h3>
+	                <c:choose>
+	                    <c:when test="${empty param.gameSeq}">
+	                        전체 리뷰
+	                    </c:when>
+	                    <c:when test="${param.gameSeq == '1'}">
+	                        2048 리뷰
+	                    </c:when>
+	                    <c:when test="${param.gameSeq == '2'}">
+	                        GOLD BREAK! 리뷰
+	                    </c:when>
+	                    <c:when test="${param.gameSeq == '3'}">
+	                        ICE CUBY 리뷰
+	                    </c:when>
+	                    <c:when test="${param.gameSeq == '4'}">
+	                        똥 피하기 리뷰
+	                    </c:when>
+	                    <c:when test="${param.gameSeq == '5'}">
+	                        탈출하기 리뷰
+	                    </c:when>
+	                </c:choose>
+	            </h3>
+	            <button id="writeReviewBtn" class="btn steamBtn">게임하러 가기</button>
+	        </div>
+	        <div class="sort-buttons">
+	            <button id="sortLikes" class="${sortType == 'review_like' ? 'active' : ''}">좋아요 많은 순</button>
+	            <button id="sortDislikes" class="${sortType == 'review_dislike' ? 'active' : ''}">싫어요 많은 순</button>
+	        </div>
+	    </div>
         <div class="review-list">
             <c:choose>
                 <c:when test="${fn:length(list) == 0}">
@@ -461,7 +500,7 @@
                     <c:forEach var="review" items="${list}">
                         <div class="review-item">
                             <div class="review-author">
-                                <img src="/upload/${review.profileUrl}" alt="Profile">
+                                <img src="/profile/${review.profileUrl}" alt="Profile">
                                 ${review.userNickname}
                             </div>
                             <div class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></div>
@@ -556,6 +595,15 @@
                         }
                     }
                 });
+            }
+        });
+        
+        $("#writeReviewBtn").on("click", function() {
+            let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+            if (gameSeq) {
+                window.location.href = `/viewGame.gboard?gameSeq=${gameSeq}`;
+            } else {
+                alert("게임을 선택해 주세요.");
             }
         });
 

@@ -97,7 +97,7 @@ public class ReviewDAO {
     public void updateReviewLike(int reviewSeq, String userId, String type) throws Exception {
         // 중복 확인 SQL
         String checkSql = "SELECT COUNT(*) FROM review_likes_dislikes WHERE review_seq = ? AND user_id = ? AND type = ?";
-        String insertSql = "INSERT INTO review_likes_dislikes (id, review_seq, user_id, type) VALUES (review_likes_dislikes_sequence.nextval, ?, ?, ?)";
+        String insertSql = "INSERT INTO review_likes_dislikes (review_likes_dislikes_seq, review_seq, user_id, type) VALUES (review_likes_dislikes_sequence.nextval, ?, ?, ?)";
         String updateSql = "";
 
         if ("like".equals(type)) {

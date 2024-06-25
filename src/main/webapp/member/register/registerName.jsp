@@ -73,7 +73,7 @@
             </div>
             <div class="input-group">
                 <label for="userPhone">폰 번호:</label>
-                <input type="text" id="userPhone" name="userPhone" placeholder="폰 번호">
+                <input type="text" id="userPhone" name="userPhone" placeholder="폰 번호" required>
                 <p id="phoneCheckText" class="checkText">폰 번호 형식이 맞지 않습니다. (예: 01012345678)</p>
             </div>
             <button type="submit" id="nextButton" class="disabled-button">다음</button>

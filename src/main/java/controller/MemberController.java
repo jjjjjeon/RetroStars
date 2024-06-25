@@ -530,6 +530,11 @@ public class MemberController extends HttpServlet {
 				String userNo = birth.substring(0,2)+birth.substring(3,5)+birth.substring(6,8)+genderCode+"******";
 				
 				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
+				
+				//세션 프로필 갱신 by 조진혁
+                String updatedProfileUrl = userProfileImgDao.selectMyUrl(id);
+                session.setAttribute("userProfileUrl", updatedProfileUrl);
+                
 				request.getRequestDispatcher("/mypage.member").forward(request, response);
 				
 			}else if(cmd.equals("/updatePw.member")) {
