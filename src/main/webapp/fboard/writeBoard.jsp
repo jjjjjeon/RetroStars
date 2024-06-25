@@ -7,11 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
  <style>
         body {
             background-color: #121212;
             color: #ffffff;
-            font-family: Arial, sans-serif;
+            font-family : 'DalseoHealing';
             margin: 0;
             padding: 0;
             display: flex;
