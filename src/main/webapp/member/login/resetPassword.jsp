@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 재설정</title>
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <style>
@@ -17,7 +18,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        font-family: 'Georgia', serif;
+        font-family : 'DalseoHealing';
         color: white;
         position: relative;
     }

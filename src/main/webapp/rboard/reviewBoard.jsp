@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>리뷰게시판</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -21,13 +22,14 @@
       background-color : #222; 
 /*       color: #d3d3d3; */
 		color:white;
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family : 'DalseoHealing';
         display: flex;
         flex-direction: column;
+        
     }
 
     div {
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family : 'DalseoHealing';
     }
 
     a {

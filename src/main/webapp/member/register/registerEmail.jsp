@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - 이메일 입력</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
     <style>
         .input-group {
             position: relative;
