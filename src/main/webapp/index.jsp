@@ -26,7 +26,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+      
        <style>
+       
         * {
             box-sizing: border-box;
         }
@@ -36,6 +39,7 @@
             margin-bottom:0;
             padding:0;
            	color:white;	/*헤더 글자색 흰색으로 */
+           	font-family : 'DalseoHealing';
            
         }
 
