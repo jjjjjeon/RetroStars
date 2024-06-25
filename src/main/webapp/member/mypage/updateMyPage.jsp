@@ -21,6 +21,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+
  <style>
  
   .navbar {
@@ -74,7 +76,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
  
  		div:focus{outline: border-bottom;}
  		
-        body{ background-image: url(/image/background.png); background-size: cover;}
+        body{ background-image: url(/image/background.png); background-size: cover; font-family : 'DalseoHealing';}
 
         *{box-sizing: border-box;}
 
