@@ -110,6 +110,11 @@
 		#nBoardContent{
 			background-color: #323232;
 			color:white;
+			height: 400px;
+			resize:vertical;
+			overflow: auto;
+			border:1px solid white;
+			border-radius:10px;
 		}
         .header {
             text-align: center;
