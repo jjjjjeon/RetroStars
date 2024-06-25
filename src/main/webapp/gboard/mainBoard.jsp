@@ -264,12 +264,23 @@ nav {
     justify-content : center;
 }
 
+.community-button .bookBtn{
+	background-color:#c6d4df;
+}
+
 .community-button:hover {
     background-color: #3a4b58;
 }
 
-.community-button .gameBtn {
-    background-color: #6fa720;
+#addGameBookmarkBtn {
+    background-color: #F4A261;
+    opacity : 0.8;
+    color : black; !important
+}
+
+#goToCBoard{
+	color : black;
+	background-color: #E9C46A;
 }
 
 #gameBtn {
@@ -518,11 +529,11 @@ a {
                 </p>
                 <p>DEVELOPER: ${game.developer}</p>
                 <div id="gameBtnBehind" class="buttons">
-                    <button class="btn community-button" id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
-                    <a href="/list.cboard?category=2" ><button class="btn community-button">공략보기</button></a>
+                    <button class="btn community-button bookBtn" id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
+                    <a href="/list.cboard?category=2" ><button class="btn community-button" id="goToCBoard">공략보기</button></a>
                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button>
                 </div>
-                <p> 가장 평가가 많은 리뷰 <p>
+                <p style="color:#c0c0c0"> 가장 평가가 많은 리뷰 <p>
             </div>
         </div>
 <!--         <div class="review-content"> -->
@@ -654,75 +665,15 @@ a {
                     let reviewDateDiv = $('<div>').addClass('review-date').text(data.reviewDate);
                     let reviewContentDiv = $('<div>').addClass('review-content').text(data.reviewContent);
 
-                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?          ');
-                    let likeButton = $('<button>').addClass('btn btn-success').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'like')`).html('<i class="fas fa-thumbs-up"></i>');
-                    let dislikeButton = $('<button>').addClass('btn btn-danger').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'dislike')`).html('<i class="fas fa-thumbs-down"></i>');
+                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?');
 
-                    reviewHelpfulDiv.append(likeButton, dislikeButton);
 
                     reviewDiv.append(reviewHeaderDiv, reviewDateDiv, reviewContentDiv, reviewHelpfulDiv);
 
                     description.append(reviewDiv);
                 });
 
-                $.ajax({
-                    url: "/latest.review",
-                    method: "GET",
-                    dataType: "json",
-                    data: {
-                        gameSeq: ${game.gameSeq}
-                    }
-                }).done(function(data) {
-                    console.log(data);
-                    let latestReviewSection = $('#latestReviewSection');
-                    let icon = '';
 
-                    if (data.reviewLike >= data.reviewDislike && data.reviewLike >= data.reviewFunny) {
-                        icon = '<i class="fas fa-thumbs-up"></i>';
-                    } else if (data.reviewDislike > data.reviewLike && data.reviewDislike >= data.reviewFunny) {
-                        icon = '<i class="fas fa-thumbs-down"></i>';
-                    } else {
-                        icon = '<i class="fas fa-laugh"></i>';
-                    }
-
-                    let reviewDiv = $('<div>').addClass('review');
-
-                    let reviewHeaderDiv = $('<div>').addClass('review-header');
-                    let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
-                    let userProfileImg = $('<img>').attr({
-                        src: `/upload/${data.profileUrl}`,
-                        class: 'rounded-circle',
-                        width: 40,
-                        height: 40,
-                        alt: 'Profile'
-                    });
-                    let userNicknameDiv = $('<div>').text(data.userNickname);
-                    let userLevelDiv = $('<div>').text(`Level ${data.userLevel}`);
-
-                    reviewUserInfoDiv.append(userProfileImg, userNicknameDiv, userLevelDiv);
-                    let reviewIconDiv = $('<div>').addClass('review-icon').html(icon);
-
-                    reviewHeaderDiv.append(reviewUserInfoDiv, reviewIconDiv);
-
-                    let reviewDateDiv = $('<div>').addClass('review-date').text(data.reviewDate);
-                    let reviewContentDiv = $('<div>').addClass('review-content').text(data.reviewContent);
-
-                    let reviewHelpfulDiv = $('<div>').addClass('review-helpful').html('리뷰가 도움이 되었나요?');
-                    let likeButton = $('<button>').addClass('btn btn-success').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'like')`).html('<i class="fas fa-thumbs-up"></i>');
-                    let dislikeButton = $('<button>').addClass('btn btn-danger').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'dislike')`).html('<i class="fas fa-thumbs-down"></i>');
-                    let funnyButton = $('<button>').addClass('btn btn-warning').attr('onclick', `updateReviewLike(${data.reviewSeq}, 'funny')`).html('<i class="fas fa-laugh"></i>');
-
-                    reviewHelpfulDiv.append(likeButton, dislikeButton, funnyButton);
-
-                    reviewDiv.append(reviewHeaderDiv, reviewDateDiv, reviewContentDiv, reviewHelpfulDiv);
-                    latestReviewSection.append(reviewDiv);
-                    
-                    $(".like-button, .dislike-button").css("cursor", "pointer").on("click", function() {
-                        let reviewSeq = $(this).data("review-seq");
-                        let type = $(this).hasClass("like-button") ? "like" : "dislike";
-                        updateReviewLike(reviewSeq, type);
-                    });
-                });
             }
 
             loadReviews();

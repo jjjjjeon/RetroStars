@@ -37,7 +37,7 @@
         color: #d3d3d3;
     }
     
-	/*  HEADER CSS  */
+
 	   .navbar {
            top: 0;
            width: 100%;
@@ -70,8 +70,8 @@
       }
       .dropdown-menu{
          background-color: #323232;
-         text-align: center; /* 중앙 정렬을 위한 설정 */
-         width: 100%; /* 너비를 100%로 설정 */
+         text-align: center; 
+         width: 100%; 
       }
       .dropdown-item{
          background-color: #323232;
@@ -86,10 +86,7 @@
       a:link { color: white; text-decoration: none;}
       a:visited { color: white; text-decoration: none;}
       a:hover { color: white; text-decoration: underline;}
-      /*    end navbar css */
 
-
-	/*header css*/
     .header {
         height: 250px;
         display: flex;
