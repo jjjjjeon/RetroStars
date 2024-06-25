@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import common.FBoardConfig;
 import dao.FBoardDAO;
 import dao.MemberDAO;
+import dao.UserProfileImgDAO;
 import dto.FBoardDTO;
 
 @WebServlet("*.fboard")
@@ -29,6 +30,7 @@ public class FBoardController extends HttpServlet {
 		String cmd = request.getRequestURI();
 		FBoardDAO fBoardDao = FBoardDAO.getInstance();
 		MemberDAO mBoardDao = MemberDAO.getInstance();
+		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		System.out.println(cmd);
 		
 		try {		
@@ -56,7 +58,10 @@ public class FBoardController extends HttpServlet {
 				List<FBoardDTO> fboardCate = fBoardDao.listCateNtoM(category,
 				cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
 				cpage*FBoardConfig.recordCountPerFPage);
+				
+				String url = userProfileImgDao.selectMyUrl(id);
 
+				request.setAttribute("userProfileUrl", url);
 				request.setAttribute("isAdmin", admin);
 				request.setAttribute("category", category);
 				request.setAttribute("cpage", cpage);
@@ -77,12 +82,23 @@ public class FBoardController extends HttpServlet {
 				String pullCate = "4";
 				
 				String pcpage = request.getParameter("cpage");
+				session = request.getSession();
+				String id = (String) session.getAttribute("loginId");		
 				
 				System.out.println(kind+":"+category+":"+search+":"+pullCate+":"+pcpage);
 				
+				boolean isAdmin = mBoardDao.isAdmin(id);
+				String admin = "";
+				
+				if(isAdmin) {
+					admin = "admin";
+				}else {
+					admin="user";
+				}				
 				
 				if (pcpage == "null") {pcpage = "1";}
 				int cpage = Integer.parseInt(pcpage);
+				
 				
 				List<FBoardDTO> fboardCate = fBoardDao.searchNtoM(kind, category, search,
 						cpage*FBoardConfig.recordCountPerFPage-(FBoardConfig.recordCountPerFPage-1),
@@ -91,6 +107,7 @@ public class FBoardController extends HttpServlet {
 				
 				System.out.println(recordSize);
 				
+				request.setAttribute("isAdmin", admin);
 				request.setAttribute("kind", kind);
 				request.setAttribute("search", search);
 				request.setAttribute("category", pullCate);
