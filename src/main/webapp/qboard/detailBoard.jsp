@@ -22,16 +22,14 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 	crossorigin="anonymous"></script>
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
-	rel="stylesheet">
+<!-- Fonts -->
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+
 <style>
+
 body {
+	font-family : 'DalseoHealing';
 	background-image: url('/image/background.png');
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	color: white;
 	background-size: 100% 100%;
 }
