@@ -29,6 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,6 +39,7 @@
             background-position: center;
             background-repeat: no-repeat;
             color:white;	/*헤더 글자색 흰색으로 */
+            font-family : 'DalseoHealing';
         }
 
       /*    navbar css */

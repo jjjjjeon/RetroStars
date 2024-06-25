@@ -29,10 +29,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
   <style>
-body{background-image:url("/image/background.png");
- background-size:100% 100%;
- color:white;
+body{
+	background-image:url("/image/background.png");
+ 	background-size:100% 100%;
+ 	color:white;
+ 	font-family : 'DalseoHealing';
  }
 
     a {
