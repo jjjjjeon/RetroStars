@@ -101,11 +101,11 @@
         
         .search{height:40px; width:100%;}	
         #search_box{display:flex; justify-content:space-evenly; margin-top:20px;}	
-        #search_kind_box{width:15%; height:90%; } 
+        #search_kind_box{width:15%; height:90%;} 
         #category_box{width:15%; height:90%;}       
-        .search-place{width:45%;display:flex; height:90%;}
+        .search-place{width:50%;display:flex; height:90%;}
         #search_btn{width:10%;height:90%;}
-        #write_btn{ width:10%; height:90%}
+        #write_btn{width:10%; height:90%}
         #write_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
@@ -262,7 +262,7 @@
                    <c:when test="${not empty loginId}">
                    <ul class="navbar-nav ms-auto">
                    
-                   <c:if test="${isAdmin eq true}">
+                   <c:if test="${isAdmin =='admin'}">
                     	<li class="nav-item">
                            <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
                     	</li>
@@ -333,7 +333,7 @@
         <div class="tabcontent">
            <c:choose >
           	<c:when test="${category.equals('1')}">
-            	<h3>게임 어드민</h3>
+            	<h3>게임</h3>
             	<div class="faq">
                 	<div class="faq-item">		
                 		<c:forEach var="fboardCate" items="${fboardCate}">
