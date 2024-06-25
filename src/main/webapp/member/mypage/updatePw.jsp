@@ -6,13 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 변경</title>
     <style>
         body {
             background: url(/image/background.png) no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Arial', sans-serif;
+            font-family : 'DalseoHealing';
             color: #fff;
             display: flex;
             justify-content: center;
