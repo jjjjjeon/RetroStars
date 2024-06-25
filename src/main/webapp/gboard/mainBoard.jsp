@@ -19,8 +19,9 @@
 <script src="/gboard/game4/Intro.js"></script>
 <script src="/gboard/game4/Exam02.js"></script>
 <script src="/gboard/game4/GameOver4.js"></script>
-<script src="/gboard/game5/js/MainScene.js"></script>
-<script src="/gboard/game5/js/survival-game.js"></script>
+<script src="/gboard/game5/survival-game.js"></script>
+<script src="/gboard/game5/MainScene.js"></script>
+<script src="/gboard/game5/GameOver5.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
@@ -388,6 +389,10 @@ a {
 	margin-top : 20px;
 	margin-left : 20px;
 }
+
+    .like-button, .dislike-button {
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -497,7 +502,8 @@ a {
                     <c:if test="${not empty videoUrl}">
                         <video src="/upload/${videoUrl}" alt="Thumbnail Video" class="thumbnail" data-type="video" data-media="/upload/${videoUrl}"></video>
                     </c:if>
-                    <button id="writeReviewBtn" class="btn steamBtn">리뷰 작성</button> 
+                    <button id="writeReviewBtn" class="btn steamBtn">리뷰 작성</button>
+                    <button id="viewReviewBtn" class="btn steamBtn" onclick="window.location.href='/list.review?gameSeq=${game.gameSeq}'">리뷰 보러가기</button>  
                 </div>
             </div>
             <div id="description" class="description-section">
@@ -577,6 +583,32 @@ a {
         	console.log(loginId);
         	
         	
+            function updateReviewLike(reviewSeq, type) {
+                if (loginId === '') {
+                    alert("로그인 해주세요.");
+                } else {
+                    $.ajax({
+                        url: "/updateReviewLike.review",
+                        method: "POST",
+                        data: { reviewSeq: reviewSeq, type: type },
+                        dataType: "json"
+                    }).done(function(response) {
+                        if (response.result === "success") {
+                            let countSpan = $("#" + type + "-count-" + reviewSeq);
+                            countSpan.text(parseInt(countSpan.text()) + 1);
+                            alert("리뷰가 성공적으로 업데이트 되었습니다.");
+                        } else if (response.result === "duplicate") {
+                            alert("이미 해당 리뷰를 평가하셨습니다.");
+                        } else {
+                            alert("리뷰 업데이트에 실패했습니다.");
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        console.error("에러: " + textStatus, errorThrown);
+                        alert("리뷰 업데이트 중 오류가 발생했습니다.");
+                    });
+                }
+            }
+        	
             function loadReviews() {
                 $.ajax({
                     url: "/mostLiked.review",
@@ -587,6 +619,7 @@ a {
                     }
                 }).done(function(data) {
                     console.log(data);
+                    console.log("Profile URL: ", data.profileUrl);
                     let description = $('#description');
                     let gameBtnBehind = $('#gameBtnBehind');
                     let mostLikedReviewSection = $('#mostLikedReviewSection');
@@ -603,7 +636,7 @@ a {
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                        src: `/profile/default.png`,
+                    	src: `/upload/${data.profileUrl}`,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
@@ -681,6 +714,12 @@ a {
 
                     reviewDiv.append(reviewHeaderDiv, reviewDateDiv, reviewContentDiv, reviewHelpfulDiv);
                     latestReviewSection.append(reviewDiv);
+                    
+                    $(".like-button, .dislike-button").css("cursor", "pointer").on("click", function() {
+                        let reviewSeq = $(this).data("review-seq");
+                        let type = $(this).hasClass("like-button") ? "like" : "dislike";
+                        updateReviewLike(reviewSeq, type);
+                    });
                 });
             }
 
@@ -779,6 +818,8 @@ a {
                     alert("리뷰 등록 중 오류가 발생했습니다.");
                 });
             });
+            
+
 
             let game;
             
@@ -875,22 +916,22 @@ a {
                             scene: [Intro, Exam02, GameOver4]
                         };
                         break;
-//                     case 5:
-//                         config = {
-//                             type: Phaser.AUTO,
-//                             parent: "game",
-//                             width: containerWidth,
-//                             height: containerHeight,
-//                             physics: {
-//                                 default: "matter",
-//                                 matter: {
-//                                     debug: false, // 디버그 표시 제거
-//                                     gravity: { y: 0 },
-//                                 }
-//                             },
-//                             scene: [MainScene]
-//                         };
-//                         break;
+                    case 5:
+                    	 config = {
+                            type: Phaser.AUTO,
+                            parent: "game",
+                            width: containerWidth,
+                            height: containerHeight,
+                    	    physics: {
+                    	        default: 'matter',
+                    	        matter: {
+                    	            debug: false,
+                    	            gravity: { y: 0 },
+                    	        }
+                    	    },
+                    	    scene: [MainScene, GameOver5]
+                    	};
+                        break;
                     default:
                         config = {
                             type: Phaser.AUTO,
