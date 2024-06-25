@@ -92,7 +92,9 @@
             margin: 0 auto;
             margin-top:24px;
             margin-bottom:25px;
-            padding: 40px;
+            padding-left: 40px;
+            padding-right: 40px;
+            padding-top:30px;
             background: #323232;
             border-radius: 10px;
             height:650px;
@@ -110,8 +112,8 @@
         #search_btn:hover{background-color:#686868; color:white; border:1px solid #686868;}
         
 
-        h1 {text-align: center; margin-bottom: 8px; font-size:25px;}
-        h3 {font-size:20px; height:20px; margin-top : 20px; text-indent:10px; width:80%}
+        h1 {text-align: center; margin-bottom: 5px; font-size:25px;}
+        h3 {font-size:18px; height:20px; margin-top : 15px; text-indent:10px; width:80%}
 
         .tabs {overflow: hidden; border-bottom: 1px solid #ccc;}
         .content{height:450px;}
@@ -133,8 +135,8 @@
         }
 
         .tablink:hover { background-color: #575757;}
-        .faq {margin-top: 20px; margin-bottom:0px;}
-        .faq-item {margin-bottom:10px; overflow-y:auto;height:350px;}
+        .faq {margin-top: 10px; margin-bottom:0px;}
+        .faq-item {margin-bottom:10px; overflow-y:auto;height:390px;}
         .question {cursor: pointer;background-color: #444;padding: 10px;border-radius: 5px; margin-top:5px; width:100%;}
         .delete_btn{ height:100%;margin-top:7px;}
         .question_box{display:flex;}
@@ -562,38 +564,36 @@
 
     
 
-        $(document).ready(function () {
-        	
-            $(".question").click(function () {
-                $(this).parent().next(".answer").slideToggle();
-                $(this).toggleClass("active");
-            });
+    $(document).ready(function () {
+        // 질문 클릭 시 동작
+        $(".question").click(function () {
+            let $this = $(this);
+            let $parent = $this.parent();
+            let $answer = $parent.next(".answer");
+
+            $answer.slideToggle();
+            $this.toggleClass("active");
+
+            // 다른 질문들의 답변 닫기
+            $(".answer").not($answer).slideUp();
+            $(".question").not($this).removeClass("active");
+        });
+
+        // 탭 링크 클릭 시 동작
+        $(".tablink").click(function () {
+            let tabName = $(this).attr("data-tab");
+            let $tabQuestions = $("#" + tabName).find(".question");
+
+            // 해당 탭의 첫 번째 질문 클릭
+            $tabQuestions.first().click();
+
+            // 모든 답변 닫기
+            $(".answer").slideUp();
             
+            // 다른 탭들의 활성화 클래스 제거
+            $(".question_box").removeClass("active");
         });
-    
-        
-        $(document).ready(function () {
-        	
-            	$(".question").click(function () {
-                let answer = $(this).parent().next(".answer");
-
-                $(".answer").not(answer).slideUp();
-                $(".question").not(this).removeClass("active");
-
-                answer.slideDown();
-                $(this).toggleClass("active");
-            });
-
-            $(".tablink").click(function() {
-            	
-                $(".answer").slideUp();
-                $(".question_box").removeClass("active");
-                
-                let tabName = $(this).attr("data-tab");
-                $("#" + tabName + " .question:first-of-type").click();
-            });
-
-        });
+    });
         
         $(document).ready(function(){
     		

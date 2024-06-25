@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+<script src="/fboard/summernote/summernote-lite.js"></script>
+<script src="/fboard/summernote/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/fboard/summernote/summernote-lite.css">
  <style>
         body {
             background-color: #121212;
@@ -46,7 +49,6 @@
         }
 
         .form-group input,
-        .form-group textarea,
         .form-group select,
         .form-group button {
             width: 98%;
@@ -58,7 +60,6 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
         .form-group select:focus,
         .form-group button:focus {
             outline: none;
@@ -82,7 +83,7 @@
         #btn_boxs{text-indent: 30px; width:100%;justify-content: end;display: flex;}
         #btn_box{display: flex; width:50%;}
         .btns{font-size:10px;}
-		#answer{height:100px; vertical-align:top;}
+		.answer{height:500px;}
 
     </style>
 </head>
@@ -91,7 +92,7 @@
 	<c:when test="${isAdmin == true}">	
 	 <div class="form-container">
         <h2>즐겨 찾는 질문 작성하기</h2>
-        <form action="/insert.fboard" method="post" id="insert">
+        <form action="/insert.fboard" method="post" id="insert" onsubmit="return postData()">
             <div class="form-group">
                 <label for="category">카테고리 선택</label>
                 <select id="category" name="category" required>
@@ -104,9 +105,10 @@
                 <label for="question">질문</label>
                 <input type="text" id="question" name="question" required>
             </div>
-            <div class="form-group">
+            <div class="group">
                 <label for="answer">답변</label>
-                <textarea id="answer" name="answer" rows="4" required></textarea>
+                <div class="answer" id="summernote"></div>
+            	<input type="hidden" id="content" name="answer">
             </div>
             <div class="form-group" id="btn_boxs">
             	<div id="btn_box">
@@ -124,6 +126,42 @@
 </c:choose>
 </body>
 <script>
+
+function postData(){
+	
+	$("#content").val($("#summernote").summernote("code"));
+	
+	let arr = $("input[name=content]");
+	
+	$(arr[1]).remove();
+	return true;
+}
+	
+$(document).ready(function(){
+	
+	$('#summernote').summernote({
+	height: '500px', // 에디터 높이
+	disableResizeEditor: true, // 에디터 사이즈 조절 옵션 끄기
+	focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+	lang: "ko-KR", // 한글 설정
+	toolbar: [ // 툴바 설정
+	['fontname', ['fontname']],
+	['fontsize', ['fontsize']],
+	['color', ['color']],
+	['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+	['para', ['ul', 'ol', 'paragraph']],
+	['height', ['height']]
+	],
+	fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+	fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','32','36','48','60']
+	});
+		$('#summernote').summernote('fontName', '맑은 고딕'); // 기본 폰트명 설정
+	 	$('#summernote').summernote('fontSize', '12'); // 기본 폰트 사이즈 설정
+	 	$('#summernote').summernote('fontSizeUnit', 'pt'); // 기본 폰트 사이즈 단위 설정
+	 	$('#summernote').summernote('foreColor', 'white');
+	});
+
+
 	$("#go_fboard").on("click",function(){
 		location.href="/list.fboard";
 	});
