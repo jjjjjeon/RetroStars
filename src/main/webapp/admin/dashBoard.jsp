@@ -22,8 +22,14 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Chart.js -->
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+
+
 <style>
 * {
+	font-family : 'DalseoHealing';
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
