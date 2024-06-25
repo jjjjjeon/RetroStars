@@ -369,7 +369,7 @@
     		}
     		
     		$("#hidden_title").val($(".ntitle").text().trim());
-    		$("#hidden_post").val($(".detailcontent").text().trim());
+    		$("#hidden_post").val($(".detailcontent").html());
     		$("#edit").show();
     		$("#complete").hide();
     		$("#cancel").hide();
