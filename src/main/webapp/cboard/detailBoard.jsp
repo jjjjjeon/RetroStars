@@ -20,12 +20,14 @@
 <script src="/cboard/summernote/summernote-lite.js"></script>
 <script src="/cboard/summernote/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/cboard/summernote/summernote-lite.css">
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 <title>게시판 글 보기</title>
 <style>
 * {
 	box-sizing: border-box;
 	margin: 0;
-	font-family: 'Noto Sans KR', sans-serif;
+	font-family : 'DalseoHealing';
 }
 
 .dropdown-toggle::after {
@@ -427,8 +429,8 @@ div {
 	color: white !important;
 }
 
-.navbar-nav button{
-	color : white;
+.navbar-nav button {
+	color: white;
 }
 
 .nav-link:hover {

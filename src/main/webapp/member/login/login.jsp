@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="google-signin-client_id" content="692534731916-p7l19g92i10v9gq4crmcad2olvu8r0ff.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="google-app-key">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +13,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css">
     <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+    
 	<meta
 	  http-equiv="Cross-Origin-Opener-Policy"
 	  content="same-origin-allow-popups"
 	/>
     <style>  
       body{
-            font-family: 'Georgia', serif;
+            font-family : 'DalseoHealing';
                background-size:100% 100%;
                display: flex;
                height : 100vh;
@@ -306,7 +308,7 @@
            
            gapi.load('auth2', function() {
                gapi.auth2.init({
-                   client_id: '692534731916-p7l19g92i10v9gq4crmcad2olvu8r0ff.apps.googleusercontent.com'
+                   client_id: 'google-app-key'
                });
            });
 
