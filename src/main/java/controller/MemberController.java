@@ -531,9 +531,7 @@ public class MemberController extends HttpServlet {
 				
 				memberDao.updateData(new MemberDTO(id,name,nickname,userNo,email,formattedPhone.trim()));
 				
-				//세션 프로필 갱신 by 조진혁
-                String updatedProfileUrl = userProfileImgDao.selectMyUrl(id);
-                session.setAttribute("userProfileUrl", updatedProfileUrl);
+
                 
 				request.getRequestDispatcher("/mypage.member").forward(request, response);
 				
