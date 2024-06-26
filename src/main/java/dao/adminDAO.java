@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -355,7 +356,8 @@ public class adminDAO {
 
 	// 연령별 이용횟수 10~50대
 	public int[] getAgeNumberOfUse() throws Exception {
-		int[] arr = new int[6]; // 0-5인데 0은 사용하지 않을 것.
+		int[] list = new int[6]; //0은 사용하지 않음 1-5만 사용
+		Arrays.fill(list, 0); //0으로 초기화
 		String sql = "select age, count(*) from (SELECT p.*, " + "m.user_id AS m_user_id, "
 				+ "m.user_no, m.user_name, substr(m.user_no, 1, 2) AS birthday_year, "
 				+ "substr((to_char(sysdate, 'yyyy') - CASE "
@@ -367,12 +369,11 @@ public class adminDAO {
 		try (Connection con = this.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();) {
-			int i = 1;
+		
 			while (rs.next()) {
-				arr[i] = rs.getInt(2);
-				i++;
+				list[rs.getInt(1)]=rs.getInt(2);
 			}
-			return arr;
+			return list;
 		}
 	}
 

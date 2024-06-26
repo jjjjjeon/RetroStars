@@ -74,7 +74,6 @@ public class QBoardDAO {
 				return 0;
 			}
 		}
-
 	}
 	
 	//0.카테고리 이름을 검색하는 함수

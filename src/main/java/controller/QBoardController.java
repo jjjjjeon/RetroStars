@@ -142,7 +142,8 @@ public class QBoardController extends HttpServlet {
 				String title=request.getParameter("title");
 				String content=request.getParameter("content");
 				int result=boarddao.updateBySeq(seq,title,content);
-				response.sendRedirect("/list.qboard");
+				request.setAttribute("seq", seq);
+				request.getRequestDispatcher("/detail.qboard").forward(request, response);
 				
 			}else if(cmd.equals("/gowrite.qboard")) {
 				//닉네임처리
