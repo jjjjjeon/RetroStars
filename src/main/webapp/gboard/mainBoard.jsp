@@ -692,6 +692,9 @@ a {
                     }
                 }).done(function(data) {
                     console.log(data);
+
+                    let profile1 = $(data.profileUrl);
+                    console.log(profile1);
                     console.log("Profile URL: ", data.profileUrl);
                     let description = $('#description');
                     let gameBtnBehind = $('#gameBtnBehind');
@@ -705,11 +708,11 @@ a {
                     } 
 					
                     let reviewDiv = $('<div>').addClass('review');
-
+``
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                    	src: `/profile/`${data.profileUrl},
+                    	src: '/profile/' + data.profileUrl,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
