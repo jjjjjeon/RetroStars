@@ -174,7 +174,7 @@ div {
 }
 
 .content .fileBox a {
-	color: blue;
+	color: white;
 	margin-bottom: 5px;
 }
 
@@ -804,7 +804,7 @@ div {
 			<c:choose>
 				<c:when test="${fn:length(fileList) > 0}">
 					<p class="fileOn" style="cursor: pointer;">
-						▼ 첨부파일 목록 열기 <span style="color: blue;">(${fn:length(fileList)})</span>
+						▼ 첨부파일 목록 열기 <span style="color: white;">(${fn:length(fileList)})</span>
 					</p>
 				</c:when>
 
