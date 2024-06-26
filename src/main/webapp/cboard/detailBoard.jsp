@@ -860,8 +860,8 @@ div {
 			<div class="writeCmtWriter" style="color: black;">${nickname}</div>
 			<div class="writeCmtCttRow">
 				<textarea
-					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
-					class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
+					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 300자)"
+					class="writeCmtCtt" maxlength="300" id="repleContent"></textarea>
 				<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
 			</div>
 		</div>
@@ -935,7 +935,7 @@ div {
 		};
 	
     	$("#writeBtn").on("click", function(){
-    		location.href = "/goWrite.cboard";
+    		location.href = "/goWrite.cboard?category=${category}";
     	})
     
 	    $(document).ready(function(){
@@ -1013,6 +1013,7 @@ div {
     		$("#delBtn").css("display", "none");
     		$("#corBtn").css("display", "none");
     		$("#writeBtn").css("display", "none");
+    		$(".commentBox").css("display", "none");
     		$("#corYesBtn").css("display", "block");
     		$("#corYesBtn").css("float", "right");
     		$("#corNoBtn").css("display", "block");

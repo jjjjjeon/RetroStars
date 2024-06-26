@@ -447,8 +447,8 @@ input[type="text" i] {
 				</div>
 			</div>
 			<div class="title">
-				<input type="text" placeholder="제목을 입력해 주세요" name="title"
-					id="titleInput" maxlength="100">
+				<input type="text" placeholder="제목을 입력해 주세요 (최대 30자까지 입력 가능)" name="title"
+					id="titleInput" maxlength="30">
 			</div>
 			<div class="fileBox">
 				<div class="col-12 uploadCol">
@@ -502,6 +502,13 @@ input[type="text" i] {
     	});
     
 	    $(document).ready(function(){
+	    	if(${category == 1}){
+	    		$("input:radio[name='category']:radio[value='option1']").prop('checked', true);
+	    	}else if(${category == 2}){
+	    		$("input:radio[name='category']:radio[value='option2']").prop('checked', true);
+	    	}
+	    	
+	    	
 	    	var elem = $('#summernote').summernote({
 	    	placeholder : `1. 비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. <br>
 	            2. 타인의 개인정보가 포함된 게시물을 올릴 경우, 개인 정보 보호법 제 59조 3호에 의해 5년 이하의 징역 또는 <br>
