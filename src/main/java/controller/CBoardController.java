@@ -174,6 +174,14 @@ public class CBoardController extends HttpServlet {
 				String id = (String) request.getSession().getAttribute("loginId");
 				String nickname = mManager.getNickname(id);
 				
+				String categoryStr = request.getParameter("category");
+				if(categoryStr == null) {
+					categoryStr = "0";
+				}
+				
+				int category = Integer.parseInt(categoryStr);
+				
+				request.setAttribute("category", category);
 				request.setAttribute("loginId", id);
 				request.setAttribute("nickname", nickname);
 				request.getRequestDispatcher("/cboard/writeBoard.jsp").forward(request, response);

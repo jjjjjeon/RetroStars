@@ -359,6 +359,9 @@ div {
 
 .cmtCtt {
 	padding-top: 20px;
+	padding-right : 40px;
+	word-break: break-all;
+	white-space: pre-wrap;
 }
 
 .cmtDate {
@@ -394,7 +397,7 @@ div {
 
 .writeCmtCtt {
 	font-size: 15px;
-	text-indent: 10px;
+	padding-left: 10px;
 	padding-top: 10px;
 	width: 1150px;
 	height: 120px;
@@ -860,8 +863,8 @@ div {
 			<div class="writeCmtWriter" style="color: black;">${nickname}</div>
 			<div class="writeCmtCttRow">
 				<textarea
-					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
-					class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
+					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 300자)"
+					class="writeCmtCtt" maxlength="300" id="repleContent"></textarea>
 				<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
 			</div>
 		</div>
@@ -935,7 +938,7 @@ div {
 		};
 	
     	$("#writeBtn").on("click", function(){
-    		location.href = "/goWrite.cboard";
+    		location.href = "/goWrite.cboard?category=${category}";
     	})
     
 	    $(document).ready(function(){
@@ -1013,13 +1016,14 @@ div {
     		$("#delBtn").css("display", "none");
     		$("#corBtn").css("display", "none");
     		$("#writeBtn").css("display", "none");
+    		$(".commentBox").css("display", "none");
     		$("#corYesBtn").css("display", "block");
     		$("#corYesBtn").css("float", "right");
     		$("#corNoBtn").css("display", "block");
     		$("#corNoBtn").css("float", "right");
     		$(".infoBox").remove();
     		
-    		$("#titleInput").val($("#originTitle").text());
+    		$("#titleInput").val($("#originTitle").text().trim());
     		$(".titleBox").css("padding-left", "0");
     		$("#titleInput").attr("type", "text");
     		
@@ -1159,9 +1163,9 @@ div {
     	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`ㄴ ${nickname}님의 답글`);
     	                    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
     	                    let textarea = $('<textarea>')
-    	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
+    	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 300자)')
     	                        .addClass('writeCmtCtt')
-    	                        .attr('maxlength', '1000');
+    	                        .attr('maxlength', '300');
     	                    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-light writeReplyReplyBtn').text('등록');
     	                    writeCmtCttRowDiv.append(textarea, submitButton);
     	                    reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
