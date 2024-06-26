@@ -349,7 +349,7 @@ nav {
 	position: relative;
 	width: 100%;
 	padding-bottom: 56.25%;
-	background-color: #000;
+	background-color: #faf8f0;
 	margin-bottom: 20px;
 }
 
@@ -656,7 +656,6 @@ a {
         	let loginId = '${loginId}';
         	console.log(loginId);
         	
-        	
             function updateReviewLike(reviewSeq, type) {
                 if (loginId === '') {
                     alert("로그인 해주세요.");
@@ -877,9 +876,18 @@ a {
 
                 switch (${game.gameSeq}) {
                     case 1:
+                    	$("#media-container").css("padding-bottom", "");
+                    	$("#media-container").css("height", "600px");
+                    	$("#game").css("position", "static");
+                    	$("#game").css("top", "");
+                    	$("#game").css("left", "");
+                    	$("#game").css("width", "500px");
+                    	$("#game").css("height", "600px");
+                    	$("#game").css("margin", "auto");
+                    	
                         config = {
                             type: Phaser.AUTO,
-                            width: 870,
+                            width: 500,
                             height: 600,
                             parent: "game",
                             backgroundColor: "#faf8f0",

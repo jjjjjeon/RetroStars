@@ -423,7 +423,7 @@ input[type="text" i] {
 	<form action="/write.cboard" method="post" id="writeForm"
 		enctype="multipart/form-data">
 		<div class="writeBoard" id="writeBoard">
-			<h3>${nickname}님의글</h3>
+			<h3>${nickname}님의 글</h3>
 			<div class="category">
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="radio" name="category"
