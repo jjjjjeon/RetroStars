@@ -115,6 +115,7 @@
 			overflow: auto;
 			border:1px solid white;
 			border-radius:10px;
+			padding:10px;
 		}
         .header {
             text-align: center;
