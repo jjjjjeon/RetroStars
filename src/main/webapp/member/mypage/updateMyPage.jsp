@@ -94,16 +94,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         .col1_profile_update{margin-left:10px; flex:1; display: flex; justify-content: center; align-items: center;}
         .col1_file{width: 95%; font-size:15px;}
         */
-        .col1_id{flex:1; display: flex;}
-        .col1_id_id{flex:6; font-weight: 800; font-size: 28px; display: flex; justify-content: center; align-items: start;  text-indent: 25px;}
-        .col1_id_level{flex:4;display: flex; justify-content: center; align-items: start;}
+        .col1_id{flex:0.5;}
+        .col1_id_id{height:50px; font-weight: 800; font-size: 28px; display: flex; justify-content:center; align-items: center;}
+        .col1_id_level{width:100%; height:50px; display: flex; justify-content: center; align-items: center; margin-right:12px;}
         .col1_empty{flex:1;}
-        .col1_btns{flex:3; display: flex; justify-content: space-evenly; align-items: center;}
+        .col1_btns{flex:2.5; display: flex; justify-content: space-evenly; align-items: center;}
 		#password_btn{height:60%; width:38%; background-color: rgb(82, 11, 117); color:white; border:0px;}
 		#password_btn:hover{cursor:pointer; background-color:rgb(82, 11, 100);}
 		#img_update_btn{height:60%; width:38%; background-color: rgb(82, 11, 117); color:white; border:0px;}
 		#img_update_btn:hover{cursor:pointer; background-color:rgb(82, 11, 100);}
         .col2{flex:0.3;}
+        .level_img{width:20%; height:80%;}
+        .col1_flex{display:flex; justify-content: end; align-items: center;}
 
         .col3{background-color: rgba(82, 11, 117,1); flex:7;border-radius: 20px; display: flex; flex-direction: column;}
         .value_box{display:flex; width: 100%; font-size: 20px; flex:2; align-items: center;} 
@@ -292,7 +294,27 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </div>
                 <div class="col1_id col1_sub">
                     <div class="col1_id_id">${mydata.userId}</div>
-                    <div class="col1_id_level">${mydata.userLevel}</div>
+                </div> 
+                <div class="col1_id col1_sub col1_flex">
+                    <div class="col1_id_level">
+                    <c:choose>
+                            		<c:when test="${mydata.userLevel=='1'}">
+                            			<img class="level_img" src="/image/level1.png"> &nbsp; Level ${mydata.userLevel}
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='2'}">
+                            			<img class="level_img" src="/image/level2.png"> &nbsp; Level ${mydata.userLevel}
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='3'}">
+                            			<img class="level_img" src="/image/level3.png"> &nbsp; Level ${mydata.userLevel}
+                            		</c:when>
+                            		<c:when test="${mydata.userLevel=='4'}">
+                            			<img class="level_img" src="/image/level4.png"> &nbsp; Level ${mydata.userLevel}
+                            		</c:when>
+                            		<c:otherwise>
+                            			<img class="level_img" src="/image/level5.png"> &nbsp; Level ${mydata.userLevel}
+                            		</c:otherwise>
+                            	</c:choose>
+                    </div>
                 </div> 
                 <div class="col1_empty col1_sub"></div>
                 <div class="col1_btns">

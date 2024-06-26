@@ -38,10 +38,12 @@ import common.util;
 import dao.GameDAO;
 import dao.MemberDAO;
 import dao.PlayRecordDAO;
+import dao.QBoardDAO;
 import dao.UserProfileImgDAO;
 import dto.CBoardBookmarkDTO;
 import dto.GamePlayRecordDTO;
 import dto.MemberDTO;
+import dto.QBoardDTO;
 import dto.UserProfileImgDTO;
 
 /**
@@ -73,6 +75,7 @@ public class MemberController extends HttpServlet {
 		Gson g = new Gson();
 		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
 		PlayRecordDAO playRecordDao = PlayRecordDAO.getInstance();
+		QBoardDAO qBoardDao = QBoardDAO.getInstance();
 		System.out.println(cmd);
 		
 	       try {
@@ -460,6 +463,8 @@ public class MemberController extends HttpServlet {
 				
 				List<CBoardBookmarkDTO> listCategory1 = memberDao.selectCBoradCate1(id);
 				List<CBoardBookmarkDTO> listCategory2 = memberDao.selectCBoradCate2(id);
+				List<QBoardDTO> listQna = qBoardDao.selectMyQna(id);
+				
 				int count1 = listCategory1.size();
 				int count2 = listCategory2.size();	
 				List<String> seq = memberDao.gameBookmark(id);
@@ -477,6 +482,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("gprDto", gprDto);
 				request.setAttribute("seq", seq);
 				request.setAttribute("seqSize", seqSize);
+				request.setAttribute("listQna", listQna);
 				
 				request.getRequestDispatcher("/member/mypage/myPage.jsp").forward(request, response);	
 				
