@@ -35,6 +35,10 @@ div {
 	font-family : 'DalseoHealing';
 }
 
+.header div{
+	color : white;
+}
+
 a {
 	text-decoration: none;
 	color: #d3d3d3;

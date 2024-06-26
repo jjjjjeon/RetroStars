@@ -51,6 +51,10 @@ div {
 	color: #d3d3d3;
 }
 
+.header div{
+	color : #d3d3d3;
+}
+
 .header {
 	height: 220px;
 	display: flex;
