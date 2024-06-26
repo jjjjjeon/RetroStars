@@ -121,7 +121,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .value_content4{flex:3;}
     .gender_value{display: flex;justify-content: start;align-items: center;} 
     .gender_img{width: 40%; height: 90%;margin-bottom:10px;}
-     #update_btn{width:90%; height:90%;}
+     #update_btn{width:90%; height:80%; margin-bottom:40px;}
     
     
     #gameSeq0{background-image:url("/image/rpg_background.png"); background-size:100% 100%;}
@@ -135,7 +135,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .rpg_title{flex:2; width: 100%; display: flex; align-items: center; font-size: 20px; font-weight: 700; text-indent: 20px; color:white;}
     .rpg_main_box{display:flex; width: 100%; flex:8; color:white;}
     .rpg_main_img{flex:5.5; display: flex; align-items: center; justify-content: center;}
-    .rpg_img{height:80%; width: 80%; }
+    .rpg_img{height:80%; width: 80%;}
     .rpg_main_content{flex:4.5;display: flex; flex-direction: column;}
     .rpg_content_title{flex:4; font-size: 25px; font-weight: 700; display: flex; justify-content: start; align-items: end;}
     .rpg_content_date{flex:2; font-size: 15px; font-weight: 500; display: flex; justify-content: start; align-items: center; margin-bottom: 8px;}
@@ -155,7 +155,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .board_bookmark_writer{flex:2;display: flex; justify-content: center; align-items: center;}
     .board_bookmark_date{flex:2;display: flex; justify-content: center; align-items: center;}
     .list_header{background-color:white;  font-size:18px; color:#323232; width:100%; display: flex; justify-content: center; align-items: center;}
-
+	.bookmark_body{overflow-y:auto; width:100%;}
 
     .tipboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
 
@@ -523,7 +523,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 					<div class="board_bookmark_writer">WRITER</div>
 					<div class="board_bookmark_date">DATE</div>
 				</div>
-            
+            	<div class="bookmark_body">
             	<c:forEach var="listCategory1" items="${listCategory1}">
 							<div class="free_row board_bookmark_row">
 								<div class="free_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory1.cBoardSeq}">${listCategory1.cBoardTitle}</a></div>
@@ -533,6 +533,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 								</div>
 							</div>
 				</c:forEach>
+				</div>
 			</div>
         </div>
         <div class="tipboard">
@@ -543,6 +544,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 					<div class="board_bookmark_writer">WRITER</div>
 					<div class="board_bookmark_date">DATE</div>
 				</div>
+				<div class="bookmark_body">
             	<c:forEach var="listCategory2" items="${listCategory2}">
 							<div class="tip_row board_bookmark_row">
 								<div class="tip_title board_bookmark_title"><a class="board_link" href="/detail.cboard?seq=${listCategory2.cBoardSeq}">${listCategory2.cBoardTitle}</a></div>
@@ -551,7 +553,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
 								</div>
 							</div>
-				</c:forEach></div>
+				</c:forEach>
+				</div>
+			</div>
         </div>
         <div class="footer">
         	<div class="footer_delete_btn">
