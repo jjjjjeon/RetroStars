@@ -63,7 +63,7 @@ public class adminDAO {
 
 	// 전체 신고된 글 수 반환
 	public int getReportPostListCount() throws Exception {
-		String sql = "select count(*) from c_board where c_board_report >= 5";
+		String sql = "select count(*) from c_board where c_board_report >= 1";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class adminDAO {
 
 	// 검색된 신고된 글 수 반환
 	public int getSearchedPostCount(String searchInput) throws Exception {
-		String sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 5)";
+		String sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 1)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + searchInput + "%");
@@ -163,7 +163,7 @@ public class adminDAO {
 
 	// 전체 신고된 글 목록 반환
 	public List<CBoard2DTO> viewReportPostList(int n, int m) throws Exception {
-		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report >= 5) where rown between ? and ?";
+		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report >= 1) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, n);
@@ -239,7 +239,7 @@ public class adminDAO {
 
 	// 검색된 신고 글 목록 반환
 	public List<CBoard2DTO> viewSearchedPostList(String searchInput, int n, int m) throws Exception {
-		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 5) where rown between ? and ?";
+		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 1) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + searchInput + "%");
@@ -447,7 +447,7 @@ public class adminDAO {
 	
 	// 신고 현황에 집계된 모든 글 삭제
 	public void delAllReportedPost() throws Exception{
-		String sql = "delete from c_board where c_board_report >= 5";
+		String sql = "delete from c_board where c_board_report >= 1";
 		
 		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.executeUpdate();

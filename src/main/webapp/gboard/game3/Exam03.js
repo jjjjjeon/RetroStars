@@ -82,7 +82,7 @@ class Exam03 extends Phaser.Scene { // 신 타입
 				  $.ajax({
 	                 url : "/write.playrecord",
 	                 data : {
-	                 game_seq : 3,
+	                 gameSeq : 3,
 	                 score : this.score,
 	                 playtime : this.timer
 	                 }

@@ -51,6 +51,10 @@ div {
 	color: #d3d3d3;
 }
 
+.header div{
+	color : #d3d3d3;
+}
+
 .header {
 	height: 220px;
 	display: flex;
@@ -355,6 +359,9 @@ div {
 
 .cmtCtt {
 	padding-top: 20px;
+	padding-right : 40px;
+	word-break: break-all;
+	white-space: pre-wrap;
 }
 
 .cmtDate {
@@ -390,7 +397,7 @@ div {
 
 .writeCmtCtt {
 	font-size: 15px;
-	text-indent: 10px;
+	padding-left: 10px;
 	padding-top: 10px;
 	width: 1150px;
 	height: 120px;
@@ -637,6 +644,8 @@ div {
 
 .note-editable {
 	border: 1px solid #d3d3d3;
+	color: white;
+	font-family : 'DalseoHealing';
 }
 </style>
 <body>
@@ -854,8 +863,8 @@ div {
 			<div class="writeCmtWriter" style="color: black;">${nickname}</div>
 			<div class="writeCmtCttRow">
 				<textarea
-					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)"
-					class="writeCmtCtt" maxlength="1000" id="repleContent"></textarea>
+					placeholder="비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 300자)"
+					class="writeCmtCtt" maxlength="300" id="repleContent"></textarea>
 				<button type="button" class="btn btn-dark" id="writeCmtBtn">등록</button>
 			</div>
 		</div>
@@ -929,7 +938,7 @@ div {
 		};
 	
     	$("#writeBtn").on("click", function(){
-    		location.href = "/goWrite.cboard";
+    		location.href = "/goWrite.cboard?category=${category}";
     	})
     
 	    $(document).ready(function(){
@@ -1007,13 +1016,14 @@ div {
     		$("#delBtn").css("display", "none");
     		$("#corBtn").css("display", "none");
     		$("#writeBtn").css("display", "none");
+    		$(".commentBox").css("display", "none");
     		$("#corYesBtn").css("display", "block");
     		$("#corYesBtn").css("float", "right");
     		$("#corNoBtn").css("display", "block");
     		$("#corNoBtn").css("float", "right");
     		$(".infoBox").remove();
     		
-    		$("#titleInput").val($("#originTitle").text());
+    		$("#titleInput").val($("#originTitle").text().trim());
     		$(".titleBox").css("padding-left", "0");
     		$("#titleInput").attr("type", "text");
     		
@@ -1135,7 +1145,7 @@ div {
     	                    let commentDiv = $('<div>').addClass('comment');
     	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userNickname);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
-    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate).css("color", "#d3d3d3");
+    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate).css("color", "#6a6e76");
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
     	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기').css("color", "#d3d3d3");
     	                    
@@ -1143,8 +1153,6 @@ div {
     	                    	let deleteButton = $('<a>').attr('class', 'delRepleBtn').text('삭제').css("color", "#d3d3d3");
         	                    deleteButton.attr('data-repleSeq', dto.cReplySeq);
     	    	                cmtDateDiv.append(deleteButton);
-    	    	            }else if ("${nickname}" != dto.userNickname){
-    	    	            	replyButton.css("display", "none");
     	    	            }
 
     	                    cmtBtnBoxDiv.append(replyButton);
@@ -1152,12 +1160,12 @@ div {
     	                    commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
     	                    let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${nickname}님의 답글`);
+    	                    let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`ㄴ ${nickname}님의 답글`);
     	                    let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
     	                    let textarea = $('<textarea>')
-    	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
+    	                        .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 300자)')
     	                        .addClass('writeCmtCtt')
-    	                        .attr('maxlength', '1000');
+    	                        .attr('maxlength', '300');
     	                    let submitButton = $('<button>').attr('type', 'button').addClass('btn btn-light writeReplyReplyBtn').text('등록');
     	                    writeCmtCttRowDiv.append(textarea, submitButton);
     	                    reReplyWriteBoxDiv.append(writeCmtWriterDiv, writeCmtCttRowDiv);
@@ -1200,7 +1208,7 @@ div {
     	                    let commentDiv = $('<div>').addClass('comment');
     	                    commentDiv.css("margin-top", "15px");
     	                    let userNickname = dto.userNickname;
-    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname + "님의 답글");
+    	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text("ㄴ " + userNickname + "님의 답글");
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
     	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
     	                    
@@ -1314,7 +1322,7 @@ div {
 	                commentDiv.append(cmtUserDiv, cmtCttDiv, cmtDateDiv);
 
 	                let reReplyWriteBoxDiv = $('<div>').addClass('reReplyWriteBox');
-	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`└ ${nickname}님의 답글`);
+	                let writeCmtWriterDiv = $('<div>').addClass('writeCmtWriter').text(`ㄴ ${nickname}님의 답글`);
 	                let writeCmtCttRowDiv = $('<div>').addClass('writeCmtCttRow');
 	                let textarea = $('<textarea>')
 	                    .attr('placeholder', '비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. (글자수 최대 1000자)')
@@ -1412,7 +1420,7 @@ div {
                 let commentDiv = $('<div>').addClass('comment');
                 commentDiv.css("margin-top", "15px");
                 let userNickname = resp.userNickname;
-                let cmtUserDiv = $('<div>').addClass('cmtUser').text("└ " + userNickname + "님의 답글");
+                let cmtUserDiv = $('<div>').addClass('cmtUser').text("ㄴ " + userNickname + "님의 답글");
                 let cmtCttDiv = $('<div>').addClass('cmtCtt').text(resp.cReplyContent);
                 let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate);
 
