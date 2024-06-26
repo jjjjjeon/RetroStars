@@ -349,7 +349,7 @@ nav {
 	position: relative;
 	width: 100%;
 	padding-bottom: 56.25%;
-	background-color: #faf8f0;
+	background-color: black;
 	margin-bottom: 20px;
 }
 
@@ -446,6 +446,10 @@ a {
 	text-align: center;
 	margin : 0 auto;
 	margin-top: 70px; 
+}
+
+.pNameText{
+	color : orange;
 }
 </style>
 </head>
@@ -581,7 +585,7 @@ a {
 					RELEASE DATE:
 					<fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy" />
 				</p>
-				<p>DEVELOPER: ${game.developer}</p>
+				<p style="color:orange">DEVELOPER: ${game.developer}</p>
 				<div id="gameBtnBehind" class="buttons">
 					<button class="btn community-button bookBtn"
 						id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
@@ -692,6 +696,9 @@ a {
                     }
                 }).done(function(data) {
                     console.log(data);
+
+                    let profile1 = $(data.profileUrl);
+                    console.log(profile1);
                     console.log("Profile URL: ", data.profileUrl);
                     let description = $('#description');
                     let gameBtnBehind = $('#gameBtnBehind');
@@ -709,13 +716,13 @@ a {
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
-                    	src: `/profile/`${data.profileUrl},
+                    	src: '/profile/' + data.profileUrl,
                         class: 'rounded-circle',
                         width: 40,
                         height: 40,
                         alt: 'Profile'
                     });
-                    let userNicknameDiv = $('<div>').text(data.userNickname);
+                    let userNicknameDiv = $('<div>').text(data.userNickname).addClass('pNameText');
 
                     reviewUserInfoDiv.append(userProfileImg, userNicknameDiv);
                     let reviewIconDiv = $('<div>').addClass('review-icon').html(icon);
@@ -868,7 +875,6 @@ a {
                     type: Phaser.AUTO,
                     width: containerWidth,
                     height: containerHeight,
-                 
                     parent: "game",
                     backgroundColor: "#faf8f0",
                     scene: []
@@ -878,6 +884,7 @@ a {
                     case 1:
                     	$("#media-container").css("padding-bottom", "");
                     	$("#media-container").css("height", "600px");
+                    	$("#media-container").css("background-color", "#faf8f0");
                     	$("#game").css("position", "static");
                     	$("#game").css("top", "");
                     	$("#game").css("left", "");

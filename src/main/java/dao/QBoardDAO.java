@@ -6,13 +6,12 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -411,6 +410,40 @@ public class QBoardDAO {
 			pstat.executeBatch();
 		}
 	}*/
+		
+		
+		//7.selectMyQna
+		public List<QBoardDTO> selectMyQna(String userId) throws Exception{
+			
+			String sql = "select * from q_board where user_id=? order by 6 desc ";
+			
+			try(Connection con=this.getConnection();
+					PreparedStatement ptat=con.prepareStatement(sql);){
+				ptat.setString(1, userId);
+				
+				try(ResultSet rs = ptat.executeQuery();){
+					
+					List<QBoardDTO> list = new ArrayList<>();
+					
+					while(rs.next()) {
+						int seq = rs.getInt(1);
+						String id = rs.getString(2);
+						int category = rs.getInt(3);
+						String title = rs.getString(4);
+						String content = rs.getString(5);
+						Timestamp date = rs.getTimestamp(6);
+						String answer = rs.getString(7);
+						String secret = rs.getString(8);
+						list.add(new QBoardDTO(seq, id, category, title, content, date, answer, secret));
+						}
+					
+						return list;
+					}
+				
+				}
+			
+			
+		}
 
 
 

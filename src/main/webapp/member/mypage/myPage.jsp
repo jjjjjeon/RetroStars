@@ -87,7 +87,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         margin: auto;
         display: flex;
         flex-direction: column;
-        height: 900px;
+        height: 1300px;
         width: 1200px;
         justify-content: center;
         align-items: center;
@@ -122,6 +122,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .gender_value{display: flex;justify-content: start;align-items: center;} 
     .gender_img{width: 40%; height: 90%;margin-bottom:10px;}
      #update_btn{width:90%; height:80%; margin-bottom:40px;}
+     .answerY{color:dodgerblue;}
+     .answerN{color:orangered;}
     
     
     #gameSeq0{background-image:url("/image/rpg_background.png"); background-size:100% 100%;}
@@ -143,8 +145,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     .no_data{display:flex; justify-content: center; align-items: center; font-size:20px;margin-bottom:20px;}
 
 	.favorite_game{flex:0.5; width: 80%; display: flex;}
-	.favorite_game_title{flex:2; font-size:25px; font-weight:700; display: flex; justify-content: start; align-items: center;}
-	.favorite_game_main{flex:8;text-indent:10px; display: flex; justify-content: start; align-items: center;}
+	.favorite_game_title{flex:2; font-size:25px; font-weight:700; display: flex; justify-content: start; align-items: end;}
+	.favorite_game_main{flex:8;text-indent:10px; display: flex; justify-content: start; align-items: end;}
 	.game_logo{width:80px;}
 	
     .freeboard{flex:2.5; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;}
@@ -516,7 +518,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             </div>
         </div>
         <div class="freeboard">
-            <div class="free_title board_title">Community Board (자유)</div>
+            <div class="free_title board_title">Community(자유)</div>
             <div class="free_main board_main">
             	<div class="board_bookmark_row list_header">
 					<div class="board_bookmark_title">TITLE</div>
@@ -537,7 +539,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 			</div>
         </div>
         <div class="tipboard">
-            <div class="tip_title board_title">Community Board (공략)</div>
+            <div class="tip_title board_title">Community(공략)</div>
             <div class="tip_main board_main">
             <div class="board_bookmark_row list_header">
 					<div class="board_bookmark_title ">TITLE</div>
@@ -551,6 +553,34 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 								<div class="tip_writer board_bookmark_writer">${listCategory2.userNickname}</div>
 								<div class="tip_date board_bookmark_date">
 									<fmt:formatDate value="${listCategory2.cBoardDate}" pattern="yy.MM.dd" />
+								</div>
+							</div>
+				</c:forEach>
+				</div>
+			</div>
+        </div>
+        <div class="tipboard">
+            <div class="tip_title board_title">MY Q&A</div>
+            <div class="tip_main board_main">
+            <div class="board_bookmark_row list_header">
+					<div class="board_bookmark_title ">TITLE</div>
+					<div class="board_bookmark_writer">ANSWER</div>
+					<div class="board_bookmark_date">DATE</div>
+				</div>
+				<div class="bookmark_body">
+            	<c:forEach var="listQna" items="${listQna}">
+							<div class="tip_row board_bookmark_row">
+								<div class="tip_title board_bookmark_title"><a class="board_link" href="/detail.qboard?seq=${listQna.qBoardSeq}">${listQna.qBoardTitle}</a></div>
+								<c:choose>
+								<c:when test="${listQna.qBoardAnswer == 'Y'}">
+									<div class="tip_writer board_bookmark_writer answerY">답변완료</div>
+								</c:when>
+								<c:when test="${listQna.qBoardAnswer == 'N'}">
+									<div class="tip_writer board_bookmark_writer answerN">답변대기</div>
+								</c:when>
+								</c:choose>
+								<div class="tip_date board_bookmark_date">
+									<fmt:formatDate value="${listQna.qBoardDate}" pattern="yy.MM.dd" />
 								</div>
 							</div>
 				</c:forEach>
