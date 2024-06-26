@@ -80,7 +80,7 @@ class Exam03 extends Phaser.Scene { // 신 타입
         // 돌과 충돌할 시 씬 변경하기
         this.physics.add.collider(this.player, this.boxes, (player, boxes) => {
 				  $.ajax({
-	                 url : "/write.playRecord",
+	                 url : "/write.playrecord",
 	                 data : {
 	                 game_seq : 3,
 	                 score : this.score,
