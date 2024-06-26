@@ -181,6 +181,7 @@
 				}
 
 				#contents_detail {
+					overflow-y: auto;
 					color:white;
 					position: relative;
 					width: 880px;

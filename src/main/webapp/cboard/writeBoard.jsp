@@ -26,7 +26,7 @@
 * {
 	box-sizing: border-box;
 	margin: 0;
-	font-family : 'DalseoHealing';
+	font-family: 'DalseoHealing';
 }
 
 .note-editor.note-frame {
@@ -49,6 +49,10 @@ body {
 div {
 	/* border: 1px solid black; */
 	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.header div{
+	color : white;
 }
 
 a {
@@ -183,7 +187,7 @@ input[type="text" i] {
 .note-editable {
 	height: 500px;
 	color: white;
-	font-family : 'DalseoHealing';
+	font-family: 'DalseoHealing';
 }
 
 .btnBox {
@@ -230,6 +234,10 @@ input[type="text" i] {
 	color: white !important;
 }
 
+.navbar-nav button {
+	color: white;
+}
+
 .nav-link:hover {
 	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 10px;
@@ -240,16 +248,18 @@ input[type="text" i] {
 	display: flex;
 }
 
-.btn {
+.naviBtn {
 	color: white;
 }
 
-.btn:hover {
+.naviBtn:hover {
 	color: white;
 }
 
 .dropdown-menu {
 	background-color: #323232;
+	text-align: center; /* 중앙 정렬을 위한 설정 */
+	width: 100%; /* 너비를 100%로 설정 */
 }
 
 .dropdown-item {
