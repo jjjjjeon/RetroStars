@@ -180,6 +180,8 @@ nav {
 }
 
 #post-content {
+    height: 210px;
+    overflow-y: auto;
 	font-size: 1.3rem;
 	margin: 0;
 	color: #ffffff;
