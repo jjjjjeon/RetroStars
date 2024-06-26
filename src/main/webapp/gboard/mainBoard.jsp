@@ -869,7 +869,6 @@ a {
                     type: Phaser.AUTO,
                     width: containerWidth,
                     height: containerHeight,
-                 
                     parent: "game",
                     backgroundColor: "#faf8f0",
                     scene: []
