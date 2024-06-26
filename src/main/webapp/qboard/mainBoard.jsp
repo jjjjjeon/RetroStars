@@ -163,6 +163,7 @@ nav {
 }
 
 .search_bar>#search_input {
+	color:white;
 	width: 100%;
 	height: 100%;
 	text-align: center;
@@ -675,9 +676,9 @@ nav {
 		            }); 
 		            
 		          //관리자라면 모든 권한을 갖는다(비밀글여부 상관없이 모든 디테일 페이지, 게시글 수정삭제와 댓글 수정삭제)
-					if(${isAdmin}==true){
-						alert("관리자 접속");
-					}
+					//if(${isAdmin}==true){
+					//	alert("관리자 접속");
+					//}
 		            
 		           
 				});
