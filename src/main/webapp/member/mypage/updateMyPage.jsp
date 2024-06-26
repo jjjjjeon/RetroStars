@@ -505,10 +505,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         let nextButton = $('#nickname_check');
 
         if (!validateNickname(userNickname)) {
-            nicknameCheckText.text("닉네임은 3~10자리만 가능합니다.");
-            nicknameCheckText.css('color', 'red');
-            nicknameCheckText.css('visibility', 'visible');
-            nextButton.addClass('disabled-button');
+            
             nextButton.prop('disabled', true);
             return;
         }
@@ -524,11 +521,15 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                     nicknameCheckText.css('color', 'green');
                     nextButton.removeClass('disabled-button');
                     nextButton.prop('disabled', false);
+                    
+                    
                 }else if (response === "before") {
                     nicknameCheckText.text("기존 닉네임입니다.");
                     nicknameCheckText.css('color', 'green');
                     nextButton.removeClass('disabled-button');
                     nextButton.prop('disabled', false);
+                    console.log(nextButton.prop);
+                    
                 }else {
                     nicknameCheckText.text("이미 사용 중인 닉네임입니다.");
                     nicknameCheckText.css('color', 'red');
@@ -553,6 +554,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         $('#input_name, #input_nickname, #input_birth, #input_phone, #input_email').on('input', function() {
             validateForm();
         });
+        
         $('#input_nickname').on('input', function() {
             $('#nicknameCheckText').css('visibility', 'hidden');
             $('#complete').addClass('disabled-button');
@@ -560,6 +562,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
             if (validateNickname($(this).val())) {
                 checkUserNickname();
+                $('#complete').prop('disabled', false);
+                
             } else {
                 $('#nicknameCheckText').text("사용 불가능한 닉네임입니다.");
                 $('#nicknameCheckText').css('color', 'red');
