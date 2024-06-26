@@ -349,7 +349,7 @@ nav {
 	position: relative;
 	width: 100%;
 	padding-bottom: 56.25%;
-	background-color: #faf8f0;
+	background-color: black;
 	margin-bottom: 20px;
 }
 
@@ -880,6 +880,7 @@ a {
                     case 1:
                     	$("#media-container").css("padding-bottom", "");
                     	$("#media-container").css("height", "600px");
+                    	$("#media-container").css("background-color", "#faf8f0");
                     	$("#game").css("position", "static");
                     	$("#game").css("top", "");
                     	$("#game").css("left", "");

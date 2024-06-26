@@ -12,6 +12,7 @@
 <script src="/fboard/summernote/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/fboard/summernote/summernote-lite.css">
  <style>
+
         body {
             background-color: #121212;
             color: #ffffff;
@@ -31,6 +32,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 1000px;
         }
+        
+        .note-editable {
+   			font-family : 'DalseoHealing';
+		}
         
         #notAdmin{display:flex; justify-content: center; align-items:center; height:600px;}
 
@@ -155,10 +160,11 @@ $(document).ready(function(){
 	fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','32','36','48','60']
 	});
-		$('#summernote').summernote('fontName', '맑은 고딕'); // 기본 폰트명 설정
+		$('#summernote').summernote('fontName', 'DalseoHealing'); // 기본 폰트명 설정
 	 	$('#summernote').summernote('fontSize', '12'); // 기본 폰트 사이즈 설정
 	 	$('#summernote').summernote('fontSizeUnit', 'pt'); // 기본 폰트 사이즈 단위 설정
 	 	$('#summernote').summernote('foreColor', 'white');
+	 	
 	});
 
 

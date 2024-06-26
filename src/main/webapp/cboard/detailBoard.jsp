@@ -51,6 +51,10 @@ div {
 	color: #d3d3d3;
 }
 
+.header div{
+	color : #d3d3d3;
+}
+
 .header {
 	height: 220px;
 	display: flex;
@@ -1137,7 +1141,7 @@ div {
     	                    let commentDiv = $('<div>').addClass('comment');
     	                    let cmtUserDiv = $('<div>').addClass('cmtUser').text(dto.userNickname);
     	                    let cmtCttDiv = $('<div>').addClass('cmtCtt').text(dto.cReplyContent);
-    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate).css("color", "#d3d3d3");
+    	                    let cmtDateDiv = $('<div>').addClass('cmtDate').text(formattedDate).css("color", "#6a6e76");
     	                    let cmtBtnBoxDiv = $('<div>').addClass('cmtBtnBox');
     	                    let replyButton = $('<button>').attr('type', 'button').addClass('btn btn-outline-secondary openReReplyWriteBtn').text('답글쓰기').css("color", "#d3d3d3");
     	                    
