@@ -447,6 +447,10 @@ a {
 	margin : 0 auto;
 	margin-top: 70px; 
 }
+
+.pNameText{
+	color : orange;
+}
 </style>
 </head>
 <body>
@@ -581,7 +585,7 @@ a {
 					RELEASE DATE:
 					<fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy" />
 				</p>
-				<p>DEVELOPER: ${game.developer}</p>
+				<p style="color:orange">DEVELOPER: ${game.developer}</p>
 				<div id="gameBtnBehind" class="buttons">
 					<button class="btn community-button bookBtn"
 						id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
@@ -708,7 +712,7 @@ a {
                     } 
 					
                     let reviewDiv = $('<div>').addClass('review');
-``
+
                     let reviewHeaderDiv = $('<div>').addClass('review-header');
                     let reviewUserInfoDiv = $('<div>').addClass('review-user-info');
                     let userProfileImg = $('<img>').attr({
@@ -718,7 +722,7 @@ a {
                         height: 40,
                         alt: 'Profile'
                     });
-                    let userNicknameDiv = $('<div>').text(data.userNickname);
+                    let userNicknameDiv = $('<div>').text(data.userNickname).addClass('pNameText');
 
                     reviewUserInfoDiv.append(userProfileImg, userNicknameDiv);
                     let reviewIconDiv = $('<div>').addClass('review-icon').html(icon);
