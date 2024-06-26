@@ -55,6 +55,10 @@ public class UserPorfileImgController extends HttpServlet {
 								imgDao.updateImg(new UserProfileImgDTO(0,id,oriname,sysname));
 								}
 						}
+				 
+					//세션 프로필 갱신 by 조진혁
+	             String updatedProfileUrl = imgDao.selectMyUrl(id);
+	             session.setAttribute("userProfileUrl", updatedProfileUrl);
 				 request.getRequestDispatcher("/member/mypage/close.jsp").forward(request, response);
 			}	
 			
