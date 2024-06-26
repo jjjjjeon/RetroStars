@@ -51,8 +51,8 @@ div {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.header div{
-	color : white;
+.header div {
+	color: white;
 }
 
 a {
@@ -433,7 +433,7 @@ input[type="text" i] {
 	<form action="/write.cboard" method="post" id="writeForm"
 		enctype="multipart/form-data">
 		<div class="writeBoard" id="writeBoard">
-			<h3>${nickname}님의글</h3>
+			<h3>${nickname}님의 글</h3>
 			<div class="category">
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" type="radio" name="category"
@@ -447,8 +447,8 @@ input[type="text" i] {
 				</div>
 			</div>
 			<div class="title">
-				<input type="text" placeholder="제목을 입력해 주세요 (최대 30자까지 입력 가능)" name="title"
-					id="titleInput" maxlength="30">
+				<input type="text" placeholder="제목을 입력해 주세요 (최대 30자까지 입력 가능)"
+					name="title" id="titleInput" maxlength="30">
 			</div>
 			<div class="fileBox">
 				<div class="col-12 uploadCol">
@@ -508,13 +508,12 @@ input[type="text" i] {
 	    		$("input:radio[name='category']:radio[value='option2']").prop('checked', true);
 	    	}
 	    	
-	    	
 	    	var elem = $('#summernote').summernote({
 	    	placeholder : `1. 비방, 욕설, 도배글 등은 서비스 이용제한 사유가 될 수 있습니다. <br>
 	            2. 타인의 개인정보가 포함된 게시물을 올릴 경우, 개인 정보 보호법 제 59조 3호에 의해 5년 이하의 징역 또는 <br>
 	              &nbsp;&nbsp; 5천만원 이하의 벌금이 부과될 수 있으니 유의하여 주시기 바랍니다. <br>
 	            3. 모든 분들이 게시물을 불편없이 이용할 수 있도록 게시물에 대한 설명을 문자로 기재해 주시기 바랍니다. <br>
-	            4. 최대 3000자까지 작성 가능합니다.`,
+	            4. 영문 최대 3000자까지 작성 가능합니다. (한글은 무분별한 복사 붙여넣기 제외 제한 없음)`,
 	    	height : '500px', // 에디터 높이
 	    	focus: true, // 에디터 로딩후 포커스를 맞출지 여부
 	    	lang: "ko-KR", // 한글 설정
@@ -529,25 +528,22 @@ input[type="text" i] {
 	    	fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	    	fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','32','36','48','60'],
 	    	callbacks: {
-                onKeydown: function (e) { 
-                    let t = e.currentTarget.innerText;
-                    
-                    if(t.length > -1){
-                    	$(".note-placeholder").css("display", "none");
-                    }
-                    
-                    if (t.trim().length >= 3000) {
-                        //delete keys, arrow keys, copy, cut, select all
-                        if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
-                        e.preventDefault(); 
-                    } 
-                },
+	    		onKeydown: function(e) {
+	    			let t = $('.note-editable')[0].textContent;
+	    			
+	    			if (e.keyCode == 8 || (e.keyCode >= 35 && e.keyCode <= 40) || e.keyCode == 46 || (e.keyCode == 88 && e.ctrlKey) || (e.keyCode == 67 && e.ctrlKey) || (e.keyCode == 65 && e.ctrlKey)) {
+	                    return;
+	                }
+	                if (t.trim().length >= 3000){
+	                    e.preventDefault();
+	                }    
+	    		},	
                 onKeyup: function (e) {
-                	let t = e.currentTarget.innerText;
+                	let t = $('.note-editable')[0].textContent;
                     $('#maxContentPost').text(3000 - t.trim().length);
                 },
                 onPaste: function (e) {
-                    let t = e.currentTarget.innerText;
+                	let t = $('.note-editable')[0].textContent;
                     let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
                     e.preventDefault();
                     let maxPaste = bufferText.length;
