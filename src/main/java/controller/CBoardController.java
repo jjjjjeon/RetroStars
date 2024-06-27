@@ -161,6 +161,7 @@ public class CBoardController extends HttpServlet {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				
 				bManager.delBookmark(id, seq);
+				bManager.delCount(seq);
 				
 			//유저게시판 게시글 북마크 추가.
 			}else if( cmd.equals("/addBookmark.cboard")) {
@@ -168,6 +169,7 @@ public class CBoardController extends HttpServlet {
 				int seq = Integer.parseInt(request.getParameter("seq"));
 				
 				bManager.addBookmark(id, seq);
+				bManager.addCount(seq);
 				
 			//글쓰기게시판 이동.
 			}else if(cmd.equals("/goWrite.cboard")) {
