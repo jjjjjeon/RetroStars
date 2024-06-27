@@ -80,9 +80,7 @@ public class QBoardController extends HttpServlet {
 			}else if(cmd.equals("/list.qboard")) {
 				String loginId=(String)request.getSession().getAttribute("loginId");
 				boolean isAdmin=false;
-				if(loginId==null) {
-					loginId="0";
-				}else {
+				if(!(loginId==null)) {
 					isAdmin=memberdao.isAdmin(loginId);
 				}
 				
@@ -159,7 +157,6 @@ public class QBoardController extends HttpServlet {
 				System.out.println(strselected+qBoardSeq);
 				int result=boarddao.updateAnswer(qBoardSeq, strselected);
 				response.sendRedirect("/list.qboard");
-				//System.out.println(result);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
