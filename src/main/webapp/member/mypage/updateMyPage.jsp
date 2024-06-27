@@ -199,9 +199,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
             border:0px;
         }
         .btn-color{background-color: purple; border:0px;}
-        .btn-color:hover{back}
-        
-        
+        .btn-color:hover{back}        
         
     </style>
 </head>
