@@ -44,17 +44,26 @@ public class UserPorfileImgController extends HttpServlet {
 					  downloadFile.mkdir();
 			        }
 				 
-				 MultipartRequest multi = new MultipartRequest(request, filePath, maxSize,"UTF8", new DefaultFileRenamePolicy());
-				 Enumeration<String> names = multi.getFileNames();
+				 MultipartRequest multi = new MultipartRequest(request, filePath, maxSize, "UTF8", new DefaultFileRenamePolicy());
+				  String useDefault = multi.getParameter("basicProfile");
+				  System.out.println(useDefault);
 				 
-				 while(names.hasMoreElements()) {						
-							String name = names.nextElement();
-							String oriname = multi.getOriginalFileName(name); // 원본 파일 이름
-							String sysname = multi.getFilesystemName(name); // 서버에 저장되었을 때 이름 (중복시 라벨링 된 이름)						
-							if(oriname != null) {
-								imgDao.updateImg(new UserProfileImgDTO(0,id,oriname,sysname));
-								}
-						}
+				  
+				    if (useDefault.equals("basic")) {
+				        // 기본 이미지 사용 로직
+				        imgDao.updateImg(new UserProfileImgDTO(0, id, "default.png", "default.png"));
+				    } else {
+				       
+				    	Enumeration<String> names = multi.getFileNames();
+				        while (names.hasMoreElements()) {
+				            String name = names.nextElement();
+				            String oriname = multi.getOriginalFileName(name); // 원본 파일 이름
+				            String sysname = multi.getFilesystemName(name); // 서버에 저장되었을 때 이름 (중복 시 라벨링 된 이름)
+				            if (oriname != null) {
+				                imgDao.updateImg(new UserProfileImgDTO(0, id, oriname, sysname));
+				            }
+				        }
+				    }
 				 
 					//세션 프로필 갱신 by 조진혁
 	             String updatedProfileUrl = imgDao.selectMyUrl(id);
