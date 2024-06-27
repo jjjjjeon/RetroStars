@@ -622,9 +622,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script>
     
-    $()
-    
-    
     $("#update_btn").on("click",function(){
     	location.href="/updateList.member"
     })
@@ -644,7 +641,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 			  confirmButtonText: "삭제",
 			  cancelButtonText: "취소"
 			}).then((result) => {
-			    location.href="/deleteMember.member";
+				if (result.isConfirmed) {
+			        location.href = "/deleteMember.member";
+			    } else if (result.isDismissed) {
+			        location.href = "/mypage.member";  // 취소 버튼 클릭 시 이동할 URL
+			    }
 			  }
 			)
     }) 	

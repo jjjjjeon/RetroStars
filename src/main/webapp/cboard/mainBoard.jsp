@@ -538,7 +538,7 @@ select:focus {
 				alert("로그인 후 이용해주세요!");
 				e.preventDefault();
 			}else{
-				location.href = "/goWrite.cboard";
+				location.href = "/goWrite.cboard?category=${category}";
 			}
 		});
 		

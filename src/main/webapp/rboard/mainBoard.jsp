@@ -66,6 +66,10 @@
          color:white;
       }
 
+	.nav-link.gametab.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
 
       a {
 		  text-decoration: none !important;
@@ -239,7 +243,7 @@
         .rankList .rankscore {
             flex: 2;
         }
-
+	
         .rankList .username {
             flex: 2;
         }
@@ -395,11 +399,11 @@
     
     
     <nav class="nav nav-pills nav-fill" id="gamenav">
-        <a class="nav-link" href="/list.playrecord?gameSeq=1">2048</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=2">GOLD BREAK!</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=3">ICE CUBY</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=4">똥 피하기</a>
-        <a class="nav-link" href="/list.playrecord?gameSeq=5">탈출하기</a>
+        <a class="nav-link gametab" id="game1" href="/list.playrecord?gameSeq=1">2048</a>
+        <a class="nav-link gametab" id="game2" href="/list.playrecord?gameSeq=2">GOLD BREAK!</a>
+        <a class="nav-link gametab" id="game3" href="/list.playrecord?gameSeq=3">ICE CUBY</a>
+        <a class="nav-link gametab" id="game4" href="/list.playrecord?gameSeq=4">똥 피하기</a>
+        <a class="nav-link gametab" id="game5" href="/list.playrecord?gameSeq=5">탈출하기</a>
     </nav>
 
     <div class="wrapper">
@@ -468,5 +472,30 @@
         </div>
     </div>
 </body>
+<script>
+	
+$(document).ready(function() {
+	let gameSeq = ${ranks.get(0).gameCate}
+	
+	console.log(gameSeq);
+	
+	if(gameSeq == 1){
+		$("#game1").css({"background-color":"#505050"});
+	}else if(gameSeq == 2){
+		$("#game2").css({"background-color":"#505050"});
+	}else if(gameSeq == 3){
+		$("#game3").css({"background-color":"#505050"});
+	}else if(gameSeq == 4){
+		$("#game4").css({"background-color":"#505050"});
+	}else if(gameSeq == 5){
+		$("#game5").css({"background-color":"#505050"});
+	}else{
+		$("#game1").css({"background-color":"#505050"});
+	}
+        
+	
+});
+
+</script>
 
 </html>

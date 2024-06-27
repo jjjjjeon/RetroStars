@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class adminDAO {
 
 	// 전체 신고된 글 수 반환
 	public int getReportPostListCount() throws Exception {
-		String sql = "select count(*) from c_board where c_board_report >= 5";
+		String sql = "select count(*) from c_board where c_board_report >= 1";
 
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -100,7 +101,7 @@ public class adminDAO {
 
 	// 검색된 신고된 글 수 반환
 	public int getSearchedPostCount(String searchInput) throws Exception {
-		String sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 5)";
+		String sql = "select count(c_board_seq) from (select c_board.*, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 1)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + searchInput + "%");
@@ -162,7 +163,7 @@ public class adminDAO {
 
 	// 전체 신고된 글 목록 반환
 	public List<CBoard2DTO> viewReportPostList(int n, int m) throws Exception {
-		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report >= 5) where rown between ? and ?";
+		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where c_board_report >= 1) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, n);
@@ -238,7 +239,7 @@ public class adminDAO {
 
 	// 검색된 신고 글 목록 반환
 	public List<CBoard2DTO> viewSearchedPostList(String searchInput, int n, int m) throws Exception {
-		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 5) where rown between ? and ?";
+		String sql = "select * from (select c_board.*, member.user_nickname, row_number() over(order by c_board_seq desc) rown from c_board join member on c_board.user_id = member.user_id where user_nickname like ? and c_board_report >= 1) where rown between ? and ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, "%" + searchInput + "%");
@@ -355,7 +356,8 @@ public class adminDAO {
 
 	// 연령별 이용횟수 10~50대
 	public int[] getAgeNumberOfUse() throws Exception {
-		int[] arr = new int[6]; // 0-5인데 0은 사용하지 않을 것.
+		int[] list = new int[6]; //0은 사용하지 않음 1-5만 사용
+		Arrays.fill(list, 0); //0으로 초기화
 		String sql = "select age, count(*) from (SELECT p.*, " + "m.user_id AS m_user_id, "
 				+ "m.user_no, m.user_name, substr(m.user_no, 1, 2) AS birthday_year, "
 				+ "substr((to_char(sysdate, 'yyyy') - CASE "
@@ -367,12 +369,11 @@ public class adminDAO {
 		try (Connection con = this.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();) {
-			int i = 1;
+		
 			while (rs.next()) {
-				arr[i] = rs.getInt(2);
-				i++;
+				list[rs.getInt(1)]=rs.getInt(2);
 			}
-			return arr;
+			return list;
 		}
 	}
 
@@ -446,7 +447,7 @@ public class adminDAO {
 	
 	// 신고 현황에 집계된 모든 글 삭제
 	public void delAllReportedPost() throws Exception{
-		String sql = "delete from c_board where c_board_report >= 5";
+		String sql = "delete from c_board where c_board_report >= 1";
 		
 		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.executeUpdate();
