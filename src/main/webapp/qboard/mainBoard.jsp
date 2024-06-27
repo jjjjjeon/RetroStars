@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -24,72 +24,82 @@
 	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 	crossorigin="anonymous"></script>
 <!-- Fonts -->
-<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
-                
-<style>            
-                
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 
+<style>
 body {
-	font-family : 'DalseoHealing';
+	font-family: 'DalseoHealing';
 	background-image: url('/image/background.png');
 	background-size: 100% 100%;
 	color: white;
-	
 }
 
 /*  HEADER CSS  */
 .navbar {
-           top: 0;
-           width: 100%;
-           z-index: 1000;
-           height:70px;
-           background-color : #323232;
-       }
-       .navbar-brand{
-          color:white;
-       }
-       .nav-link {
-            color: white !important;         
-       }
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+	height: 70px;
+	background-color: #323232;
+}
 
-       .nav-link:hover {
-          background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-       }
-       .nav-item{
-           align-items: center;
-          display: flex;
-       }
+.navbar-brand {
+	color: white;
+}
 
-      .btn{
-         color:white;
-      }
- 
-      .btn:hover{
-         color:white;
-      }
-      .dropdown-menu{
-         background-color: #323232;
-         text-align: center; /* 중앙 정렬을 위한 설정 */
-         width: 100%; /* 너비를 100%로 설정 */
-      }
-      .dropdown-item{
-         background-color: #323232;
-         color:white;
-      }
+.nav-link {
+	color: white !important;
+}
 
+.nav-link:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+}
 
-      a {
-        text-decoration: none !important;
-     }
-     
-     a:link { color: white; text-decoration: none;}
-      a:visited { color: white; text-decoration: none;}
-     a:hover { color: white; text-decoration: underline;}
-      /*    end navbar css */
+.nav-item {
+	align-items: center;
+	display: flex;
+}
 
+.btn {
+	color: white;
+}
 
+.btn:hover {
+	color: white;
+}
 
+.dropdown-menu {
+	background-color: #323232;
+	text-align: center; /* 중앙 정렬을 위한 설정 */
+	width: 100%; /* 너비를 100%로 설정 */
+}
+
+.dropdown-item {
+	background-color: #323232;
+	color: white;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+a:link {
+	color: white;
+	text-decoration: none;
+}
+
+a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+	text-decoration: underline;
+}
+/*    end navbar css */
 nav {
 	margin-bottom: 50px;
 }
@@ -118,8 +128,8 @@ nav {
 }
 
 .container {
-	font-size:large;
-	padding:0px;
+	font-size: large;
+	padding: 0px;
 	width: 1500px;
 	height: 1100px;
 	margin: auto;
@@ -163,16 +173,14 @@ nav {
 }
 
 .search_bar>#search_input {
-	color:white;
+	color: white;
 	width: 100%;
 	height: 100%;
 	text-align: center;
 	border: none;
 	background-color: #323232;
-	outline:none;
+	outline: none;
 }
-
-
 
 .dropdown-toggle {
 	height: 35px;
@@ -210,7 +218,7 @@ nav {
 }
 
 .list_data_writer {
-	text-align:center;
+	text-align: center;
 	width: 131px;
 	height: 48px;
 	overflow: hidden;
@@ -237,7 +245,7 @@ nav {
 }
 
 .detailA:hover {
-	background-color:dimgray;
+	background-color: dimgray;
 }
 
 .btns_container {
@@ -252,16 +260,15 @@ nav {
 	width: 120px;
 	border-radius: 0;
 	color: white;
-    border: 1px solid white;
+	border: 1px solid white;
 }
 
 #ask_btn:hover {
 	width: 120px;
 	border-radius: 0;
 	color: #323232;
-    background-color: white;
+	background-color: white;
 }
-
 
 #page_navi a {
 	display: inline-block;
@@ -278,160 +285,171 @@ nav {
 	margin-top: 50px;
 }
 
-
 /* FOOTER CSS */
-        .footer {
-            width: 100%;
-            background-color: #323232;
-            position: relative;
-            height: 150px;
-        }
-        .leftfooter{
-           color : white;
-           font-weight : bold;
-           margin-top: 20px;
-        }
-        .rightfooter {
-           display: flex;
-           align-items: center;
-       
-       }
-         .footerbox {
-           width: 1000px;
-           height: 100%;
-           margin: auto;
-           display: flex;
-           justify-content: space-between;
-           align-items: center;    
-       }
+.footer {
+	width: 100%;
+	background-color: #323232;
+	position: relative;
+	height: 150px;
+}
 
-        .iconbox {
-            display: flex;
-            align-items: center;
-        }
+.leftfooter {
+	color: white;
+	font-weight: bold;
+	margin-top: 20px;
+}
 
-        .iconbox a {
-            margin: 0 10px;
-            font-size: 50px;
-            color: white;
-        }
-       .coinbox {
-           display: flex;
-           align-items: center;
-           margin-left: 20px;
-       }
-        .coinbox img {
-            width: 120px;
-            height: 100px;
-            margin-left : 20px;
-        }
-        
-        .thumbnail{
-           border-radius: 20px;
-           width: 356px;
-           height: 230px;
-           object-fit: cover;
-        }
-        
+.rightfooter {
+	display: flex;
+	align-items: center;
+}
 
-        a {
-          text-decoration: none !important;
-      }
-       a:link { color: white; text-decoration: none;}
-       a:visited { color: white; text-decoration: none;}
-       a:hover { color: white; text-decoration: underline;}
+.footerbox {
+	width: 1000px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
+.iconbox {
+	display: flex;
+	align-items: center;
+}
 
+.iconbox a {
+	margin: 0 10px;
+	font-size: 50px;
+	color: white;
+}
 
+.coinbox {
+	display: flex;
+	align-items: center;
+	margin-left: 20px;
+}
 
+.coinbox img {
+	width: 120px;
+	height: 100px;
+	margin-left: 20px;
+}
 
+.thumbnail {
+	border-radius: 20px;
+	width: 356px;
+	height: 230px;
+	object-fit: cover;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+a:link {
+	color: white;
+	text-decoration: none;
+}
+
+a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+	text-decoration: underline;
+}
 </style>
 </head>
 
 
 <body>
-<!--  HEADER HTML -->
+	<!--  HEADER HTML -->
 
- <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-           
-            <a class="navbar-brand" href="/index.jsp"><img src="/image/headerlogo.png" alt="" style="width: 80px; height: 60px;"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게임
-                        </button>
+	<nav class="navbar navbar-expand-lg">
+		<div class="container-fluid">
 
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=1">2048</a></li>
-                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
-                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
-                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
-                            <li><a class="dropdown-item" href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            게시판
-                        </button>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
-                            <li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
-                     <li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
-                            <li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
-                            <li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
-                            
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/list.playrecord">랭킹</a>
-                    </li>
-                   
+			<a class="navbar-brand" href="/index.jsp"><img
+				src="/image/headerlogo.png" alt=""
+				style="width: 80px; height: 60px;"></a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
+				aria-controls="navbarNavDarkDropdown" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+							aria-expanded="false">게임</button>
 
-                </ul>
-                <c:choose>
-                   <c:when test="${not empty loginId}">
-                   <ul class="navbar-nav ms-auto">
-                   
-                   <c:if test="${isAdmin eq true}">
-                       <li class="nav-item">
-                           <a class="nav-link" href="/dashBoard.admin">관리자페이지</a>
-                       </li>
-                   </c:if>   
-                     <li class="nav-item">
-                           <a class="nav-link" href="/logout.member">로그아웃</a>
-                     </li>
-                     
-                    <li class="nav-item">
-                       <a class="nav-link" href="/mypage.member">
-                           <img src="/profile/${userProfileUrl}" class="rounded-circle" width="40" height="40" alt="Profile">
-                       </a>
-                    </li>                  
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item"
+								href="/viewGame.gboard?gameSeq=1">2048</a></li>
+							<li><a class="dropdown-item"
+								href="/viewGame.gboard?gameSeq=2">GOLD BREAK!</a></li>
+							<li><a class="dropdown-item"
+								href="/viewGame.gboard?gameSeq=3">ICE CUBY</a></li>
+							<li><a class="dropdown-item"
+								href="/viewGame.gboard?gameSeq=4">똥 피하기</a></li>
+							<li><a class="dropdown-item"
+								href="/viewGame.gboard?gameSeq=5">탈출하기</a></li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<button class="btn dropdown-toggle" data-bs-toggle="dropdown"
+							aria-expanded="false">게시판</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/list.nboard">공지사항</a></li>
+							<li><a class="dropdown-item" href="/list.cboard">커뮤니티</a></li>
+							<li><a class="dropdown-item" href="/list.review">게임리뷰</a></li>
+							<li><a class="dropdown-item" href="/list.qboard">Q&A게시판</a></li>
+							<li><a class="dropdown-item" href="/list.fboard">FAQ게시판</a></li>
+
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-link"
+						href="/list.playrecord">랭킹</a></li>
 
 
-                   </ul>                          
-                   </c:when>
-                   <c:otherwise>
-                      <ul class="navbar-nav ms-auto">
-                          <li class="nav-item">
-                              <a class="nav-link" href="/member/login/login.jsp"><i class="fas fa-user"></i></a>
-                          </li>
-                      </ul>
-                   </c:otherwise>
-                </c:choose>
+				</ul>
+				<c:choose>
+					<c:when test="${not empty loginId}">
+						<ul class="navbar-nav ms-auto">
 
-            </div>
-        </div>
-    </nav>
+							<c:if test="${isAdmin eq true}">
+								<li class="nav-item"><a class="nav-link"
+									href="/dashBoard.admin">관리자페이지</a></li>
+							</c:if>
+							<li class="nav-item"><a class="nav-link"
+								href="/logout.member">로그아웃</a></li>
+
+							<li class="nav-item"><a class="nav-link"
+								href="/mypage.member"> <img src="/profile/${userProfileUrl}"
+									class="rounded-circle" width="40" height="40" alt="Profile">
+							</a></li>
+
+
+						</ul>
+					</c:when>
+					<c:otherwise>
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item"><a class="nav-link"
+								href="/member/login/login.jsp"><i class="fas fa-user"></i></a></li>
+						</ul>
+					</c:otherwise>
+				</c:choose>
+
+			</div>
+		</div>
+	</nav>
 
 	<div class="container col center">
-		<div class="col1 center" style="flex: 1; width: 100%; background-color:#272727; border: 1px solid whitesmoke;">
+		<div class="col1 center"
+			style="flex: 1; width: 100%; background-color: #272727; border: 1px solid whitesmoke;">
 			<h4>
 				질문과 답변 <i class="fa-brands fa-quinscape"></i>
 			</h4>
@@ -461,7 +479,7 @@ nav {
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item dropdown-search" href="#"
 								data-searchBy="q_board_title">제목</a></li>
-							<li><a  class="dropdown-item dropdown-search" href="#"
+							<li><a class="dropdown-item dropdown-search" href="#"
 								data-searchBy="q_board_content">내용</a></li>
 						</ul>
 					</div>
@@ -471,7 +489,7 @@ nav {
 					</div>
 				</div>
 			</div>
-			<div class="list_container_row row" style="flex:7.0; width: 100%;">
+			<div class="list_container_row row" style="flex: 7.0; width: 100%;">
 				<div class="list_container_col col" style="flex: 1; height: 100%;">
 					<div class="list_head row" style="flex: 1; width: 100%;">
 						<div class="list_head_seq center" style="flex: 1;">번호</div>
@@ -485,57 +503,62 @@ nav {
 						<div class="list_detail_box_col col"
 							style="flex: 1; height: 100%;">
 							<c:choose>
-							<c:when test="${fn:length(list) > 0 }">
-							<c:forEach var="dto" items="${list}">
-								<a class="detailA" data-postOwnerId="${dto.userId}" data-qBoardSeq="${dto.qBoardSeq}" data-qBoardSecret="${dto.qBoardSecret}">
-									<div class="list_data_row row" style="height: 56px; width: 100%;">
-										<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
-										<div class="list_data_category center" style="flex: 1;">
-											<c:choose>
-												<c:when test="${dto.qBoardCategory==1}">
+								<c:when test="${fn:length(list) > 0 }">
+									<c:forEach var="dto" items="${list}">
+										<a class="detailA" data-postOwnerId="${dto.userId}"
+											data-qBoardSeq="${dto.qBoardSeq}"
+											data-qBoardSecret="${dto.qBoardSecret}">
+											<div class="list_data_row row"
+												style="height: 56px; width: 100%;">
+												<div class="list_data_seq center" style="flex: 1;">${dto.qBoardSeq}</div>
+												<div class="list_data_category center" style="flex: 1;">
+													<c:choose>
+														<c:when test="${dto.qBoardCategory==1}">
 															게임문의
 														</c:when>
-												<c:when test="${dto.qBoardCategory==2}">
+														<c:when test="${dto.qBoardCategory==2}">
 															제휴문의
 														</c:when>
-												<c:when test="${dto.qBoardCategory==3}">
+														<c:when test="${dto.qBoardCategory==3}">
 															기타문의
 														</c:when>
-											</c:choose>
-										</div>
-										<div class="list_data_writer center" style="flex: 1;">${dto.qBoardUserNickname}</div>
-										<div class="list_data_title center" style="flex: 4.5;">
-											<span>${dto.qBoardTitle}</span>
-											<c:choose>
-												<c:when test="${dto.qBoardSecret eq 'N'}">
-													<i class="fa-solid fa-lock-open" style="margin-left: 5px;"></i>
-												</c:when>
-												<c:when test="${dto.qBoardSecret eq 'Y'}">
-													<i class="fa-solid fa-lock" style="margin-left: 5px;"></i>
-												</c:when>
-											</c:choose>
-										</div>
-										<div class="list_data_date center" style="flex: 1.5;">
-											<fmt:formatDate value="${dto.qBoardDate}"
-												pattern="yyyy.MM.dd"></fmt:formatDate>
-										</div>
-										<c:choose>
-											<c:when test="${dto.qBoardAnswer eq 'N'}">
-												<div class="list_data_answer center"
-													style="flex: 1; color: orangered">답변대기</div>
-											</c:when>
-											<c:when test="${dto.qBoardAnswer eq 'Y'}">
-												<div class="list_data_answer center"
-													style="flex: 1; color: dodgerblue">답변완료</div>
-											</c:when>
-										</c:choose>
-									</div>
-								</a>
-							</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<div style="text-align:center; margin-top:10px">검색결과가 존재하지 않습니다.</div>
-							</c:otherwise>
+													</c:choose>
+												</div>
+												<div class="list_data_writer center" style="flex: 1;">${dto.qBoardUserNickname}</div>
+												<div class="list_data_title center" style="flex: 4.5;">
+													<span>${dto.qBoardTitle}</span>
+													<c:choose>
+														<c:when test="${dto.qBoardSecret eq 'N'}">
+															<i class="fa-solid fa-lock-open"
+																style="margin-left: 5px;"></i>
+														</c:when>
+														<c:when test="${dto.qBoardSecret eq 'Y'}">
+															<i class="fa-solid fa-lock" style="margin-left: 5px;"></i>
+														</c:when>
+													</c:choose>
+												</div>
+												<div class="list_data_date center" style="flex: 1.5;">
+													<fmt:formatDate value="${dto.qBoardDate}"
+														pattern="yyyy.MM.dd"></fmt:formatDate>
+												</div>
+												<c:choose>
+													<c:when test="${dto.qBoardAnswer eq 'N'}">
+														<div class="list_data_answer center"
+															style="flex: 1; color: orangered">답변대기</div>
+													</c:when>
+													<c:when test="${dto.qBoardAnswer eq 'Y'}">
+														<div class="list_data_answer center"
+															style="flex: 1; color: dodgerblue">답변완료</div>
+													</c:when>
+												</c:choose>
+											</div>
+										</a>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<div style="text-align: center; margin-top: 10px">검색결과가
+										존재하지 않습니다.</div>
+								</c:otherwise>
 							</c:choose>
 						</div>
 					</div>
@@ -549,46 +572,30 @@ nav {
 		</div>
 	</div>
 	<!-- FOOTER CSS -->
-<div class="footer">
-        <div class="footerbox">
-            <div class="leftfooter">
-                <p>회사명: 팀별빛</p>
-                <p>전화: 02-1234-5678</p>
-                <p>이메일: info@example.com</p>
-            </div>
-            <div class="rightfooter">
-                <div class="iconbox">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="coinbox">
-                    <img src="/image/coin.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-	
+	<div class="footer">
+		<div class="footerbox">
+			<div class="leftfooter">
+				<p>회사명: 팀별빛</p>
+				<p>전화: 02-1234-5678</p>
+				<p>이메일: info@example.com</p>
+			</div>
+			<div class="rightfooter">
+				<div class="iconbox">
+					<a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
+						class="fab fa-instagram"></i></a> <a href="#"><i
+						class="fab fa-youtube"></i></a>
+				</div>
+				<div class="coinbox">
+					<img src="/image/coin.png" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
-				let searchBy="0";
-				let searchData="0";
-				$(document).ready(function () {
-					//url파싱 스트링값을 변수로 처리하는 문제를 해결하기 위해
-					const currentUrl = window.location.href;
-					const url = new URL(currentUrl);
-
-					const protocol = url.protocol; // 예: "https:"
-					const host = url.host; // 예: "example.com"
-					const pathname = url.pathname; // 예: "/path"
-					const searchParams = url.searchParams;
-
-					searchBy = searchParams.get('searchBy');
-					searchData = searchParams.get('searchData'); 
-
-					if(searchBy==null){
-						searchBy="0";
-						searchData="0";
-					}
+				let searchBy='${searchBy}';
+				let searchData='${searchData}';
+				
 
 					let category = ${ category };
 					let cpage = ${ cpage };
@@ -645,7 +652,6 @@ nav {
 		                e.preventDefault();
 		                $("#searchToggle").html($(this).html());
 		                searchBy = $(this).attr("data-searchBy");
-		                //console.log(searchBy);
 		            });
 
 		            function performSearch() {
@@ -675,15 +681,14 @@ nav {
 		                }
 		            }); 
 		            
-		          //관리자라면 모든 권한을 갖는다(비밀글여부 상관없이 모든 디테일 페이지, 게시글 수정삭제와 댓글 수정삭제)
-					//if(${isAdmin}==true){
-					//	alert("관리자 접속");
-					//}
+		          	/*관리자라면 모든 권한을 갖는다(비밀글여부 상관없이 모든 디테일 페이지, 게시글 수정삭제와 댓글 수정삭제)
+					if(${isAdmin}==true){
+						alert("관리자 접속");
+					}*/
 		            
-		           
-				});
+		       
 				
-				//디테일페이지 앵커 권한 설정
+				//디테일페이지로 넘어갈 때 앵커 권한 설정
 				$($(".detailA")).on("click",function(){	
 					//로그인하든 안하든 관리자가 아니고 내가 쓴 글이 아니고 비밀이라면 보지 못 한다.
 					if((("${loginId}" != "0")||("${loginId}" == "0"))&&("${loginId}" != $(this).attr("data-postOwnerId")) && ($(this).attr("data-qBoardSecret")=="Y") && (${isAdmin}==false)){
@@ -691,8 +696,7 @@ nav {
 						return false;
 					}
 					
-					//내가 쓴 글이거나 비밀이 아닐 때, 관리자일 때
-					//볼 수 있는 경우는 모두 이동
+					//내가 쓴 글이거나 비밀이 아닐 때, 관리자일 때 볼 수 있는 경우는 모두 이동
 					window.location.href="/detail.qboard?seq="+$(this).attr("data-qBoardSeq");
 				});
 				
@@ -700,7 +704,7 @@ nav {
 				
 				//로그인 안 하고 글쓰기를 누를 경우 작성할 수 없게 하기
 				$("#ask_btn").on("click",function(){
-					if("${loginId}" == "0"){
+					if(${loginId == null}){
 						alert("로그인이 필요한 서비스입니다.");
 						return false;
 					}
