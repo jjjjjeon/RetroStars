@@ -201,6 +201,7 @@ public class CBoardController extends HttpServlet {
 				}else {
 					ReportDTO report = new ReportDTO(0, boardSeq, reporterId, reportType, null);
 					String result = rptManager.addReport(report);
+					bManager.addReportCount(boardSeq);
 					
 					PrintWriter pw = response.getWriter();
 					pw.append(result);
