@@ -20,7 +20,6 @@
 
    body{
       background-color : #222; 
-/*       color: #d3d3d3; */
 		color:white;
         font-family : 'DalseoHealing';
         display: flex;
@@ -170,7 +169,6 @@
 	}
 
     .review-list {
-/*         margin-top: 20px; */
     }
 
     .review-item {
@@ -222,7 +220,7 @@
         align-items: center;
         margin-top: 20px;
     }
-	.delete-review-btn{
+	.delete-review-btn, .edit-review-btn, .save-review-btn, .cancel-edit-btn {
 	    width: 60px;
     	height: 40px;
     	border: none;
@@ -231,7 +229,7 @@
     	background-color:black;
     	color:white;
 	}
-	.delete-review-btn:hover{
+	.delete-review-btn:hover, .edit-review-btn:hover, .save-review-btn:hover, .cancel-edit-btn:hover {
 		background-color:white;
 		color:black;
 		transition:0.2s;
@@ -259,7 +257,6 @@
     	background-color: #ff463e;
     	opacity : 0.8;
     }
-
 
     .sort-buttons button.active {
         opacity : 1;
@@ -498,13 +495,13 @@
                 </c:when>
                 <c:otherwise>
                     <c:forEach var="review" items="${list}">
-                        <div class="review-item">
+                        <div class="review-item" id="review-${review.reviewSeq}">
                             <div class="review-author">
                                 <img src="/profile/${review.profileUrl}" alt="Profile">
                                 ${review.userNickname}
                             </div>
                             <div class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></div>
-                            <div class="review-text">
+                            <div class="review-text" id="review-text-${review.reviewSeq}">
                                 ${review.reviewContent}
                             </div>
                             <div class="review-rating">
@@ -528,9 +525,14 @@
 							                <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요" class="dislike-button" data-logged-in="false">
 							            </c:otherwise>
 							        </c:choose>
-							        <c:if test="${isAdmin}">
-							            <button class="delete-review-btn" data-review-seq="${review.reviewSeq}">삭제</button>
-							        </c:if>
+						            <c:if test="${review.userId eq loginId || isAdmin}">
+						                <button class="delete-review-btn" data-review-seq="${review.reviewSeq}">삭제</button>
+						            </c:if>
+						            <c:if test="${review.userId eq loginId}">
+						                <button class="edit-review-btn" data-review-seq="${review.reviewSeq}">수정</button>
+						                <button class="save-review-btn" data-review-seq="${review.reviewSeq}" style="display: none;">완료</button>
+                                        <button class="cancel-edit-btn" data-review-seq="${review.reviewSeq}" style="display: none;">취소</button>
+						            </c:if>
 							    </div>
 							</div>
                         </div>
@@ -659,6 +661,46 @@
                     alert("로그인된 사용자만 싫어요를 누를 수 있습니다.");
                 } else {
                     alert("싫어요 업데이트에 실패했습니다.");
+                }
+            });
+        });
+
+        $(".edit-review-btn").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            $("#review-text-" + reviewSeq).attr("contenteditable", "true").focus();
+            $(this).hide();
+            $(".delete-review-btn[data-review-seq='" + reviewSeq + "']").hide();
+            $(".save-review-btn[data-review-seq='" + reviewSeq + "']").show();
+            $(".cancel-edit-btn[data-review-seq='" + reviewSeq + "']").show();
+        });
+
+        $(".cancel-edit-btn").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            $("#review-text-" + reviewSeq).attr("contenteditable", "false").blur();
+            $(this).hide();
+            $(".save-review-btn[data-review-seq='" + reviewSeq + "']").hide();
+            $(".edit-review-btn[data-review-seq='" + reviewSeq + "']").show();
+            $(".delete-review-btn[data-review-seq='" + reviewSeq + "']").show();
+        });
+
+        $(".save-review-btn").on("click", function() {
+            let reviewSeq = $(this).data("review-seq");
+            let newContent = $("#review-text-" + reviewSeq).text().trim();
+            $.ajax({
+                url: "/updateReview.review",
+                method: "POST",
+                data: { reviewSeq: reviewSeq, reviewContent: newContent },
+                success: function(response) {
+                    if (response.result === "success") {
+                        alert("리뷰가 수정되었습니다.");
+                        $("#review-text-" + reviewSeq).attr("contenteditable", "false").blur();
+                        $(".save-review-btn[data-review-seq='" + reviewSeq + "']").hide();
+                        $(".cancel-edit-btn[data-review-seq='" + reviewSeq + "']").hide();
+                        $(".edit-review-btn[data-review-seq='" + reviewSeq + "']").show();
+                        $(".delete-review-btn[data-review-seq='" + reviewSeq + "']").show();
+                    } else {
+                        alert("리뷰 수정에 실패했습니다.");
+                    }
                 }
             });
         });

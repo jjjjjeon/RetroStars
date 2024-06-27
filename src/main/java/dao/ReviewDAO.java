@@ -308,4 +308,35 @@ public class ReviewDAO {
             pstat.executeUpdate();
         }
     }
+    
+    
+    public ReviewDTO getReviewBySeq(int reviewSeq) throws Exception {
+        String sql = "select * from review where review_seq = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setInt(1, reviewSeq);
+            try (ResultSet rs = pstat.executeQuery()) {
+                if (rs.next()) {
+                    return new ReviewDTO(
+                        rs.getInt("review_seq"),
+                        rs.getInt("game_seq"),
+                        rs.getString("user_id"),
+                        rs.getString("review_content"),
+                        rs.getInt("review_like"),
+                        rs.getInt("review_dislike"),
+                        rs.getTimestamp("review_date")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    public void updateReview(ReviewDTO review) throws Exception {
+        String sql = "update review set review_content = ? where review_seq = ?";
+        try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+            pstat.setString(1, review.getReviewContent());
+            pstat.setInt(2, review.getReviewSeq());
+            pstat.executeUpdate();
+        }
+    }
 }

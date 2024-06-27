@@ -45,7 +45,7 @@
     </div>
     <script>
     function validateEmail(email) {
-        let regex = /@+/gm;
+        let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
         return regex.test(email);
     }
 

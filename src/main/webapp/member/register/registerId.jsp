@@ -51,7 +51,7 @@
     </div>
     <script>
     function validateUserId(userId) {
-        let regex = /^[a-zA-Z0-9]{3,16}$/;
+    	let regex = /^(?=.*[a-zA-Z])([a-zA-Z0-9]{3,16})$/;
         return regex.test(userId);
     }
 
