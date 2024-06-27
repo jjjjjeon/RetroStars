@@ -445,7 +445,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     }
 
     function validateNickname(nickname) {
-        let regex = /^[a-zA-Z0-9가-힣]{3,10}$/;
+        let regex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9]{3,10}$/;
         return regex.test(nickname);
     }
 
@@ -455,7 +455,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     }
     
     function validateEmail(email) {
-        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
         return regex.test(email);
     }
 
