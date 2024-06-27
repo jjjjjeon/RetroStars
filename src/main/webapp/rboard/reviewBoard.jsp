@@ -501,9 +501,11 @@
                                 ${review.userNickname}
                             </div>
                             <div class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></div>
+<!--                             review Id 동적으로 생성될때 리뷰번호에 맞는 아이디 생성해주기. -->
                             <div class="review-text" id="review-text-${review.reviewSeq}">
                                 ${review.reviewContent}
                             </div>
+<!--                             별점기능. 현재작동 x -->
                             <div class="review-rating">
                                 <c:forEach var="i" begin="1" end="5">
                                     <i class="fas fa-star"></i>
@@ -600,6 +602,7 @@
             }
         });
         
+//         귀찮아서 writeReviewBtn이라는 값줬는데 게임하러 가기 버튼임
         $("#writeReviewBtn").on("click", function() {
             let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
             if (gameSeq) {
