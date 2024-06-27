@@ -337,6 +337,7 @@ nav {
 
 .replycontainer>.col1 {
 	height: 30px;
+	font-size: large;
 }
 
 .replycontainer>.col1>span {
@@ -554,15 +555,6 @@ nav {
 </body>
 <script>
 			
-			// 엔터키로 <br> 삽입
-			document.getElementById('addCommentInput').addEventListener('keydown', function(e) {
-			    if (e.key === 'Enter') {
-			        e.preventDefault();  // 기본 엔터 동작 방지
-			        document.execCommand('insertHTML', false, '<br><br>'); // <br> 삽입
-			    }
-			});
-
-			
 			$("#selectBox").on("change",function(){
                      let form = $('<form>', {
                          action: '/selectAnswer.qboard',
@@ -604,7 +596,7 @@ nav {
 		               replycontainer.append(col1);
 		               
 		               //문제지점
-		               let col2 = $("<div>").addClass("replycontents").css("flex","1").html(reply.qReplyContent);
+		               let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(reply.qReplyContent);
 		               replycontainer.append(col2);
 		               
 		               
@@ -632,7 +624,7 @@ nav {
             $(".replyupdatebtn").on("click", function () {
                 let replyContainer = $(this).closest('.replycontainer');
                 let replySeq = replyContainer.data("reply-seq");
-                let replyContents = replyContainer.find('.col2');
+                let replyContents = replyContainer.find('.replycontents');
                 let updatebtn = $(this);
                 let deletebtn = $(this).next();
 
@@ -640,6 +632,7 @@ nav {
                     replyContents.attr("contenteditable", "true"); //편집 열기
                     updatebtn.html("완료");
                     deletebtn.html("취소");
+                    
                 } else if (updatebtn.html() == "완료") {
                     replyContents.attr("contenteditable", "false"); //편집 닫기
                     updatebtn.html("수정");
@@ -691,8 +684,6 @@ nav {
 }
 
 
-
-
             $("#addCommentBtn").on("click", function () {
                 $.ajax({
                     url: "/insert.qreply",
@@ -715,7 +706,7 @@ nav {
                     col1.append(span);
                     replycontainer.append(col1);
                     
-                    let col2 = $("<div>").addClass("replycontents").css("flex","1").html(replydto.qReplyContent);
+                    let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(replydto.qReplyContent);
                     replycontainer.append(col2);
                     
                     if (replydto.userId == '${loginId}' && ${isAdmin}==false) {
@@ -739,7 +730,7 @@ nav {
                     $(".replyupdatebtn").on("click", function () {
                         let replyContainer = $(this).closest('.replycontainer');
                         let replySeq = replyContainer.data("reply-seq");
-                        let replyContents = replyContainer.find('.col2');
+                        let replyContents = replyContainer.find('.replycontents');
                         let updatebtn = $(this);
                         let deletebtn = $(this).next();
 
@@ -803,22 +794,10 @@ nav {
                 deletebtn = $(this).next();
 
                 if (updatebtn.html() == "수정") {
-                    // $(".post-detail").find("div[contenteditable]").attr("contenteditable", "true");
                     $("div[contenteditable]").attr("contenteditable", "true");
                     updatebtn.html("완료");
                     deletebtn.html("취소");
 
-                    $(".title").on("keypress", function (e) {
-                        if (e.key == "Enter") {
-                            return false;
-                        }
-                    });
-
-                    $(".contents").on("keypress", function (e) {
-                        if (e.key == "Enter") {
-                            return false;
-                        }
-                    });
 
                 } else if (updatebtn.html() == "완료") {
                     $("div[contenteditable]").attr("contenteditable", "false");

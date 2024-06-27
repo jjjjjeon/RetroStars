@@ -440,28 +440,11 @@
             </div>
         </div>
     </div>
-			
-			
+				
 			<script>
-			
-			 /*let input = document.getElementById('fileinput');
-			    let output = document.getElementById('output');
-
-			    document.getElementById('fileinput').addEventListener('input', (event) => {
-			        let files = event.target.files;
-			        if (files.length > 5) {
-			            alert("최대 5개 파일까지만 첨부할 수 있습니다.");
-			            input.value = ""; // 파일 선택 초기화
-			            output.textContent = "";
-			        } else {
-			            output.textContent = Array.from(files).map(file => file.name).join('\n');
-			        }
-			    });*/
-
-			
+		
 			 $("#insert_btn").on("click", function () {
 				 event.preventDefault(); // 기본 제출 동작 막기
-				 //console.log($("#categoryToggle").html());
 				 
 				 if( $("#categoryToggle").html()=="카테고리"){
 					 alert("카테고리를 선택해주세요.");
@@ -490,7 +473,6 @@
 			        // 폼 제출
 			        document.getElementById("myForm").submit();
              	
-                 
          	});
 			 
 		   //.dropdown-item을 클릭했을 때
@@ -499,12 +481,7 @@
 	          $("#categoryToggle").html($(this).html());
 	          console.log($("#categoryToggle").html());
 	       });
-		   
-		   
-			
-			
-
-				
+		   			
 	
 			</script>
 
