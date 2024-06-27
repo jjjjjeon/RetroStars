@@ -812,6 +812,7 @@ a {
                     alert("로그인 해주세요.");
                 } else {
                     $("#reviewModal").modal("show");
+                    $("#reviewContent").focus();
                 }
             });
 

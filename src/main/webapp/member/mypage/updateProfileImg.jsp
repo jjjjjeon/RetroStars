@@ -27,12 +27,14 @@
 <form id="uploadForm" action="/upload.userprofileimg"  method="post" enctype="multipart/form-data">
     <div class="container">
         <div class="img">
-            <img id="previewImg" src="/profile/default.png" alt="이미지 미리보기">
+            <img id="previewImg" src="/profile/${userProfileUrl}" alt="이미지 미리보기">
+            <input type="hidden" id="useDefault" name="basicProfile" value="img">
         </div>
         <div class="input">
             <input type="file" id="uploadFile" name="uploadFile">
         </div>
         <div class="btns">
+        	<button id="basic" type="button"> 기본 이미지로 </button>
             <button id="cancle" type="button"> 취소 </button>
             <button id="complete" type="submit"> 완료 </button>
         </div>
@@ -40,19 +42,29 @@
 </form>
     
     <script>
+    $("#basic").on("click",function(){	
+    	$("#previewImg").attr("src","/profile/default.png");
+    	$("#useDefault").val("basic");
+        $("#uploadFile").val(""); // 파일 입력 필드를 비웁니다.
+    	
+	})
+    
     $("#cancle").on("click",function(){
 		window.close();		
 	})
 	
-	$("#complete").on("click",function(){	 
+	$("#complete").on("click",function(){	
+		console.log($("#useDefault").val());		
 		$("#uploadForm").submit();   
 	})
 	
 	 $("#uploadFile").change(function() {
             previewImage(this);
+            $("#useDefault").val("img");
         });
     
     function previewImage(input) {
+    	
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 

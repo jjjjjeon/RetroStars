@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import dao.MemberDAO;
 import dao.ReviewDAO;
 import dto.ReviewDTO;
 
@@ -47,9 +48,11 @@ public class ReviewController extends HttpServlet {
         System.out.println(cmd);
         ReviewDAO reviewDao = ReviewDAO.getInstance();
         PrintWriter pw = response.getWriter();
-
+        MemberDAO memberDao = MemberDAO.getInstance();
+        
         try {
         	String userId1 = (String) request.getSession().getAttribute("loginId");
+        	boolean isAdmin = userId1 != null && memberDao.isAdmin(userId1);
         	
             if (cmd.equals("/mostLiked.review")) {
 
@@ -60,6 +63,25 @@ public class ReviewController extends HttpServlet {
                 pw.append(result);
                 System.out.println("가장평가가 좋은 " + result);
                 
+            }else if (cmd.equals("/updateReviewLike.review")) {
+                if (userId1 == null) {
+                    pw.append("{\"result\":\"not_logged_in\"}");
+                    return;
+                }
+
+                int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
+                String type = request.getParameter("type");
+
+                try {
+                    reviewDao.updateReviewLike(reviewSeq, userId1, type);
+                    pw.append("{\"result\":\"success\"}");
+                } catch (SQLException e) {
+                    if (e.getErrorCode() == -20001 || e.getErrorCode() == -20002) {
+                        pw.append("{\"result\":\"duplicate\"}");
+                    } else {
+                        throw e;
+                    }
+                }
             } else if (cmd.equals("/latest.review")) {
                 ReviewDTO latestReview = reviewDao.getLatestReview();
                 String result = gson.toJson(latestReview);
@@ -92,6 +114,7 @@ public class ReviewController extends HttpServlet {
 
                 String gameSeqStr = request.getParameter("gameSeq");
                 ArrayList<HashMap<String, ?>> list;
+                String userId = (String) request.getSession().getAttribute("loginId"); // 로그인된 유저 아이디 가져오기
                 int reviewCount;
 
                 if (gameSeqStr != null) {
@@ -120,6 +143,7 @@ public class ReviewController extends HttpServlet {
 
                 request.setAttribute("list", list);
                 System.out.println(list);
+                request.setAttribute("userId", userId);
                 request.setAttribute("cpage", cpage);
                 request.setAttribute("reviewCount", reviewCount);
                 request.setAttribute("sortType", sortType);
@@ -143,10 +167,26 @@ public class ReviewController extends HttpServlet {
                 }
             } else if (cmd.equals("/deleteReview.review")) {
                 int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
-               
-                reviewDao.deleteReview(reviewSeq);
-                pw.append("{\"result\":\"success\"}");
+                ReviewDTO review = reviewDao.getReviewBySeq(reviewSeq);
+                if (review.getUserId().equals(userId1) || isAdmin) {
+                    reviewDao.deleteReview(reviewSeq);
+                    pw.append("{\"result\":\"success\"}");
+                } else {
+                    pw.append("{\"result\":\"unauthorized\"}");
+                }
+            }	else if (cmd.equals("/updateReview.review")) {
+                int reviewSeq = Integer.parseInt(request.getParameter("reviewSeq"));
+                String reviewContent = request.getParameter("reviewContent");
+                ReviewDTO review = reviewDao.getReviewBySeq(reviewSeq);
+                if (review.getUserId().equals(userId1)) {
+                    review.setReviewContent(reviewContent);
+                    reviewDao.updateReview(review);
+                    pw.append("{\"result\":\"success\"}");
+                } else {
+                    pw.append("{\"result\":\"unauthorized\"}");
+                }
             }
+        
         } catch (Exception e) {
             e.printStackTrace();
             pw.append("{\"result\":\"error\"}");

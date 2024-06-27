@@ -86,7 +86,7 @@
     }
 
     function validateNickname(nickname) {
-        let regex = /^[a-zA-Z0-9가-힣]{3,10}$/;
+    	let regex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9]{3,10}$/;
         return regex.test(nickname);
     }
 
