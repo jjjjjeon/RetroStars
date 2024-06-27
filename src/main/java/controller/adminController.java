@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import common.BoardConfig;
+import dao.MemberDAO;
 import dao.adminDAO;
 import dto.CBoard2DTO;
 import dto.MemberDTO;
@@ -27,6 +28,7 @@ public class adminController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		adminDAO aManager = adminDAO.getInstance();
+		MemberDAO memberdao=MemberDAO.getInstance();
 		Gson g = new Gson();
 		String cmd = request.getRequestURI();
 		System.out.println("get:" + cmd);
@@ -226,23 +228,28 @@ public class adminController extends HttpServlet {
 
 				// 대시보드 이동
 			} else if (cmd.equals("/dashBoard.admin")) {
+				String id = (String) request.getSession().getAttribute("loginId");
+				boolean isAdmin=memberdao.isAdmin(id);
+				request.setAttribute("isAdmin", isAdmin);
 				ArrayList<HashMap<String,?>> gameNumberOfArr = aManager.getGameNumberOfUse();
-				int[] ageNumberOfArr = aManager.getAgeNumberOfUse();
 				int[] genderRatioOfMem = aManager.getGenderRatioOfMem();
 				ArrayList<HashMap<String,?>> gameAvgOfTime = aManager.getGameAvgOfTime();
 				ArrayList<HashMap<String, ?>> list = aManager.getUnresolvedQBoard();
-				System.out.println(list);
+
 				request.setAttribute("gameNumberOfArr", gameNumberOfArr);
-				request.setAttribute("ageNumberOfArr", ageNumberOfArr);
 				request.setAttribute("genderRatioOfMem", genderRatioOfMem);
 				request.setAttribute("gameAvgOfTime", gameAvgOfTime);
 				request.setAttribute("list", list);
-				request.getRequestDispatcher("/admin/dashBoard.jsp").forward(request, response);
 				
+				int[] ageNumberOfArr = aManager.getAgeNumberOfUse();
+				request.setAttribute("ageNumberOfArr", ageNumberOfArr);
+				
+				request.getRequestDispatcher("/admin/dashBoard.jsp").forward(request, response);
+	
 				// 신고 현황에 집계된 모든 글 삭제
 			} else if (cmd.equals("/delAllPost.admin")) {
 				aManager.delAllReportedPost();
-				
+
 				response.sendRedirect("/reportList.admin");
 			}
 

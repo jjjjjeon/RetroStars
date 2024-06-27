@@ -24,12 +24,13 @@
 <!-- Chart.js -->
 
 <!-- Fonts -->
-<link rel="stylesheet" href="https://webfontworld.github.io/daegu/DalseoHealing.css">
+<link rel="stylesheet"
+	href="https://webfontworld.github.io/daegu/DalseoHealing.css">
 
 
 <style>
 * {
-	font-family : 'DalseoHealing';
+	font-family: 'DalseoHealing';
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -40,7 +41,6 @@ div {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 */
-
 a {
 	text-decoration: none;
 	color: black;
@@ -78,8 +78,8 @@ a {
 
 .main .navi .profileBox {
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	width: 85%;
 	height: 50px;
 	margin-top: 30px;
@@ -92,7 +92,7 @@ a {
 	width: 80%;
 	margin: 20px auto 0 auto;
 	border: 1px solid black;
-	background-color : #ddd;
+	background-color: #ddd;
 }
 
 .main .navi .profileBox .name {
@@ -152,140 +152,147 @@ a {
 	color: rgb(59, 59, 59);
 }
 
-
-
 .detailA:hover {
 	background-color: darkgray;
 }
 
-.dropdown-item:active{
-	background-color:black;
-	
+.dropdown-item:active {
+	background-color: black;
 }
 
-#gameAvgOfChart, .qa, .fn{
-	height:365px;
+#gameAvgOfChart, .qa, .fn {
+	height: 365px;
 }
 
-h5{
-	font-size:1.1rem;
+h5 {
+	font-size: 1.1rem;
 }
 
-btn-secondary{
-	height:30px;
+btn-secondary {
+	height: 30px;
 }
-
-
-
 </style>
 </head>
 <body>
+
 	<div class="header col-12">관리자페이지</div>
-	<div class="main">
-		<div class="navi">
-			<div class="profileBox name">${loginId}관리자님, 환영합니다!</div>
-			<div class="naviBox">
-				<a href="/index.jsp" target="_blank"
-					class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
-					이동</a> <a href="/dashBoard.admin"
-					class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
-					id="dashboard">대시보드</a>
+	<c:choose>
+		<c:when test="${isAdmin eq true}">
+			<div class="main">
+				<div class="navi">
+					<div class="profileBox name">${loginId}관리자님,환영합니다!</div>
+					<div class="naviBox">
+						<a href="/index.jsp" target="_blank"
+							class="list-group-item list-group-item-action list-group-item-secondary bigNavi">메인사이트
+							이동</a> <a href="/dashBoard.admin"
+							class="list-group-item list-group-item-action list-group-item-secondary bigNavi"
+							id="dashboard">대시보드</a>
 
-				<div class="dropdown">
-					<a style="width: 100%; text-align: left; border-radius: 0;"
-						class="btn btn-secondary dropdown-toggle bigNavi active"
-						href="/memberList.admin" role="button" data-bs-toggle="dropdown"
-						aria-expanded="false"> 회원관리 </a>
+						<div class="dropdown">
+							<a style="width: 100%; text-align: left; border-radius: 0;"
+								class="btn btn-secondary dropdown-toggle bigNavi active"
+								href="/memberList.admin" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false"> 회원관리 </a>
 
-					<ul style="width: 100%" class="dropdown-menu"
-						style="border-radius:0;">
-						<li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
-						<li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
-						<li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
-					</ul>
-				</div>
-		
-			</div>
-		</div>
-		<div class="contentBox">
-			<div class="contentTitle" style="height:113px">DashBoard</div>
-			<div class="content">
-				<div class="col1" style="flex: 1; display: flex; border-bottom:1px solid gray;">
-					<div class="row1 row-4" style="flex: 1;">
-						<canvas id="gameNumberOfChart" style="width: 100%; height: 330px"></canvas>
-					</div>
-					<div class="row2 row-4" style="flex: 1;">
-						<canvas id="genderRatioOfChart" style="width: 100%; height: 330px"></canvas>
-					</div>
-					<div class="row3 row-4" style="flex: 1;">
-						<canvas id="ageNumberOfChart" style="width: 100%; height: 330px"></canvas>
+							<ul style="width: 100%" class="dropdown-menu"
+								style="border-radius:0;">
+								<li><a class="dropdown-item" href="/memberList.admin">회원목록</a></li>
+								<li><a class="dropdown-item" href="/reportList.admin">신고현황</a></li>
+								<li><a class="dropdown-item" href="/blackList.admin">블랙회원관리</a></li>
+							</ul>
+						</div>
+
 					</div>
 				</div>
-				<div class="co12" style="flex: 1; display: flex;">
-					<div class="row4" style="flex: 4;">
-						<canvas id="gameAvgOfChart" style="width: 100%;"></canvas>
-					</div>
-					<div class="row5" style="flex: 6; display: flex;">
-						<div class="qa" style="flex: 6; padding: 20px">
-							<h5>질문과 답변</h5>
-							<hr>
-							<div class="list"
-								style="display: flex; flex-direction: column; overflow: auto; height: 245px; text-align: center">
-								<c:forEach var="dto" items="${list}">
-									<a class="detailA" href="/detail.qboard?seq=${dto.qBoardSeq}" target="_blank" rel="noopener noreferrer" data-postOwnerId="${dto.userId}"
-										data-qBoardSeq="${dto.qBoardSeq}"
-										data-qBoardSecret="${dto.qBoardSecret}">
-										<div class="list_data_row row"
-											style="height: 40px; width: 100%; margin: 0px; line-height: 37px;">
-											<div class="list_data_seq center" style="flex: 0.5;">${dto.qBoardSeq}</div>
-											<div class="list_data_title center" style="flex: 5.5;">${dto.qBoardTitle}</div>
-											<div class="list_data_date center" style="flex: 1.5;">
-												<fmt:formatDate value="${dto.qBoardDate}"
-													pattern="yyyy.MM.dd"></fmt:formatDate>
-											</div>
-											<c:choose>
-												<c:when test="${dto.qBoardAnswer eq 'N'}">
-													<div class="list_data_answer center"
-														style="flex: 2.5; color: orangered">답변예정</div>
-												</c:when>
-											</c:choose>
+				<div class="contentBox">
+					<div class="contentTitle" style="height: 113px">DashBoard</div>
+					<div class="content">
+						<div class="col1"
+							style="flex: 1; display: flex; border-bottom: 1px solid gray;">
+							<div class="row1 row-4" style="flex: 1;">
+								<canvas id="gameNumberOfChart"
+									style="width: 100%; height: 330px"></canvas>
+							</div>
+							<div class="row2 row-4" style="flex: 1;">
+								<canvas id="genderRatioOfChart"
+									style="width: 100%; height: 330px"></canvas>
+							</div>
+							<div class="row3 row-4" style="flex: 1;">
+								<canvas id="ageNumberOfChart" style="width: 100%; height: 330px"></canvas>
+							</div>
+						</div>
+						<div class="co12" style="flex: 1; display: flex;">
+							<div class="row4" style="flex: 4;">
+								<canvas id="gameAvgOfChart" style="width: 100%;"></canvas>
+							</div>
+							<div class="row5" style="flex: 6; display: flex;">
+								<div class="qa" style="flex: 6; padding: 20px">
+									<h5>질문과 답변</h5>
+									<hr>
+									<div class="list"
+										style="display: flex; flex-direction: column; overflow: auto; height: 245px; text-align: center">
+										<c:forEach var="dto" items="${list}">
+											<a class="detailA" href="/detail.qboard?seq=${dto.qBoardSeq}"
+												target="_blank" rel="noopener noreferrer"
+												data-postOwnerId="${dto.userId}"
+												data-qBoardSeq="${dto.qBoardSeq}"
+												data-qBoardSecret="${dto.qBoardSecret}">
+												<div class="list_data_row row"
+													style="height: 40px; width: 100%; margin: 0px; line-height: 37px;">
+													<div class="list_data_seq center" style="flex: 0.5;">${dto.qBoardSeq}</div>
+													<div class="list_data_title center" style="flex: 5.5;">${dto.qBoardTitle}</div>
+													<div class="list_data_date center" style="flex: 1.5;">
+														<fmt:formatDate value="${dto.qBoardDate}"
+															pattern="yyyy.MM.dd"></fmt:formatDate>
+													</div>
+													<c:choose>
+														<c:when test="${dto.qBoardAnswer eq 'N'}">
+															<div class="list_data_answer center"
+																style="flex: 2.5; color: orangered">답변예정</div>
+														</c:when>
+													</c:choose>
+												</div>
+											</a>
+										</c:forEach>
+									</div>
+									<hr>
+								</div>
+								<div class="fn" style="flex: 4; padding: 20px">
+									<h5>공지사항</h5>
+									<button class="btn btn-secondary"
+										onclick="location.href='/list.nboard'">이동하기</button>
+									<button class="btn btn-secondary"
+										onclick="location.href='/nboard/nBoardWrite.jsp'">작성하기</button>
+									<hr>
+									<h5>자주 찾는 질문</h5>
+									<button class="btn btn-secondary"
+										onclick="location.href='/list.fboard'">이동하기</button>
+									<button class="btn btn-secondary"
+										onclick="location.href='/goWriteFaq.fboard'">작성하기</button>
+									<hr>
+									<div style="display: flex;">
+										<div style="flex: 1">
+											<h5>커뮤니티 게시판</h5>
+											<button class="btn btn-secondary"
+												onclick="location.href='/list.cboard'">이동하기</button>
 										</div>
-									</a>
-								</c:forEach>
-							</div>
-							<hr>
-						</div>
-						<div class="fn" style="flex: 4; padding: 20px">
-							<h5>공지사항</h5>
-							<button class="btn btn-secondary"
-								onclick="location.href='/list.nboard'">이동하기</button>
-							<button class="btn btn-secondary"
-								onclick="location.href='/nboard/nBoardWrite.jsp'">작성하기</button>
-							<hr>
-							<h5>자주 찾는 질문</h5>
-							<button class="btn btn-secondary"
-								onclick="location.href='/list.fboard'">이동하기</button>
-							<button class="btn btn-secondary"
-								onclick="location.href='/goWriteFaq.fboard'">작성하기</button>
-							<hr>
-							<div style="display:flex;">
-								<div style="flex:1">
-							<h5>커뮤니티 게시판</h5>
-							<button class="btn btn-secondary"
-								onclick="location.href='/list.cboard'">이동하기</button>
-								</div>
-								<div style="flex:1">
-							<h5>게임리뷰 게시판</h5>
-							<button class="btn btn-secondary"
-								onclick="location.href='/list.review'">이동하기</button>
+										<div style="flex: 1">
+											<h5>게임리뷰 게시판</h5>
+											<button class="btn btn-secondary"
+												onclick="location.href='/list.review'">이동하기</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</c:when>
+		<c:otherwise>
+			<div>관리자가 아닙니다. 접근할 수 없습니다.</div>
+		</c:otherwise>
+	</c:choose>
 
 	<script>
     	
@@ -383,11 +390,8 @@ btn-secondary{
            }
          });
     	
-    	
-    	
-    	
+
 		let ctx3= document.getElementById("ageNumberOfChart").getContext("2d");
-    	
     	let mybarChart3 = new Chart(ctx3, {
     		  type: 'bar',
     		  data: {

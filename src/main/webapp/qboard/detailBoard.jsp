@@ -330,6 +330,7 @@ nav {
 	flex-diraction: column;
 }
 
+<!--길이가 적용되지 않았던 이유 col2에-->
 .replycontainer>.col1, .replycontainer>.col2 {
 	padding-left: 20px;
 }
@@ -342,6 +343,7 @@ nav {
 	margin-right: 20px;
 }
 
+<!--길이가 적용되지 않았던 이유-->
 .replycontainer>.col2 {
 	height: 40px;
 	display: flex;
@@ -552,6 +554,15 @@ nav {
 </body>
 <script>
 			
+			// 엔터키로 <br> 삽입
+			document.getElementById('addCommentInput').addEventListener('keydown', function(e) {
+			    if (e.key === 'Enter') {
+			        e.preventDefault();  // 기본 엔터 동작 방지
+			        document.execCommand('insertHTML', false, '<br><br>'); // <br> 삽입
+			    }
+			});
+
+			
 			$("#selectBox").on("change",function(){
                      let form = $('<form>', {
                          action: '/selectAnswer.qboard',
@@ -579,40 +590,43 @@ nav {
                let replylist = data.replylist;
                let loginId = data.loginId;
                for (let reply of replylist) {
-               if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
-            	   //console.log(reply.nickname);
-            	   //console.log(reply.userId);
-            	   //console.log(reply.admin);
-	               let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
-	               let col1 = $("<div>").addClass("col1").css("flex","1").html(reply.nickname);
-	               let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
-                   let useri=$("<i>").addClass("fa-solid fa-person-circle-question").css("color","#ffffff");
-	               if(reply.admin=='Y'){
-	            	   col1.append(admini);
-	               }
-            
-	               let span = $("<span>").css("float","right").html(reply.qReplyDate);
-	               col1.append(span);
-	               let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(reply.qReplyContent);
-	               replycontainer.append(col1, col2);
-	               $(".replyListBox").append(replycontainer);
-	               if (reply.userId == loginId && ${isAdmin}==false) {
-	                  let col3 = $("<div>").addClass("col3").css("flex","1");
-	                  let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-outline-success").html("수정");
-	                  let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-outline-success").html("삭제");
-	                  col3.append(replyupdatebtn, replydeletebtn);
-	                  replycontainer.append(col3);
-	               }else if(${isAdmin}==true){
+	               if (reply.qBoardSeq == ${ dto.qBoardSeq }) {
+		               let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", reply.qReplySeq);
+		               let col1 = $("<div>").addClass("col1").css("flex","1").html(reply.nickname);
+		               let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
+	                   let useri=$("<i>").addClass("fa-solid fa-person-circle-question").css("color","#ffffff");
+		               if(reply.admin=='Y'){
+		            	   col1.append(admini);
+		               }
+	            
+		               let span = $("<span>").css("float","right").html(reply.qReplyDate);
+		               col1.append(span);
+		               replycontainer.append(col1);
+		               
+		               //문제지점
+		               let col2 = $("<div>").addClass("replycontents").css("flex","1").html(reply.qReplyContent);
+		               replycontainer.append(col2);
+		               
+		               
+		               if (reply.userId == loginId && ${isAdmin}==false) {
 		                  let col3 = $("<div>").addClass("col3").css("flex","1");
+		                  let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-outline-success").html("수정");
 		                  let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-outline-success").html("삭제");
-		                  col3.append(replydeletebtn);
+		                  col3.append(replyupdatebtn, replydeletebtn);
 		                  replycontainer.append(col3);
-		           }else{
-		        	   let col3 = $("<div>").addClass("col3").css("flex","1");
-		        	   replycontainer.append(col3);
-		           }
-	      
-            	}
+		               }else if(${isAdmin}==true){
+			                  let col3 = $("<div>").addClass("col3").css("flex","1");
+			                  let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-outline-success").html("삭제");
+			                  col3.append(replydeletebtn);
+			                  replycontainer.append(col3);
+			           }else{
+			        	   let col3 = $("<div>").addClass("col3").css("flex","1");
+			        	   replycontainer.append(col3);
+			           }
+		               
+		               $(".replyListBox").append(replycontainer);
+		      
+	            	}
         	}
 
             $(".replyupdatebtn").on("click", function () {
@@ -670,7 +684,7 @@ nav {
             form.appendTo('body').submit();
                 }
             } else if (deletebtn.html() == "취소") {
-                location.href = "/detail.qboards?seq=${dto.qBoardSeq}";
+                location.href = "/detail.qboard?seq=${dto.qBoardSeq}";
             }
         });
     });
@@ -678,10 +692,6 @@ nav {
 
 
 
-            //댓글 등록 버튼을 클릭했을 때
-            //console.log('${ dto.qBoardSeq }');
-            //console.log('${ loginId }');
-            //console.log( $('#addCommentInput').html());
 
             $("#addCommentBtn").on("click", function () {
                 $.ajax({
@@ -693,16 +703,21 @@ nav {
                         loginId: '${loginId}',
                         comment: $('#addCommentInput').html().trim()
                     }
-                }).done(function (replydto) {
-                	$('#addCommentInput').html("");
+                }).done(function (replydto) {  
                     let replycontainer = $("<div>").addClass("replycontainer col").attr("data-reply-seq", replydto.qReplySeq);
                     let col1 = $("<div>").addClass("col1").css("flex","1").html('${loginnickname}');
                     let admini=$("<i>").addClass("fa-solid fa-user-gear").css("color","#ffffff");
                     let useri=$("<i>").addClass("fa-solid fa-person-circle-question").css("color","#ffffff");
+ 	                if(${isAdmin}==true){
+ 	                	col1.append(admini);
+ 	                }                
                     let span = $("<span>").css("float","right").html(replydto.qReplyDate);
- 	                col1.append(span);
-                    let col2 = $("<div>").addClass("replycontents col2").css("flex","1").html(replydto.qReplyContent);
-                    replycontainer.append(col1, col2);
+                    col1.append(span);
+                    replycontainer.append(col1);
+                    
+                    let col2 = $("<div>").addClass("replycontents").css("flex","1").html(replydto.qReplyContent);
+                    replycontainer.append(col2);
+                    
                     if (replydto.userId == '${loginId}' && ${isAdmin}==false) {
                     	let col3 = $("<div>").addClass("col3").css("flex","1");
                     	let replyupdatebtn = $("<button>").addClass("replyupdatebtn btn btn-outline-success").html("수정");
@@ -710,18 +725,16 @@ nav {
                     	col3.append(replyupdatebtn, replydeletebtn);
                     	replycontainer.append(col3);
                     }else if(${isAdmin}==true){
-                    	col1.append(admini);
                     	let col3 = $("<div>").addClass("col3").css("flex","1");
                     	let replydeletebtn = $("<button>").addClass("replydeletebtn btn btn-outline-success").html("삭제");
                     	col3.append(replydeletebtn);
                     	replycontainer.append(col3);
                     }else{
-                    	col1.append(useri);
                     	let col3 = $("<div>").addClass("col3").css("flex","1");
                     	replycontainer.append(col3);
                     }
                     $(".replyListBox").prepend(replycontainer);
-                    $(".addCommentInput").html("");
+                    $("#addCommentInput").html("");
                     
                     $(".replyupdatebtn").on("click", function () {
                         let replyContainer = $(this).closest('.replycontainer');
@@ -778,7 +791,7 @@ nav {
                     		form.appendTo('body').submit();
                         	}
                     } else if (deletebtn.html() == "취소") {
-                        location.href = "/detail.qboards?seq=${dto.qBoardSeq}";
+                        location.href = "/detail.qboard?seq=${dto.qBoardSeq}";
                     }
                 });
                 })
