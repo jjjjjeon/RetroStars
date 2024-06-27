@@ -193,7 +193,7 @@ class Main extends Phaser.Scene {
 				url: "/write.playrecord",
 				data: {
 					gameSeq: this.gameSeq,
-					score: this.score * 0.1,
+					score: Math.floor(this.score * 0.1),
 					playtime: this.timer
 				}
 			}).done(function(resp) {
