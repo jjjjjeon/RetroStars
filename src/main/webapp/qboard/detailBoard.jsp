@@ -330,12 +330,9 @@ nav {
 	flex-diraction: column;
 }
 
-<!--길이가 적용되지 않았던 이유 col2에-->
-.replycontainer>.col1, .replycontainer>.col2 {
-	padding-left: 20px;
-}
 
 .replycontainer>.col1 {
+	padding-left: 10px;
 	height: 30px;
 	font-size: large;
 }
@@ -344,12 +341,13 @@ nav {
 	margin-right: 20px;
 }
 
-<!--길이가 적용되지 않았던 이유-->
+
 .replycontainer>.col2 {
-	height: 40px;
+	padding-left: 30px;
+	min-height: 40px;
 	display: flex;
-	justify-content: left;
-	align-items: center;
+	align-items: left;
+	flex-direction: column;
 }
 
 .replycontainer>.col3 {
@@ -373,7 +371,6 @@ nav {
 <body>
 
 <!--  HEADER HTML -->
-
  <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
            

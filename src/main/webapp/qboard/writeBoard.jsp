@@ -3,7 +3,6 @@
 
 		<!DOCTYPE html>
 		<html>
-
 		<head>
 			<meta charset="UTF-8">
 			<title>Q&Apage</title>
