@@ -111,11 +111,6 @@ public class MemberDAO {
         	pstat.setString(6, dto.getUserPhone());
         	pstat.setString(7, dto.getUserEmail());
         	pstat.setTimestamp(8, dto.getUserJoinDate());
-//        	pstat.setString(9, dto.getUserProfileUrl());
-//        	pstat.setString(10, dto.getUserLevel());
-//        	pstat.setString(11, dto.getUserAdmin());
-//        	pstat.setString(12, dto.getUserBlack());
-//        	pstat.setString(13, dto.getUserActive());
             result = pstat.executeUpdate();
         }
         return result;
@@ -128,7 +123,7 @@ public class MemberDAO {
      * @version : 
      * @Method info : 로그인 시 id가 존재하는 지 확인.
      * @param 로그인 시 사용한 id
-     * @return boolean
+     * @return 카운트 1 되면 트루.
      * @throws Exception 
      */
     public boolean isMemberExists(String id) {
@@ -152,9 +147,9 @@ public class MemberDAO {
      * @date : 2024. 6. 16. 
      * @author : Jin 
      * @version : 
-     * @Method info : 회원가입 시 id가 존재하는 지 확인.
+     * @Method info : 회원가입 시 id가 중복인지 확인.
      * @param 회원가입 시 사용한 id
-     * @return boolean
+     * @return 0이면 트루.
      * @throws Exception 
      */
     public boolean isUserIdCheck(String userId) {
@@ -209,7 +204,7 @@ public class MemberDAO {
      * @throws Exception 
      */   
     public String getNickname(String userId) throws Exception {
-        String sql = "select user_nickname FROM member WHERE user_id = ?";
+        String sql = "select user_nickname from member where user_id = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, userId);
             try (ResultSet rs = pstat.executeQuery();) {
@@ -230,7 +225,7 @@ public class MemberDAO {
      * @version : 
      * @Method info : userId로 관리자 여부 구별
      * @param 로그인 시 사용한 id
-     * @return boolean
+     * @return select 했을 때 user_admin이 rs.next했을 때 Y이면 트루 아니면 false 반환.
      * @throws Exception 
      */   
     public boolean isAdmin(String userId) throws Exception {
@@ -255,7 +250,7 @@ public class MemberDAO {
     }
     
     public String findIdByNameAndEmail(String name, String email) throws Exception {
-        String sql = "select user_id from member WHERE user_name = ? and user_email = ?";
+        String sql = "select user_id from member where user_name = ? and user_email = ?";
         try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
             pstat.setString(1, name);
             pstat.setString(2, email);

@@ -15,12 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.GBoardDAO;
 import dao.GameDAO;
-import dao.MemberDAO;
 import dto.GameDTO;
-import dto.GameImageDTO;
-import dto.GameVideoDTO;
 
 /**
  * Description : 클래스에 대한 설명을 입력해주세요.
@@ -47,37 +43,44 @@ public class GBoardController extends HttpServlet {
         GameDAO gameDao = GameDAO.getInstance();
 
         try {
+        	
+        	// 현재 사용하지 않음.
             if (cmd.equals("/list.gboard")) {
                 System.out.println("확인");
                 List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
-                String loginId = (String) request.getSession().getAttribute("loginId");
+                String loginId = (String) session.getAttribute("loginId");
                 request.setAttribute("listGame", listGame);
                 request.setAttribute("loginId", loginId); 
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
                 return;
-            } else if (cmd.equals("/viewGame.gboard")) {
+            } 
+            
+            // 게임번호에 맞는 게임 보여주기.
+            else if (cmd.equals("/viewGame.gboard")) {
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
-                System.out.println(gameSeq);
-                GameDTO game = gameDao.getGameById(gameSeq);
-                List<String> listGameImage = gameDao.getGameImages(gameSeq);
-                System.out.println(listGameImage.get(1));
-                String gameVideoStr = gameDao.getGameVideo(gameSeq);
-                System.out.println(gameVideoStr);
+                String loginId = (String) session.getAttribute("loginId");
+                
+                
+                GameDTO game = gameDao.getGameById(gameSeq); // 게임번호를 입력받아 하나 넣기.
                 List<GameDTO> listGame = gameDao.getAllGames(); // 모든 게임을 가져옴
-                String loginId = (String) request.getSession().getAttribute("loginId");
+                
+                List<String> listGameImage = gameDao.getGameImages(gameSeq); // 게임번호에 맞는 이미지 List에 넣기                
+                String gameVideoStr = gameDao.getGameVideo(gameSeq); // 게임번호에 맞는 비디오 url 가져오기. 현재 사이트에 비디오 하나만 허용하게 해놨음.
+                  
                 request.setAttribute("listGame", listGame);
                 request.setAttribute("loginId", loginId); 
                 request.setAttribute("game", game);
                 request.setAttribute("images", listGameImage);
                 request.setAttribute("videoUrl", gameVideoStr);
                 request.getRequestDispatcher("/gboard/mainBoard.jsp").forward(request, response);
-                System.out.println(loginId);
                 return;
-            } else if (cmd.equals("/toggleGameBookmark.gboard")) {
-                String id = (String) request.getSession().getAttribute("loginId");
-                System.out.println(id);
+            } 
+            // 북마크 
+            else if (cmd.equals("/toggleGameBookmark.gboard")) {
+                String id = (String) session.getAttribute("loginId");
                 int gameSeq = Integer.parseInt(request.getParameter("gameSeq"));
 
+                // 북마크가 존재하면 삭제, 아니면 추가.
                 if (gameDao.isGameBookmarked(id, gameSeq)) {
                     gameDao.removeGameBookmark(id, gameSeq);
                     response.getWriter().write("removed");

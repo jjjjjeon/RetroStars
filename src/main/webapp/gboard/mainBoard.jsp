@@ -533,9 +533,11 @@ a {
 		</div>
 	</nav>
 
+	
 	<div class="container">
 		<div class="nav-menu">
 			<div class="bookmark-menu">
+<!-- 			모든 게임을 가져온 listGame을 items로 받아 gameItem과 controller에서 넘긴 game.gameSeq가 동일하면 active. -->
 				<c:forEach var="gameItem" items="${listGame}">
 					<div
 						class="bookmark-item ${gameItem.gameSeq == game.gameSeq ? 'active' : ''}"
@@ -586,6 +588,8 @@ a {
 					<fmt:formatDate value="${game.releaseDate}" pattern="dd MMM, yyyy" />
 				</p>
 				<p style="color:orange">DEVELOPER: ${game.developer}</p>
+				
+<!-- 				여기 분명 isBookmarkde가 트루면 별, 아니면 찜하기인데 왜 동작을 안하지 -->
 				<div id="gameBtnBehind" class="buttons">
 					<button class="btn community-button bookBtn"
 						id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>
@@ -597,21 +601,6 @@ a {
 				<p>
 			</div>
 		</div>
-		<!--         <div class="review-content"> -->
-		<!--             <div class="media-section" id="mostLikedReviewSection">가장 평가가 많은 리뷰</div> -->
-		<!--             <div class="description-section"> -->
-		<!--                 <p>가장 최근에 게시된 리뷰</p> -->
-		<!--                 <p>RELEASE DATE: 14 June, 2024</p> -->
-		<!--                 <p>DEVELOPER: 팀 별빛</p> -->
-		<!--                 <p>PUBLISHER: 팀 별빛</p> -->
-		<!--                 <p>게임 장르: 무료 플레이, 픽셀 그래픽, RPG, 인디, 어드벤처</p> -->
-		<!--                 <div class="buttons"> -->
-		<!--                     <button class="btn community-button">찜하기</button> -->
-		<!--                     <button class="btn community-button">팔로우</button> -->
-		<!--                     <button class="btn community-button gameBtn" id="gameBtn">게임하기</button> -->
-		<!--                 </div> -->
-		<!--             </div> -->
-		<!--         </div> -->
 	</div>
 	<div class="footer">
 		<div class="footerbox">
@@ -658,7 +647,6 @@ a {
         $(document).ready(function() {
         
         	let loginId = '${loginId}';
-        	console.log(loginId);
         	
             function updateReviewLike(reviewSeq, type) {
                 if (loginId === '') {
@@ -694,12 +682,8 @@ a {
                     data: {
                         gameSeq: ${game.gameSeq}
                     }
-                }).done(function(data) {
-                    console.log(data);
-
+                }).done(function(data) {     
                     let profile1 = $(data.profileUrl);
-                    console.log(profile1);
-                    console.log("Profile URL: ", data.profileUrl);
                     let description = $('#description');
                     let gameBtnBehind = $('#gameBtnBehind');
                     let mostLikedReviewSection = $('#mostLikedReviewSection');
@@ -862,8 +846,6 @@ a {
 
                 let containerWidth = mediaContainer.width();
                 let containerHeight = mediaContainer.height();
-                console.log(containerWidth);
-                console.log(containerHeight);
 
                 if (!containerWidth || containerWidth <= 0) {
                     containerWidth = 500;  

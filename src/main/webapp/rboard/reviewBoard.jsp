@@ -447,6 +447,7 @@
 		<p id="headerTitle">리뷰게시판</p>
     </div>
 
+<!-- 	param.gameSeq로 비교 후 같으면 gameSeq-->
 	<div class="navi">
 	    <a href="/list.review" class="${empty param.gameSeq ? 'active' : ''}">전체</a>
 	    <a href="/list.review?gameSeq=1" class="${param.gameSeq == '1' ? 'active' : ''}">2048</a>
