@@ -290,5 +290,45 @@ public class CBoardDAO {
 			pstat.executeUpdate();
 		}
 	}
+	
+	//북마크 추가 시 해당 글 북마크 수 증가
+	public void addCount(int seq) throws Exception{
+		String sql = "update c_board set c_board_bookmark = c_board_bookmark + 1 where c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			pstat.executeUpdate();
+		}
+	}
+	
+	//북마크 해제 시 해당 글 북마크 수 감소
+	public void delCount(int seq) throws Exception{
+		String sql = "update c_board set c_board_bookmark = c_board_bookmark - 1 where c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			pstat.executeUpdate();
+		}
+	}
+	
+	//게시글 신고 시 신고 카운트 증가
+	public void addReportCount(int seq) throws Exception{
+		String sql = "update c_board set c_board_report = c_board_report + 1 where c_board_seq = ?";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, seq);
+			pstat.executeUpdate();
+		}
+	}
+	
+	//회원 탈퇴 시 탈퇴한 사람이 신고했던 글들의 신고 카운트 감소
+	public void delReportCount(String id) throws Exception{
+		String sql = "update c_board set c_board_report = c_board_report - 1 where c_board_seq in (select c_board_seq from report where user_id = ?)";
+		
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, id);
+			pstat.executeUpdate();
+		}
+	}
 
 }

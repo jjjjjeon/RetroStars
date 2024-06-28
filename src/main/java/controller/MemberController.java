@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import common.util;
+import dao.CBoardDAO;
 import dao.GameDAO;
 import dao.MemberDAO;
 import dao.PlayRecordDAO;
@@ -71,6 +72,7 @@ public class MemberController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String cmd = request.getRequestURI();
 		MemberDAO memberDao = MemberDAO.getInstance();
+		CBoardDAO cboardDAO = CBoardDAO.getInstance();
 		GameDAO gameDao = GameDAO.getInstance();
 		Gson g = new Gson();
 		UserProfileImgDAO userProfileImgDao = UserProfileImgDAO.getInstance();
@@ -125,6 +127,7 @@ public class MemberController extends HttpServlet {
 			if(cmd.equals("/deleteMember.member")) {
 				session = request.getSession();
 				String id = (String) session.getAttribute("loginId");
+				cboardDAO.delReportCount(id);
 				memberDao.deleteMember(id);
 				session.invalidate();
 				response.sendRedirect("/index.jsp");
