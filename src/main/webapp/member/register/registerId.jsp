@@ -99,6 +99,8 @@
     }
 
     $(document).ready(function(){
+    	$('#userId').focus();
+    	
         $('#userId').on('input', function() {
             if (validateUserId($(this).val())) {
                 checkUserId();

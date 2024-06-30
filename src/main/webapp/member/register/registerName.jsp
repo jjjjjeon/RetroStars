@@ -183,6 +183,8 @@
     }
 
     $(document).ready(function(){
+    	$('#userName').focus();
+    	
         $('#userName').on('input', function() {
             if (!validateName($(this).val())) {
                 $('#nameCheckText').css('visibility', 'visible');

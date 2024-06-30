@@ -5,8 +5,13 @@
  */
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +38,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import common.util;
 import dao.CBoardDAO;
@@ -275,6 +281,85 @@ public class MemberController extends HttpServlet {
 			    response.sendRedirect("/index.jsp");
 			    return;
 			}
+			
+            // 네이버 로그인 콜백 처리
+            else if (cmd.equals("/naverLogin.member")) {
+                String clientId = "EbRJJmdyC7Je1eseIvPl";
+                String clientSecret = "u5qOcKEsPK";
+                String code = request.getParameter("code");
+                String state = request.getParameter("state");
+
+                String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=" + clientId
+                        + "&client_secret=" + clientSecret + "&code=" + code + "&state=" + state;
+
+                String accessToken = "";
+                String refreshToken = "";
+
+                try {
+                    URL url = new URL(apiURL);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    int responseCode = con.getResponseCode();
+                    BufferedReader br;
+                    if (responseCode == 200) {
+                        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    } else {
+                        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                    }
+                    String inputLine;
+                    StringBuffer responseBuffer = new StringBuffer();
+                    while ((inputLine = br.readLine()) != null) {
+                        responseBuffer.append(inputLine);
+                    }
+                    br.close();
+
+                    JsonObject jsonObject = JsonParser.parseString(responseBuffer.toString()).getAsJsonObject();
+                    accessToken = jsonObject.get("access_token").getAsString();
+                    refreshToken = jsonObject.get("refresh_token").getAsString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String header = "Bearer " + accessToken;
+                try {
+                    String apiURL2 = "https://openapi.naver.com/v1/nid/me";
+                    URL url = new URL(apiURL2);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    con.setRequestProperty("Authorization", header);
+                    int responseCode = con.getResponseCode();
+                    BufferedReader br;
+                    if (responseCode == 200) {
+                        br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
+                    } else {
+                        br = new BufferedReader(new InputStreamReader(con.getErrorStream(), StandardCharsets.UTF_8));
+                    }
+                    String inputLine;
+                    StringBuffer responseBuffer = new StringBuffer();
+                    while ((inputLine = br.readLine()) != null) {
+                        responseBuffer.append(inputLine);
+                    }
+                    br.close();
+
+                    JsonObject jsonObject = JsonParser.parseString(responseBuffer.toString()).getAsJsonObject();
+                    JsonObject responseObj = jsonObject.getAsJsonObject("response");
+                    String naverId = responseObj.get("id").getAsString();
+                    String email = responseObj.get("email").getAsString();
+                    String name = responseObj.get("name").getAsString();
+
+                    if (!memberDao.isMemberExists(naverId)) {
+                        MemberDTO addMember = new MemberDTO(naverId, "dummy", name, name, "dummy", "dummy", email, new Timestamp(System.currentTimeMillis()));
+                        memberDao.addMember(addMember);
+                    }
+
+                    session.setAttribute("loginId", naverId);
+                    response.sendRedirect("/index.jsp");
+                    return;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 			
 			
 			else if (cmd.equals("/googleLogin.member")) {

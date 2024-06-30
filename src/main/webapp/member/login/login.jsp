@@ -167,7 +167,8 @@
         <div class="social-login">
             <a href="javascript:signInWithGoogle()"><img id="update1" src="/image/google_login.png" alt="Google"></a>
             <a href="javaScript:kakaoLogin()"><img src="/image/kakao_login.png" alt="Kakao"></a>
-            <img id="update2" src="/image/naver_login.png" alt="Line">
+             <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=EbRJJmdyC7Je1eseIvPl&redirect_uri=http://52.78.49.200/naverCallback&state=STATE_STRING">
+            <img id="update2" src="/image/naver_login.png" alt="Line"></a>
         </div>
         <a href="/member/register/registerStart.jsp" class="register-link">계정이 없나요? 새로운 계정을 생성해주세요.</a>
     </div>
@@ -269,17 +270,14 @@
                 });
             });
 
-            gapi.load('auth2', function() {
-                gapi.auth2.init({
-                    client_id: '692534731916-p7l19g92i10v9gq4crmcad2olvu8r0ff.apps.googleusercontent.com'
-                });
-            });
+//             gapi.load('auth2', function() {
+//                 gapi.auth2.init({
+//                     client_id: '692534731916-p7l19g92i10v9gq4crmcad2olvu8r0ff.apps.googleusercontent.com'
+//                 });
+//             });
 
             Kakao.init('4b9bccad837f62946166c2a78ed8b481');
 
-            $("#update2").on("click", function() {               
-                alert("업데이트 예정입니다.");                
-            });
         });
     </script>
 </body>

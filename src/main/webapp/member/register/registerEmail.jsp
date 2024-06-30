@@ -50,12 +50,15 @@
     }
 
     $(document).ready(function(){
+    	$('#userEmail').focus();
+    	
         $('#userEmail').on('input', function() {
             let email = $(this).val();
             let checkText = $('#checkText');
             let nextButton = $('#nextButton');
 
             if (!validateEmail(email)) {
+            	checkText.css('color', 'red');
                 checkText.css('visibility', 'visible').removeClass('valid').addClass('invalid').text('유효하지 않은 이메일 형식입니다.');
                 nextButton.addClass('disabled-button');
                 nextButton.prop('disabled', true);

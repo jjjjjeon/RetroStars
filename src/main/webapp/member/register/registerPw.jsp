@@ -120,6 +120,8 @@
         }
 
         $(document).ready(function() {
+        	$('#userPw').focus();
+        	
             $('#userPw, #confirmUserPw').on('input', function() {
                 let valid = validatePassword();
                 let nextButton = $('#nextButton');
