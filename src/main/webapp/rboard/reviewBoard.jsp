@@ -343,14 +343,10 @@
     	backgroud-color : red;
     } 
     
-    #likeImg{
-    	width:40px;
-    	height:40px;
-    }
-    #dislikeImg{
-    	width:40px;
-    	height:40px;
-    }      
+    .like, .dislike {
+        width: 40px;
+        height: 40px;
+    }    
     
      .like-button, .dislike-button {
         cursor: pointer;
@@ -520,12 +516,12 @@
 							    <div>
 							        <c:choose>
 							            <c:when test="${not empty loginId}">
-							                <img id="likeImg" src="/upload/like.png" alt="좋아요" class="like-button" data-review-seq="${review.reviewSeq}">
-							                <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요" class="dislike-button" data-review-seq="${review.reviewSeq}">
+							                <img id="likeImg-${review.reviewSeq}" src="/upload/like.png" alt="좋아요" class="like-button like" data-review-seq="${review.reviewSeq}" style="opacity: ${review.isLiked ? '1' : '0.2'};">
+							                <img id="dislikeImg-${review.reviewSeq}" src="/upload/dislike.png" alt="싫어요" class="dislike-button dislike" data-review-seq="${review.reviewSeq}" style="opacity: ${review.isDisliked ? '1' : '0.2'};">
 							            </c:when>
 							            <c:otherwise>
-							                <img id="likeImg" src="/upload/like.png" alt="좋아요" class="like-button" data-logged-in="false">
-							                <img id="dislikeImg" src="/upload/dislike.png" alt="싫어요" class="dislike-button" data-logged-in="false">
+							                <img id="likeImg-${review.reviewSeq}" src="/upload/like.png" alt="좋아요" class="like-button like" data-logged-in="false" style="opacity: 0.2;">
+							                <img id="dislikeImg-${review.reviewSeq}" src="/upload/dislike.png" alt="싫어요" class="dislike-button dislike" data-logged-in="false" style="opacity: 0.2;">
 							            </c:otherwise>
 							        </c:choose>
 						            <c:if test="${review.userId eq loginId || isAdmin}">
@@ -629,14 +625,19 @@
                 dataType: "json"
             }).done(function(response) {
                 if (response.result === "success") {
+                	// 좋아요 카운트 1 증가
                     let likeCount = $("#like-count-" + reviewSeq);
                     likeCount.text(parseInt(likeCount.text()) + 1);
-                } else if (response.result === "duplicate") {
+                    $("#likeImg-" + reviewSeq).css("opacity", "1");
+                    $("#dislikeImg-" + reviewSeq).css("opacity", "0.2");
+                } else if (response.result === "duplicate" || response.result === "already_liked") {
                     alert("이미 좋아요를 누르셨습니다.");
+                } else if (response.result === "already_disliked"){
+                	alert("이미 싫어요를 누르셨습니다.")
                 } else if (response.result === "not_logged_in") {
                     alert("로그인된 사용자만 좋아요를 누를 수 있습니다.");
                 } else {
-                    alert("좋아요 업데이트에 실패했습니다.");
+                    alert("이미 평가하셨습니다.");
                 }
             });
         });
@@ -657,14 +658,19 @@
                 dataType: "json"
             }).done(function(response) {
                 if (response.result === "success") {
+                	// 싫어요 카운트 1 증가
                     let dislikeCount = $("#dislike-count-" + reviewSeq);
                     dislikeCount.text(parseInt(dislikeCount.text()) + 1);
-                } else if (response.result === "duplicate") {
+                    $("#likeImg-" + reviewSeq).css("opacity", "0.2");
+                    $("#dislikeImg-" + reviewSeq).css("opacity", "1");
+                } else if (response.result === "duplicate" || response.result === "already_disliked") {
                     alert("이미 싫어요를 누르셨습니다.");
+                } else if (response.result === "already_liked" ){
+                	alert("이미 좋아요를 누르셨습니다.");
                 } else if (response.result === "not_logged_in") {
                     alert("로그인된 사용자만 싫어요를 누를 수 있습니다.");
                 } else {
-                    alert("싫어요 업데이트에 실패했습니다.");
+                    alert("이미 평가하셨습니다.");
                 }
             });
         });

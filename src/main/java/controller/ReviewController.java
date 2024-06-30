@@ -79,8 +79,15 @@ public class ReviewController extends HttpServlet {
                     reviewDao.updateReviewLike(reviewSeq, userId1, type);
                     pw.append("{\"result\":\"success\"}");
                 } catch (SQLException e) {
+                	// 에러코드 20001 or 20002면 중복
                     if (e.getErrorCode() == -20001 || e.getErrorCode() == -20002) {
                         pw.append("{\"result\":\"duplicate\"}");
+                    } else if(e.getErrorCode() == -20003) {
+                    	// 이미 싫어요 누름
+                    	pw.append("{\"result\":\"already_disliked\"}");
+                    } else if(e.getErrorCode() == -20004) {
+                    	// 이미 좋아요 누름
+                    	pw.append("{\"result\":\"already_liked\"}");
                     } else {
                         throw e;
                     }
@@ -104,7 +111,8 @@ public class ReviewController extends HttpServlet {
                 int endNum = cpage * 10;
 
                 String gameSeqStr = request.getParameter("gameSeq");
-                ArrayList<HashMap<String, ?>> list;
+                ArrayList<HashMap<String, Object>> list;
+ 
                 String userId = (String) session.getAttribute("loginId"); // 로그인된 유저 아이디 가져오기
                 int reviewCount;
 
@@ -126,6 +134,12 @@ public class ReviewController extends HttpServlet {
                 } else {
                     list = reviewDao.getAllReviews(sortType, startNum, endNum);
                     reviewCount = reviewDao.getReviewCount();
+                }
+                for (HashMap<String, Object> review : list) {
+                    int reviewSeq = (int) review.get("reviewSeq");
+                    String status = reviewDao.getUserLikeDislikeStatus(reviewSeq, userId);
+                    review.put("isLiked", "like".equals(status));
+                    review.put("isDisliked", "dislike".equals(status));
                 }
 
                 request.setAttribute("list", list);

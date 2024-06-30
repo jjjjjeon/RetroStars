@@ -66,7 +66,14 @@ public class GBoardController extends HttpServlet {
                 
                 List<String> listGameImage = gameDao.getGameImages(gameSeq); // 게임번호에 맞는 이미지 List에 넣기                
                 String gameVideoStr = gameDao.getGameVideo(gameSeq); // 게임번호에 맞는 비디오 url 가져오기. 현재 사이트에 비디오 하나만 허용하게 해놨음.
-                  
+                
+                // 북마크 확인
+                boolean isBookmarked = false;
+                if (loginId != null) {
+                    isBookmarked = gameDao.isGameBookmarked(loginId, gameSeq);
+                }
+                request.setAttribute("isBookmarked", isBookmarked);
+                
                 request.setAttribute("listGame", listGame);
                 request.setAttribute("loginId", loginId); 
                 request.setAttribute("game", game);

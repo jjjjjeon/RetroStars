@@ -58,8 +58,7 @@ import dto.UserProfileImgDTO;
  */
 
 @WebServlet("*.member")
-public class MemberController extends HttpServlet {
-	
+public class MemberController extends HttpServlet {	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);

@@ -589,7 +589,7 @@ a {
 				</p>
 				<p style="color:orange">DEVELOPER: ${game.developer}</p>
 				
-<!-- 				여기 분명 isBookmarkde가 트루면 별, 아니면 찜하기인데 왜 동작을 안하지 -->
+
 				<div id="gameBtnBehind" class="buttons">
 					<button class="btn community-button bookBtn"
 						id="addGameBookmarkBtn">${isBookmarked ? '★' : '찜하기'}</button>

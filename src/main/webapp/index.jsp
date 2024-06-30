@@ -378,11 +378,11 @@
 
             <div class="gamelist">
                 <div class="listtitle zen-dots-regular">GAME LIST</div>
-                <div class = "game" id="listgame1"><a href="/viewGame.gboard?gameSeq=1"> 2048 </a> </div>
-                <div class = "game" id="listgame2"><a href="/viewGame.gboard?gameSeq=2"> GOLD BREAK! </a> </div>
-                <div class = "game" id="listgame3"><a href="/viewGame.gboard?gameSeq=3"> ICE CUBY </a> </div>
-                <div class = "game" id="listgame4"><a href="/viewGame.gboard?gameSeq=4"> 똥 피하기 </a> </div>
-                <div class = "game" id="listgame5"><a href="/viewGame.gboard?gameSeq=5"> 탈출하기 </a> </div>
+                <div class = "game" id="listgame1"><a href="#" data-seq="1"> 2048 </a> </div>
+                <div class = "game" id="listgame2"><a href="#" data-seq="2"> GOLD BREAK! </a> </div>
+                <div class = "game" id="listgame3"><a href="#" data-seq="3"> ICE CUBY </a> </div>
+                <div class = "game" id="listgame4"><a href="#" data-seq="4"> 똥 피하기 </a> </div>
+                <div class = "game" id="listgame5"><a href="#" data-seq="5"> 탈출하기 </a> </div>
             </div> 
             <div class="gameintro">
                 <div class="playVideo">
@@ -419,33 +419,40 @@
 </body>
 
 <script>
-    $(document).ready(function() {
-        var videoList = [
-            {src: "/upload/G1.mp4", seq: 1},
-            {src: "/upload/G2.mp4", seq: 2},
-            {src: "/upload/G3.mp4", seq: 3},
-            {src: "/upload/G4.mp4", seq: 4},
-            {src: "/upload/G5.mp4", seq: 5}
-        ];
-
-        function playRandomVideo() {
-            let randomIndex = Math.floor(Math.random() * videoList.length); // 비디오 랜덤 재상
-            let videoElement = $('#gameVideo');
-            let selectedVideo = videoList[randomIndex];
-
-            videoElement.attr('src', selectedVideo.src);
-            $('#startGameLink').attr('href', '/viewGame.gboard?gameSeq=' + selectedVideo.seq);
-            videoElement[0].load();
-            videoElement[0].play();
-        }
-
-        $('#gameVideo').on('ended', function() {
-            setTimeout(playRandomVideo, 3); // 나중에 클릭 후 애니메이션 줄 때 사용 예정
-        });
-
-        playRandomVideo(); 
-    });
-    
+	$(document).ready(function() {
+	    var videoList = [
+	        {src: "/upload/G1.mp4", seq: 1},
+	        {src: "/upload/G2.mp4", seq: 2},
+	        {src: "/upload/G3.mp4", seq: 3},
+	        {src: "/upload/G4.mp4", seq: 4},
+	        {src: "/upload/G5.mp4", seq: 5}
+	    ];
+	    
+	    function playVideoBySeq(seq){
+	    	let videoElement = $('#gameVideo');
+        	// find로 첫번째 요소 반환, 화살표 함수로 배열의 각 요소에 대해 실행. 현재 요소의 seq값이 함수에 전달된 seq와 같은지 비교
+	    	let selectedVideo = videoList.find(video => video.seq == seq);
+	    	
+	    	videoElement.attr('src', selectedVideo.src);
+	    	$('#startGameLink').attr('href', '/viewGame.gboard?gameSeq=' + selectedVideo.seq);
+	    	videoElement[0].load();
+	    	videoElement[0].play();
+	    }
+	
+	    function playRandomVideo() {
+	        let randomIndex = Math.floor(Math.random() * videoList.length); // 비디오 랜덤 재상
+			playVideoBySeq(videoList[randomIndex].seq);
+	    }
+	
+	    $('.gamelist .game a').on('click', function(event) {
+	    	event.preventDefault();
+	    	let seq = $(this).data('seq');
+	    	playVideoBySeq(seq);
+	    });
+	
+	    playRandomVideo(); 
+	});
+	    
     
 </script>
 
