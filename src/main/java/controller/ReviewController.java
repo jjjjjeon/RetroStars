@@ -104,7 +104,7 @@ public class ReviewController extends HttpServlet {
             //리뷰 보여주기 
             else if (cmd.equals("/list.review")) {
             	// null이 아니면 getParameter로 가져온 sortType을 가져오고 아니면 기본적으로는 좋아요
-                String sortType = request.getParameter("sortType") != null ? request.getParameter("sortType") : "review_like";
+                String sortType = request.getParameter("sortType") != null ? request.getParameter("sortType") : "review_date";
                 // null 이 아니면 받아온 cpage를 가져오고 아니면 1
                 int cpage = request.getParameter("cpage") != null ? Integer.parseInt(request.getParameter("cpage")) : 1;
                 int startNum = cpage * 10 - 9;
@@ -132,6 +132,7 @@ public class ReviewController extends HttpServlet {
                         
                     }
                 } else {
+                	
                     list = reviewDao.getAllReviews(sortType, startNum, endNum);
                     reviewCount = reviewDao.getReviewCount();
                 }

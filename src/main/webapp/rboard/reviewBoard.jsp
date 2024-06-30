@@ -355,6 +355,34 @@
     .steamBtn {
 	background-color: #6fa720;
 }
+
+	.modal-dialog {
+	    max-width: 60%;
+	    margin: 15rem auto;
+	}
+	
+	.modal-content {
+	    background-color: #2a475e;
+	    color: white;
+	}
+	
+	.modal-header {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    background-color: #3a4b58;
+	    border-bottom: 1px solid #dee2e6;
+	    padding: 1rem 1rem;
+	    border-top-left-radius: 0.3rem;
+	    border-top-right-radius: 0.3rem;
+	    color: white;
+	}
+	
+	.modal-body {
+	    position: relative;
+	    flex: 1 1 auto;
+	    padding: 1rem;
+	}
 </style>
 </head>
 
@@ -478,7 +506,27 @@
 	                    </c:when>
 	                </c:choose>
 	            </h3>
-	            <button id="writeReviewBtn" class="btn steamBtn">게임하러 가기</button>
+	            <button id="goToGameBtn" class="btn steamBtn">게임하러 가기</button>
+	            <button id="writeReviewBtn" class="btn steamBtn" ${empty param.gameSeq ? 'style="display:none;"' : ''}>리뷰 작성</button>
+	            <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+				                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				            </div>
+				            <div class="modal-body">
+				                <form id="reviewForm">
+				                    <div class="mb-3">
+				                        <label for="reviewContent" class="form-label">리뷰 내용</label>
+				                        <textarea class="form-control" id="reviewContent" rows="5" placeholder="리뷰 작성은 한글, 영어로 30자까지만 가능합니다."></textarea>
+				                    </div>
+				                    <button type="submit" class="btn btn-primary" style="float: right;">작성 완료</button>
+				                </form>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 	        </div>
 	        <div class="sort-buttons">
 	            <button id="sortLikes" class="${sortType == 'review_like' ? 'active' : ''}">좋아요 많은 순</button>
@@ -600,7 +648,7 @@
         });
         
 //         귀찮아서 writeReviewBtn이라는 값줬는데 게임하러 가기 버튼임
-        $("#writeReviewBtn").on("click", function() {
+        $("#goToGameBtn").on("click", function() {
             let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
             if (gameSeq) {
                 window.location.href = `/viewGame.gboard?gameSeq=${gameSeq}`;
@@ -608,6 +656,44 @@
                 alert("게임을 선택해 주세요.");
             }
         });
+        
+        $("#writeReviewBtn").on("click", function() {
+            $("#reviewModal").modal("show");
+            $("#reviewContent").focus();
+        });
+
+        // 리뷰 작성 폼 제출 이벤트
+        $("#reviewForm").on("submit", function(e) {
+            e.preventDefault();
+            let reviewContent = $("#reviewContent").val();
+            let gameSeq = new URLSearchParams(window.location.search).get('gameSeq');
+            
+	            if (reviewContent.length > 30) {
+	                alert("리뷰는 30자까지만 작성해주세요.");
+	            } else {
+	                $.ajax({
+	                    url: "/addReview.review",
+	                    method: "POST",
+	                    dataType: "json",
+	                    data: {
+	                        gameSeq: gameSeq,
+	                        reviewContent: reviewContent
+	                    }
+	                }).done(function(response) {
+	                    if (response.result === "success") {
+	                        alert("리뷰가 성공적으로 등록되었습니다.");
+	                        $("#reviewModal").modal("hide");
+	                        location.reload(); // 페이지 새로고침
+	                    } else {
+	                        alert("리뷰 등록에 실패했습니다.");
+	                    }
+	                }).fail(function(jqXHR, textStatus, errorThrown) {
+	                    console.error("에러: " + textStatus, errorThrown);
+	                    alert("리뷰 등록 중 오류가 발생했습니다.");
+	                });
+	            }
+	        });
+	
 
         $(".like-button").on("click", function() {
             let reviewSeq = $(this).data("review-seq");
